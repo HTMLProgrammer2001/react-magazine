@@ -1,0 +1,73 @@
+.product
+    .container
+        .row.space-between.product__content
+            .product__images
+                .product__image.product__image_lg
+                    img(src='image/product.png' width="100%")
+
+                .row.space-between
+                    .product__image.product__image_sm
+                        img(src='image/product.png' width="100%")
+
+                    .product__image.product__image_sm
+                        img(src='image/product.png' width="100%")
+
+                    .product__image.product__image_sm
+                        img(src='image/product.png' width="100%")
+
+
+            .product__info
+                .row.space-between.product__info-head
+                    .product__name Biker hoodie
+                    .product__price $24.00
+
+                .product__description.
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto aspernatur at consectetur cum cupiditate dolores doloribus exercitationem explicabo fuga fugiat ipsum iusto, labore natus nisi tempore, tenetur ullam ut veniam!
+
+                .row.space-between.product__facilities
+                    .product__size.row
+                        p Size:
+
+                        ul.product__size-list
+                            li.product__size-item XS
+                            li.product__size-item S
+                            li.product__size-item.product__size-item_active M
+                            li.product__size-item L
+
+                    .product__color.row
+                        p Color:
+
+                        .goods__color.goods__color_sm
+                            .goods__color-item.goods__color-item_red
+                            .goods__color-item.goods__color-item_green
+                            .goods__color-item.goods__color-item_blue
+                            .goods__color-item.goods__color-item_purple.goods__color-item_active
+                            .goods__color-item.goods__color-item_yellow
+                            .goods__color-item.goods__color-item_black
+
+                .my-pad
+                    include product_order
+
+                .product__share
+                    b Share in:
+
+                    i.fab.fa-facebook-f.product__share-soc
+                    i.fab.fa-twitter.product__share-soc
+                    i.fab.fa-pinterest-p.product__share-soc
+
+                .product__categories
+                    b Categories:
+                    span.ml-1
+                        a(href='#').product__categories-item Fashion, &nbsp;
+                        a(href='#').product__categories-item Men clothes
+
+                .product__categories
+                    b Tags:
+                    span.ml-1
+                        a(href='#').product__categories-item Fashion, &nbsp;
+                        a(href='#').product__categories-item Men clothes
+
+                .product__mark.my-pad
+                    b.product__mark-head Average mark:
+
+                    include ../../../includes/reviews_mark.html

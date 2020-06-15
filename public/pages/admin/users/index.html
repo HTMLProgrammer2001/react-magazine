@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&amp;display=swap" rel="stylesheet">
+    <link href="https://use.fontawesome.com/releases/v5.13.0/css/all.css" rel="stylesheet" type="text/css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" rel="stylesheet" type="text/css">
+    <link href="/css/bundle.css" rel="stylesheet" type="text/css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin | Users</title>
+  </head>
+  <body>
+    <div class="admHeader">
+      <div class="row">
+        <div class="burger">
+          <div class="burger__body">
+            <div class="burger__item"></div>
+            <div class="burger__item"></div>
+            <div class="burger__item"></div>
+          </div>
+        </div>
+        <div class="admHeader__menu">
+          <div class="admHeader__divider">Admin panel</div><a href="/admin">
+            <div class="admHeader__item"><i class="fas fa-cog admHeader__icon"></i><span>Admin page</span></div></a><a href="/admin/tags">
+            <div class="admHeader__item"><i class="fas fa-cog admHeader__icon"></i><span>Tags</span></div></a><a href="/admin/categories">
+            <div class="admHeader__item"><i class="fas fa-cog admHeader__icon"></i><span>Categories</span></div></a><a href="/admin/users">
+            <div class="admHeader__item"><i class="fas fa-cog admHeader__icon"></i><span>Users</span></div></a><a href="/admin/reviews">
+            <div class="admHeader__item"><i class="fas fa-cog admHeader__icon"></i><span>Reviews</span></div></a><a href="/admin/products">
+            <div class="admHeader__item"><i class="fas fa-cog admHeader__icon"></i><span>Products</span></div></a><a href="/admin/sales">
+            <div class="admHeader__item"><i class="fas fa-cog admHeader__icon"></i><span>Sales</span></div></a>
+        </div><img class="admHeader__logo" src="/image/adminLogo.png">
+      </div>
+      <div class="row cur dropdown">
+        <div class="admHeader__user dropdown__elem">
+          <div class="admHeader__name"><span>Yuri Prisyazhny</span></div><img class="admHeader__photo" src="/image/ava.png"><i class="fas fa-sort-down ml-1"></i>
+        </div>
+        <div class="dropdown__body">
+          <div class="dropdown__content">
+            <ul class="menu__list">
+              <li class="menu__item"><a href="./profile.html">Profile</a></li>
+              <li class="menu__item"><a href="./settings.html">Settings</a></li>
+              <li class="menu__item"><a href="./orders.html">Orders</a></li>
+              <li class="menu__item"><a href="./favorite.html">Favorite</a></li>
+              <li class="menu__item">Log out</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="admContent">
+      <div class="container">
+        <div class="myOrders py-pad">
+          <h3>Users</h3>
+          <div class="myOrders__header my-pad"><span class="myOrders__find">
+              <div class="input">
+                <input class="input__elem" type="text" required="">
+                <label class="input__label">Find user</label>
+              </div></span><a href="create.html">
+              <button class="but but_outline">Create</button></a></div>
+          <div class="myOrders__types my-pad">
+            <div class="radio">
+              <label class="row">
+                <input class="radio__elem" type="radio" name="filter"><span class="radio__label">All</span>
+              </label>
+            </div>
+            <div class="radio">
+              <label class="row">
+                <input class="radio__elem" type="radio" name="filter"><span class="radio__label">User</span>
+              </label>
+            </div>
+            <div class="radio">
+              <label class="row">
+                <input class="radio__elem" type="radio" name="filter"><span class="radio__label">Moderator</span>
+              </label>
+            </div>
+            <div class="radio">
+              <label class="row">
+                <input class="radio__elem" type="radio" name="filter"><span class="radio__label">Admin</span>
+              </label>
+            </div>
+          </div>
+          <div class="table__wrap">
+            <div class="table">
+              <div class="table__head">
+                <div class="table__head-item">ID</div>
+                <div class="table__head-item">Ava</div>
+                <div class="table__head-item">Name</div>
+                <div class="table__head-item">Email</div>
+                <div class="table__head-item">Role</div>
+                <div class="table__head-item">Actions</div>
+              </div>
+              <div class="table__content">
+                <div class="table__row">
+                  <div class="table__col">#1</div>
+                  <div class="table__col"><img src="/image/product.png"></div>
+                  <div class="table__col">Yuri Prisyazhny</div>
+                  <div class="table__col">cssuperpy@gmail.com</div>
+                  <div class="table__col">User</div>
+                  <div class="table__col"><i class="fas fa-times cur"></i><a href="show.html"><i class="fas fa-eye cur ml-10"></i></a><a href="edit.html"><i class="fas fa-pencil-alt cur ml-10"></i></a><i class="fas fa-ban cur ml-10"></i></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="pagination mb-pad">
+          <div class="pagination__item pagination__item_disabled">Prev</div>
+          <div class="pagination__item pagination__item_active">1</div>
+          <div class="pagination__item">2</div>
+          <div class="pagination__item">3</div>
+          <div class="pagination__item">Next</div>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div class="footer__copy">Copyright 2020</div>
+    <script src="/js/bundle.js"></script>
+  </body>
+</html>

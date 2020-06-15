@@ -1,0 +1,18 @@
+.product{
+    &__order{
+        @media all and (max-width: 550px){
+            flex-direction: column;
+            align-items: center;
+
+            *{
+                margin-bottom: $pad/4;
+            }
+        }
+
+        @include flex(space-between, center);
+
+        padding: $pad/2;
+
+        border-bottom: 2px dashed $textGray;
+    }
+}

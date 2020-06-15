@@ -1,0 +1,36 @@
+.container
+    .table__wrap.my-pad
+        .table
+            .table__head
+                .table__head-item.table__head-item_lg Product
+                .table__head-item Price
+                .table__head-item Quantity
+                .table__head-item Total
+                .table__head-item
+
+            .table__content
+                .table__row
+                    .table__col.orders__product
+                        img(src='./image/product.png').orders__img
+
+                        div
+                            .orders__name Soft benim bermuda shorts
+                            .orders__color
+                                .goods__color-item.goods__color-item_black
+                                .orders__size M
+
+                    .table__col.orders__price $45.00
+                    .table__col.orders__quantity
+                        .order__quantity
+                            span(contenteditable='').order__quantity-count 1
+
+                    .table__col.orders__total
+                        | $45.00
+
+                    .table__col.orders__remove
+                        i.fas.fa-times.cur
+
+    .orders__actions
+        .orders__clear Clear cart
+
+        .orders__update Update cart

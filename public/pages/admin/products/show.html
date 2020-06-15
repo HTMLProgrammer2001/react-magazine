@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&amp;display=swap" rel="stylesheet">
+    <link href="https://use.fontawesome.com/releases/v5.13.0/css/all.css" rel="stylesheet" type="text/css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" rel="stylesheet" type="text/css">
+    <link href="/css/bundle.css" rel="stylesheet" type="text/css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin | Product page</title>
+  </head>
+  <body>
+    <div class="admHeader">
+      <div class="row">
+        <div class="burger">
+          <div class="burger__body">
+            <div class="burger__item"></div>
+            <div class="burger__item"></div>
+            <div class="burger__item"></div>
+          </div>
+        </div>
+        <div class="admHeader__menu">
+          <div class="admHeader__divider">Admin panel</div><a href="/admin">
+            <div class="admHeader__item"><i class="fas fa-cog admHeader__icon"></i><span>Admin page</span></div></a><a href="/admin/tags">
+            <div class="admHeader__item"><i class="fas fa-cog admHeader__icon"></i><span>Tags</span></div></a><a href="/admin/categories">
+            <div class="admHeader__item"><i class="fas fa-cog admHeader__icon"></i><span>Categories</span></div></a><a href="/admin/users">
+            <div class="admHeader__item"><i class="fas fa-cog admHeader__icon"></i><span>Users</span></div></a><a href="/admin/reviews">
+            <div class="admHeader__item"><i class="fas fa-cog admHeader__icon"></i><span>Reviews</span></div></a><a href="/admin/products">
+            <div class="admHeader__item"><i class="fas fa-cog admHeader__icon"></i><span>Products</span></div></a><a href="/admin/sales">
+            <div class="admHeader__item"><i class="fas fa-cog admHeader__icon"></i><span>Sales</span></div></a>
+        </div><img class="admHeader__logo" src="/image/adminLogo.png">
+      </div>
+      <div class="row cur dropdown">
+        <div class="admHeader__user dropdown__elem">
+          <div class="admHeader__name"><span>Yuri Prisyazhny</span></div><img class="admHeader__photo" src="/image/ava.png"><i class="fas fa-sort-down ml-1"></i>
+        </div>
+        <div class="dropdown__body">
+          <div class="dropdown__content">
+            <ul class="menu__list">
+              <li class="menu__item"><a href="./profile.html">Profile</a></li>
+              <li class="menu__item"><a href="./settings.html">Settings</a></li>
+              <li class="menu__item"><a href="./orders.html">Orders</a></li>
+              <li class="menu__item"><a href="./favorite.html">Favorite</a></li>
+              <li class="menu__item">Log out</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="admContent">
+      <div class="container">
+        <div class="product-info py-pad">
+          <div class="product-info__ava"><img class="product-info__img product-info__img_lg" src="/image/product.png">
+            <div class="row product-info__row"><img class="product-info__img" src="/image/product.png"><img class="product-info__img" src="/image/product.png"><img class="product-info__img" src="/image/product.png"></div>
+          </div>
+          <div class="product-info__fields">
+            <div class="product-info__field">
+              <div class="product-info__head">Name</div>
+              <div class="product-info__content">TShirt</div>
+            </div>
+            <div class="product-info__field">
+              <div class="product-info__head">Category</div>
+              <div class="product-info__content">Category 1</div>
+            </div>
+            <div class="product-info__field">
+              <div class="product-info__head">Tags</div>
+              <div class="product-info__content"><a href="#">Tag1</a>,<a href="#">Tag2</a></div>
+            </div>
+            <div class="product-info__field">
+              <div class="product-info__head">Price</div>
+              <div class="product-info__content bold red">$24.00</div>
+            </div>
+            <div class="product-info__field">
+              <div class="product-info__head">Sizes</div>
+              <div class="product-info__content">XS | S | M | L</div>
+            </div>
+            <div class="product-info__field">
+              <div class="product-info__head">Colors</div>
+              <div class="product-info__content">
+                <div class="goods__color goods__color_sm">
+                  <div class="goods__color-item goods__color-item_red"></div>
+                  <div class="goods__color-item goods__color-item_green"></div>
+                  <div class="goods__color-item goods__color-item_blue"></div>
+                  <div class="goods__color-item goods__color-item_purple"></div>
+                  <div class="goods__color-item goods__color-item_yellow"></div>
+                  <div class="goods__color-item goods__color-item_black"></div>
+                </div>
+              </div>
+            </div>
+            <div class="product-info__field">
+              <div class="product-info__head">Average mark</div>
+              <div class="product-info__content"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="150px" height="30px"
+     viewBox="0 0 2135 427"
+     class = "reviews__mark"
+>
+    <clipPath id="clip">
+        <polygon transform="translate(0)" points="213.333,10.441 279.249,144.017 426.667,165.436 320,269.41 345.173,416.226 213.333,346.91
+81.485,416.226 106.667,269.41 0,165.436 147.409,144.017 "> </polygon>
+        <polygon transform="translate(854)" points="213.333,10.441 279.249,144.017 426.667,165.436 320,269.41 345.173,416.226 213.333,346.91
+81.485,416.226 106.667,269.41 0,165.436 147.409,144.017 "> </polygon>
+        <polygon class="f" transform="translate(1281)" points="213.333,10.441 279.249,144.017 426.667,165.436 320,269.41 345.173,416.226 213.333,346.91
+81.485,416.226 106.667,269.41 0,165.436 147.409,144.017 "> </polygon>
+        <polygon transform="translate(1708)" points="213.333,10.441 279.249,144.017 426.667,165.436 320,269.41 345.173,416.226 213.333,346.91
+81.485,416.226 106.667,269.41 0,165.436 147.409,144.017 "> </polygon>
+        <polygon transform="translate(427)" points="213.333,10.441 279.249,144.017 426.667,165.436 320,269.41 345.173,416.226 213.333,346.91
+81.485,416.226 106.667,269.41 0,165.436 147.409,144.017 "> </polygon>
+    </clipPath>
+    <polygon transform="translate(0)" points="213.333,10.441 279.249,144.017 426.667,165.436 320,269.41 345.173,416.226 213.333,346.91
+81.485,416.226 106.667,269.41 0,165.436 147.409,144.017 " class="reviews__mark-star"> </polygon>
+    <polygon transform="translate(854)" points="213.333,10.441 279.249,144.017 426.667,165.436 320,269.41 345.173,416.226 213.333,346.91
+81.485,416.226 106.667,269.41 0,165.436 147.409,144.017 " class="reviews__mark-star"> </polygon>
+    <polygon transform="translate(1281)" points="213.333,10.441 279.249,144.017 426.667,165.436 320,269.41 345.173,416.226 213.333,346.91
+81.485,416.226 106.667,269.41 0,165.436 147.409,144.017 " class="reviews__mark-star"> </polygon>
+    <polygon transform="translate(1708)" points="213.333,10.441 279.249,144.017 426.667,165.436 320,269.41 345.173,416.226 213.333,346.91
+81.485,416.226 106.667,269.41 0,165.436 147.409,144.017 " class="reviews__mark-star"> </polygon>
+    <polygon transform="translate(427)" points="213.333,10.441 279.249,144.017 426.667,165.436 320,269.41 345.173,416.226 213.333,346.91
+81.485,416.226 106.667,269.41 0,165.436 147.409,144.017 " class="reviews__mark-star"> </polygon>
+    <rect x="0" y="0" width="1878.8" height="427" fill="yellow" class="reviews__mark-fill" style='clip-path: url("#clip");'> </rect>
+</svg>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tabs">
+          <div class="tabs__items"><a class="tabs__item tabs__item_active" href="#reviews">Reviews (12)</a><a class="tabs__item" href="#orders">Orders (23)</a></div>
+          <div class="tabs__content">
+            <div class="tabs__content-item tabs__content-item_active" id="reviews">
+              <div class="product__reviews"><a class="product__review" href="#">
+                  <div class="product__review-ava"><img class="product__review-img" src="/image/ava.png"></div>
+                  <div class="product__review-content">
+                    <div class="product__review-author">Yura Prisyazhny</div>
+                    <div class="product__review-mark"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="150px" height="30px"
+     viewBox="0 0 2135 427"
+     class = "reviews__mark"
+>
+    <clipPath id="clip">
+        <polygon transform="translate(0)" points="213.333,10.441 279.249,144.017 426.667,165.436 320,269.41 345.173,416.226 213.333,346.91
+81.485,416.226 106.667,269.41 0,165.436 147.409,144.017 "> </polygon>
+        <polygon transform="translate(854)" points="213.333,10.441 279.249,144.017 426.667,165.436 320,269.41 345.173,416.226 213.333,346.91
+81.485,416.226 106.667,269.41 0,165.436 147.409,144.017 "> </polygon>
+        <polygon class="f" transform="translate(1281)" points="213.333,10.441 279.249,144.017 426.667,165.436 320,269.41 345.173,416.226 213.333,346.91
+81.485,416.226 106.667,269.41 0,165.436 147.409,144.017 "> </polygon>
+        <polygon transform="translate(1708)" points="213.333,10.441 279.249,144.017 426.667,165.436 320,269.41 345.173,416.226 213.333,346.91
+81.485,416.226 106.667,269.41 0,165.436 147.409,144.017 "> </polygon>
+        <polygon transform="translate(427)" points="213.333,10.441 279.249,144.017 426.667,165.436 320,269.41 345.173,416.226 213.333,346.91
+81.485,416.226 106.667,269.41 0,165.436 147.409,144.017 "> </polygon>
+    </clipPath>
+    <polygon transform="translate(0)" points="213.333,10.441 279.249,144.017 426.667,165.436 320,269.41 345.173,416.226 213.333,346.91
+81.485,416.226 106.667,269.41 0,165.436 147.409,144.017 " class="reviews__mark-star"> </polygon>
+    <polygon transform="translate(854)" points="213.333,10.441 279.249,144.017 426.667,165.436 320,269.41 345.173,416.226 213.333,346.91
+81.485,416.226 106.667,269.41 0,165.436 147.409,144.017 " class="reviews__mark-star"> </polygon>
+    <polygon transform="translate(1281)" points="213.333,10.441 279.249,144.017 426.667,165.436 320,269.41 345.173,416.226 213.333,346.91
+81.485,416.226 106.667,269.41 0,165.436 147.409,144.017 " class="reviews__mark-star"> </polygon>
+    <polygon transform="translate(1708)" points="213.333,10.441 279.249,144.017 426.667,165.436 320,269.41 345.173,416.226 213.333,346.91
+81.485,416.226 106.667,269.41 0,165.436 147.409,144.017 " class="reviews__mark-star"> </polygon>
+    <polygon transform="translate(427)" points="213.333,10.441 279.249,144.017 426.667,165.436 320,269.41 345.173,416.226 213.333,346.91
+81.485,416.226 106.667,269.41 0,165.436 147.409,144.017 " class="reviews__mark-star"> </polygon>
+    <rect x="0" y="0" width="1878.8" height="427" fill="yellow" class="reviews__mark-fill" style='clip-path: url("#clip");'> </rect>
+</svg>
+
+                    </div>
+                    <div class="product__review-text mb-1">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet atque consequuntur distinctio dolor explicabo, odio sapiente voluptas! Corporis cumque dolorum enim id impedit labore minus nobis, quae quas sed tempora?</div>
+                    <div class="row text-muted space-between w-100">
+                      <div class="product__review-likes">+ 10</div>
+                      <div class="product__review-date">20.03.2020</div>
+                    </div>
+                  </div></a><a class="product__review" href="#">
+                  <div class="product__review-ava"><img class="product__review-img" src="/image/ava.png"></div>
+                  <div class="product__review-content">
+                    <div class="product__review-author">Yura Prisyazhny</div>
+                    <div class="product__review-mark"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="150px" height="30px"
+     viewBox="0 0 2135 427"
+     class = "reviews__mark"
+>
+    <clipPath id="clip">
+        <polygon transform="translate(0)" points="213.333,10.441 279.249,144.017 426.667,165.436 320,269.41 345.173,416.226 213.333,346.91
+81.485,416.226 106.667,269.41 0,165.436 147.409,144.017 "> </polygon>
+        <polygon transform="translate(854)" points="213.333,10.441 279.249,144.017 426.667,165.436 320,269.41 345.173,416.226 213.333,346.91
+81.485,416.226 106.667,269.41 0,165.436 147.409,144.017 "> </polygon>
+        <polygon class="f" transform="translate(1281)" points="213.333,10.441 279.249,144.017 426.667,165.436 320,269.41 345.173,416.226 213.333,346.91
+81.485,416.226 106.667,269.41 0,165.436 147.409,144.017 "> </polygon>
+        <polygon transform="translate(1708)" points="213.333,10.441 279.249,144.017 426.667,165.436 320,269.41 345.173,416.226 213.333,346.91
+81.485,416.226 106.667,269.41 0,165.436 147.409,144.017 "> </polygon>
+        <polygon transform="translate(427)" points="213.333,10.441 279.249,144.017 426.667,165.436 320,269.41 345.173,416.226 213.333,346.91
+81.485,416.226 106.667,269.41 0,165.436 147.409,144.017 "> </polygon>
+    </clipPath>
+    <polygon transform="translate(0)" points="213.333,10.441 279.249,144.017 426.667,165.436 320,269.41 345.173,416.226 213.333,346.91
+81.485,416.226 106.667,269.41 0,165.436 147.409,144.017 " class="reviews__mark-star"> </polygon>
+    <polygon transform="translate(854)" points="213.333,10.441 279.249,144.017 426.667,165.436 320,269.41 345.173,416.226 213.333,346.91
+81.485,416.226 106.667,269.41 0,165.436 147.409,144.017 " class="reviews__mark-star"> </polygon>
+    <polygon transform="translate(1281)" points="213.333,10.441 279.249,144.017 426.667,165.436 320,269.41 345.173,416.226 213.333,346.91
+81.485,416.226 106.667,269.41 0,165.436 147.409,144.017 " class="reviews__mark-star"> </polygon>
+    <polygon transform="translate(1708)" points="213.333,10.441 279.249,144.017 426.667,165.436 320,269.41 345.173,416.226 213.333,346.91
+81.485,416.226 106.667,269.41 0,165.436 147.409,144.017 " class="reviews__mark-star"> </polygon>
+    <polygon transform="translate(427)" points="213.333,10.441 279.249,144.017 426.667,165.436 320,269.41 345.173,416.226 213.333,346.91
+81.485,416.226 106.667,269.41 0,165.436 147.409,144.017 " class="reviews__mark-star"> </polygon>
+    <rect x="0" y="0" width="1878.8" height="427" fill="yellow" class="reviews__mark-fill" style='clip-path: url("#clip");'> </rect>
+</svg>
+
+                    </div>
+                    <div class="product__review-text mb-1">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet atque consequuntur distinctio dolor explicabo, odio sapiente voluptas! Corporis cumque dolorum enim id impedit labore minus nobis, quae quas sed tempora?</div>
+                    <div class="row text-muted space-between w-100">
+                      <div class="product__review-likes">+ 10</div>
+                      <div class="product__review-date">20.03.2020</div>
+                    </div>
+                  </div></a><a class="product__review" href="#">
+                  <div class="product__review-ava"><img class="product__review-img" src="/image/ava.png"></div>
+                  <div class="product__review-content">
+                    <div class="product__review-author">Yura Prisyazhny</div>
+                    <div class="product__review-mark"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="150px" height="30px"
+     viewBox="0 0 2135 427"
+     class = "reviews__mark"
+>
+    <clipPath id="clip">
+        <polygon transform="translate(0)" points="213.333,10.441 279.249,144.017 426.667,165.436 320,269.41 345.173,416.226 213.333,346.91
+81.485,416.226 106.667,269.41 0,165.436 147.409,144.017 "> </polygon>
+        <polygon transform="translate(854)" points="213.333,10.441 279.249,144.017 426.667,165.436 320,269.41 345.173,416.226 213.333,346.91
+81.485,416.226 106.667,269.41 0,165.436 147.409,144.017 "> </polygon>
+        <polygon class="f" transform="translate(1281)" points="213.333,10.441 279.249,144.017 426.667,165.436 320,269.41 345.173,416.226 213.333,346.91
+81.485,416.226 106.667,269.41 0,165.436 147.409,144.017 "> </polygon>
+        <polygon transform="translate(1708)" points="213.333,10.441 279.249,144.017 426.667,165.436 320,269.41 345.173,416.226 213.333,346.91
+81.485,416.226 106.667,269.41 0,165.436 147.409,144.017 "> </polygon>
+        <polygon transform="translate(427)" points="213.333,10.441 279.249,144.017 426.667,165.436 320,269.41 345.173,416.226 213.333,346.91
+81.485,416.226 106.667,269.41 0,165.436 147.409,144.017 "> </polygon>
+    </clipPath>
+    <polygon transform="translate(0)" points="213.333,10.441 279.249,144.017 426.667,165.436 320,269.41 345.173,416.226 213.333,346.91
+81.485,416.226 106.667,269.41 0,165.436 147.409,144.017 " class="reviews__mark-star"> </polygon>
+    <polygon transform="translate(854)" points="213.333,10.441 279.249,144.017 426.667,165.436 320,269.41 345.173,416.226 213.333,346.91
+81.485,416.226 106.667,269.41 0,165.436 147.409,144.017 " class="reviews__mark-star"> </polygon>
+    <polygon transform="translate(1281)" points="213.333,10.441 279.249,144.017 426.667,165.436 320,269.41 345.173,416.226 213.333,346.91
+81.485,416.226 106.667,269.41 0,165.436 147.409,144.017 " class="reviews__mark-star"> </polygon>
+    <polygon transform="translate(1708)" points="213.333,10.441 279.249,144.017 426.667,165.436 320,269.41 345.173,416.226 213.333,346.91
+81.485,416.226 106.667,269.41 0,165.436 147.409,144.017 " class="reviews__mark-star"> </polygon>
+    <polygon transform="translate(427)" points="213.333,10.441 279.249,144.017 426.667,165.436 320,269.41 345.173,416.226 213.333,346.91
+81.485,416.226 106.667,269.41 0,165.436 147.409,144.017 " class="reviews__mark-star"> </polygon>
+    <rect x="0" y="0" width="1878.8" height="427" fill="yellow" class="reviews__mark-fill" style='clip-path: url("#clip");'> </rect>
+</svg>
+
+                    </div>
+                    <div class="product__review-text mb-1">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet atque consequuntur distinctio dolor explicabo, odio sapiente voluptas! Corporis cumque dolorum enim id impedit labore minus nobis, quae quas sed tempora?</div>
+                    <div class="row text-muted space-between w-100">
+                      <div class="product__review-likes">+ 10</div>
+                      <div class="product__review-date">20.03.2020</div>
+                    </div>
+                  </div></a>
+                <div class="center w-100">
+                  <button class="but but_fill">Load more</button>
+                </div>
+              </div>
+            </div>
+            <div class="tabs__content-item" id="orders">
+              <div class="product__orders"><a class="product__order" href="#">
+                  <div class="product__order-user">Yuri Prisyazhny</div>
+                  <div class="product__order-price">$90.00</div>
+                  <div class="product__order-date">20.03.2020</div></a><a class="product__order" href="#">
+                  <div class="product__order-user">Yuri Prisyazhny</div>
+                  <div class="product__order-price">$90.00</div>
+                  <div class="product__order-date">20.03.2020</div></a><a class="product__order" href="#">
+                  <div class="product__order-user">Yuri Prisyazhny</div>
+                  <div class="product__order-price">$90.00</div>
+                  <div class="product__order-date">20.03.2020</div></a>
+                <div class="center w-100">
+                  <button class="but but_fill">Load more</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mt-2">
+          <div class="center"><img src="/image/diagram.jpg" style="max-width: 100%"></div>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div class="footer__copy">Copyright 2020</div>
+    <script src="/js/bundle.js"></script>
+  </body>
+</html>

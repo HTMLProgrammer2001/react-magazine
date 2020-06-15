@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&amp;display=swap" rel="stylesheet">
+    <link href="https://use.fontawesome.com/releases/v5.13.0/css/all.css" rel="stylesheet" type="text/css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" rel="stylesheet" type="text/css">
+    <link href="/css/bundle.css" rel="stylesheet" type="text/css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin</title>
+  </head>
+  <body>
+    <div class="admHeader">
+      <div class="row">
+        <div class="burger">
+          <div class="burger__body">
+            <div class="burger__item"></div>
+            <div class="burger__item"></div>
+            <div class="burger__item"></div>
+          </div>
+        </div>
+        <div class="admHeader__menu">
+          <div class="admHeader__divider">Admin panel</div><a href="/admin">
+            <div class="admHeader__item"><i class="fas fa-cog admHeader__icon"></i><span>Admin page</span></div></a><a href="/admin/tags">
+            <div class="admHeader__item"><i class="fas fa-cog admHeader__icon"></i><span>Tags</span></div></a><a href="/admin/categories">
+            <div class="admHeader__item"><i class="fas fa-cog admHeader__icon"></i><span>Categories</span></div></a><a href="/admin/users">
+            <div class="admHeader__item"><i class="fas fa-cog admHeader__icon"></i><span>Users</span></div></a><a href="/admin/reviews">
+            <div class="admHeader__item"><i class="fas fa-cog admHeader__icon"></i><span>Reviews</span></div></a><a href="/admin/products">
+            <div class="admHeader__item"><i class="fas fa-cog admHeader__icon"></i><span>Products</span></div></a><a href="/admin/sales">
+            <div class="admHeader__item"><i class="fas fa-cog admHeader__icon"></i><span>Sales</span></div></a>
+        </div><img class="admHeader__logo" src="/image/adminLogo.png">
+      </div>
+      <div class="row cur dropdown">
+        <div class="admHeader__user dropdown__elem">
+          <div class="admHeader__name"><span>Yuri Prisyazhny</span></div><img class="admHeader__photo" src="/image/ava.png"><i class="fas fa-sort-down ml-1"></i>
+        </div>
+        <div class="dropdown__body">
+          <div class="dropdown__content">
+            <ul class="menu__list">
+              <li class="menu__item"><a href="./profile.html">Profile</a></li>
+              <li class="menu__item"><a href="./settings.html">Settings</a></li>
+              <li class="menu__item"><a href="./orders.html">Orders</a></li>
+              <li class="menu__item"><a href="./favorite.html">Favorite</a></li>
+              <li class="menu__item">Log out</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="admContent">
+      <div class="container py-pad">
+        <div class="admin">
+          <div class="admin__head center bold">Orders diagram</div>
+          <div class="admin__row">
+            <div class="admin__diagram"><img class="admin__image" src="/image/diagram.jpg"></div>
+            <div class="admin__filter">
+              <div class="select cur mb-1">
+                <select class="select__input cur">
+                  <option selected>Last day</option>
+                  <option>Last week</option>
+                  <option>Last month</option>
+                  <option>Last year</option>
+                </select><i class="fas fa-chevron-down select__icon"></i>
+                <div class="select__line"></div>
+              </div>
+              <div class="admin__orders mb-10 bold">Total orders: 95</div>
+              <div class="admin__price mb-10 bold">Total price: $35523.39</div>
+              <div class="admin__max mb-10 bold">Max order: $300</div>
+            </div>
+          </div>
+        </div>
+        <div class="stats py-pad">
+          <div class="stats__head">Statistic for day</div>
+          <div class="table__wrap w-100">
+            <div class="table">
+              <div class="table__content">
+                <div class="table__row">
+                  <div class="table__col">Total orders</div>
+                  <div class="table__col">25</div>
+                </div>
+                <div class="table__row">
+                  <div class="table__col">Total items</div>
+                  <div class="table__col">46</div>
+                </div>
+                <div class="table__row">
+                  <div class="table__col">Total price</div>
+                  <div class="table__col">$945.34</div>
+                </div>
+                <div class="table__row">
+                  <div class="table__col">Max order price</div>
+                  <div class="table__col">$210.34</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div class="footer__copy">Copyright 2020</div>
+    <script src="/js/bundle.js"></script>
+  </body>
+</html>

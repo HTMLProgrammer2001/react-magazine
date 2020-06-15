@@ -1,0 +1,61 @@
+.billing.py-pad
+    .container
+        .login__head Create sale
+
+        .billing__form
+
+            div.input
+                input(required).input__elem
+                label.input__label
+                    span Title of sale
+                    span.red *
+                .input__line
+
+            .center
+                .my-pad.datalist.w-100
+
+                    .datalist__values
+                        .datalist__value
+                            .datalist__value__text TShirt
+                            i.fas.fa-times.cur
+
+                        .datalist__value
+                            .datalist__value__text Shoes
+                            i.fas.fa-times.cur
+
+                    .input
+                        input(list="tags").datalist__input
+                        label.input__label
+                            span Products
+                            span.red *
+                        .input__line
+
+                    datalist(id="tags").datalist__select
+                        option.datalist__select__item TShirt
+                        option.datalist__select__item Shoes
+                        option.datalist__select__item Cap
+
+
+            .center.space-between.my-pad.period
+                .input
+                    input(type="date" required="" value="2020-01-01").input__elem
+                    label.input__label
+                        span From
+                        span.red *
+
+                .input.ml-1
+                    input(type="date" required="" value="2020-06-06").input__elem
+                    label.input__label
+                        span To
+                        span.red *
+
+            div.input
+                input(type="number" required).input__elem
+                label.input__label
+                    span Sale
+                    span.red *
+                .input__line
+
+            .row.space-between.my-pad.w-100
+                button.check__but.mb-10 Back
+                button.check__but Create

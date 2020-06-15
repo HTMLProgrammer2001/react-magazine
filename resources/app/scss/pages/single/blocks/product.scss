@@ -1,0 +1,143 @@
+.product{
+    padding-top: $pad;
+
+    &__facilities{
+        @media all and(max-width: 1200px){
+            flex-direction: column;
+        }
+    }
+
+    &__content{
+        @media all and(max-width: 600px){
+            flex-direction: column;
+        }
+    }
+    
+    &__images{
+        padding-right: 5%;
+
+        @media all and(max-width: 800px) {
+            width: 100%;
+        }
+    }
+
+    &__image{
+        padding: 10px 0;
+
+        &_lg{
+            width: 100%;
+        }
+
+        &_sm{
+            width: 30%;
+        }
+    }
+
+    //Product info
+    &__info{
+        padding-top: 20px;
+
+        width: 50%;
+
+        @media all and(max-width: 600px){
+            width: 100%;
+        }
+
+        &-head{
+            @media all and(max-width: 319px){
+                flex-direction: column;
+
+                text-align: center;
+            }
+        }
+    }
+
+    &__name, &__price{
+        font-weight: 700;
+        font-size: 2rem;
+
+        text-transform: uppercase;
+    }
+
+    &__price{
+        color: $red;
+    }
+
+    &__description{
+        padding: 20px 0;
+    }
+
+    &__size{
+        font-weight: 700;
+
+        &-list{
+            list-style: none;
+            display: flex;
+
+            padding: 0;
+        }
+
+        &-item{
+            font-weight: 300;
+
+            margin: 0 10px;
+            position: relative;
+
+            cursor: pointer;
+
+            &:hover{
+                font-weight: 700;
+            }
+
+            &::before{
+                content: '';
+
+                display: block;
+                position: absolute;
+                bottom: 0;
+                left: 0;
+
+                width: 0;
+                height: 1px;
+
+                background: $red;
+
+                transition: .3s;
+            }
+
+            &_active::before{
+                width: 100%;
+            }
+        }
+    }
+
+    &__categories{
+        &-item{
+            text-shadow: 0 0 0 transparentize(black, .5);
+            transition: .3s;
+
+            &:hover{
+                text-shadow: 0 0 1px transparentize(black, .5);
+            }
+        }
+    }
+
+    &__share{
+        &-soc{
+            margin: 0 10px;
+
+            cursor: pointer;
+            transition: .3s;
+
+            font-size: 1.2rem;
+
+            &:hover{
+                color: $red;
+            }
+        }
+    }
+
+    &__mark{
+        @include flex(space-between, center);
+    }
+}

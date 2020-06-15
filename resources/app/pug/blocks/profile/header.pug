@@ -1,0 +1,58 @@
+.admHeader
+    .row
+        .burger
+            .burger__body
+                .burger__item
+                .burger__item
+                .burger__item
+
+        .admHeader__menu
+            .admHeader__divider Navigation menu
+
+            a(href='./profile.html')
+                .admHeader__item.admHeader__item_active
+                    i.fas.fa-user.admHeader__icon
+                    span Profile
+
+            a(href='./orders.html')
+                .admHeader__item
+                    i.fas.fa-shopping-cart.admHeader__icon
+                    span Orders
+
+            a(href='./favorite.html')
+                .admHeader__item
+                    i.fas.fa-star.admHeader__icon
+                    span Favorite
+
+            a(href='./reviews.html')
+                .admHeader__item
+                    i.fas.fa-comments.admHeader__icon
+                    span Reviews
+
+            a(href='./settings.html')
+                .admHeader__item
+                    i.fas.fa-cog.admHeader__icon
+                    span Settings
+
+        img(src="/image/adminLogo.png").admHeader__logo
+
+    .row.cur.dropdown
+        .admHeader__user.dropdown__elem
+            .admHeader__name
+                span Yuri Prisyazhny
+
+            img(src="/image/ava.png").admHeader__photo
+            i.fas.fa-sort-down.ml-1
+
+        .dropdown__body
+            .dropdown__content
+                ul.menu__list
+                    li.menu__item
+                        a(href='./profile.html') Profile
+                    li.menu__item
+                        a(href='./settings.html') Settings
+                    li.menu__item
+                        a(href='./orders.html') Orders
+                    li.menu__item
+                        a(href='./favorite.html') Favorite
+                    li.menu__item Log out

@@ -1,0 +1,30 @@
+.reviews.my-pad
+    .container
+        .reviews__head Reviews
+
+        .reviews__form
+            .row
+                img(src='./image/ava.png').reviews__ava
+
+                .reviews__wrap
+                    include ../../../includes/reviews_mark.html
+
+                    .reviews__comment
+                        div.input
+                            input(required).input__elem
+                            label.input__label Email
+                            .input__line
+
+                        div.input
+                            input(required).input__elem
+                            label.input__label Name
+                            .input__line
+
+                        div.input
+                            textarea(required rows=1)#message.input__elem
+                            label.input__label Message
+                            .input__line(style="bottom: 7px")
+
+                        button.reviews__but Send
+
+        include reviews_list
