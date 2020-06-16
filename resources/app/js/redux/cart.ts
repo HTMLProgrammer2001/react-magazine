@@ -8,7 +8,7 @@ interface CartItem{
 	price: number
 }
 
-interface CartState {
+export interface CartState {
 	items: Array<CartItem>
 }
 
