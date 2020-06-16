@@ -9,6 +9,10 @@ const LoginPage: React.FC<{}> = () => {
 		console.log(values);
 	};
 
+	React.useEffect(() => {
+		document.title = 'Login';
+	}, []);
+
 	return (
 		<React.Fragment>
 			<Paginate paths={[{name: 'Home', path: '/'}, {name: 'Login', path: '/login'}]}/>

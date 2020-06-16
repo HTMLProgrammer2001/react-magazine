@@ -29074,6 +29074,10 @@ var _RegisterPage = __webpack_require__(/*! ./RegisterPage/ */ "./resources/app/
 
 var _RegisterPage2 = _interopRequireDefault(_RegisterPage);
 
+var _NotFoundPage = __webpack_require__(/*! ./NotFoundPage/ */ "./resources/app/js/components/NotFoundPage/index.tsx");
+
+var _NotFoundPage2 = _interopRequireDefault(_NotFoundPage);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
@@ -29093,7 +29097,8 @@ var Content = function Content() {
 					);
 				} }),
 			React.createElement(_reactRouterDom.Route, { path: '/login', exact: true, component: _LoginPage2.default }),
-			React.createElement(_reactRouterDom.Route, { path: '/register', exact: true, component: _RegisterPage2.default })
+			React.createElement(_reactRouterDom.Route, { path: '/register', exact: true, component: _RegisterPage2.default }),
+			React.createElement(_reactRouterDom.Route, { path: '/', component: _NotFoundPage2.default })
 		)
 	);
 };
@@ -29935,6 +29940,10 @@ var LoginPage = function LoginPage() {
 		console.log(values);
 	};
 
+	React.useEffect(function () {
+		document.title = 'Login';
+	}, []);
+
 	return React.createElement(
 		React.Fragment,
 		null,
@@ -30012,6 +30021,53 @@ var Newsletter = function Newsletter() {
 };
 
 exports.default = Newsletter;
+
+/***/ }),
+
+/***/ "./resources/app/js/components/NotFoundPage/index.tsx":
+/*!************************************************************!*\
+  !*** ./resources/app/js/components/NotFoundPage/index.tsx ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var React = _interopRequireWildcard(_react);
+
+var _Paginate = __webpack_require__(/*! ../Paginate */ "./resources/app/js/components/Paginate.tsx");
+
+var _Paginate2 = _interopRequireDefault(_Paginate);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var NotFoundPage = function NotFoundPage() {
+	React.useEffect(function () {
+		document.title = '404 | Not found';
+	}, []);
+
+	return React.createElement(
+		React.Fragment,
+		null,
+		React.createElement(_Paginate2.default, { paths: [{ name: 'Home', path: '/' }, { name: 'Not found', path: '/404' }] }),
+		React.createElement(
+			'div',
+			{ className: 'error' },
+			React.createElement('img', { className: 'error__img', src: '/image/not-found.png', alt: 'Not found' })
+		)
+	);
+};
+
+exports.default = NotFoundPage;
 
 /***/ }),
 
@@ -30176,6 +30232,10 @@ var RegisterPage = function RegisterPage() {
 	var submit = function submit(values) {
 		console.log(values);
 	};
+
+	React.useEffect(function () {
+		document.title = 'Sign in';
+	}, []);
 
 	return React.createElement(
 		React.Fragment,

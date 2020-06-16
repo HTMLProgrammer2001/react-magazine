@@ -9,6 +9,10 @@ const RegisterPage: React.FC<{}> = () => {
 		console.log(values);
 	};
 
+	React.useEffect(() => {
+		document.title = 'Sign in';
+	}, []);
+
 	return (
 		<React.Fragment>
 			<Paginate paths={[{name: 'Home', path: '/'}, {name: 'Register', path: '/register'}]}/>
