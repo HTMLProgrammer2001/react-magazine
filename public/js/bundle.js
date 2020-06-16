@@ -29070,6 +29070,10 @@ var _LoginPage = __webpack_require__(/*! ./LoginPage/ */ "./resources/app/js/com
 
 var _LoginPage2 = _interopRequireDefault(_LoginPage);
 
+var _RegisterPage = __webpack_require__(/*! ./RegisterPage/ */ "./resources/app/js/components/RegisterPage/index.tsx");
+
+var _RegisterPage2 = _interopRequireDefault(_RegisterPage);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
@@ -29081,7 +29085,15 @@ var Content = function Content() {
 		React.createElement(
 			_reactRouterDom.Switch,
 			null,
-			React.createElement(_reactRouterDom.Route, { to: '/login', exact: true, component: _LoginPage2.default })
+			React.createElement(_reactRouterDom.Route, { path: '/', exact: true, render: function render() {
+					return React.createElement(
+						'div',
+						null,
+						'\u041F\u0443\u0441\u0442\u043E'
+					);
+				} }),
+			React.createElement(_reactRouterDom.Route, { path: '/login', exact: true, component: _LoginPage2.default }),
+			React.createElement(_reactRouterDom.Route, { path: '/register', exact: true, component: _RegisterPage2.default })
 		)
 	);
 };
@@ -29864,7 +29876,7 @@ var LoginForm = function LoginForm(props) {
 				{ className: 'login__head' },
 				'Login'
 			),
-			React.createElement(_reduxForm.Field, { component: _InputElement2.default, type: 'email', name: 'email',
+			React.createElement(_reduxForm.Field, { component: _InputElement2.default, type: 'text', name: 'email',
 				placeholder: 'Email', required: true }),
 			React.createElement(_reduxForm.Field, { component: _InputElement2.default, type: 'password', name: 'password',
 				placeholder: 'Password', required: true }),
@@ -30057,6 +30069,123 @@ var Paginate = function Paginate(props) {
 };
 
 exports.default = Paginate;
+
+/***/ }),
+
+/***/ "./resources/app/js/components/RegisterPage/RegisterForm.tsx":
+/*!*******************************************************************!*\
+  !*** ./resources/app/js/components/RegisterPage/RegisterForm.tsx ***!
+  \*******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var React = _interopRequireWildcard(_react);
+
+var _reduxForm = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
+
+var _InputElement = __webpack_require__(/*! ../FormElements/InputElement */ "./resources/app/js/components/FormElements/InputElement.tsx");
+
+var _InputElement2 = _interopRequireDefault(_InputElement);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var RegisterForm = function RegisterForm(props) {
+	return React.createElement(
+		'div',
+		{ className: 'container' },
+		React.createElement(
+			'form',
+			{ onSubmit: props.handleSubmit, className: 'login my-pad' },
+			React.createElement(
+				'div',
+				{ className: 'login__head' },
+				'Sign in'
+			),
+			React.createElement(_reduxForm.Field, { component: _InputElement2.default, type: 'text', name: 'firstName',
+				placeholder: 'First name', required: true }),
+			React.createElement(_reduxForm.Field, { component: _InputElement2.default, type: 'text', name: 'lastName',
+				placeholder: 'Last name', required: true }),
+			React.createElement(_reduxForm.Field, { component: _InputElement2.default, type: 'text', name: 'email',
+				placeholder: 'Email', required: true }),
+			React.createElement(_reduxForm.Field, { component: _InputElement2.default, type: 'password', name: 'password',
+				placeholder: 'Password', required: true }),
+			React.createElement(_reduxForm.Field, { component: _InputElement2.default, type: 'password', name: 'confirmPassword',
+				placeholder: 'Confirm password', required: true }),
+			React.createElement(
+				'div',
+				{ className: 'row space-between my-pad w-100' },
+				React.createElement('div', null),
+				React.createElement(
+					'button',
+					{ type: 'submit', className: 'check__but' },
+					'Sign in'
+				)
+			)
+		)
+	);
+};
+
+exports.default = (0, _reduxForm.reduxForm)({
+	form: 'register'
+})(RegisterForm);
+
+/***/ }),
+
+/***/ "./resources/app/js/components/RegisterPage/index.tsx":
+/*!************************************************************!*\
+  !*** ./resources/app/js/components/RegisterPage/index.tsx ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var React = _interopRequireWildcard(_react);
+
+var _Paginate = __webpack_require__(/*! ../Paginate */ "./resources/app/js/components/Paginate.tsx");
+
+var _Paginate2 = _interopRequireDefault(_Paginate);
+
+var _RegisterForm = __webpack_require__(/*! ./RegisterForm */ "./resources/app/js/components/RegisterPage/RegisterForm.tsx");
+
+var _RegisterForm2 = _interopRequireDefault(_RegisterForm);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var RegisterPage = function RegisterPage() {
+	var submit = function submit(values) {
+		console.log(values);
+	};
+
+	return React.createElement(
+		React.Fragment,
+		null,
+		React.createElement(_Paginate2.default, { paths: [{ name: 'Home', path: '/' }, { name: 'Register', path: '/register' }] }),
+		React.createElement(_RegisterForm2.default, { onSubmit: submit })
+	);
+};
+
+exports.default = RegisterPage;
 
 /***/ }),
 

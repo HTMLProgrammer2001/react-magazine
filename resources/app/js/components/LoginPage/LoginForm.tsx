@@ -11,7 +11,7 @@ const LoginForm: React.FC<ILoginProps> = (props) => (
 		<form onSubmit={props.handleSubmit} className="login my-pad">
 			<div className="login__head">Login</div>
 
-			<Field component={InputElement} type="email" name="email"
+			<Field component={InputElement} type="text" name="email"
 				   placeholder="Email" required/>
 			<Field component={InputElement} type="password" name="password"
 				   placeholder="Password" required/>
