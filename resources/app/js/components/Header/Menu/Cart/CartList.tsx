@@ -1,55 +1,46 @@
 import * as React from 'react';
+import {connect, ConnectedProps} from 'react-redux';
+
+import {RootState} from '../../../../redux';
+import {ICartItem} from '../../../../redux/cart';
 
 
-interface CartItem{
-	product: {
-		name: string,
-		price: number
-	},
-	count: number,
-	size: string
-}
+const mapStateToProps = (state: RootState) => ({
+	cartItems: state.cart
+});
 
-const mockData: Array<CartItem> = [{
-	product: {
-		name: 'T-Shirt',
-		price: 45
-	},
-	count: 2,
-	size: 'M'
-}, {
-	product: {
-		name: 'Something',
-		price: 50
-	},
-	count: 1,
-	size: 'M'
-}];
+const connected = connect(mapStateToProps);
 
-const CartList: React.FC<{}> = () => (
-	<ul className="header__product-list">
-		{!mockData.length && <b>Нет товаров</b>}
+type ICartListProps = ConnectedProps<typeof connected>;
 
-		{mockData.map((data, index) => (
-			<li className="header__product-item" key={index}>
-				<span>{data.product.name} x {data.count}</span>
-				<span>${(data.product.price * data.count).toFixed(2)}</span>
-				<span>&times;</span>
-			</li>
-		))}
+const CartList: React.FC<ICartListProps> = (props) => {
+	const cartPrice: number = props.cartItems.reduce((prev, data) => (
+		prev + data.product.price * data.count
+	), 0);
 
-		{mockData.length &&
+	return (
+		<ul className="header__product-list">
+			{!props.cartItems.length && <b>Нет товаров</b>}
+
+			{
+				props.cartItems.map((item: ICartItem, index) => (
+					<li className="header__product-item" key={index}>
+						<span>{item.product.name} x {item.count}</span>
+						<span>${(item.product.price * item.count).toFixed(2)}</span>
+						<span>&times;</span>
+					</li>
+				))
+			}
+
+			{props.cartItems.length &&
 			<li className="header__product-item">
 				<b>Total</b>
 				<span/>
-				<b>${
-					mockData.reduce((prev, data) => (
-						prev + data.product.price * data.count
-					), 0).toFixed(2)
-				}</b>
+				<b>${cartPrice.toFixed(2)}</b>
 			</li>
-		}
-	</ul>
-);
+			}
+		</ul>
+	);
+};
 
-export default CartList;
+export default connected(CartList);

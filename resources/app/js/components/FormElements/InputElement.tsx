@@ -5,8 +5,6 @@ import {WrappedFieldProps} from 'redux-form';
 type IElementProps = WrappedFieldProps & React.InputHTMLAttributes<HTMLInputElement>;
 
 const InputElement: React.FC<IElementProps> = (props) => {
-	//console.log(props);
-
 	const {required, type, placeholder, input: {value, name, onChange}} = props;
 
 	return (

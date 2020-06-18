@@ -1,11 +1,21 @@
 import * as React from 'react';
 import c from 'classnames';
+import {connect, ConnectedProps} from 'react-redux';
 
+import {RootState} from '../../../../redux/';
 import CartDropdown from './CartDropdown';
 import {IMenuProps} from '../Search';
 
 
-const Cart: React.FC<IMenuProps> = (props) => {
+const mapStateToProps = (state: RootState) => ({
+	count: state.cart.length
+});
+
+const connected = connect(mapStateToProps);
+
+type IMenuCartProps = IMenuProps & ConnectedProps<typeof connected>;
+
+const Cart: React.FC<IMenuCartProps> = (props) => {
 	const dropClasses = c('header__icon header__icon_badge dropdown', {
 		active: props.openMenu == 'cart'
 	});
@@ -18,7 +28,7 @@ const Cart: React.FC<IMenuProps> = (props) => {
 						props.changeOpen((prev) => prev=='cart' ? '' : 'cart');
 					}}/>
 
-				<span className="badge">2</span>
+				<span className="badge">{props.count}</span>
 
 				<CartDropdown/>
 			</span>
@@ -26,4 +36,4 @@ const Cart: React.FC<IMenuProps> = (props) => {
 	);
 };
 
-export default Cart;
+export default connected(Cart);

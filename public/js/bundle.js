@@ -29046,6 +29046,447 @@ exports.default = App;
 
 /***/ }),
 
+/***/ "./resources/app/js/components/CartPage/Content/CartItem.tsx":
+/*!*******************************************************************!*\
+  !*** ./resources/app/js/components/CartPage/Content/CartItem.tsx ***!
+  \*******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var React = _interopRequireWildcard(_react);
+
+var _cart = __webpack_require__(/*! ../../../redux/cart */ "./resources/app/js/redux/cart.ts");
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var CartItem = function CartItem(props) {
+	return React.createElement(
+		'div',
+		{ className: 'table__row' },
+		React.createElement(
+			'div',
+			{ className: 'table__col orders__product' },
+			React.createElement('img', { className: 'orders__img', src: props.product.photo, alt: 'Product picture' }),
+			React.createElement(
+				'div',
+				null,
+				React.createElement(
+					'div',
+					{ className: 'orders__name' },
+					props.product.name
+				),
+				React.createElement(
+					'div',
+					{ className: 'orders__color' },
+					React.createElement('div', { className: 'goods__color-item goods__color-item_black' }),
+					React.createElement(
+						'div',
+						{ className: 'orders__size' },
+						props.product.size
+					)
+				)
+			)
+		),
+		React.createElement(
+			'div',
+			{ className: 'table__col orders__price' },
+			props.product.price
+		),
+		React.createElement(
+			'div',
+			{ className: 'table__col orders__quantity' },
+			React.createElement(
+				'div',
+				{ className: 'order__quantity' },
+				React.createElement(
+					'span',
+					{ className: 'order__quantity-count',
+						contentEditable: 'true' },
+					props.count
+				)
+			)
+		),
+		React.createElement(
+			'div',
+			{ className: 'table__col orders__total' },
+			props.count * props.product.price
+		),
+		React.createElement(
+			'div',
+			{ className: 'table__col orders__remove' },
+			React.createElement('i', { className: 'fas fa-times cur' })
+		)
+	);
+};
+
+exports.default = CartItem;
+
+/***/ }),
+
+/***/ "./resources/app/js/components/CartPage/Content/CartTable.tsx":
+/*!********************************************************************!*\
+  !*** ./resources/app/js/components/CartPage/Content/CartTable.tsx ***!
+  \********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var React = _interopRequireWildcard(_react);
+
+var _cart = __webpack_require__(/*! ../../../redux/cart */ "./resources/app/js/redux/cart.ts");
+
+var _CartItem = __webpack_require__(/*! ./CartItem */ "./resources/app/js/components/CartPage/Content/CartItem.tsx");
+
+var _CartItem2 = _interopRequireDefault(_CartItem);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var CartTable = function CartTable(props) {
+	return React.createElement(
+		'div',
+		{ className: 'container' },
+		React.createElement(
+			'div',
+			{ className: 'table__wrap my-pad' },
+			React.createElement(
+				'div',
+				{ className: 'table' },
+				React.createElement(
+					'div',
+					{ className: 'table__head' },
+					React.createElement(
+						'div',
+						{ className: 'table__head-item table__head-item_lg' },
+						'Product'
+					),
+					React.createElement(
+						'div',
+						{ className: 'table__head-item' },
+						'Price'
+					),
+					React.createElement(
+						'div',
+						{ className: 'table__head-item' },
+						'Quantity'
+					),
+					React.createElement(
+						'div',
+						{ className: 'table__head-item' },
+						'Total'
+					),
+					React.createElement('div', { className: 'table__head-item' })
+				),
+				React.createElement(
+					'div',
+					{ className: 'table__content' },
+					props.cartItems.map(function (item, index) {
+						return React.createElement(_CartItem2.default, _extends({ key: index }, item));
+					})
+				)
+			)
+		),
+		React.createElement(
+			'div',
+			{ className: 'orders__actions' },
+			React.createElement(
+				'div',
+				{ className: 'orders__clear' },
+				'Clear cart'
+			),
+			React.createElement(
+				'div',
+				{ className: 'orders__update' },
+				'Update cart'
+			)
+		)
+	);
+};
+
+exports.default = CartTable;
+
+/***/ }),
+
+/***/ "./resources/app/js/components/CartPage/Content/Checkout.tsx":
+/*!*******************************************************************!*\
+  !*** ./resources/app/js/components/CartPage/Content/Checkout.tsx ***!
+  \*******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var React = _interopRequireWildcard(_react);
+
+var _cart = __webpack_require__(/*! ../../../redux/cart */ "./resources/app/js/redux/cart.ts");
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var Checkout = function Checkout(props) {
+	var cartPrice = props.cartItems.reduce(function (prev, item) {
+		return prev + item.count * item.product.price;
+	}, 0).toFixed(2);
+
+	return React.createElement(
+		'div',
+		{ className: 'container' },
+		React.createElement(
+			'div',
+			{ className: 'check my-pad' },
+			React.createElement(
+				'div',
+				{ className: 'check__box' },
+				React.createElement(
+					'b',
+					{ className: 'check__head mb-10' },
+					'Cart Total'
+				),
+				React.createElement(
+					'div',
+					{ className: 'check__subtotal mb-10 row space-between' },
+					React.createElement(
+						'div',
+						{ className: 'check__subtotal-head' },
+						'Subtotal:'
+					),
+					React.createElement(
+						'div',
+						{ className: 'check__subtotal-price' },
+						'$',
+						cartPrice
+					)
+				),
+				React.createElement(
+					'div',
+					{ className: 'check__shipping mb-10 row space-between' },
+					React.createElement(
+						'div',
+						{ className: 'check__shipping-head' },
+						'Shipping:'
+					),
+					React.createElement(
+						'div',
+						{ className: 'check__shipping-list' },
+						'FREE SHIPPING'
+					)
+				),
+				React.createElement('hr', null),
+				React.createElement(
+					'div',
+					{ className: 'check__result mb-10 row space-between' },
+					React.createElement(
+						'div',
+						{ className: 'check__result-head' },
+						'Total'
+					),
+					React.createElement(
+						'div',
+						{ className: 'check__result-price' },
+						'$',
+						cartPrice
+					)
+				)
+			),
+			React.createElement(
+				'button',
+				{ type: 'button', className: 'check__but my-pad' },
+				'Checkout'
+			)
+		)
+	);
+};
+
+exports.default = Checkout;
+
+/***/ }),
+
+/***/ "./resources/app/js/components/CartPage/Content/index.tsx":
+/*!****************************************************************!*\
+  !*** ./resources/app/js/components/CartPage/Content/index.tsx ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var React = _interopRequireWildcard(_react);
+
+var _cart = __webpack_require__(/*! ../../../redux/cart */ "./resources/app/js/redux/cart.ts");
+
+var _CartTable = __webpack_require__(/*! ./CartTable */ "./resources/app/js/components/CartPage/Content/CartTable.tsx");
+
+var _CartTable2 = _interopRequireDefault(_CartTable);
+
+var _Checkout = __webpack_require__(/*! ./Checkout */ "./resources/app/js/components/CartPage/Content/Checkout.tsx");
+
+var _Checkout2 = _interopRequireDefault(_Checkout);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var Content = function Content(props) {
+	return React.createElement(
+		React.Fragment,
+		null,
+		React.createElement(_CartTable2.default, { cartItems: props.cartItems }),
+		React.createElement(_Checkout2.default, { cartItems: props.cartItems })
+	);
+};
+
+exports.default = Content;
+
+/***/ }),
+
+/***/ "./resources/app/js/components/CartPage/Empty.tsx":
+/*!********************************************************!*\
+  !*** ./resources/app/js/components/CartPage/Empty.tsx ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var React = _interopRequireWildcard(_react);
+
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var EmptyCart = function EmptyCart() {
+	return React.createElement(
+		'div',
+		{ className: 'empty my-pad' },
+		React.createElement(
+			'div',
+			{ className: 'container' },
+			React.createElement(
+				'div',
+				{ className: 'empty__text' },
+				'Your cart is current empty'
+			),
+			React.createElement(
+				_reactRouterDom.Link,
+				{ to: '/' },
+				React.createElement(
+					'button',
+					{ type: 'button', className: 'empty__back' },
+					'Return to shop'
+				)
+			)
+		)
+	);
+};
+
+exports.default = EmptyCart;
+
+/***/ }),
+
+/***/ "./resources/app/js/components/CartPage/index.tsx":
+/*!********************************************************!*\
+  !*** ./resources/app/js/components/CartPage/index.tsx ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var React = _interopRequireWildcard(_react);
+
+var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
+var _redux = __webpack_require__(/*! ../../redux/ */ "./resources/app/js/redux/index.ts");
+
+var _Paginate = __webpack_require__(/*! ../Paginate */ "./resources/app/js/components/Paginate.tsx");
+
+var _Paginate2 = _interopRequireDefault(_Paginate);
+
+var _Empty = __webpack_require__(/*! ./Empty */ "./resources/app/js/components/CartPage/Empty.tsx");
+
+var _Empty2 = _interopRequireDefault(_Empty);
+
+var _Content = __webpack_require__(/*! ./Content/ */ "./resources/app/js/components/CartPage/Content/index.tsx");
+
+var _Content2 = _interopRequireDefault(_Content);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+//Redux data to props
+var mapStateToProps = function mapStateToProps(state) {
+	return {
+		cart: state.cart
+	};
+};
+
+var cartConnected = (0, _reactRedux.connect)(mapStateToProps);
+
+var CartPage = function CartPage(props) {
+	React.useEffect(function () {
+		document.title = 'Cart';
+	}, []);
+
+	return React.createElement(
+		React.Fragment,
+		null,
+		React.createElement(_Paginate2.default, { paths: [{ name: 'Home', path: '/' }, { name: 'Cart', path: '/cart' }] }),
+		props.cart.length ? React.createElement(_Content2.default, { cartItems: props.cart }) : React.createElement(_Empty2.default, null)
+	);
+};
+
+exports.default = cartConnected(CartPage);
+
+/***/ }),
+
 /***/ "./resources/app/js/components/Content.tsx":
 /*!*************************************************!*\
   !*** ./resources/app/js/components/Content.tsx ***!
@@ -29078,6 +29519,18 @@ var _NotFoundPage = __webpack_require__(/*! ./NotFoundPage/ */ "./resources/app/
 
 var _NotFoundPage2 = _interopRequireDefault(_NotFoundPage);
 
+var _HomePage = __webpack_require__(/*! ./HomePage/ */ "./resources/app/js/components/HomePage/index.tsx");
+
+var _HomePage2 = _interopRequireDefault(_HomePage);
+
+var _CartPage = __webpack_require__(/*! ./CartPage/ */ "./resources/app/js/components/CartPage/index.tsx");
+
+var _CartPage2 = _interopRequireDefault(_CartPage);
+
+var _ResetPage = __webpack_require__(/*! ./ResetPage/ */ "./resources/app/js/components/ResetPage/index.tsx");
+
+var _ResetPage2 = _interopRequireDefault(_ResetPage);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
@@ -29089,15 +29542,11 @@ var Content = function Content() {
 		React.createElement(
 			_reactRouterDom.Switch,
 			null,
-			React.createElement(_reactRouterDom.Route, { path: '/', exact: true, render: function render() {
-					return React.createElement(
-						'div',
-						null,
-						'\u041F\u0443\u0441\u0442\u043E'
-					);
-				} }),
+			React.createElement(_reactRouterDom.Route, { path: '/', exact: true, component: _HomePage2.default }),
 			React.createElement(_reactRouterDom.Route, { path: '/login', exact: true, component: _LoginPage2.default }),
 			React.createElement(_reactRouterDom.Route, { path: '/register', exact: true, component: _RegisterPage2.default }),
+			React.createElement(_reactRouterDom.Route, { path: '/cart', exact: true, component: _CartPage2.default }),
+			React.createElement(_reactRouterDom.Route, { path: '/reset', exact: true, component: _ResetPage2.default }),
 			React.createElement(_reactRouterDom.Route, { path: '/', component: _NotFoundPage2.default })
 		)
 	);
@@ -29297,8 +29746,6 @@ var _reduxForm = __webpack_require__(/*! redux-form */ "./node_modules/redux-for
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 var InputElement = function InputElement(props) {
-	//console.log(props);
-
 	var required = props.required,
 	    type = props.type,
 	    placeholder = props.placeholder,
@@ -29490,49 +29937,51 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var React = _interopRequireWildcard(_react);
 
+var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
+var _redux = __webpack_require__(/*! ../../../../redux */ "./resources/app/js/redux/index.ts");
+
+var _cart = __webpack_require__(/*! ../../../../redux/cart */ "./resources/app/js/redux/cart.ts");
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-var mockData = [{
-	product: {
-		name: 'T-Shirt',
-		price: 45
-	},
-	count: 2,
-	size: 'M'
-}, {
-	product: {
-		name: 'Something',
-		price: 50
-	},
-	count: 1,
-	size: 'M'
-}];
+var mapStateToProps = function mapStateToProps(state) {
+	return {
+		cartItems: state.cart
+	};
+};
 
-var CartList = function CartList() {
+var connected = (0, _reactRedux.connect)(mapStateToProps);
+
+var CartList = function CartList(props) {
+	var cartPrice = props.cartItems.reduce(function (prev, data) {
+		return prev + data.product.price * data.count;
+	}, 0);
+
 	return React.createElement(
 		'ul',
 		{ className: 'header__product-list' },
-		!mockData.length && React.createElement(
+		!props.cartItems.length && React.createElement(
 			'b',
 			null,
 			'\u041D\u0435\u0442 \u0442\u043E\u0432\u0430\u0440\u043E\u0432'
 		),
-		mockData.map(function (data, index) {
+		props.cartItems.map(function (item, index) {
 			return React.createElement(
 				'li',
 				{ className: 'header__product-item', key: index },
 				React.createElement(
 					'span',
 					null,
-					data.product.name,
+					item.product.name,
 					' x ',
-					data.count
+					item.count
 				),
 				React.createElement(
 					'span',
 					null,
 					'$',
-					(data.product.price * data.count).toFixed(2)
+					(item.product.price * item.count).toFixed(2)
 				),
 				React.createElement(
 					'span',
@@ -29541,7 +29990,7 @@ var CartList = function CartList() {
 				)
 			);
 		}),
-		mockData.length && React.createElement(
+		props.cartItems.length && React.createElement(
 			'li',
 			{ className: 'header__product-item' },
 			React.createElement(
@@ -29554,15 +30003,13 @@ var CartList = function CartList() {
 				'b',
 				null,
 				'$',
-				mockData.reduce(function (prev, data) {
-					return prev + data.product.price * data.count;
-				}, 0).toFixed(2)
+				cartPrice.toFixed(2)
 			)
 		)
 	);
 };
 
-exports.default = CartList;
+exports.default = connected(CartList);
 
 /***/ }),
 
@@ -29588,6 +30035,10 @@ var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnam
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
+var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
+var _redux = __webpack_require__(/*! ../../../../redux/ */ "./resources/app/js/redux/index.ts");
+
 var _CartDropdown = __webpack_require__(/*! ./CartDropdown */ "./resources/app/js/components/Header/Menu/Cart/CartDropdown.tsx");
 
 var _CartDropdown2 = _interopRequireDefault(_CartDropdown);
@@ -29597,6 +30048,14 @@ var _Search = __webpack_require__(/*! ../Search */ "./resources/app/js/component
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var mapStateToProps = function mapStateToProps(state) {
+	return {
+		count: state.cart.length
+	};
+};
+
+var connected = (0, _reactRedux.connect)(mapStateToProps);
 
 var Cart = function Cart(props) {
 	var dropClasses = (0, _classnames2.default)('header__icon header__icon_badge dropdown', {
@@ -29618,14 +30077,14 @@ var Cart = function Cart(props) {
 			React.createElement(
 				'span',
 				{ className: 'badge' },
-				'2'
+				props.count
 			),
 			React.createElement(_CartDropdown2.default, null)
 		)
 	);
 };
 
-exports.default = Cart;
+exports.default = connected(Cart);
 
 /***/ }),
 
@@ -29838,6 +30297,48 @@ var Header = function Header() {
 };
 
 exports.default = Header;
+
+/***/ }),
+
+/***/ "./resources/app/js/components/HomePage/index.tsx":
+/*!********************************************************!*\
+  !*** ./resources/app/js/components/HomePage/index.tsx ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var React = _interopRequireWildcard(_react);
+
+var _Paginate = __webpack_require__(/*! ../Paginate */ "./resources/app/js/components/Paginate.tsx");
+
+var _Paginate2 = _interopRequireDefault(_Paginate);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var HomePage = function HomePage() {
+	React.useEffect(function () {
+		document.title = 'Home | Products';
+	}, []);
+
+	return React.createElement(
+		React.Fragment,
+		null,
+		React.createElement(_Paginate2.default, { paths: [{ name: 'Home', path: '/' }] })
+	);
+};
+
+exports.default = HomePage;
 
 /***/ }),
 
@@ -30249,6 +30750,119 @@ exports.default = RegisterPage;
 
 /***/ }),
 
+/***/ "./resources/app/js/components/ResetPage/ResetForm.tsx":
+/*!*************************************************************!*\
+  !*** ./resources/app/js/components/ResetPage/ResetForm.tsx ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var React = _interopRequireWildcard(_react);
+
+var _reduxForm = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
+
+var _InputElement = __webpack_require__(/*! ../FormElements/InputElement */ "./resources/app/js/components/FormElements/InputElement.tsx");
+
+var _InputElement2 = _interopRequireDefault(_InputElement);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var ResetForm = function ResetForm(props) {
+	return React.createElement(
+		'form',
+		{ className: 'reset', onSubmit: props.handleSubmit },
+		React.createElement(
+			'div',
+			{ className: 'container my-pad' },
+			React.createElement(
+				'div',
+				{ className: 'login__head' },
+				'Reset password'
+			),
+			React.createElement(_reduxForm.Field, { component: _InputElement2.default, type: 'email', name: 'email',
+				placeholder: 'Email', required: true }),
+			React.createElement(
+				'div',
+				{ className: 'row space-between my-pad w-100' },
+				React.createElement('div', null),
+				React.createElement(
+					'button',
+					{ type: 'submit', className: 'check__but' },
+					'Reset'
+				)
+			)
+		)
+	);
+};
+
+exports.default = (0, _reduxForm.reduxForm)({
+	form: 'reset'
+})(ResetForm);
+
+/***/ }),
+
+/***/ "./resources/app/js/components/ResetPage/index.tsx":
+/*!*********************************************************!*\
+  !*** ./resources/app/js/components/ResetPage/index.tsx ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var React = _interopRequireWildcard(_react);
+
+var _Paginate = __webpack_require__(/*! ../Paginate */ "./resources/app/js/components/Paginate.tsx");
+
+var _Paginate2 = _interopRequireDefault(_Paginate);
+
+var _ResetForm = __webpack_require__(/*! ./ResetForm */ "./resources/app/js/components/ResetPage/ResetForm.tsx");
+
+var _ResetForm2 = _interopRequireDefault(_ResetForm);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var ResetPage = function ResetPage() {
+	React.useEffect(function () {
+		document.title = 'Reset password';
+	}, []);
+
+	var onSubmit = function onSubmit(vals) {
+		console.log(vals);
+	};
+
+	return React.createElement(
+		React.Fragment,
+		null,
+		React.createElement(_Paginate2.default, { paths: [{ name: 'Home', path: '/' }, { name: 'Reset password', path: '/reset' }] }),
+		React.createElement(_ResetForm2.default, { onSubmit: onSubmit })
+	);
+};
+
+exports.default = ResetPage;
+
+/***/ }),
+
 /***/ "./resources/app/js/main.tsx":
 /*!***********************************!*\
   !*** ./resources/app/js/main.tsx ***!
@@ -30313,9 +30927,17 @@ var _redux = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js"
 
 //My components
 
-var initialState = {
-	items: []
-};
+var initialState = [{
+	count: 3,
+	product: {
+		id: 1,
+		name: 'T-Shirt',
+		price: 45,
+		color: 'black',
+		photo: '/image/product.png',
+		size: 'XL'
+	}
+}];
 
 var cartReducer = function cartReducer() {
 	var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
@@ -30351,10 +30973,12 @@ var _cart2 = _interopRequireDefault(_cart);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.default = (0, _redux.combineReducers)({
+var storeReducer = (0, _redux.combineReducers)({
 	cart: _cart2.default,
 	form: _reduxForm.reducer
 });
+
+exports.default = storeReducer;
 
 /***/ })
 

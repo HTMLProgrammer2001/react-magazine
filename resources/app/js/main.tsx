@@ -6,7 +6,6 @@ import {Provider} from 'react-redux';
 import App from './components/App';
 import reducer from './redux/';
 
-
 let store = createStore(reducer);
 
 window.store = store;
