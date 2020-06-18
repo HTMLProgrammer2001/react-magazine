@@ -7,6 +7,8 @@ import NotFoundPage from './NotFoundPage/';
 import HomePage from './HomePage/';
 import CartPage from './CartPage/';
 import ResetPage from './ResetPage/';
+import CategoriesPage from './CategoriesPage/';
+import CheckoutPage from './CheckoutPage/';
 
 
 const Content: React.FC<{}> = () => (
@@ -17,6 +19,9 @@ const Content: React.FC<{}> = () => (
 			<Route path='/register' exact component={RegisterPage}/>
 			<Route path='/cart' exact component={CartPage}/>
 			<Route path='/reset' exact component={ResetPage}/>
+			<Route path='/categories' exact component={CategoriesPage}/>
+			<Route path='/checkout' exact component={CheckoutPage}/>
+
 			<Route path='/' component={NotFoundPage}/>
 		</Switch>
 	</Router>

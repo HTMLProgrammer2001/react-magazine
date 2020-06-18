@@ -29487,6 +29487,185 @@ exports.default = cartConnected(CartPage);
 
 /***/ }),
 
+/***/ "./resources/app/js/components/CategoriesPage/CategoriesList.tsx":
+/*!***********************************************************************!*\
+  !*** ./resources/app/js/components/CategoriesPage/CategoriesList.tsx ***!
+  \***********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var React = _interopRequireWildcard(_react);
+
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var categories = [{
+	name: 'Test',
+	slug: 'man',
+	image: '/image/product.png',
+	productCount: 20
+}, {
+	name: 'Test2',
+	slug: 'woman',
+	image: '/image/product.png',
+	productCount: 341
+}, {
+	name: 'Test',
+	slug: 'man',
+	image: '/image/product.png',
+	productCount: 227
+}];
+
+var CategoriesList = function CategoriesList() {
+	return React.createElement(
+		'div',
+		{ className: 'container' },
+		React.createElement(
+			'div',
+			{ className: 'categories my-pad' },
+			!categories.length && React.createElement(
+				'b',
+				null,
+				'\u041D\u0435\u0442 \u043A\u0430\u0442\u0435\u0433\u043E\u0440\u0438\u0439'
+			),
+			categories.map(function (category) {
+				return React.createElement(
+					_reactRouterDom.Link,
+					{ to: '/categories/' + category.slug,
+						key: category.slug,
+						className: 'categories__item' },
+					React.createElement('img', { className: 'categories__img', src: category.image, alt: 'Category' }),
+					React.createElement(
+						'div',
+						{ className: 'categories__products center w-100',
+							style: { flexDirection: 'column' } },
+						React.createElement(
+							'div',
+							null,
+							category.name
+						),
+						React.createElement(
+							'div',
+							null,
+							category.productCount,
+							' products'
+						)
+					)
+				);
+			})
+		)
+	);
+};
+
+exports.default = CategoriesList;
+
+/***/ }),
+
+/***/ "./resources/app/js/components/CategoriesPage/index.tsx":
+/*!**************************************************************!*\
+  !*** ./resources/app/js/components/CategoriesPage/index.tsx ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var React = _interopRequireWildcard(_react);
+
+var _Paginate = __webpack_require__(/*! ../Paginate */ "./resources/app/js/components/Paginate.tsx");
+
+var _Paginate2 = _interopRequireDefault(_Paginate);
+
+var _CategoriesList = __webpack_require__(/*! ./CategoriesList */ "./resources/app/js/components/CategoriesPage/CategoriesList.tsx");
+
+var _CategoriesList2 = _interopRequireDefault(_CategoriesList);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var CategoriesPage = function CategoriesPage() {
+	React.useEffect(function () {
+		document.title = 'Categories';
+	}, []);
+
+	return React.createElement(
+		React.Fragment,
+		null,
+		React.createElement(_Paginate2.default, { paths: [{ name: 'Home', path: '/' }, { name: 'Categories', path: '/categories' }] }),
+		React.createElement(_CategoriesList2.default, null)
+	);
+};
+
+exports.default = CategoriesPage;
+
+/***/ }),
+
+/***/ "./resources/app/js/components/CheckoutPage/index.tsx":
+/*!************************************************************!*\
+  !*** ./resources/app/js/components/CheckoutPage/index.tsx ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var React = _interopRequireWildcard(_react);
+
+var _Paginate = __webpack_require__(/*! ../Paginate */ "./resources/app/js/components/Paginate.tsx");
+
+var _Paginate2 = _interopRequireDefault(_Paginate);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var CheckoutPage = function CheckoutPage() {
+	React.useEffect(function () {
+		document.title = 'Checkout';
+	}, []);
+
+	return React.createElement(
+		React.Fragment,
+		null,
+		React.createElement(_Paginate2.default, { paths: [{
+				name: 'Home',
+				path: '/'
+			}, {
+				name: 'Checkout',
+				path: '/checkout'
+			}] })
+	);
+};
+
+exports.default = CheckoutPage;
+
+/***/ }),
+
 /***/ "./resources/app/js/components/Content.tsx":
 /*!*************************************************!*\
   !*** ./resources/app/js/components/Content.tsx ***!
@@ -29531,6 +29710,14 @@ var _ResetPage = __webpack_require__(/*! ./ResetPage/ */ "./resources/app/js/com
 
 var _ResetPage2 = _interopRequireDefault(_ResetPage);
 
+var _CategoriesPage = __webpack_require__(/*! ./CategoriesPage/ */ "./resources/app/js/components/CategoriesPage/index.tsx");
+
+var _CategoriesPage2 = _interopRequireDefault(_CategoriesPage);
+
+var _CheckoutPage = __webpack_require__(/*! ./CheckoutPage/ */ "./resources/app/js/components/CheckoutPage/index.tsx");
+
+var _CheckoutPage2 = _interopRequireDefault(_CheckoutPage);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
@@ -29547,6 +29734,8 @@ var Content = function Content() {
 			React.createElement(_reactRouterDom.Route, { path: '/register', exact: true, component: _RegisterPage2.default }),
 			React.createElement(_reactRouterDom.Route, { path: '/cart', exact: true, component: _CartPage2.default }),
 			React.createElement(_reactRouterDom.Route, { path: '/reset', exact: true, component: _ResetPage2.default }),
+			React.createElement(_reactRouterDom.Route, { path: '/categories', exact: true, component: _CategoriesPage2.default }),
+			React.createElement(_reactRouterDom.Route, { path: '/checkout', exact: true, component: _CheckoutPage2.default }),
 			React.createElement(_reactRouterDom.Route, { path: '/', component: _NotFoundPage2.default })
 		)
 	);
