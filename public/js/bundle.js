@@ -29011,6 +29011,8 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var React = _interopRequireWildcard(_react);
 
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+
 var _Header = __webpack_require__(/*! ./Header/ */ "./resources/app/js/components/Header/index.tsx");
 
 var _Header2 = _interopRequireDefault(_Header);
@@ -29033,7 +29035,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 var App = function App() {
 	return React.createElement(
-		React.Fragment,
+		_reactRouterDom.BrowserRouter,
 		null,
 		React.createElement(_Header2.default, null),
 		React.createElement(_Content2.default, null),
@@ -29618,6 +29620,497 @@ exports.default = CategoriesPage;
 
 /***/ }),
 
+/***/ "./resources/app/js/components/CheckoutPage/BillingForm.tsx":
+/*!******************************************************************!*\
+  !*** ./resources/app/js/components/CheckoutPage/BillingForm.tsx ***!
+  \******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var React = _interopRequireWildcard(_react);
+
+var _reduxForm = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
+
+var _InputElement = __webpack_require__(/*! ../FormElements/InputElement */ "./resources/app/js/components/FormElements/InputElement.tsx");
+
+var _InputElement2 = _interopRequireDefault(_InputElement);
+
+var _CreateAccountForm = __webpack_require__(/*! ./CreateAccountForm */ "./resources/app/js/components/CheckoutPage/CreateAccountForm.tsx");
+
+var _CreateAccountForm2 = _interopRequireDefault(_CreateAccountForm);
+
+var _Payment = __webpack_require__(/*! ./Payment */ "./resources/app/js/components/CheckoutPage/Payment.tsx");
+
+var _Payment2 = _interopRequireDefault(_Payment);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var BillingForm = function BillingForm(props) {
+	return React.createElement(
+		'div',
+		{ className: 'container' },
+		React.createElement(
+			'div',
+			{ className: 'billing my-pad' },
+			React.createElement(
+				'div',
+				{ className: 'billing__head' },
+				'Billing Details'
+			),
+			React.createElement(
+				'form',
+				{ className: 'billing__form', onSubmit: props.handleSubmit },
+				React.createElement(
+					'div',
+					{ className: 'row' },
+					React.createElement(_reduxForm.Field, { component: _InputElement2.default,
+						placeholder: 'First Name',
+						name: 'first',
+						type: 'text',
+						className: 'mr-1',
+						required: true }),
+					React.createElement(_reduxForm.Field, { component: _InputElement2.default,
+						placeholder: 'Last Name',
+						name: 'last',
+						type: 'text',
+						className: 'ml-1',
+						required: true })
+				),
+				React.createElement(_reduxForm.Field, { component: _InputElement2.default,
+					placeholder: 'Company Name',
+					name: 'company',
+					type: 'text',
+					required: true }),
+				React.createElement(_reduxForm.Field, { component: _InputElement2.default,
+					placeholder: 'Country',
+					name: 'country',
+					type: 'text',
+					required: true }),
+				React.createElement(
+					'div',
+					{ className: 'row' },
+					React.createElement(_reduxForm.Field, { component: _InputElement2.default,
+						placeholder: 'Town / City',
+						name: 'city',
+						type: 'text',
+						className: 'mr-1',
+						required: true }),
+					React.createElement(_reduxForm.Field, { component: _InputElement2.default,
+						placeholder: 'Postcode / Zip',
+						name: 'postcode',
+						type: 'text',
+						className: 'ml-1',
+						required: true })
+				),
+				React.createElement(_reduxForm.Field, { component: _InputElement2.default,
+					placeholder: 'Street Address',
+					name: 'address',
+					type: 'text',
+					required: true }),
+				React.createElement(_reduxForm.Field, { component: _InputElement2.default,
+					placeholder: 'Phone',
+					name: 'phone',
+					type: 'text',
+					required: true }),
+				React.createElement(_reduxForm.Field, { component: _InputElement2.default,
+					placeholder: 'Email address',
+					name: 'email',
+					type: 'email',
+					required: true }),
+				React.createElement(_CreateAccountForm2.default, null),
+				React.createElement(
+					'div',
+					null,
+					'Order Notes'
+				),
+				React.createElement(
+					'div',
+					{ className: 'text-muted' },
+					'Notes about your order like delivery species e.g.'
+				),
+				React.createElement(
+					'div',
+					{ className: 'input' },
+					React.createElement('textarea', { className: 'input__elem', required: true, rows: 1 }),
+					React.createElement('div', { className: 'input__line', style: { bottom: '4px' } })
+				),
+				React.createElement(_Payment2.default, null)
+			)
+		)
+	);
+};
+
+exports.default = (0, _reduxForm.reduxForm)({
+	form: 'billing'
+})(BillingForm);
+
+/***/ }),
+
+/***/ "./resources/app/js/components/CheckoutPage/CreateAccountForm.tsx":
+/*!************************************************************************!*\
+  !*** ./resources/app/js/components/CheckoutPage/CreateAccountForm.tsx ***!
+  \************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var React = _interopRequireWildcard(_react);
+
+var _reduxForm = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
+
+var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
+var _redux = __webpack_require__(/*! ../../redux/ */ "./resources/app/js/redux/index.ts");
+
+var _CheckboxElement = __webpack_require__(/*! ../FormElements/CheckboxElement */ "./resources/app/js/components/FormElements/CheckboxElement.tsx");
+
+var _CheckboxElement2 = _interopRequireDefault(_CheckboxElement);
+
+var _InputElement = __webpack_require__(/*! ../FormElements/InputElement */ "./resources/app/js/components/FormElements/InputElement.tsx");
+
+var _InputElement2 = _interopRequireDefault(_InputElement);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var selector = (0, _reduxForm.formValueSelector)('billing');
+
+var connected = (0, _reactRedux.connect)(function (state) {
+	return {
+		isCreate: selector(state, 'create')
+	};
+});
+
+var CreateAccountForm = function CreateAccountForm(props) {
+	return React.createElement(
+		React.Fragment,
+		null,
+		React.createElement(_reduxForm.Field, { component: _CheckboxElement2.default,
+			name: 'create',
+			placeholder: 'Create account?'
+		}),
+		React.createElement(
+			'div',
+			{ className: 'row my-pad ' + (props.isCreate || 'hidden') },
+			React.createElement(_reduxForm.Field, {
+				component: _InputElement2.default,
+				name: 'password',
+				placeholder: 'Password',
+				className: 'mr-1',
+				required: true
+			}),
+			React.createElement(_reduxForm.Field, {
+				component: _InputElement2.default,
+				name: 'password_confirm',
+				placeholder: 'Password confirmation',
+				className: 'ml-1',
+				required: true
+			})
+		)
+	);
+};
+
+exports.default = connected(CreateAccountForm);
+
+/***/ }),
+
+/***/ "./resources/app/js/components/CheckoutPage/Payment.tsx":
+/*!**************************************************************!*\
+  !*** ./resources/app/js/components/CheckoutPage/Payment.tsx ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var React = _interopRequireWildcard(_react);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var Payment = function Payment() {
+	return React.createElement(
+		"div",
+		{ className: "container" },
+		React.createElement(
+			"div",
+			{ className: "payment my-pad row" },
+			React.createElement(
+				"div",
+				{ className: "payment__order" },
+				React.createElement(
+					"div",
+					{ className: "payment__head" },
+					"My Order"
+				),
+				React.createElement(
+					"div",
+					{ className: "payment__order-list" },
+					React.createElement(
+						"div",
+						{ className: "payment__order-item" },
+						React.createElement(
+							"b",
+							null,
+							"Product"
+						),
+						React.createElement(
+							"b",
+							null,
+							"Total"
+						)
+					),
+					React.createElement(
+						"div",
+						{ className: "payment__order-item" },
+						React.createElement(
+							"span",
+							null,
+							"Fine Knit Hat x1"
+						),
+						React.createElement(
+							"span",
+							null,
+							"$45.00"
+						)
+					),
+					React.createElement(
+						"div",
+						{ className: "payment__order-item" },
+						React.createElement(
+							"span",
+							null,
+							"Fine Knit Hat x1"
+						),
+						React.createElement(
+							"span",
+							null,
+							"$45.00"
+						)
+					),
+					React.createElement(
+						"div",
+						{ className: "payment__order-item" },
+						React.createElement(
+							"span",
+							null,
+							"Shipping"
+						),
+						React.createElement(
+							"span",
+							null,
+							"FREE SHIPPING"
+						)
+					),
+					React.createElement(
+						"div",
+						{ className: "payment__order-item" },
+						React.createElement(
+							"b",
+							null,
+							"Total"
+						),
+						React.createElement(
+							"b",
+							null,
+							"$90.00"
+						)
+					)
+				)
+			),
+			React.createElement(
+				"div",
+				{ className: "payment__types" },
+				React.createElement(
+					"div",
+					{ className: "payment__head" },
+					"Payment"
+				),
+				React.createElement(
+					"div",
+					{ className: "payment__type" },
+					React.createElement(
+						"div",
+						{ className: "radio" },
+						React.createElement("input", {
+							className: "radio__elem",
+							type: "radio",
+							id: "paypal",
+							name: "payment",
+							checked: true
+						}),
+						React.createElement(
+							"label",
+							{ className: "radio__label", htmlFor: "paypal" },
+							React.createElement(
+								"span",
+								null,
+								"Paypal"
+							)
+						)
+					),
+					React.createElement(
+						"div",
+						{ className: "payment__content" },
+						"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam assumenda at atque culpa dolore dolorem esse eum facere laboriosam minima modi natus neque odio, officiis reiciendis ullam voluptas voluptatem voluptatibus?"
+					)
+				),
+				React.createElement(
+					"div",
+					{ className: "payment__type" },
+					React.createElement(
+						"div",
+						{ className: "radio" },
+						React.createElement("input", { className: "radio__elem", type: "radio", id: "bank", name: "payment" }),
+						React.createElement(
+							"label",
+							{ className: "radio__label", htmlFor: "bank" },
+							React.createElement(
+								"span",
+								null,
+								"Direct Bank Transfer"
+							)
+						)
+					),
+					React.createElement(
+						"div",
+						{ className: "payment__content hidden" },
+						"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam assumenda at atque culpa dolore dolorem esse eum facere laboriosam minima modi natus neque odio, officiis reiciendis ullam voluptas voluptatem voluptatibus?"
+					)
+				),
+				React.createElement(
+					"div",
+					{ className: "payment__type" },
+					React.createElement(
+						"div",
+						{ className: "radio" },
+						React.createElement("input", { className: "radio__elem", type: "radio", id: "deliver", name: "payment" }),
+						React.createElement(
+							"label",
+							{ className: "radio__label", htmlFor: "deliver" },
+							React.createElement(
+								"span",
+								null,
+								"Carsh on delivery"
+							)
+						)
+					),
+					React.createElement(
+						"div",
+						{ className: "payment__content hidden" },
+						"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam assumenda at atque culpa dolore dolorem esse eum facere laboriosam minima modi natus neque odio, officiis reiciendis ullam voluptas voluptatem voluptatibus?"
+					)
+				)
+			)
+		),
+		React.createElement(
+			"div",
+			{ className: "space-between row mb-10" },
+			React.createElement("div", null),
+			React.createElement(
+				"button",
+				{ type: "submit", className: "check__but" },
+				"Place order"
+			)
+		)
+	);
+};
+
+exports.default = Payment;
+
+/***/ }),
+
+/***/ "./resources/app/js/components/CheckoutPage/Questions.tsx":
+/*!****************************************************************!*\
+  !*** ./resources/app/js/components/CheckoutPage/Questions.tsx ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var React = _interopRequireWildcard(_react);
+
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var Questions = function Questions() {
+	return React.createElement(
+		'div',
+		{ className: 'container' },
+		React.createElement(
+			'div',
+			{ className: 'questions my-pad' },
+			React.createElement(
+				'div',
+				{ className: 'question' },
+				React.createElement(
+					'div',
+					{ className: 'question__text' },
+					'Returning customer ?',
+					React.createElement(
+						_reactRouterDom.Link,
+						{ to: '/login' },
+						'Click here to login.'
+					)
+				)
+			),
+			React.createElement(
+				'div',
+				{ className: 'question' },
+				React.createElement(
+					'div',
+					{ className: 'question__text' },
+					'Have a coupon ?',
+					React.createElement(
+						'a',
+						{ href: '#' },
+						'Click here to enter.'
+					)
+				)
+			)
+		)
+	);
+};
+
+exports.default = Questions;
+
+/***/ }),
+
 /***/ "./resources/app/js/components/CheckoutPage/index.tsx":
 /*!************************************************************!*\
   !*** ./resources/app/js/components/CheckoutPage/index.tsx ***!
@@ -29640,6 +30133,14 @@ var _Paginate = __webpack_require__(/*! ../Paginate */ "./resources/app/js/compo
 
 var _Paginate2 = _interopRequireDefault(_Paginate);
 
+var _Questions = __webpack_require__(/*! ./Questions */ "./resources/app/js/components/CheckoutPage/Questions.tsx");
+
+var _Questions2 = _interopRequireDefault(_Questions);
+
+var _BillingForm = __webpack_require__(/*! ./BillingForm */ "./resources/app/js/components/CheckoutPage/BillingForm.tsx");
+
+var _BillingForm2 = _interopRequireDefault(_BillingForm);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
@@ -29648,6 +30149,10 @@ var CheckoutPage = function CheckoutPage() {
 	React.useEffect(function () {
 		document.title = 'Checkout';
 	}, []);
+
+	var onSubmit = function onSubmit(vals) {
+		console.log(vals);
+	};
 
 	return React.createElement(
 		React.Fragment,
@@ -29658,7 +30163,9 @@ var CheckoutPage = function CheckoutPage() {
 			}, {
 				name: 'Checkout',
 				path: '/checkout'
-			}] })
+			}] }),
+		React.createElement(_Questions2.default, null),
+		React.createElement(_BillingForm2.default, { onSubmit: onSubmit })
 	);
 };
 
@@ -29724,20 +30231,16 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 var Content = function Content() {
 	return React.createElement(
-		_reactRouterDom.BrowserRouter,
+		_reactRouterDom.Switch,
 		null,
-		React.createElement(
-			_reactRouterDom.Switch,
-			null,
-			React.createElement(_reactRouterDom.Route, { path: '/', exact: true, component: _HomePage2.default }),
-			React.createElement(_reactRouterDom.Route, { path: '/login', exact: true, component: _LoginPage2.default }),
-			React.createElement(_reactRouterDom.Route, { path: '/register', exact: true, component: _RegisterPage2.default }),
-			React.createElement(_reactRouterDom.Route, { path: '/cart', exact: true, component: _CartPage2.default }),
-			React.createElement(_reactRouterDom.Route, { path: '/reset', exact: true, component: _ResetPage2.default }),
-			React.createElement(_reactRouterDom.Route, { path: '/categories', exact: true, component: _CategoriesPage2.default }),
-			React.createElement(_reactRouterDom.Route, { path: '/checkout', exact: true, component: _CheckoutPage2.default }),
-			React.createElement(_reactRouterDom.Route, { path: '/', component: _NotFoundPage2.default })
-		)
+		React.createElement(_reactRouterDom.Route, { path: '/', exact: true, component: _HomePage2.default }),
+		React.createElement(_reactRouterDom.Route, { path: '/login', exact: true, component: _LoginPage2.default }),
+		React.createElement(_reactRouterDom.Route, { path: '/register', exact: true, component: _RegisterPage2.default }),
+		React.createElement(_reactRouterDom.Route, { path: '/cart', exact: true, component: _CartPage2.default }),
+		React.createElement(_reactRouterDom.Route, { path: '/reset', exact: true, component: _ResetPage2.default }),
+		React.createElement(_reactRouterDom.Route, { path: '/categories', exact: true, component: _CategoriesPage2.default }),
+		React.createElement(_reactRouterDom.Route, { path: '/checkout', exact: true, component: _CheckoutPage2.default }),
+		React.createElement(_reactRouterDom.Route, { path: '/', component: _NotFoundPage2.default })
 	);
 };
 
@@ -29912,6 +30415,61 @@ exports.default = Footer;
 
 /***/ }),
 
+/***/ "./resources/app/js/components/FormElements/CheckboxElement.tsx":
+/*!**********************************************************************!*\
+  !*** ./resources/app/js/components/FormElements/CheckboxElement.tsx ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var React = _interopRequireWildcard(_react);
+
+var _reduxForm = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var CheckboxElement = function CheckboxElement(props) {
+	var placeholder = props.placeholder,
+	    className = props.className,
+	    _props$input = props.input,
+	    value = _props$input.value,
+	    name = _props$input.name,
+	    onChange = _props$input.onChange;
+
+
+	return React.createElement(
+		'div',
+		{ className: 'checkbox' },
+		React.createElement('input', { className: 'checkbox__elem  ' + className,
+			type: 'checkbox',
+			checked: value,
+			name: name,
+			onChange: onChange }),
+		React.createElement(
+			'label',
+			{ className: 'checkbox__label' },
+			React.createElement(
+				'span',
+				null,
+				placeholder
+			)
+		)
+	);
+};
+
+exports.default = CheckboxElement;
+
+/***/ }),
+
 /***/ "./resources/app/js/components/FormElements/InputElement.tsx":
 /*!*******************************************************************!*\
   !*** ./resources/app/js/components/FormElements/InputElement.tsx ***!
@@ -29938,6 +30496,7 @@ var InputElement = function InputElement(props) {
 	var required = props.required,
 	    type = props.type,
 	    placeholder = props.placeholder,
+	    className = props.className,
 	    _props$input = props.input,
 	    value = _props$input.value,
 	    name = _props$input.name,
@@ -29946,7 +30505,7 @@ var InputElement = function InputElement(props) {
 
 	return React.createElement(
 		'div',
-		{ className: 'input' },
+		{ className: 'input  ' + className },
 		React.createElement('input', { className: 'input__elem', required: required,
 			type: type,
 			value: value, name: name, onChange: onChange }),
@@ -30074,6 +30633,8 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var React = _interopRequireWildcard(_react);
 
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+
 var _CartList = __webpack_require__(/*! ./CartList */ "./resources/app/js/components/Header/Menu/Cart/CartList.tsx");
 
 var _CartList2 = _interopRequireDefault(_CartList);
@@ -30093,11 +30654,23 @@ var CartDropdown = function CartDropdown() {
 			React.createElement(
 				'div',
 				{ className: 'row space-between w-100' },
-				React.createElement('span', null),
 				React.createElement(
-					'button',
-					{ type: 'button', className: 'check__but sm' },
-					'Checkout'
+					_reactRouterDom.Link,
+					{ to: '/cart' },
+					React.createElement(
+						'button',
+						{ type: 'button', className: 'check__but sm' },
+						'View Cart'
+					)
+				),
+				React.createElement(
+					_reactRouterDom.Link,
+					{ to: '/checkout' },
+					React.createElement(
+						'button',
+						{ type: 'button', className: 'check__but sm' },
+						'Checkout'
+					)
 				)
 			)
 		)
@@ -30374,6 +30947,8 @@ var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnam
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+
 var _Cart = __webpack_require__(/*! ./Cart */ "./resources/app/js/components/Header/Menu/Cart/index.tsx");
 
 var _Cart2 = _interopRequireDefault(_Cart);
@@ -30412,18 +30987,18 @@ var Menu = function Menu() {
 			'div',
 			{ className: menuClasses },
 			React.createElement(
-				'a',
-				{ className: 'header__item', href: '#' },
+				_reactRouterDom.Link,
+				{ to: '/', className: 'header__item' },
 				'Home'
 			),
 			React.createElement(
-				'a',
-				{ className: 'header__item', href: '#' },
+				_reactRouterDom.Link,
+				{ to: '/categories', className: 'header__item' },
 				'Categories'
 			),
 			React.createElement(
-				'a',
-				{ className: 'header__item', href: '#' },
+				_reactRouterDom.Link,
+				{ to: '/profile', className: 'header__item' },
 				'Profile'
 			)
 		),

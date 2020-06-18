@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import {Switch, Route} from 'react-router-dom';
 
 import LoginPage from './LoginPage/';
 import RegisterPage from './RegisterPage/';
@@ -12,19 +12,17 @@ import CheckoutPage from './CheckoutPage/';
 
 
 const Content: React.FC<{}> = () => (
-	<Router>
-		<Switch>
-			<Route path='/' exact component={HomePage}/>
-			<Route path='/login' exact component={LoginPage}/>
-			<Route path='/register' exact component={RegisterPage}/>
-			<Route path='/cart' exact component={CartPage}/>
-			<Route path='/reset' exact component={ResetPage}/>
-			<Route path='/categories' exact component={CategoriesPage}/>
-			<Route path='/checkout' exact component={CheckoutPage}/>
+	<Switch>
+		<Route path='/' exact component={HomePage}/>
+		<Route path='/login' exact component={LoginPage}/>
+		<Route path='/register' exact component={RegisterPage}/>
+		<Route path='/cart' exact component={CartPage}/>
+		<Route path='/reset' exact component={ResetPage}/>
+		<Route path='/categories' exact component={CategoriesPage}/>
+		<Route path='/checkout' exact component={CheckoutPage}/>
 
-			<Route path='/' component={NotFoundPage}/>
-		</Switch>
-	</Router>
+		<Route path='/' component={NotFoundPage}/>
+	</Switch>
 );
 
 export default Content;

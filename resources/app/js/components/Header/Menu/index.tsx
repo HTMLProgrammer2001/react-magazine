@@ -1,5 +1,6 @@
 import * as React from 'react';
 import c from 'classnames';
+import {Link} from 'react-router-dom';
 
 //My components
 import Cart from './Cart';
@@ -18,9 +19,17 @@ const Menu: React.FC<{}> = () => {
 	return (
 		<nav className="header__menu">
 			<div className={menuClasses}>
-				<a className="header__item" href="#">Home</a>
-				<a className="header__item" href="#">Categories</a>
-				<a className="header__item" href="#">Profile</a>
+				<Link to="/" className="header__item">
+					Home
+				</Link>
+
+				<Link to="/categories" className="header__item">
+					Categories
+				</Link>
+
+				<Link to="/profile" className="header__item">
+					Profile
+				</Link>
 			</div>
 
 			<div className="header__icons">

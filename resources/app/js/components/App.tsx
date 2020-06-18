@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {BrowserRouter as Router} from 'react-router-dom';
 
 import Header from './Header/';
 import Footer from './Footer';
@@ -7,12 +8,12 @@ import Newsletter from './Newsletter';
 
 
 const App: React.FC<{}> = () => (
-	<React.Fragment>
+	<Router>
 		<Header/>
 		<Content/>
 		<Newsletter/>
 		<Footer/>
-	</React.Fragment>
+	</Router>
 );
 
 export default App;
