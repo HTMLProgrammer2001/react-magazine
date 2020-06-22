@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import {ICartItem} from '../../../redux/cart';
+import {ICartItem} from '../../../Interfaces/ICartItem';
 
 type ICartCheckoutProps = {
 	cartItems: Array<ICartItem>

@@ -1,13 +1,8 @@
 import * as React from 'react';
-import {Link} from 'react-router-dom';
 
+import {ICategory} from '../../Interfaces/ICategory';
+import CategoryItem from './CategoryItem';
 
-type ICategory = {
-	name: string,
-	slug: string,
-	image?: string,
-	productCount: number
-}
 
 const categories: Array<ICategory> = [{
 	name: 'Test',
@@ -33,20 +28,7 @@ const CategoriesList: React.FC<{}> = () => (
 
 			{
 				categories.map( (category: ICategory) => (
-					<Link to={`/categories/${category.slug}`}
-						  key={category.slug}
-						  className="categories__item">
-
-						<img className="categories__img" src={category.image} alt="Category"/>
-
-						<div className="categories__products center w-100"
-							 	style={{flexDirection: 'column'}}>
-
-							<div>{category.name}</div>
-							<div>{category.productCount} products</div>
-						</div>
-
-					</Link>
+					<CategoryItem key={category.slug} category={category}/>
 				))
 			}
 		</div>

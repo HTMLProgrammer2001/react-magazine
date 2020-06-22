@@ -9,9 +9,13 @@ const InputElement: React.FC<IElementProps> = (props) => {
 
 	return (
 		<div className={`input  ${className}`}>
-			<input className="input__elem" required={required}
-				   type={type}
-				   value={value} name={name} onChange={onChange}/>
+			<input
+				className="input__elem"
+				required={required}
+				type={type}
+				value={value}
+				name={name}
+				onChange={onChange}/>
 
 			<label className="input__label">
 				<span>{placeholder}</span>

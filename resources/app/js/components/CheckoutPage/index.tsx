@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import Paginate from '../Paginate';
 import Questions from './Questions';
-import BillingForm from './BillingForm';
+import BillingForm from './Form/BillingForm';
 
 
 const CheckoutPage: React.FC<{}> = () => {

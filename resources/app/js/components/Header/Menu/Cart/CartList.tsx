@@ -1,8 +1,8 @@
 import * as React from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 
-import {RootState} from '../../../../redux';
-import {ICartItem} from '../../../../redux/cart';
+import {RootState} from '../../../../redux/Reducers';
+import {ICartItem} from '../../../../Interfaces/ICartItem';
 
 
 const mapStateToProps = (state: RootState) => ({

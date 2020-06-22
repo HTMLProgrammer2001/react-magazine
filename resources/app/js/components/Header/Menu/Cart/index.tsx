@@ -3,8 +3,8 @@ import c from 'classnames';
 import {connect, ConnectedProps} from 'react-redux';
 
 import {RootState} from '../../../../redux/';
-import CartDropdown from './CartDropdown';
 import {IMenuProps} from '../Search';
+import CartDropdown from './CartDropdown';
 
 
 const mapStateToProps = (state: RootState) => ({
@@ -25,7 +25,7 @@ const Cart: React.FC<IMenuCartProps> = (props) => {
 			<span className={dropClasses}>
 				<i className="fas fa-shopping-bag dropdown__elem"
 				   onClick={() => {
-						props.changeOpen((prev) => prev=='cart' ? '' : 'cart');
+						props.changeOpen((prev) => prev == 'cart' ? '' : 'cart');
 					}}/>
 
 				<span className="badge">{props.count}</span>

@@ -1,4 +1,4 @@
-//gulp modules
+//Gulp modules
 const gulp = require('gulp');
 const concat = require('gulp-concat');
 const cleanCSS = require('gulp-clean-css');
@@ -8,22 +8,21 @@ const pugCompiler = require('gulp-pug');
 const sass = require('gulp-sass');
 const imagemin = require('gulp-imagemin');
 const through = require('through2');
-const del = require('del');
 const rename = require('gulp-rename');
 const sourceMap = require('gulp-sourcemaps');
 const eslint = require('gulp-eslint');
 
 const browserSync = require('browser-sync').create();
 
-//webpack configuration
+//Webpack configuration
 const webpackStream = require('webpack-stream');
 const webpackConfig = require('./webpack.config.js');
 const webpack = require('webpack');
 
-//set ruby compiler to use
+//Set ruby compiler to use
 sass.compiler = require('node-sass');
 
-//paths
+//Paths
 const SRC_PATH = 'resources/app',
 	DIST_PATH = 'public';
 
@@ -34,71 +33,88 @@ function scss(){
 	return gulp.src(`${SRC_PATH}/scss/pages/**/*.page.scss`, {
 		allowEmpty: true
 	})
-		//create source map
+		//Create source map
 		.pipe(sourceMap.init())
 		.pipe(sass().on('error', sass.logError))
-		//postcss
+
+		//Postcss
 		.pipe(autoprefixer())
 		.pipe(cleanCSS())
-		.pipe(sourceMap.write())
-		//rename files
+
+		//Rename files
 		.pipe(rename((path) => ({
 			basename: path.basename,
 			dirname: './',
 			extname: '.css'
 		})))
-		//save
+
+		//Save
 		.pipe(concat('bundle.css'))
+		.pipe(sourceMap.write())
 		.pipe(gulp.dest(`${DIST_PATH}/css`))
-		//reload
+
+		//Reload
 		.pipe(browserSync.stream());
 }
 
 function js(mode){
-	//Javascript files
-	//mode = production | development
+	/*
+	 * Javascript files
+	 * mode = production | development
+	 */
 
 	return function javascript(){
 		return gulp.src(`${SRC_PATH}/js/main.tsx`, {
 			allowEmpty: true
 		})
-			//create source maps
-			.pipe(sourceMap.init())
-			//linters
+			//Linters
 			.pipe(eslint())
 			.pipe(eslint.formatEach('compact', process.stderr))
 			.pipe(eslint.failAfterError())
-			//mode
-			.pipe(mode === 'production' ?
-				sourceMap.init() :
-				through.obj((chunk, enc, cb) =>
-					cb(null, chunk)))
-			//send webpack
+
+			//Send webpack
 			.pipe(webpackStream({
 				...webpackConfig,
-				mode
+				mode,
+				watch: mode !== 'production',
+				devtool: 'source-map'
 			}), webpack)
+
+			//Create source maps
+			.pipe(sourceMap.init({loadMaps: true}))
+			.pipe(through.obj(function (file, enc, cb) {
+				/*
+				 * Dont pipe through any source map files as
+				 * it will be handled by gulp-sourcemaps
+				 */
+
+				const isSourceMap = /\.map$/.test(file.path);
+
+				if (!isSourceMap) {
+					this.push(file);
+				}
+
+				cb();
+			}))
+
 			.pipe(concat('bundle.js'))
-			.pipe(mode === 'production' ?
-				uglify() :
-				through.obj((chunk, enc, cb) =>
-					cb(null, chunk))
-			)
-			.pipe(mode === 'production' ?
-				sourceMap.write() :
-				through.obj((chunk, enc, cb) =>
-					cb(null, chunk)))
-			.pipe(sourceMap.write())
-			//save
+			.pipe(sourceMap.write('.'))
+			// .pipe(mode === 'production' ?
+			// 	uglify() :
+			// 	through.obj((chunk, enc, cb) =>
+			// 		cb(null, chunk))
+			// )
+
+			//Save
 			.pipe(gulp.dest(`${DIST_PATH}/js`))
-			//reload
+			//Reload
 			.pipe(browserSync.stream());
 	};
 }
 
 function image() {
 	return gulp.src(`${SRC_PATH}/image/**/*.*`)
-		//minify
+		//Minify
 		.pipe(imagemin())
 		.pipe(gulp.dest(`${DIST_PATH}/image/`))
 		.pipe(browserSync.stream());

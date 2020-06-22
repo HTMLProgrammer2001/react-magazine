@@ -1,7 +1,8 @@
 import * as React from 'react';
+import {reduxForm, Field, InjectedFormProps} from 'redux-form';
 
 
-const Newsletter: React.FC<{}> = () => (
+const Newsletter: React.FC<InjectedFormProps<{}>> = (props) => (
 	<div className="subscribe">
 		<div className="container">
 			<div className="subscribe__wrap">
@@ -12,20 +13,28 @@ const Newsletter: React.FC<{}> = () => (
 						Get timely updates from your favorite products
 					</div>
 
-					<div className="subscribe__form">
+					<form className="subscribe__form" onSubmit={props.handleSubmit}>
 						<div className="subscribe__form-wrap">
 							<i className="fas fa-envelope subscribe__icon"/>
-							<input className="subscribe__email" placeholder="Enter your email"/>
+
+							<Field
+								component="input"
+								name="email"
+								className="subscribe__email"
+								placeholder="Enter your email"
+							/>
 						</div>
 
-						<div className="subscribe__but">
+						<button type="submit" className="subscribe__but">
 							<i className="fas fa-paper-plane"/>
-						</div>
-					</div>
+						</button>
+					</form>
 				</div>
 			</div>
 		</div>
 	</div>
 );
 
-export default Newsletter;
+export default reduxForm({
+	form: 'newsletter'
+})(Newsletter);

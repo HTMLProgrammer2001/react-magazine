@@ -1,9 +1,9 @@
 import * as React from 'react';
 import {reduxForm, Field, InjectedFormProps} from 'redux-form';
 
-import InputElement from '../FormElements/InputElement';
-import CreateAccountForm from './CreateAccountForm';
-import Payment from './Payment';
+import InputElement from '../../FormElements/InputElement';
+import AccountForm from './CreateAccountForm';
+import Payment from './Payment/';
 
 
 type IBillingProps = InjectedFormProps<{}, {}>;
@@ -13,7 +13,7 @@ const BillingForm: React.FC<IBillingProps> = (props) => (
 		<div className="billing my-pad">
 			<div className="billing__head">Billing Details</div>
 
-			<form className="billing__form" onSubmit={props.handleSubmit}>
+			<form className="billing__form" onSubmit={props.handleSubmit} noValidate>
 				<div className="row">
 					<Field component={InputElement}
 						   placeholder="First Name"
@@ -76,12 +76,17 @@ const BillingForm: React.FC<IBillingProps> = (props) => (
 					   type="email"
 					   required/>
 
-				<CreateAccountForm/>
+				<AccountForm/>
 
 				<div>Order Notes</div>
 				<div className="text-muted">Notes about your order like delivery species e.g.</div>
 				<div className="input">
-					<textarea className="input__elem" required rows={1}/>
+					<Field component="textarea"
+						   className="input__elem"
+						   rows={1}
+						   name="notes"
+					/>
+
 					<div className="input__line" style={{bottom: '4px'}}/>
 				</div>
 

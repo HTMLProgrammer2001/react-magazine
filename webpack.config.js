@@ -39,16 +39,10 @@ const conf = {
 
 	resolve: {
 		alias: {
-			// pages: path.resolve(__dirname, 'src/pages/'),
-			// scss: path.resolve(__dirname, 'src/scss/'),
-			// js: path.resolve(__dirname, 'src/js/'),
-			// css: path.resolve(__dirname, 'src/css/'),
-			// assets: path.resolve(__dirname, 'src/assets/'),
 			modules: path.resolve(__dirname, 'node_modules')
 		},
 		extensions: ['.js', '.jsx', '.ts', '.tsx']
 	},
-	devtool: 'none',
 	optimization: {
 		minimizer: [
 			new TerserPlugin({

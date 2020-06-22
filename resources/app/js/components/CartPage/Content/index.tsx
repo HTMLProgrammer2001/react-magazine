@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import {ICartItem} from '../../../redux/cart';
+import {ICartItem} from '../../../redux/Reducers/cart';
 import CartTable from './CartTable';
 import Checkout from './Checkout';
 

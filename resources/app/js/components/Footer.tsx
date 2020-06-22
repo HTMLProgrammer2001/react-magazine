@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {Link} from 'react-router-dom';
 
 
 const Footer: React.FC<{}> = () => (
@@ -6,7 +7,10 @@ const Footer: React.FC<{}> = () => (
 		<div className = "container">
 			<div className="footer__content">
           			<div className="footer__info">
-          				<img className="footer__logo" src="./image/logo.png"/>
+          				<img className="footer__logo" 
+							 src="./image/logo.png" 
+							 alt="Logo"/>
+						
             			<div className="footer__info-content">
                             Lorem ipsum dolor sit amet, consectetur adipisicing
                             elit. Ab aliquam cumque debitis deleniti doloribus
@@ -18,18 +22,19 @@ const Footer: React.FC<{}> = () => (
 
           			<div className="footer__links">
             			<div className="footer__links-head">Useful links</div>
+						
             			<ul className="footer__links-list">
-            				<a className="footer__links-item" href="#">
-                				<li>Home</li>
-                			</a>
+						<Link to="/" className="footer__links-item">
+							<li>Home</li>
+						</Link>
 
-                			<a className="footer__links-item" href="#">
-                				<li>Checkout</li>
-                			</a>
+						<Link to="/checkout" className="footer__links-item">
+							<li>Checkout</li>
+						</Link>
 
-                			<a className="footer__links-item" href="#">
-                				<li>My account</li>
-                			</a>
+						<Link to="/profile" className="footer__links-item">
+							<li>My account</li>
+						</Link>
 
                 			<a className="footer__links-item" href="#">
                 				<li>Man fashion</li>
@@ -39,34 +44,39 @@ const Footer: React.FC<{}> = () => (
                 				<li>Women fashion</li>
                 			</a>
 
-                			<a className="footer__links-item" href="#">
-                				<li>Cart</li>
-                			</a>
+						<Link to="/cart" className="footer__links-item">
+							<li>Cart</li>
+						</Link>
                 		</ul>
                 	</div>
 
                 	<div className="footer__contacts">
             			<div className="footer__links-head">Contact us</div>
+
             			<div className="footer__contacts-list">
               				<div className="footer__contacts-item">
-              					<i className="fas fa-envelope"></i>
+              					<i className="fas fa-envelope"/>
+
               					<a className="footer__contacts-link"
 								   href="mailto:cssuperpy@gmail.com">
-              						cssuperpy@gmail.com
+              							cssuperpy@gmail.com
               					</a>
               				</div>
 
               				<div className="footer__contacts-item">
-              					<i className="fas fa-phone-alt"></i>
+              					<i className="fas fa-phone-alt"/>
+
               					<a className="footer__contacts-link"
 								   href="tel:+7043345544">
-              						+7043345435543
+              							+7043345435543
               					</a>
               				</div>
 
               				<div className="footer__contacts-item">
-              					<i className="fas fa-link"></i>
-              					<a className="footer__contacts-link" href="#">
+              					<i className="fas fa-link"/>
+
+              					<a className="footer__contacts-link"
+								   href="https://htmlprogrammer.ru">
               						htmlprogrammer.ru
               					</a>
               				</div>
@@ -76,7 +86,7 @@ const Footer: React.FC<{}> = () => (
 		</div>
 
 		<hr/>
-		<div className="footer__copy">Copyright 2020</div>
+		<div className="footer__copy">Copyright {new Date().getFullYear()}</div>
 	</footer>
 );
 
