@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import Paginate from '../Paginate';
-import ResetForm from './ResetForm';
+import {default as ResetForm, IResetFormData} from './ResetForm';
 
 
 const ResetPage: React.FC<{}> = () => {
@@ -9,7 +9,7 @@ const ResetPage: React.FC<{}> = () => {
 		document.title = 'Reset password';
 	}, []);
 
-	let onSubmit = (vals: any) => {
+	let onSubmit = (vals: IResetFormData) => {
 		console.log(vals);
 	};
 

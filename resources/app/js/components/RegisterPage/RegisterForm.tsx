@@ -4,7 +4,15 @@ import {reduxForm, Field, InjectedFormProps} from 'redux-form';
 import InputElement from '../FormElements/InputElement';
 
 
-type IRegisterProps = InjectedFormProps<{}, {}>;
+export type IRegisterFormData = {
+	firstName: string,
+	lastName: string,
+	email: string,
+	password: string,
+	confirmPassword: string
+}
+
+type IRegisterProps = InjectedFormProps<IRegisterFormData, {}>;
 
 const RegisterForm: React.FC<IRegisterProps> = (props) => (
 	<div className="container">
@@ -30,6 +38,6 @@ const RegisterForm: React.FC<IRegisterProps> = (props) => (
 	</div>
 );
 
-export default reduxForm({
+export default reduxForm<IRegisterFormData>({
 	form: 'register'
 })(RegisterForm);

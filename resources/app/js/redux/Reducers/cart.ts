@@ -11,7 +11,7 @@ export type CartState = Array<ICartItem>;
 const initialState: CartState = [];
 
 const cartReducer = (state: CartState = initialState, action: CartActions): CartState => {
-	console.log(1);
+	console.log(2);
 	return state;
 };
 

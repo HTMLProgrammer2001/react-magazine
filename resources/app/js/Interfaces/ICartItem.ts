@@ -1,7 +1,7 @@
-import IProductD, {Size} from './IProduct';
+import {IProduct, Size} from './IProduct';
 
 export type ICartItem = {
-	product: IProductD,
+	product: IProduct,
 	count: number,
 	size: Size,
 	color: string

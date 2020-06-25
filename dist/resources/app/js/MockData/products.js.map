@@ -1,0 +1,1 @@
+{"version":3,"file":"products.js","sourceRoot":"","sources":["../../../../../resources/app/js/MockData/products.ts"],"names":[],"mappings":"","sourcesContent":["import {IProduct} from '../redux/Reducers/cart';\r\n\r\n\r\nexport type IProductServer = {\r\n\tproducts: Array<IProduct>\r\n\ttotal: number,\r\n\toffset: number\r\n};\r\n"]}

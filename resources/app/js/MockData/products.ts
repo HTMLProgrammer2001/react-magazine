@@ -1,4 +1,4 @@
-import {IProduct} from '../redux/Reducers/cart';
+import {IProduct} from '../Interfaces/IProduct';
 
 
 export type IProductServer = {

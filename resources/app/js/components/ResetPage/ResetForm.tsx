@@ -4,7 +4,11 @@ import {reduxForm, Field, InjectedFormProps} from 'redux-form';
 import InputElement from '../FormElements/InputElement';
 
 
-type IResetProps = InjectedFormProps<{}, {}>;
+export type IResetFormData = {
+	email: string
+}
+
+type IResetProps = InjectedFormProps<IResetFormData, {}>;
 
 const ResetForm: React.FC<IResetProps> = (props) => (
 	<form className="reset" onSubmit={props.handleSubmit}>
@@ -22,6 +26,6 @@ const ResetForm: React.FC<IResetProps> = (props) => (
 	</form>
 );
 
-export default reduxForm({
+export default reduxForm<IResetFormData>({
 	form: 'reset'
 })(ResetForm);

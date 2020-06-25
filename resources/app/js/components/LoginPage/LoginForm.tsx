@@ -4,7 +4,12 @@ import {reduxForm, Field, InjectedFormProps} from 'redux-form';
 import InputElement from '../FormElements/InputElement';
 
 
-type ILoginProps = InjectedFormProps<{}, {}>;
+export type ILoginFormData = {
+	email: string,
+	password: string
+}
+
+type ILoginProps = InjectedFormProps<ILoginFormData, {}>;
 
 const LoginForm: React.FC<ILoginProps> = (props) => (
 	<div className="container">
@@ -24,6 +29,8 @@ const LoginForm: React.FC<ILoginProps> = (props) => (
 	</div>
 );
 
-export default reduxForm({
+type C<T> = T extends string ? string : any;
+
+export default reduxForm<ILoginFormData>({
 	form: 'login'
 })(LoginForm);

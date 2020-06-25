@@ -24,7 +24,7 @@ const GoodItem: React.FC<IGoodItemProps> = (props) => (
 			</div>
 
 			<div className="goods__list-price">
-				{props.product.price}
+				${props.product.price}
 			</div>
 		</div>
 

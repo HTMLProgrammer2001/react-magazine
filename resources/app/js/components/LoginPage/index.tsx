@@ -1,11 +1,11 @@
 import * as React from 'react';
 
 import Paginate from '../Paginate';
-import LoginForm from './LoginForm';
+import {default as LoginForm, ILoginFormData} from './LoginForm';
 
 
 const LoginPage: React.FC<{}> = () => {
-	const submit = (values: any) => {
+	const submit = (values: ILoginFormData) => {
 		console.log(values);
 	};
 

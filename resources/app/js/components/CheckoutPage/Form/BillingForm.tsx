@@ -2,11 +2,24 @@ import * as React from 'react';
 import {reduxForm, Field, InjectedFormProps} from 'redux-form';
 
 import InputElement from '../../FormElements/InputElement';
-import AccountForm from './CreateAccountForm';
+import AccountForm, {IAccountFormData} from './CreateAccountForm';
 import Payment from './Payment/';
 
 
-type IBillingProps = InjectedFormProps<{}, {}>;
+export type IBillingFormData = {
+	first: string,
+	last: string,
+	company: string,
+	country: string,
+	city: string,
+	postcode: string,
+	address: string,
+	email: string,
+	notes: string,
+	payment: string
+} & IAccountFormData;
+
+type IBillingProps = InjectedFormProps<IBillingFormData, {}>;
 
 const BillingForm: React.FC<IBillingProps> = (props) => (
 	<div className="container">
@@ -96,6 +109,6 @@ const BillingForm: React.FC<IBillingProps> = (props) => (
 	</div>
 );
 
-export default reduxForm({
+export default reduxForm<IBillingFormData>({
 	form: 'billing'
 })(BillingForm);

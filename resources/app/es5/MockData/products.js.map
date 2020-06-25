@@ -1,0 +1,1 @@
+{"version":3,"sources":["MockData/products.ts"],"names":[],"mappings":"","file":"products.js","sourcesContent":["import {IProduct} from '../Interfaces/IProduct';\r\n\r\n\r\nexport type IProductServer = {\r\n\tproducts: Array<IProduct>\r\n\ttotal: number,\r\n\toffset: number\r\n};\r\n"]}

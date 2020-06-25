@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import Paginate from '../Paginate';
 import Questions from './Questions';
-import BillingForm from './Form/BillingForm';
+import BillingForm, {IBillingFormData} from './Form/BillingForm';
 
 
 const CheckoutPage: React.FC<{}> = () => {
@@ -10,7 +10,7 @@ const CheckoutPage: React.FC<{}> = () => {
 		document.title = 'Checkout';
 	}, []);
 
-	let onSubmit = (vals: any) => {
+	let onSubmit = (vals: IBillingFormData) => {
 		console.log(vals);
 	};
 

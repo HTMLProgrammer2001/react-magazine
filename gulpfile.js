@@ -7,10 +7,12 @@ const autoprefixer = require('gulp-autoprefixer');
 const pugCompiler = require('gulp-pug');
 const sass = require('gulp-sass');
 const imagemin = require('gulp-imagemin');
-const through = require('through2');
 const rename = require('gulp-rename');
 const sourceMap = require('gulp-sourcemaps');
 const eslint = require('gulp-eslint');
+
+const ts = require('gulp-typescript');
+const tsProject = ts.createProject(require('./tsconfig.json'));
 
 const browserSync = require('browser-sync').create();
 
@@ -57,59 +59,42 @@ function scss(){
 		.pipe(browserSync.stream());
 }
 
-function js(mode){
-	/*
-	 * Javascript files
-	 * mode = production | development
-	 */
+function javascript(){
+	return gulp.src(`${SRC_PATH}/js/**/*.t*`)
 
-	return function javascript(){
-		return gulp.src(`${SRC_PATH}/js/main.tsx`, {
-			allowEmpty: true
+		//Linters
+		.pipe(eslint())
+		.pipe(eslint.formatEach('compact', process.stderr))
+		.pipe(eslint.failAfterError())
+
+		//Create source maps
+		.pipe(sourceMap.init())
+
+		//Typescript
+		.pipe(tsProject()).js
+		.on('error', function(err){
+			console.log('Typescript error', err);
+			this.emit('end');
 		})
-			//Linters
-			.pipe(eslint())
-			.pipe(eslint.formatEach('compact', process.stderr))
-			.pipe(eslint.failAfterError())
+		.pipe(sourceMap.write('.'))
 
-			//Send webpack
-			.pipe(webpackStream({
-				...webpackConfig,
-				mode,
-				watch: mode !== 'production',
-				devtool: 'source-map'
-			}), webpack)
+		//Save
+		.pipe(gulp.dest(`${SRC_PATH}/es5`));
+}
 
-			//Create source maps
-			.pipe(sourceMap.init({loadMaps: true}))
-			.pipe(through.obj(function (file, enc, cb) {
-				/*
-				 * Dont pipe through any source map files as
-				 * it will be handled by gulp-sourcemaps
-				 */
-
-				const isSourceMap = /\.map$/.test(file.path);
-
-				if (!isSourceMap) {
-					this.push(file);
-				}
-
-				cb();
-			}))
-
-			.pipe(concat('bundle.js'))
-			.pipe(sourceMap.write('.'))
-			// .pipe(mode === 'production' ?
-			// 	uglify() :
-			// 	through.obj((chunk, enc, cb) =>
-			// 		cb(null, chunk))
-			// )
-
-			//Save
-			.pipe(gulp.dest(`${DIST_PATH}/js`))
-			//Reload
-			.pipe(browserSync.stream());
-	};
+function webpackTask(){
+	return gulp
+		.src(`${SRC_PATH}/es5/main.js`)
+		.pipe(webpackStream({
+			...webpackConfig,
+			devtool: 'soure-map'
+		}, webpack))
+		.on('error', function (err) {
+			console.error('WEBPACK ERROR', err);
+			this.emit('end');
+		})
+		.pipe(gulp.dest(`${DIST_PATH}/js/`))
+		.pipe(browserSync.stream());
 }
 
 function image() {
@@ -141,19 +126,27 @@ function watch(){
 
 	gulp.watch(`${SRC_PATH}/pug/**/*.page.pug`, pug).on('change', browserSync.reload);
 	gulp.watch(`${SRC_PATH}/scss/**/*.scss`, scss);
-	gulp.watch(`${SRC_PATH}/js/**/*.tsx`, js('development'));
-	gulp.watch(`${SRC_PATH}/js/**/*.ts`, js('development'));
+	gulp.watch(`${SRC_PATH}/js/**/*.tsx`, {
+		events: 'change',
+		ignoreInitial: false,
+		queue: false
+	}, gulp.series(javascript, webpackTask));
+	gulp.watch(`${SRC_PATH}/js/**/*.ts`, {
+		events: 'change',
+		ignoreInitial: false,
+		queue: false
+	}, gulp.series(javascript, webpackTask));
 }
 
 function build(){
 	return gulp.parallel(
-		pug, scss, js('production'), image
+		pug, scss, gulp.series(javascript, webpackTask), image
 	);
 }
 
 gulp.task('scss', scss);
 gulp.task('html', pug);
-gulp.task('js', js('production'));
+gulp.task('js', gulp.series(javascript, webpackTask));
 gulp.task('image', image);
 gulp.task('watch', watch);
 gulp.task('build', build());

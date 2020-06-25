@@ -4,6 +4,7 @@ import * as actionCreators from '../Actions/categoryActions';
 
 
 //Action type
+
 type InferValuesType<T> = T extends {[key: string]: infer U} ? U : never;
 type CategoryActions = ReturnType<InferValuesType<typeof actionCreators>>;
 
@@ -16,7 +17,11 @@ export type CategoryState = {
 const initialState: CategoryState = {
 	isLoading: false,
 	error: null,
-	categories: []
+	categories: [{
+		name: 'Test',
+		productCount: 32,
+		slug: 'test'
+	}]
 };
 
 const categoryReducer = (state: CategoryState = initialState,

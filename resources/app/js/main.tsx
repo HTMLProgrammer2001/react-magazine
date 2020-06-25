@@ -6,9 +6,11 @@ import {Provider} from 'react-redux';
 import App from './components/App';
 import reducer from './redux/Reducers/';
 
+declare let myStore: any;
+
 let store = createStore(reducer);
 
-window.store = store;
+myStore = store;
 
 ReactDOM.render(
 	<Provider store={store}>

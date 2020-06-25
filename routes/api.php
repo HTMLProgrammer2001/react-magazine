@@ -14,7 +14,39 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/register', 'UserActions@register');
-Route::post('/login', 'UserActions@login')->name('login');
-Route::get('/logout', 'UserActions@logout')
-    ->middleware('auth:api');
+Route::post('/getProducts', function (Request $request){
+    $data = [
+        [
+            'id' => 1,
+            'name' => 'T-Shirt',
+            'slug' => 'shirt',
+            'colors' => ['black', 'red', 'green'],
+            'photo' => '/image/product.png',
+            'price' => 30,
+            'sizes' => ['M', 'L', 'XL']
+        ],
+        [
+            'id' => 2,
+            'name' => 'T-Shirt',
+            'slug' => 'shirt',
+            'colors' => ['black', 'red', 'green'],
+            'photo' => '/image/product.png',
+            'price' => 30,
+            'sizes' => ['M', 'L', 'XL']
+        ],
+        [
+            'id' => 3,
+            'name' => 'T-bank',
+            'slug' => 'bank',
+            'colors' => ['black', 'purple'],
+            'photo' => '/image/product.png',
+            'price' => 30,
+            'sizes' => ['M', 'L', 'XL']
+        ]
+    ];
+
+    return response()->json([
+        'total' => sizeof($data),
+        'products' => array_slice($data, $request->input('offset'), 1)
+    ]);
+});

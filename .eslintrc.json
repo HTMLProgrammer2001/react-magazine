@@ -55,7 +55,7 @@
         "no-unmodified-loop-condition": "warn",
         "no-unused-expressions": "error",
         "vars-on-top": "error",
-        "no-unused-vars": "warn",
+        "no-unused-vars": "off",
         "no-use-before-define": "error",
         "camelcase": "error",
         "block-spacing": "warn",
@@ -68,8 +68,8 @@
         "eol-last": ["error", "always"],
         "func-call-spacing": ["error", "never"],
         "id-length": ["warn", {
-          "min": 3,
-          "max": 15
+          "min": 1,
+          "max": 25
         }],
         "max-depth": ["warn", 5],
         "max-len": ["error", {

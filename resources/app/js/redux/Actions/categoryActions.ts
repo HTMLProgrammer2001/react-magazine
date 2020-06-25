@@ -22,5 +22,3 @@ export const categoryLoadFailure = (error: string) => (<const>{
 	type: CATEGORY_LOAD_ERROR,
 	error
 });
-
-

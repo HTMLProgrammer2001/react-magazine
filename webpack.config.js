@@ -4,16 +4,10 @@ const TerserPlugin = require('terser-webpack-plugin');
 
 const conf = {
 	output: {
-		filename: 'js/[name].js',
-		path: path.resolve(__dirname, './dist')
+		filename: 'bundle.js'
 	},
 	module: {
 		rules: [
-			// {
-			// 	test: /\.tsx?/,
-			// 	use: 'ts-loader',
-			// 	exclude: '/node_modules/'
-			// },
 			{
 				test: /\.(js|ts)x?$/,
 				use: 'cache-loader',

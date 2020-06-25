@@ -1,11 +1,11 @@
 import * as React from 'react';
 
 import Paginate from '../Paginate';
-import RegisterForm from './RegisterForm';
+import {default as RegisterForm, IRegisterFormData} from './RegisterForm';
 
 
 const RegisterPage: React.FC<{}> = () => {
-	const submit = (values: any) => {
+	const submit = (values: IRegisterFormData) => {
 		console.log(values);
 	};
 

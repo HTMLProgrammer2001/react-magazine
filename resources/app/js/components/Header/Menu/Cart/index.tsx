@@ -2,7 +2,7 @@ import * as React from 'react';
 import c from 'classnames';
 import {connect, ConnectedProps} from 'react-redux';
 
-import {RootState} from '../../../../redux/';
+import {RootState} from '../../../../redux/Reducers/';
 import {IMenuProps} from '../Search';
 import CartDropdown from './CartDropdown';
 

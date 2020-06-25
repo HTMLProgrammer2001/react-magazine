@@ -1,0 +1,8 @@
+export var CATEGORY_LOAD_START = 'CATEGORY_LOAD_START';
+export var CATEGORY_LOAD_SUCCESS = 'CATEGORY_LOAD_SUCCESS';
+export var CATEGORY_LOAD_ERROR = 'CATEGORY_LOAD_ERROR';
+export var CART_ADD = 'CART_ADD';
+export var CART_REMOVE = 'CART_REMOVE';
+export var CART_RESET = 'CART_RESET';
+export var CART_UPDATE = 'CART_UPDATE';
+//# sourceMappingURL=actionTypes.js.map

@@ -7,6 +7,11 @@ import CheckboxElement from '../../FormElements/CheckboxElement';
 import InputElement from '../../FormElements/InputElement';
 
 
+export type IAccountFormData = {
+	password?: string,
+	passwordConfirm?: string
+}
+
 const selector = formValueSelector('billing');
 
 const connected = connect((state: RootState) => ({
@@ -32,7 +37,7 @@ const AccountForm: React.FC<ConnectedProps<typeof connected>> = (props) => (
 
 			<Field
 				component={InputElement}
-				name="password_confirm"
+				name="passwordConfirm"
 				placeholder="Password confirmation"
 				className="ml-1"
 				required

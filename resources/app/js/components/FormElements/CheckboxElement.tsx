@@ -5,10 +5,10 @@ import {WrappedFieldProps} from 'redux-form';
 type IElementProps = WrappedFieldProps & React.InputHTMLAttributes<HTMLInputElement>;
 
 const CheckboxElement: React.FC<IElementProps> = (props) => {
-	const {placeholder, className, input: {value, name, onChange}} = props;
+	const {placeholder, className, style, input: {value, name, onChange}} = props;
 
 	return (
-		<div className="checkbox">
+		<div className="checkbox" style={style}>
 			<input className={`checkbox__elem  ${className}`}
 				   type="checkbox"
 				   checked={value}
