@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/getProducts', function (Request $request){
+Route::get('/getProducts', function (Request $request){
     $data = [
         [
             'id' => 1,
@@ -47,6 +47,6 @@ Route::post('/getProducts', function (Request $request){
 
     return response()->json([
         'total' => sizeof($data),
-        'products' => array_slice($data, $request->input('offset'), 1)
+        'products' => array_slice($data, $request->get('offset'), 1)
     ]);
 });

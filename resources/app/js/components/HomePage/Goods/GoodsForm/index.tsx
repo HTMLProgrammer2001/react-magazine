@@ -1,20 +1,36 @@
 import * as React from 'react';
-import {reduxForm, InjectedFormProps, Field} from 'redux-form';
+import {reduxForm, InjectedFormProps, Field, formValueSelector} from 'redux-form';
+import {connect, ConnectedProps} from 'react-redux';
 
+import {RootState} from '../../../../redux/Reducers';
 import CheckboxGroup from '../../../FormElements/CheckboxGroup';
 import ColorGroup from '../../../FormElements/ColorGroup';
+import SizeGroup from '../../../FormElements/SizeGroup';
+import Slider from '../../../FormElements/Slider';
 
+
+const selector = formValueSelector('productFilter');
+
+const connected = connect((state: RootState) => ({
+	range: selector(state, 'priceRange')
+}));
 
 type IGoodsFormData = {
 	categories: {
 		[key: string]: boolean
 	},
-	color: string
-};
+	color: string,
+	size: string,
+	priceRange: {
+		from: number,
+		to: number
+	}
+}
 
-const GoodsForm: React.FC<InjectedFormProps<IGoodsFormData>> = (props) => (
+type IOwnProps = ConnectedProps<typeof connected>;
+
+const GoodsForm: React.FC<InjectedFormProps<IGoodsFormData, IOwnProps> & IOwnProps> = (props) => (
 	<form className="goods__form" onSubmit={props.handleSubmit}>
-
 		<div className="goods__form-head">Product Categories</div>
 		<div className="goods__categories">
 			<Field
@@ -34,30 +50,39 @@ const GoodsForm: React.FC<InjectedFormProps<IGoodsFormData>> = (props) => (
 		</div>
 
 		<div className="goods__form-head">Filter by size</div>
-		<ul className="goods__size">
-			<li className="goods__size-item">XS</li>
-			<li className="goods__size-item goods__size-item_active">S</li>
-			<li className="goods__size-item">M</li>
-			<li className="goods__size-item">L</li>
-			<li className="goods__size-item">XL</li>
-		</ul>
+		<Field
+			component={SizeGroup}
+			name="size"
+			sizes={['XS', 'S', 'M', 'L', 'XL']}
+		/>
 
 		<div className="goods__form-head">Filter by price</div>
-		<div className="goods__price">
-			<div className="goods__price-point left"/>
-			<div className="goods__price-indicator"/>
-			<div className="goods__price-point right"/>
+		<Field
+			component={Slider}
+			name="priceRange"
+			min={0}
+			max={1000}
+		/>
+
+		<div className="goods__price-range">
+			Price: ${props.range?.from.toFixed(2)} - ${props.range?.to.toFixed(2)}
 		</div>
-		<div className="goods__price-range">Price: $5 - $100</div>
 
 		<button type="submit" className="goods__form-button">Filter</button>
 	</form>
 );
 
-export default reduxForm<IGoodsFormData>({
+const GoodsFormRedux = reduxForm<IGoodsFormData, IOwnProps>({
 	form: 'productFilter',
 	initialValues: {
 		categories: {},
-		color: ''
+		color: '',
+		size: 'S',
+		priceRange: {
+			from: 100,
+			to: 500
+		}
 	}
 })(GoodsForm);
+
+export default connected(GoodsFormRedux);

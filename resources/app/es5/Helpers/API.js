@@ -55,7 +55,9 @@ var API = (function () {
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
-                        return [4, exports.clientAPI.post('/getProducts', body)];
+                        return [4, exports.clientAPI.get('/getProducts', {
+                                params: body
+                            })];
                     case 2:
                         response = _a.sent();
                         return [3, 4];

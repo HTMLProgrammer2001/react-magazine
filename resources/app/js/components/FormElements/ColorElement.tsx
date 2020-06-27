@@ -23,7 +23,9 @@ const ColorElement: React.FC<IElementProps> = (props) => {
 			style={{background: color}}
 			onClick={
 				() => {
-					dispatch(change('productFilter', name, color));
+					let newColor = checked ? '' : color;
+
+					dispatch(change('productFilter', name, newColor));
 				}
 			}
 		/>

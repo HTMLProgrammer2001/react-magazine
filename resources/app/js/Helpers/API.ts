@@ -15,7 +15,9 @@ class API{
 		let response: AxiosResponse;
 
 		try {
-			response = await clientAPI.post<Array<IProductsResponse>>('/getProducts', body);
+			response = await clientAPI.get<Array<IProductsResponse>>('/getProducts', {
+				params: body
+			});
 		}
 		catch (err) {
 			return err as AxiosError;

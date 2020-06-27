@@ -11,7 +11,8 @@ var ColorElement = function (props) {
         'goods__color-item_active': checked
     });
     return (React.createElement("div", { className: classes, style: { background: color }, onClick: function () {
-            dispatch(redux_form_1.change('productFilter', name, color));
+            var newColor = checked ? '' : color;
+            dispatch(redux_form_1.change('productFilter', name, newColor));
         } }));
 };
 exports.default = connected(ColorElement);
