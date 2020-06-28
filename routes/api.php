@@ -50,3 +50,31 @@ Route::get('/getProducts', function (Request $request){
         'products' => array_slice($data, $request->get('offset'), 1)
     ]);
 });
+
+Route::get('/products/{slug}', function($slug){
+    $data = [
+        [
+            'id' => 1,
+            'slug' => 'shirt',
+            'name' => 'T-Shirt',
+            'images' => [
+                'https://idg.net.ua/blog/wp-content/uploads/foto-v-raznyh-rakursah.jpg',
+                'https://idg.net.ua/blog/wp-content/uploads/kak-fotografirovat-odezhdu-i-oformlyat-stranitsu-tovara-700x325.png',
+                'https://ireland.apollo.olxcdn.com/v1/files/pz2flhr24asg1-UA/image;s=1000x700'
+            ],
+            'colors' => ['black', 'red', 'green'],
+            'price' => 24,
+            'sizes' => ['XL', 'L', 'M'],
+            'description' => 'Lorem text abcd iron test',
+            'mark' => 5,
+            'category' => 'test'
+        ]
+    ];
+
+    $key = array_search($slug, array_column($data, 'slug'));
+
+    if($key !== false)
+        return response()->json($data[$key]);
+    else
+        return abort(404, 'Product not found');
+});

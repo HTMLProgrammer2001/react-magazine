@@ -7,7 +7,8 @@ const connected = connect();
 
 type ISliderProps = {
 	min: number,
-	max: number
+	max: number,
+	formName: string
 }
 
 type IWhich = 'left' | 'right' | null;
@@ -132,7 +133,7 @@ class SliderElement extends React.Component<IElementProps, ISliderState>{
 		}
 
 		//Dispatch change
-		dispatch(change('productFilter', 'priceRange', {
+		dispatch(change(this.props.formName, 'priceRange', {
 			from: this.state.left/100 * (max - min) + min,
 			to: (100 - this.state.right)/100 * (max - min) + min
 		}));

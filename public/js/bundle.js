@@ -31018,9 +31018,6 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var axios_1 = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-exports.clientAPI = axios_1.default.create({
-    baseURL: 'http://localhost:8000/api'
-});
 var API = function () {
     function API() {}
     API.getProducts = function (offset) {
@@ -31035,7 +31032,7 @@ var API = function () {
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3,, 4]);
-                        return [4, exports.clientAPI.get('/getProducts', {
+                        return [4, this.clientAPI.get('/getProducts', {
                             params: body
                         })];
                     case 2:
@@ -31050,9 +31047,32 @@ var API = function () {
             });
         });
     };
+    API.getProductInfo = function (slug) {
+        return __awaiter(this, void 0, void 0, function () {
+            var response, err_2;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2,, 3]);
+                        return [4, this.clientAPI.get("/products/" + slug)];
+                    case 1:
+                        response = _a.sent();
+                        return [3, 3];
+                    case 2:
+                        err_2 = _a.sent();
+                        return [2, err_2];
+                    case 3:
+                        return [2, response.data];
+                }
+            });
+        });
+    };
     API.isError = function (arg) {
         return 'response' in arg;
     };
+    API.clientAPI = axios_1.default.create({
+        baseURL: 'http://localhost:8000/api'
+    });
     return API;
 }();
 exports.default = API;
@@ -31547,8 +31567,9 @@ var CartPage_1 = __webpack_require__(/*! ./CartPage/ */ "./resources/app/es5/com
 var ResetPage_1 = __webpack_require__(/*! ./ResetPage/ */ "./resources/app/es5/components/ResetPage/index.js");
 var CategoriesPage_1 = __webpack_require__(/*! ./CategoriesPage/ */ "./resources/app/es5/components/CategoriesPage/index.js");
 var CheckoutPage_1 = __webpack_require__(/*! ./CheckoutPage/ */ "./resources/app/es5/components/CheckoutPage/index.js");
+var SinglePage_1 = __webpack_require__(/*! ./SinglePage/ */ "./resources/app/es5/components/SinglePage/index.js");
 var Content = function Content() {
-    return React.createElement(react_router_dom_1.Switch, null, React.createElement(react_router_dom_1.Route, { path: '/', exact: true, component: HomePage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/login', exact: true, component: LoginPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/register', exact: true, component: RegisterPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/cart', exact: true, component: CartPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/reset', exact: true, component: ResetPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/categories', exact: true, component: CategoriesPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/checkout', exact: true, component: CheckoutPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/', component: NotFoundPage_1.default }));
+    return React.createElement(react_router_dom_1.Switch, null, React.createElement(react_router_dom_1.Route, { path: '/', exact: true, component: HomePage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/login', exact: true, component: LoginPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/register', exact: true, component: RegisterPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/cart', exact: true, component: CartPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/reset', exact: true, component: ResetPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/categories', exact: true, component: CategoriesPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/checkout', exact: true, component: CheckoutPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/products/:slug', exact: true, component: SinglePage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/', component: NotFoundPage_1.default }));
 };
 exports.default = Content;
 
@@ -31622,11 +31643,12 @@ var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-f
 var CheckboxElement_1 = __webpack_require__(/*! ./CheckboxElement */ "./resources/app/es5/components/FormElements/CheckboxElement.js");
 var CheckboxGroup = function CheckboxGroup(props) {
     var options = props.options,
+        formName = props.formName,
         _a = props.input,
         value = _a.value,
         name = _a.name;
     return React.createElement(React.Fragment, null, options.map(function (option, index) {
-        return React.createElement(redux_form_1.Field, { component: CheckboxElement_1.default, placeholder: option, key: index, style: { margin: '5px 0' }, name: name + "[" + option + "]", checked: !!value[option] });
+        return React.createElement(redux_form_1.Field, { component: CheckboxElement_1.default, placeholder: option, key: index, formName: formName, style: { margin: '5px 0' }, name: name + "[" + option + "]", checked: !!value[option] });
     }));
 };
 exports.default = CheckboxGroup;
@@ -31653,6 +31675,7 @@ var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react
 var connected = react_redux_1.connect();
 var ColorElement = function ColorElement(props) {
     var className = props.className,
+        formName = props.formName,
         dispatch = props.dispatch,
         color = props.color,
         checked = props.checked,
@@ -31662,7 +31685,7 @@ var ColorElement = function ColorElement(props) {
     });
     return React.createElement("div", { className: classes, style: { background: color }, onClick: function onClick() {
             var newColor = checked ? '' : color;
-            dispatch(redux_form_1.change('productFilter', name, newColor));
+            dispatch(redux_form_1.change(formName, name, newColor));
         } });
 };
 exports.default = connected(ColorElement);
@@ -31687,11 +31710,12 @@ var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-f
 var ColorElement_1 = __webpack_require__(/*! ./ColorElement */ "./resources/app/es5/components/FormElements/ColorElement.js");
 var ColorGroup = function ColorGroup(props) {
     var colors = props.colors,
+        formName = props.formName,
         _a = props.input,
         value = _a.value,
         name = _a.name;
     return React.createElement(React.Fragment, null, colors.map(function (color, index) {
-        return React.createElement(redux_form_1.Field, { component: ColorElement_1.default, key: index, name: name, color: color, checked: value == color });
+        return React.createElement(redux_form_1.Field, { component: ColorElement_1.default, key: index, name: name, formName: formName, color: color, checked: value == color });
     }));
 };
 exports.default = ColorGroup;
@@ -31775,17 +31799,19 @@ var classnames_1 = __webpack_require__(/*! classnames */ "./node_modules/classna
 var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 var connected = react_redux_1.connect();
 var SizeElement = function SizeElement(props) {
+    var _a;
     var className = props.className,
+        formName = props.formName,
         dispatch = props.dispatch,
+        viewType = props.viewType,
         size = props.size,
         checked = props.checked,
         name = props.input.name;
-    var classes = classnames_1.default("goods__size-item " + (className ? className : ''), {
-        'goods__size-item_active': checked
-    });
+    var mainClass = viewType == 'product' ? 'product__size' : 'goods__size';
+    var classes = classnames_1.default(mainClass + "-item " + (className ? className : ''), (_a = {}, _a[mainClass + "-item_active"] = checked, _a));
     return React.createElement("li", { className: classes, onClick: function onClick() {
             var newSize = checked ? '' : size;
-            dispatch(redux_form_1.change('productFilter', name, newSize));
+            dispatch(redux_form_1.change(formName, name, newSize));
         } }, size);
 };
 exports.default = connected(SizeElement);
@@ -31810,11 +31836,14 @@ var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-f
 var SizeElement_1 = __webpack_require__(/*! ./SizeElement */ "./resources/app/es5/components/FormElements/SizeElement.js");
 var SizeGroup = function SizeGroup(props) {
     var sizes = props.sizes,
+        formName = props.formName,
+        viewType = props.viewType,
         _a = props.input,
         value = _a.value,
         name = _a.name;
-    return React.createElement("ul", { className: "goods__size" }, sizes.map(function (size, index) {
-        return React.createElement(redux_form_1.Field, { component: SizeElement_1.default, key: index, name: name, size: size, checked: value == size });
+    var mainClass = viewType == 'product' ? 'product__size' : 'goods__size';
+    return React.createElement("ul", { className: mainClass + " " + mainClass + "-list" }, sizes.map(function (size, index) {
+        return React.createElement(redux_form_1.Field, { component: SizeElement_1.default, key: index, name: name, size: size, formName: formName, viewType: viewType, checked: value == size });
     }));
 };
 exports.default = SizeGroup;
@@ -31926,7 +31955,7 @@ var SliderElement = function (_super) {
                 right: 100 - (newPos > 100 ? 100 : newPos)
             });
         }
-        dispatch(redux_form_1.change('productFilter', 'priceRange', {
+        dispatch(redux_form_1.change(this.props.formName, 'priceRange', {
             from: this.state.left / 100 * (max - min) + min,
             to: (100 - this.state.right) / 100 * (max - min) + min
         }));
@@ -32206,7 +32235,7 @@ var connected = react_redux_1.connect(function (state) {
 });
 var GoodsForm = function GoodsForm(props) {
     var _a, _b;
-    return React.createElement("form", { className: "goods__form", onSubmit: props.handleSubmit }, React.createElement("div", { className: "goods__form-head" }, "Product Categories"), React.createElement("div", { className: "goods__categories" }, React.createElement(redux_form_1.Field, { component: CheckboxGroup_1.default, name: "categories", options: ['T1', 'T2', 'T3'] })), React.createElement("div", { className: "goods__form-head" }, "Filter by color"), React.createElement("div", { className: "goods__color" }, React.createElement(redux_form_1.Field, { component: ColorGroup_1.default, name: "color", colors: ['red', 'green', 'yellow', 'black'] })), React.createElement("div", { className: "goods__form-head" }, "Filter by size"), React.createElement(redux_form_1.Field, { component: SizeGroup_1.default, name: "size", sizes: ['XS', 'S', 'M', 'L', 'XL'] }), React.createElement("div", { className: "goods__form-head" }, "Filter by price"), React.createElement(redux_form_1.Field, { component: Slider_1.default, name: "priceRange", min: 0, max: 1000 }), React.createElement("div", { className: "goods__price-range" }, "Price: $", (_a = props.range) === null || _a === void 0 ? void 0 : _a.from.toFixed(2), " - $", (_b = props.range) === null || _b === void 0 ? void 0 : _b.to.toFixed(2)), React.createElement("button", { type: "submit", className: "goods__form-button" }, "Filter"));
+    return React.createElement("form", { className: "goods__form", onSubmit: props.handleSubmit }, React.createElement("div", { className: "goods__form-head" }, "Product Categories"), React.createElement("div", { className: "goods__categories" }, React.createElement(redux_form_1.Field, { component: CheckboxGroup_1.default, name: "categories", formName: props.form, options: ['T1', 'T2', 'T3'] })), React.createElement("div", { className: "goods__form-head" }, "Filter by color"), React.createElement("div", { className: "goods__color" }, React.createElement(redux_form_1.Field, { component: ColorGroup_1.default, name: "color", formName: props.form, colors: ['red', 'green', 'yellow', 'black'] })), React.createElement("div", { className: "goods__form-head" }, "Filter by size"), React.createElement(redux_form_1.Field, { component: SizeGroup_1.default, name: "size", formName: props.form, sizes: ['XS', 'S', 'M', 'L', 'XL'] }), React.createElement("div", { className: "goods__form-head" }, "Filter by price"), React.createElement(redux_form_1.Field, { component: Slider_1.default, name: "priceRange", formName: props.form, min: 0, max: 1000 }), React.createElement("div", { className: "goods__price-range" }, "Price: $", (_a = props.range) === null || _a === void 0 ? void 0 : _a.from.toFixed(2), " - $", (_b = props.range) === null || _b === void 0 ? void 0 : _b.to.toFixed(2)), React.createElement("button", { type: "submit", className: "goods__form-button" }, "Filter"));
 };
 var GoodsFormRedux = redux_form_1.reduxForm({
     form: 'productFilter',
@@ -32595,6 +32624,31 @@ exports.default = LoginPage;
 
 /***/ }),
 
+/***/ "./resources/app/es5/components/Mark.js":
+/*!**********************************************!*\
+  !*** ./resources/app/es5/components/Mark.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var Mark = function Mark(props) {
+    return React.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", x: "0px", y: "0px", width: "150px", height: "30px", viewBox: "0 0 2150 427", className: "reviews__mark" }, React.createElement("defs", null, React.createElement("polygon", { points: "213.333,10.441 279.249,144.017 426.667,165.436 320,269.41\r\n\t\t\t\t\t\t 345.173,416.226 213.333,346.91 81.485,416.226 106.667,269.41\r\n\t\t\t\t\t\t 0,165.436 147.409,144.017 ", id: "star" })), React.createElement("clipPath", { id: "clip" }, new Array(5).fill(0).map(function (item, index) {
+        return React.createElement("use", { href: "#star", key: index, transform: "translate(" + index * 430 + ")" });
+    })), new Array(5).fill(0).map(function (item, index) {
+        return React.createElement("use", { href: "#star", key: index, transform: "translate(" + index * 430 + ")", className: "reviews__mark-star" });
+    }), React.createElement("rect", { x: "0", y: "0", width: 2150 * props.rating / 5, height: "427", fill: "yellow", className: "reviews__mark-fill", style: { clipPath: 'url("#clip")' } }));
+};
+exports.default = Mark;
+
+//# sourceMappingURL=Mark.js.map
+
+/***/ }),
+
 /***/ "./resources/app/es5/components/Newsletter.js":
 /*!****************************************************!*\
   !*** ./resources/app/es5/components/Newsletter.js ***!
@@ -32771,6 +32825,339 @@ var ResetPage = function ResetPage() {
     return React.createElement(React.Fragment, null, React.createElement(Paginate_1.default, { paths: [{ name: 'Home', path: '/' }, { name: 'Reset password', path: '/reset' }] }), React.createElement(ResetForm_1.default, { onSubmit: onSubmit }));
 };
 exports.default = ResetPage;
+
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ "./resources/app/es5/components/SinglePage/ProductInfo/AddCartForm.js":
+/*!****************************************************************************!*\
+  !*** ./resources/app/es5/components/SinglePage/ProductInfo/AddCartForm.js ***!
+  \****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
+var classnames_1 = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+var ColorGroup_1 = __webpack_require__(/*! ../../FormElements/ColorGroup */ "./resources/app/es5/components/FormElements/ColorGroup.js");
+var SizeGroup_1 = __webpack_require__(/*! ../../FormElements/SizeGroup */ "./resources/app/es5/components/FormElements/SizeGroup.js");
+var AddCartForm = function AddCartForm(props) {
+    var _a = React.useState(props.liked),
+        isLiked = _a[0],
+        changeLike = _a[1];
+    return React.createElement("form", { onSubmit: props.handleSubmit }, React.createElement("div", { className: "row space-between product__facilities" }, React.createElement("div", { className: "product__size row" }, React.createElement("p", null, "Size:"), React.createElement(redux_form_1.Field, { component: SizeGroup_1.default, name: "size", viewType: "product", formName: props.form, sizes: props.sizes })), React.createElement("div", { className: "product__color row" }, React.createElement("p", null, "Color:"), React.createElement(redux_form_1.Field, { component: ColorGroup_1.default, name: "color", formName: props.form, colors: props.colors }))), React.createElement("div", { className: "my-pad" }, React.createElement("div", { className: "order" }, React.createElement("div", { className: "order__quantity" }, React.createElement("b", { className: "order__quantity-head" }, "Quantity:"), React.createElement("span", { className: "order__quantity-count", contentEditable: true }, "1")), React.createElement("div", { className: "order__actions row mt-2" }, React.createElement("div", { className: classnames_1.default('order__like', { 'order__like_active': isLiked }), onClick: function onClick() {
+            return changeLike(!isLiked);
+        } }, React.createElement("i", { className: "fas fa-heart" })), React.createElement("button", { type: "submit", className: "order__add" }, "Add to cart")))));
+};
+exports.default = redux_form_1.reduxForm({
+    form: 'addCart',
+    initialValues: {
+        color: '',
+        size: ''
+    }
+})(AddCartForm);
+
+//# sourceMappingURL=AddCartForm.js.map
+
+/***/ }),
+
+/***/ "./resources/app/es5/components/SinglePage/ProductInfo/Galery.js":
+/*!***********************************************************************!*\
+  !*** ./resources/app/es5/components/SinglePage/ProductInfo/Galery.js ***!
+  \***********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var classnames_1 = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+exports.Gallery = function (props) {
+    var _a = React.useState(0),
+        curImage = _a[0],
+        changeImage = _a[1];
+    return React.createElement("div", { className: "product__images" }, React.createElement("div", { className: "product__image product__image_lg" }, React.createElement("img", { src: props.images[curImage] || '/image/product.png', alt: "Product photo" })), React.createElement("div", { className: "row space-between center" }, props.images.map(function (image, index) {
+        var prodClass = classnames_1.default('product__image product__image_sm cur', {
+            'product__image_active': curImage == index
+        });
+        return React.createElement("div", { className: prodClass, key: index, onClick: function onClick() {
+                return changeImage(index);
+            } }, React.createElement("img", { src: image, width: "100%", alt: "Gallery photo" }));
+    })));
+};
+exports.default = exports.Gallery;
+
+//# sourceMappingURL=Galery.js.map
+
+/***/ }),
+
+/***/ "./resources/app/es5/components/SinglePage/ProductInfo/Info.js":
+/*!*********************************************************************!*\
+  !*** ./resources/app/es5/components/SinglePage/ProductInfo/Info.js ***!
+  \*********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+var AddCartForm_1 = __webpack_require__(/*! ./AddCartForm */ "./resources/app/es5/components/SinglePage/ProductInfo/AddCartForm.js");
+var Mark_1 = __webpack_require__(/*! ../../Mark */ "./resources/app/es5/components/Mark.js");
+var Info = function Info(props) {
+    return React.createElement("div", { className: "product__info" }, React.createElement("div", { className: "row space-between product__info-head" }, React.createElement("div", { className: "product__name" }, props.product.name), React.createElement("div", { className: "product__price" }, "$", props.product.price.toFixed(2))), React.createElement("div", { className: "product__description" }, props.product.description), React.createElement(AddCartForm_1.default, { colors: props.product.colors, sizes: props.product.sizes, liked: props.product.liked, onSubmit: function onSubmit(vals) {
+            return console.log(vals);
+        } }), React.createElement("div", { className: "product__share" }, React.createElement("b", null, "Share in:"), React.createElement("i", { className: "fab fa-facebook-f product__share-soc" }), React.createElement("i", { className: "fab fa-twitter product__share-soc" }), React.createElement("i", { className: "fab fa-pinterest-p product__share-soc" })), React.createElement("div", { className: "product__categories" }, React.createElement("b", null, "Category:"), React.createElement("span", { className: "ml-1" }, React.createElement(react_router_dom_1.Link, { to: "/categories/" + props.product.category }, props.product.category))), React.createElement("div", { className: "product__mark my-pad" }, React.createElement("b", { className: "product__mark-head" }, "Average mark:"), React.createElement("span", null, React.createElement(Mark_1.default, { rating: props.product.mark, fixed: true }))));
+};
+exports.default = Info;
+
+//# sourceMappingURL=Info.js.map
+
+/***/ }),
+
+/***/ "./resources/app/es5/components/SinglePage/ProductInfo/index.js":
+/*!**********************************************************************!*\
+  !*** ./resources/app/es5/components/SinglePage/ProductInfo/index.js ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var Galery_1 = __webpack_require__(/*! ./Galery */ "./resources/app/es5/components/SinglePage/ProductInfo/Galery.js");
+var Info_1 = __webpack_require__(/*! ./Info */ "./resources/app/es5/components/SinglePage/ProductInfo/Info.js");
+var ProductInfo = function ProductInfo(props) {
+    return React.createElement("div", { className: "product" }, React.createElement("div", { className: "container" }, React.createElement("div", { className: "row space-between product__content" }, React.createElement(Galery_1.default, { images: props.product.images }), React.createElement(Info_1.default, { product: props.product }))));
+};
+exports.default = ProductInfo;
+
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ "./resources/app/es5/components/SinglePage/Reviews/ReviewForm.js":
+/*!***********************************************************************!*\
+  !*** ./resources/app/es5/components/SinglePage/Reviews/ReviewForm.js ***!
+  \***********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
+var InputElement_1 = __webpack_require__(/*! ../../FormElements/InputElement */ "./resources/app/es5/components/FormElements/InputElement.js");
+var ReviewForm = function ReviewForm(props) {
+    return React.createElement("form", { className: "reviews__form", onSubmit: props.handleSubmit }, React.createElement("div", { className: "row" }, React.createElement("img", { className: "reviews__ava", src: "/image/ava.png", alt: "Ava" }), React.createElement("div", { className: "reviews__wrap" }, React.createElement("div", { className: "reviews__comment" }, React.createElement(redux_form_1.Field, { component: InputElement_1.default, name: "email", placeholder: "Email", required: true }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, name: "userName", placeholder: "Name", required: true }), React.createElement("div", { className: "input" }, React.createElement("textarea", { className: "input__elem", required: true, rows: 1, id: "message" }), React.createElement("label", { className: "input__label" }, "Message"), React.createElement("div", { className: "input__line", style: { bottom: '7px' } })), React.createElement("button", { type: "submit", className: "reviews__but" }, "Send")))));
+};
+exports.default = redux_form_1.reduxForm({
+    form: 'productReview'
+})(ReviewForm);
+
+//# sourceMappingURL=ReviewForm.js.map
+
+/***/ }),
+
+/***/ "./resources/app/es5/components/SinglePage/Reviews/index.js":
+/*!******************************************************************!*\
+  !*** ./resources/app/es5/components/SinglePage/Reviews/index.js ***!
+  \******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var ReviewForm_1 = __webpack_require__(/*! ./ReviewForm */ "./resources/app/es5/components/SinglePage/Reviews/ReviewForm.js");
+var Reviews = function Reviews() {
+    return React.createElement("div", { className: "reviews my-pad" }, React.createElement("div", { className: "container" }, React.createElement("div", { className: "reviews__head" }, "Reviews"), React.createElement(ReviewForm_1.default, null)));
+};
+exports.default = Reviews;
+
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ "./resources/app/es5/components/SinglePage/index.js":
+/*!**********************************************************!*\
+  !*** ./resources/app/es5/components/SinglePage/index.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __extends = undefined && undefined.__extends || function () {
+    var _extendStatics = function extendStatics(d, b) {
+        _extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
+            d.__proto__ = b;
+        } || function (d, b) {
+            for (var p in b) {
+                if (b.hasOwnProperty(p)) d[p] = b[p];
+            }
+        };
+        return _extendStatics(d, b);
+    };
+    return function (d, b) {
+        _extendStatics(d, b);
+        function __() {
+            this.constructor = d;
+        }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+}();
+var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
+    function adopt(value) {
+        return value instanceof P ? value : new P(function (resolve) {
+            resolve(value);
+        });
+    }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) {
+            try {
+                step(generator.next(value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function rejected(value) {
+            try {
+                step(generator["throw"](value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function step(result) {
+            result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+        }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = undefined && undefined.__generator || function (thisArg, body) {
+    var _ = { label: 0, sent: function sent() {
+            if (t[0] & 1) throw t[1];return t[1];
+        }, trys: [], ops: [] },
+        f,
+        y,
+        t,
+        g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
+        return this;
+    }), g;
+    function verb(n) {
+        return function (v) {
+            return step([n, v]);
+        };
+    }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) {
+            try {
+                if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+                if (y = 0, t) op = [op[0] & 2, t.value];
+                switch (op[0]) {
+                    case 0:case 1:
+                        t = op;break;
+                    case 4:
+                        _.label++;return { value: op[1], done: false };
+                    case 5:
+                        _.label++;y = op[1];op = [0];continue;
+                    case 7:
+                        op = _.ops.pop();_.trys.pop();continue;
+                    default:
+                        if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+                            _ = 0;continue;
+                        }
+                        if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+                            _.label = op[1];break;
+                        }
+                        if (op[0] === 6 && _.label < t[1]) {
+                            _.label = t[1];t = op;break;
+                        }
+                        if (t && _.label < t[2]) {
+                            _.label = t[2];_.ops.push(op);break;
+                        }
+                        if (t[2]) _.ops.pop();
+                        _.trys.pop();continue;
+                }
+                op = body.call(thisArg, _);
+            } catch (e) {
+                op = [6, e];y = 0;
+            } finally {
+                f = t = 0;
+            }
+        }if (op[0] & 5) throw op[1];return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var API_1 = __webpack_require__(/*! ../../Helpers/API */ "./resources/app/es5/Helpers/API.js");
+var Paginate_1 = __webpack_require__(/*! ../Paginate */ "./resources/app/es5/components/Paginate.js");
+var Reviews_1 = __webpack_require__(/*! ./Reviews/ */ "./resources/app/es5/components/SinglePage/Reviews/index.js");
+var ProductInfo_1 = __webpack_require__(/*! ./ProductInfo/ */ "./resources/app/es5/components/SinglePage/ProductInfo/index.js");
+var SinglePage = function (_super) {
+    __extends(SinglePage, _super);
+    function SinglePage(props) {
+        var _this = _super.call(this, props) || this;
+        _this.state = {
+            isLoading: false,
+            error: '',
+            product: null
+        };
+        return _this;
+    }
+    SinglePage.prototype.componentDidMount = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var productInfoResp;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        this.setState({
+                            isLoading: true
+                        });
+                        return [4, API_1.default.getProductInfo(this.props.match.params.slug)];
+                    case 1:
+                        productInfoResp = _a.sent();
+                        if (API_1.default.isError(productInfoResp)) {
+                            this.setState({
+                                error: productInfoResp.response.data
+                            });
+                        } else {
+                            this.setState({
+                                product: productInfoResp
+                            });
+                        }
+                        this.setState({
+                            isLoading: false
+                        });
+                        return [2];
+                }
+            });
+        });
+    };
+    SinglePage.prototype.render = function () {
+        return React.createElement(React.Fragment, null, React.createElement(Paginate_1.default, { paths: [{ name: 'Home', path: '/' }, { name: 'Product', path: '/' }] }), this.state.isLoading && React.createElement("div", null, "Loading info..."), !this.state.isLoading && this.state.product && React.createElement(React.Fragment, null, React.createElement(ProductInfo_1.default, { product: this.state.product }), React.createElement(Reviews_1.default, null)));
+    };
+    return SinglePage;
+}(React.Component);
+exports.default = SinglePage;
 
 //# sourceMappingURL=index.js.map
 

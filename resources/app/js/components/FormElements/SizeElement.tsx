@@ -7,14 +7,18 @@ import {connect, ConnectedProps} from 'react-redux';
 const connected = connect();
 
 type IElementProps = WrappedFieldProps & React.InputHTMLAttributes<HTMLLIElement> & {
-	size: string
+	size: string,
+	viewType?: 'product' | 'goods',
+	formName: string
 } & ConnectedProps<typeof connected>;
 
 const SizeElement: React.FC<IElementProps> = (props) => {
-	const {className, dispatch, size, checked, input: {name}} = props;
+	const {className, formName, dispatch, viewType, size, checked, input: {name}} = props;
 
-	const classes = c(`goods__size-item ${className ? className : ''}`, {
-		'goods__size-item_active': checked
+	const mainClass = viewType == 'product' ? 'product__size' : 'goods__size';
+
+	const classes = c(`${mainClass}-item ${className ? className : ''}`, {
+		[`${mainClass}-item_active`]: checked
 	});
 
 	return (
@@ -24,7 +28,7 @@ const SizeElement: React.FC<IElementProps> = (props) => {
 				() => {
 					let newSize = checked ? '' : size;
 
-					dispatch(change('productFilter', name, newSize));
+					dispatch(change(formName, name, newSize));
 				}
 			}
 		>

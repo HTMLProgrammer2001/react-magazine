@@ -37,9 +37,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var axios_1 = require("axios");
-exports.clientAPI = axios_1.default.create({
-    baseURL: 'http://localhost:8000/api'
-});
 var API = (function () {
     function API() {
     }
@@ -55,7 +52,7 @@ var API = (function () {
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
-                        return [4, exports.clientAPI.get('/getProducts', {
+                        return [4, this.clientAPI.get('/getProducts', {
                                 params: body
                             })];
                     case 2:
@@ -69,9 +66,31 @@ var API = (function () {
             });
         });
     };
+    API.getProductInfo = function (slug) {
+        return __awaiter(this, void 0, void 0, function () {
+            var response, err_2;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4, this.clientAPI.get("/products/" + slug)];
+                    case 1:
+                        response = _a.sent();
+                        return [3, 3];
+                    case 2:
+                        err_2 = _a.sent();
+                        return [2, err_2];
+                    case 3: return [2, response.data];
+                }
+            });
+        });
+    };
     API.isError = function (arg) {
         return 'response' in arg;
     };
+    API.clientAPI = axios_1.default.create({
+        baseURL: 'http://localhost:8000/api'
+    });
     return API;
 }());
 exports.default = API;

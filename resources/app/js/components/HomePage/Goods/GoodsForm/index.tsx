@@ -15,7 +15,7 @@ const connected = connect((state: RootState) => ({
 	range: selector(state, 'priceRange')
 }));
 
-type IGoodsFormData = {
+export type IGoodsFormData = {
 	categories: {
 		[key: string]: boolean
 	},
@@ -36,6 +36,7 @@ const GoodsForm: React.FC<InjectedFormProps<IGoodsFormData, IOwnProps> & IOwnPro
 			<Field
 				component={CheckboxGroup}
 				name="categories"
+				formName={props.form}
 				options={['T1', 'T2', 'T3']}
 			/>
 		</div>
@@ -45,6 +46,7 @@ const GoodsForm: React.FC<InjectedFormProps<IGoodsFormData, IOwnProps> & IOwnPro
 			<Field
 				component={ColorGroup}
 				name="color"
+				formName={props.form}
 				colors={['red', 'green', 'yellow', 'black']}
 			/>
 		</div>
@@ -53,6 +55,7 @@ const GoodsForm: React.FC<InjectedFormProps<IGoodsFormData, IOwnProps> & IOwnPro
 		<Field
 			component={SizeGroup}
 			name="size"
+			formName={props.form}
 			sizes={['XS', 'S', 'M', 'L', 'XL']}
 		/>
 
@@ -60,6 +63,7 @@ const GoodsForm: React.FC<InjectedFormProps<IGoodsFormData, IOwnProps> & IOwnPro
 		<Field
 			component={Slider}
 			name="priceRange"
+			formName={props.form}
 			min={0}
 			max={1000}
 		/>

@@ -10,6 +10,7 @@ var CartPage_1 = require("./CartPage/");
 var ResetPage_1 = require("./ResetPage/");
 var CategoriesPage_1 = require("./CategoriesPage/");
 var CheckoutPage_1 = require("./CheckoutPage/");
+var SinglePage_1 = require("./SinglePage/");
 var Content = function () { return (React.createElement(react_router_dom_1.Switch, null,
     React.createElement(react_router_dom_1.Route, { path: '/', exact: true, component: HomePage_1.default }),
     React.createElement(react_router_dom_1.Route, { path: '/login', exact: true, component: LoginPage_1.default }),
@@ -18,6 +19,7 @@ var Content = function () { return (React.createElement(react_router_dom_1.Switc
     React.createElement(react_router_dom_1.Route, { path: '/reset', exact: true, component: ResetPage_1.default }),
     React.createElement(react_router_dom_1.Route, { path: '/categories', exact: true, component: CategoriesPage_1.default }),
     React.createElement(react_router_dom_1.Route, { path: '/checkout', exact: true, component: CheckoutPage_1.default }),
+    React.createElement(react_router_dom_1.Route, { path: '/products/:slug', exact: true, component: SinglePage_1.default }),
     React.createElement(react_router_dom_1.Route, { path: '/', component: NotFoundPage_1.default }))); };
 exports.default = Content;
 

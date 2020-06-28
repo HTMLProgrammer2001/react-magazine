@@ -14,10 +14,14 @@
     }
     
     &__images{
+        @include flex(center, center, column);
+
         padding-right: 5%;
+        max-width: 50%;
 
         @media all and(max-width: 800px) {
             width: 100%;
+            max-width: 100%;
         }
     }
 
@@ -25,11 +29,25 @@
         padding: 10px 0;
 
         &_lg{
+            @include flex(center, center);
+
             width: 100%;
+            max-height: 350px;
+            margin: 20px 0;
+
+            & img{
+                max-width: 100%;
+                max-height: 350px;
+            }
         }
 
         &_sm{
             width: 30%;
+            padding: 10px;
+        }
+
+        &_active{
+            border: 2px solid $red;
         }
     }
 

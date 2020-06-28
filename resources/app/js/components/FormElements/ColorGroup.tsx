@@ -5,11 +5,12 @@ import ColorElement from './ColorElement';
 
 
 type IElementProps = WrappedFieldProps & React.InputHTMLAttributes<HTMLInputElement> & {
-	colors: Array<string>
+	colors: Array<string>,
+	formName: string
 };
 
 const ColorGroup: React.FC<IElementProps> = (props) => {
-	const {colors, input: {value, name}} = props;
+	const {colors, formName, input: {value, name}} = props;
 
 	return (
 		<React.Fragment>
@@ -19,6 +20,7 @@ const ColorGroup: React.FC<IElementProps> = (props) => {
 						component={ColorElement}
 						key={index}
 						name={name}
+						formName={formName}
 						color={color}
 						checked={value == color}
 					/>

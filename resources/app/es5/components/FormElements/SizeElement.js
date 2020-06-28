@@ -6,13 +6,15 @@ var classnames_1 = require("classnames");
 var react_redux_1 = require("react-redux");
 var connected = react_redux_1.connect();
 var SizeElement = function (props) {
-    var className = props.className, dispatch = props.dispatch, size = props.size, checked = props.checked, name = props.input.name;
-    var classes = classnames_1.default("goods__size-item " + (className ? className : ''), {
-        'goods__size-item_active': checked
-    });
+    var _a;
+    var className = props.className, formName = props.formName, dispatch = props.dispatch, viewType = props.viewType, size = props.size, checked = props.checked, name = props.input.name;
+    var mainClass = viewType == 'product' ? 'product__size' : 'goods__size';
+    var classes = classnames_1.default(mainClass + "-item " + (className ? className : ''), (_a = {},
+        _a[mainClass + "-item_active"] = checked,
+        _a));
     return (React.createElement("li", { className: classes, onClick: function () {
             var newSize = checked ? '' : size;
-            dispatch(redux_form_1.change('productFilter', name, newSize));
+            dispatch(redux_form_1.change(formName, name, newSize));
         } }, size));
 };
 exports.default = connected(SizeElement);

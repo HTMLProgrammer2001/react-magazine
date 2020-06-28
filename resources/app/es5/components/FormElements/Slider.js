@@ -82,7 +82,7 @@ var SliderElement = (function (_super) {
                 right: 100 - (newPos > 100 ? 100 : newPos)
             });
         }
-        dispatch(redux_form_1.change('productFilter', 'priceRange', {
+        dispatch(redux_form_1.change(this.props.formName, 'priceRange', {
             from: this.state.left / 100 * (max - min) + min,
             to: (100 - this.state.right) / 100 * (max - min) + min
         }));

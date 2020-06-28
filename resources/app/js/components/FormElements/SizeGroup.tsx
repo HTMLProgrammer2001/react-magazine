@@ -5,14 +5,18 @@ import SizeElement from './SizeElement';
 
 
 type IElementProps = WrappedFieldProps & React.InputHTMLAttributes<HTMLUListElement> & {
-	sizes: Array<string>
+	sizes: Array<string>,
+	formName: string,
+	viewType?: 'product' | 'goods'
 };
 
 const SizeGroup: React.FC<IElementProps> = (props) => {
-	const {sizes, input: {value, name}} = props;
+	const {sizes, formName, viewType, input: {value, name}} = props;
+
+	const mainClass = viewType == 'product' ? 'product__size' : 'goods__size';
 
 	return (
-		<ul className="goods__size">
+		<ul className={`${mainClass} ${mainClass}-list`}>
 			{
 				sizes.map((size: string, index: number) => (
 					<Field
@@ -20,6 +24,8 @@ const SizeGroup: React.FC<IElementProps> = (props) => {
 						key={index}
 						name={name}
 						size={size}
+						formName={formName}
+						viewType={viewType}
 						checked={value == size}
 					/>
 				))
