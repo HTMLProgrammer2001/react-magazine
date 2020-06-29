@@ -85,6 +85,29 @@ var API = (function () {
             });
         });
     };
+    API.getComments = function (productID, offset) {
+        return __awaiter(this, void 0, void 0, function () {
+            var response, err_3;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4, this.clientAPI.get("/products/" + productID + "/getComments", {
+                                params: {
+                                    offset: offset
+                                }
+                            })];
+                    case 1:
+                        response = _a.sent();
+                        return [3, 3];
+                    case 2:
+                        err_3 = _a.sent();
+                        return [2, err_3];
+                    case 3: return [2, response.data];
+                }
+            });
+        });
+    };
     API.isError = function (arg) {
         return 'response' in arg;
     };

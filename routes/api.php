@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/getProducts', function (Request $request){
+Route::get('/getProducts', function (Request $request) {
     $data = [
         [
             'id' => 1,
@@ -51,7 +51,7 @@ Route::get('/getProducts', function (Request $request){
     ]);
 });
 
-Route::get('/products/{slug}', function($slug){
+Route::get('/products/{slug}', function ($slug) {
     $data = [
         [
             'id' => 1,
@@ -66,15 +66,61 @@ Route::get('/products/{slug}', function($slug){
             'price' => 24,
             'sizes' => ['XL', 'L', 'M'],
             'description' => 'Lorem text abcd iron test',
-            'mark' => 5,
+            'mark' => 1.8,
             'category' => 'test'
         ]
     ];
 
     $key = array_search($slug, array_column($data, 'slug'));
 
-    if($key !== false)
+    if ($key !== false)
         return response()->json($data[$key]);
     else
         return abort(404, 'Product not found');
+});
+
+Route::get('/products/{productID}/getComments', function (Request $request, $productID) {
+    $data = [
+        [
+            'id' => 1,
+            'likes' => 10,
+            'dislikes' => 1,
+            'mark' => 4,
+            'author' => [
+                'name' => 'Yura',
+                'avatar' => '/image/ava.png'
+            ],
+            'text' => 'Lorem',
+            'date' => '27.01.10 12:45'
+        ],
+        [
+            'id' => 2,
+            'likes' => 3,
+            'dislikes' => 5,
+            'mark' => 1,
+            'author' => [
+                'name' => 'Test',
+                'avatar' => '/image/ava.png'
+            ],
+            'text' => 'Awful',
+            'date' => '27.01.10 12:55'
+        ],
+        [
+            'id' => 3,
+            'likes' => 15,
+            'dislikes' => 0,
+            'mark' => 5,
+            'author' => [
+                'name' => 'Kuku',
+                'avatar' => '/image/ava.png'
+            ],
+            'text' => 'Very good',
+            'date' => '27.01.10 12:45'
+        ]
+    ];
+
+    return response()->json([
+        'comments' => array_slice($data, $request->offset, 1),
+        'total' => sizeof($data)
+    ]);
 });

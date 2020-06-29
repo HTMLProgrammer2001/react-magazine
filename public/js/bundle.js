@@ -31067,6 +31067,30 @@ var API = function () {
             });
         });
     };
+    API.getComments = function (productID, offset) {
+        return __awaiter(this, void 0, void 0, function () {
+            var response, err_3;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2,, 3]);
+                        return [4, this.clientAPI.get("/products/" + productID + "/getComments", {
+                            params: {
+                                offset: offset
+                            }
+                        })];
+                    case 1:
+                        response = _a.sent();
+                        return [3, 3];
+                    case 2:
+                        err_3 = _a.sent();
+                        return [2, err_3];
+                    case 3:
+                        return [2, response.data];
+                }
+            });
+        });
+    };
     API.isError = function (arg) {
         return 'response' in arg;
     };
@@ -31750,6 +31774,80 @@ var InputElement = function InputElement(props) {
 exports.default = InputElement;
 
 //# sourceMappingURL=InputElement.js.map
+
+/***/ }),
+
+/***/ "./resources/app/es5/components/FormElements/MarkElement.js":
+/*!******************************************************************!*\
+  !*** ./resources/app/es5/components/FormElements/MarkElement.js ***!
+  \******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
+var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+var Mark_1 = __webpack_require__(/*! ../Mark */ "./resources/app/es5/components/Mark.js");
+var connected = react_redux_1.connect();
+var MarkElement = function MarkElement(props) {
+    var formName = props.formName,
+        dispatch = props.dispatch,
+        _a = props.input,
+        value = _a.value,
+        name = _a.name;
+    var changeValue = function changeValue(newValue) {
+        console.log(newValue);
+        dispatch(redux_form_1.change(formName, name, newValue));
+    };
+    return React.createElement(Mark_1.default, { rating: value, fixed: false, onChange: changeValue });
+};
+exports.default = connected(MarkElement);
+
+//# sourceMappingURL=MarkElement.js.map
+
+/***/ }),
+
+/***/ "./resources/app/es5/components/FormElements/Numeric.js":
+/*!**************************************************************!*\
+  !*** ./resources/app/es5/components/FormElements/Numeric.js ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
+var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+var connected = react_redux_1.connect();
+var NumericElement = function NumericElement(props) {
+    var className = props.className,
+        formName = props.formName,
+        dispatch = props.dispatch,
+        _a = props.input,
+        value = _a.value,
+        name = _a.name;
+    var changeValue = function changeValue(newValue) {
+        if (newValue <= 0) {
+            return;
+        }
+        dispatch(redux_form_1.change(formName, name, newValue));
+    };
+    return React.createElement("span", { className: "order__quantity-count " + className }, React.createElement("span", { className: "order__quantity-control", onClick: function onClick() {
+            return changeValue(value - 1);
+        } }, "-"), React.createElement("span", { className: "order__quantity-elem", contentEditable: true }, value), React.createElement("span", { className: "order__quantity-control", onClick: function onClick() {
+            return changeValue(value + 1);
+        } }, "+"));
+};
+exports.default = connected(NumericElement);
+
+//# sourceMappingURL=Numeric.js.map
 
 /***/ }),
 
@@ -32639,9 +32737,11 @@ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var Mark = function Mark(props) {
     return React.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", x: "0px", y: "0px", width: "150px", height: "30px", viewBox: "0 0 2150 427", className: "reviews__mark" }, React.createElement("defs", null, React.createElement("polygon", { points: "213.333,10.441 279.249,144.017 426.667,165.436 320,269.41\r\n\t\t\t\t\t\t 345.173,416.226 213.333,346.91 81.485,416.226 106.667,269.41\r\n\t\t\t\t\t\t 0,165.436 147.409,144.017 ", id: "star" })), React.createElement("clipPath", { id: "clip" }, new Array(5).fill(0).map(function (item, index) {
         return React.createElement("use", { href: "#star", key: index, transform: "translate(" + index * 430 + ")" });
-    })), new Array(5).fill(0).map(function (item, index) {
-        return React.createElement("use", { href: "#star", key: index, transform: "translate(" + index * 430 + ")", className: "reviews__mark-star" });
-    }), React.createElement("rect", { x: "0", y: "0", width: 2150 * props.rating / 5, height: "427", fill: "yellow", className: "reviews__mark-fill", style: { clipPath: 'url("#clip")' } }));
+    })), React.createElement("rect", { x: "0", y: "0", width: 2150 * props.rating / 5, height: "427", fill: "yellow", className: "reviews__mark-fill", style: { clipPath: 'url("#clip")' } }), new Array(5).fill(0).map(function (item, index) {
+        return React.createElement("use", { href: "#star", key: index, transform: "translate(" + index * 430 + ")", onClick: function onClick() {
+                return !props.fixed && props.onChange ? props.onChange(index + 1) : false;
+            }, className: "reviews__mark-star" });
+    }));
 };
 exports.default = Mark;
 
@@ -32846,11 +32946,12 @@ var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-f
 var classnames_1 = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
 var ColorGroup_1 = __webpack_require__(/*! ../../FormElements/ColorGroup */ "./resources/app/es5/components/FormElements/ColorGroup.js");
 var SizeGroup_1 = __webpack_require__(/*! ../../FormElements/SizeGroup */ "./resources/app/es5/components/FormElements/SizeGroup.js");
+var Numeric_1 = __webpack_require__(/*! ../../FormElements/Numeric */ "./resources/app/es5/components/FormElements/Numeric.js");
 var AddCartForm = function AddCartForm(props) {
     var _a = React.useState(props.liked),
         isLiked = _a[0],
         changeLike = _a[1];
-    return React.createElement("form", { onSubmit: props.handleSubmit }, React.createElement("div", { className: "row space-between product__facilities" }, React.createElement("div", { className: "product__size row" }, React.createElement("p", null, "Size:"), React.createElement(redux_form_1.Field, { component: SizeGroup_1.default, name: "size", viewType: "product", formName: props.form, sizes: props.sizes })), React.createElement("div", { className: "product__color row" }, React.createElement("p", null, "Color:"), React.createElement(redux_form_1.Field, { component: ColorGroup_1.default, name: "color", formName: props.form, colors: props.colors }))), React.createElement("div", { className: "my-pad" }, React.createElement("div", { className: "order" }, React.createElement("div", { className: "order__quantity" }, React.createElement("b", { className: "order__quantity-head" }, "Quantity:"), React.createElement("span", { className: "order__quantity-count", contentEditable: true }, "1")), React.createElement("div", { className: "order__actions row mt-2" }, React.createElement("div", { className: classnames_1.default('order__like', { 'order__like_active': isLiked }), onClick: function onClick() {
+    return React.createElement("form", { onSubmit: props.handleSubmit }, React.createElement("div", { className: "row space-between product__facilities" }, React.createElement("div", { className: "product__size row" }, React.createElement("p", null, "Size:"), React.createElement(redux_form_1.Field, { component: SizeGroup_1.default, name: "size", viewType: "product", formName: props.form, sizes: props.sizes })), React.createElement("div", { className: "product__color row" }, React.createElement("p", null, "Color:"), React.createElement(redux_form_1.Field, { component: ColorGroup_1.default, name: "color", formName: props.form, colors: props.colors }))), React.createElement("div", { className: "my-pad" }, React.createElement("div", { className: "order" }, React.createElement("div", { className: "order__quantity" }, React.createElement("b", { className: "order__quantity-head" }, "Quantity:"), React.createElement(redux_form_1.Field, { component: Numeric_1.default, name: "count", formName: props.form })), React.createElement("div", { className: "order__actions row mt-2" }, React.createElement("div", { className: classnames_1.default('order__like', { 'order__like_active': isLiked }), onClick: function onClick() {
             return changeLike(!isLiked);
         } }, React.createElement("i", { className: "fas fa-heart" })), React.createElement("button", { type: "submit", className: "order__add" }, "Add to cart")))));
 };
@@ -32858,7 +32959,8 @@ exports.default = redux_form_1.reduxForm({
     form: 'addCart',
     initialValues: {
         color: '',
-        size: ''
+        size: '',
+        count: 1
     }
 })(AddCartForm);
 
@@ -32947,6 +33049,29 @@ exports.default = ProductInfo;
 
 /***/ }),
 
+/***/ "./resources/app/es5/components/SinglePage/Reviews/Review.js":
+/*!*******************************************************************!*\
+  !*** ./resources/app/es5/components/SinglePage/Reviews/Review.js ***!
+  \*******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var Mark_1 = __webpack_require__(/*! ../../Mark */ "./resources/app/es5/components/Mark.js");
+var Review = function Review(_a) {
+    var comment = _a.comment;
+    return React.createElement(React.Fragment, null, React.createElement("span", { id: "comment_" + comment.id }), React.createElement("div", { className: "reviews-list__item row" }, React.createElement("img", { className: "reviews__ava", src: comment.author.avatar, alt: "User ava" }), React.createElement("div", { className: "reviews-list__wrap" }, React.createElement("div", { className: "reviews-list__name" }, React.createElement("p", null, comment.author.name), React.createElement("div", { className: "reviews-list__icons" }, React.createElement("i", { className: "fas fa-link reviews-list__icon" }), React.createElement("i", { className: "fas fa-exclamation-triangle reviews-list__icon" }))), React.createElement("div", { className: "my-1" }, React.createElement(Mark_1.default, { rating: comment.mark, fixed: true })), React.createElement("div", { className: "reviews-list__message" }, React.createElement("p", null, comment.text)), React.createElement("div", { className: "reviews-list__item-footer" }, React.createElement("div", { className: "reviews-list__item-mark" }, React.createElement("span", null, React.createElement("i", { className: "fas fa-angle-up" }), React.createElement("span", null, "\xA0", comment.likes)), React.createElement("span", null, React.createElement("i", { className: "fas fa-angle-down" }), React.createElement("span", null, "\xA0", comment.dislikes))), React.createElement("div", { className: "reviews-list__item-date" }, comment.date)))));
+};
+exports.default = Review;
+
+//# sourceMappingURL=Review.js.map
+
+/***/ }),
+
 /***/ "./resources/app/es5/components/SinglePage/Reviews/ReviewForm.js":
 /*!***********************************************************************!*\
   !*** ./resources/app/es5/components/SinglePage/Reviews/ReviewForm.js ***!
@@ -32961,14 +33086,232 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
 var InputElement_1 = __webpack_require__(/*! ../../FormElements/InputElement */ "./resources/app/es5/components/FormElements/InputElement.js");
+var MarkElement_1 = __webpack_require__(/*! ../../FormElements/MarkElement */ "./resources/app/es5/components/FormElements/MarkElement.js");
 var ReviewForm = function ReviewForm(props) {
-    return React.createElement("form", { className: "reviews__form", onSubmit: props.handleSubmit }, React.createElement("div", { className: "row" }, React.createElement("img", { className: "reviews__ava", src: "/image/ava.png", alt: "Ava" }), React.createElement("div", { className: "reviews__wrap" }, React.createElement("div", { className: "reviews__comment" }, React.createElement(redux_form_1.Field, { component: InputElement_1.default, name: "email", placeholder: "Email", required: true }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, name: "userName", placeholder: "Name", required: true }), React.createElement("div", { className: "input" }, React.createElement("textarea", { className: "input__elem", required: true, rows: 1, id: "message" }), React.createElement("label", { className: "input__label" }, "Message"), React.createElement("div", { className: "input__line", style: { bottom: '7px' } })), React.createElement("button", { type: "submit", className: "reviews__but" }, "Send")))));
+    return React.createElement("form", { className: "reviews__form", onSubmit: props.handleSubmit, noValidate: true }, React.createElement("div", { className: "row" }, React.createElement("img", { className: "reviews__ava", src: "/image/ava.png", alt: "Ava" }), React.createElement("div", { className: "reviews__wrap" }, React.createElement(redux_form_1.Field, { component: MarkElement_1.default, name: "mark", formName: props.form }), React.createElement("div", { className: "reviews__comment" }, React.createElement(redux_form_1.Field, { component: InputElement_1.default, name: "email", placeholder: "Email", required: true }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, name: "userName", placeholder: "Name", required: true }), React.createElement("div", { className: "input" }, React.createElement(redux_form_1.Field, { component: "textarea", className: "input__elem", rows: 1, required: true, name: "message" }), React.createElement("label", { className: "input__label" }, "Message"), React.createElement("div", { className: "input__line", style: { bottom: '4px' } })), React.createElement("button", { type: "submit", className: "reviews__but" }, "Send")))));
 };
 exports.default = redux_form_1.reduxForm({
-    form: 'productReview'
+    form: 'productReview',
+    initialValues: {
+        mark: 0,
+        email: '',
+        name: '',
+        message: ''
+    }
 })(ReviewForm);
 
 //# sourceMappingURL=ReviewForm.js.map
+
+/***/ }),
+
+/***/ "./resources/app/es5/components/SinglePage/Reviews/ReviewSortForm.js":
+/*!***************************************************************************!*\
+  !*** ./resources/app/es5/components/SinglePage/Reviews/ReviewSortForm.js ***!
+  \***************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
+var SelectElement_1 = __webpack_require__(/*! ../../FormElements/SelectElement */ "./resources/app/es5/components/FormElements/SelectElement.js");
+var GoodsHeaderForm = function GoodsHeaderForm(props) {
+    return React.createElement("form", { onSubmit: props.handleSubmit }, React.createElement(redux_form_1.Field, { component: SelectElement_1.default, name: "type", options: ['New first', 'Old first', 'Best first', 'Worse first'] }));
+};
+exports.default = redux_form_1.reduxForm({
+    form: 'sortReviewsForm',
+    initialValues: {
+        type: 'New first'
+    },
+    onChange: function onChange(values, dispatch) {
+        dispatch(redux_form_1.submit('sortReviewsForm'));
+    }
+})(GoodsHeaderForm);
+
+//# sourceMappingURL=ReviewSortForm.js.map
+
+/***/ }),
+
+/***/ "./resources/app/es5/components/SinglePage/Reviews/ReviewsList.js":
+/*!************************************************************************!*\
+  !*** ./resources/app/es5/components/SinglePage/Reviews/ReviewsList.js ***!
+  \************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __extends = undefined && undefined.__extends || function () {
+    var _extendStatics = function extendStatics(d, b) {
+        _extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
+            d.__proto__ = b;
+        } || function (d, b) {
+            for (var p in b) {
+                if (b.hasOwnProperty(p)) d[p] = b[p];
+            }
+        };
+        return _extendStatics(d, b);
+    };
+    return function (d, b) {
+        _extendStatics(d, b);
+        function __() {
+            this.constructor = d;
+        }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+}();
+var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
+    function adopt(value) {
+        return value instanceof P ? value : new P(function (resolve) {
+            resolve(value);
+        });
+    }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) {
+            try {
+                step(generator.next(value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function rejected(value) {
+            try {
+                step(generator["throw"](value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function step(result) {
+            result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+        }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = undefined && undefined.__generator || function (thisArg, body) {
+    var _ = { label: 0, sent: function sent() {
+            if (t[0] & 1) throw t[1];return t[1];
+        }, trys: [], ops: [] },
+        f,
+        y,
+        t,
+        g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
+        return this;
+    }), g;
+    function verb(n) {
+        return function (v) {
+            return step([n, v]);
+        };
+    }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) {
+            try {
+                if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+                if (y = 0, t) op = [op[0] & 2, t.value];
+                switch (op[0]) {
+                    case 0:case 1:
+                        t = op;break;
+                    case 4:
+                        _.label++;return { value: op[1], done: false };
+                    case 5:
+                        _.label++;y = op[1];op = [0];continue;
+                    case 7:
+                        op = _.ops.pop();_.trys.pop();continue;
+                    default:
+                        if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+                            _ = 0;continue;
+                        }
+                        if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+                            _.label = op[1];break;
+                        }
+                        if (op[0] === 6 && _.label < t[1]) {
+                            _.label = t[1];t = op;break;
+                        }
+                        if (t && _.label < t[2]) {
+                            _.label = t[2];_.ops.push(op);break;
+                        }
+                        if (t[2]) _.ops.pop();
+                        _.trys.pop();continue;
+                }
+                op = body.call(thisArg, _);
+            } catch (e) {
+                op = [6, e];y = 0;
+            } finally {
+                f = t = 0;
+            }
+        }if (op[0] & 5) throw op[1];return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var API_1 = __webpack_require__(/*! ../../../Helpers/API */ "./resources/app/es5/Helpers/API.js");
+var Review_1 = __webpack_require__(/*! ./Review */ "./resources/app/es5/components/SinglePage/Reviews/Review.js");
+var ReviewSortForm_1 = __webpack_require__(/*! ./ReviewSortForm */ "./resources/app/es5/components/SinglePage/Reviews/ReviewSortForm.js");
+var ReviewsList = function (_super) {
+    __extends(ReviewsList, _super);
+    function ReviewsList(props) {
+        var _this = _super.call(this, props) || this;
+        _this.state = {
+            isLoading: false,
+            error: '',
+            comments: [],
+            total: 0
+        };
+        _this.loadMore = _this.loadMore.bind(_this);
+        return _this;
+    }
+    ReviewsList.prototype.componentDidMount = function () {
+        this.loadMore();
+    };
+    ReviewsList.prototype.render = function () {
+        return React.createElement(React.Fragment, null, React.createElement("hr", { className: "my-pad", color: "silver" }), React.createElement("div", { className: "reviews-list__header" }, React.createElement("div", null, this.state.total, " comments"), React.createElement(ReviewSortForm_1.default, { onSubmit: function onSubmit(vals) {
+                return console.log(vals);
+            } })), React.createElement("div", { className: "reviews-list my-pad" }, this.state.comments.map(function (comment) {
+            return React.createElement(Review_1.default, { comment: comment, key: comment.id });
+        })), React.createElement("div", { className: "load" }, this.state.total == this.state.comments.length ? false : React.createElement("button", { type: "button", className: "load__more", onClick: this.loadMore }, this.state.isLoading ? 'Loading...' : 'Load More')));
+    };
+    ReviewsList.prototype.loadMore = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var commentsResp;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        this.setState({
+                            isLoading: true
+                        });
+                        return [4, API_1.default.getComments(this.props.productID, this.state.comments.length)];
+                    case 1:
+                        commentsResp = _a.sent();
+                        if (API_1.default.isError(commentsResp)) {
+                            this.setState({
+                                error: commentsResp.response.data
+                            });
+                        } else {
+                            this.setState(function (prev) {
+                                return {
+                                    total: commentsResp.total,
+                                    comments: prev.comments.concat(commentsResp.comments)
+                                };
+                            });
+                        }
+                        this.setState({
+                            isLoading: false
+                        });
+                        return [2];
+                }
+            });
+        });
+    };
+    return ReviewsList;
+}(React.Component);
+exports.default = ReviewsList;
+
+//# sourceMappingURL=ReviewsList.js.map
 
 /***/ }),
 
@@ -32985,8 +33328,11 @@ exports.default = redux_form_1.reduxForm({
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var ReviewForm_1 = __webpack_require__(/*! ./ReviewForm */ "./resources/app/es5/components/SinglePage/Reviews/ReviewForm.js");
-var Reviews = function Reviews() {
-    return React.createElement("div", { className: "reviews my-pad" }, React.createElement("div", { className: "container" }, React.createElement("div", { className: "reviews__head" }, "Reviews"), React.createElement(ReviewForm_1.default, null)));
+var ReviewsList_1 = __webpack_require__(/*! ./ReviewsList */ "./resources/app/es5/components/SinglePage/Reviews/ReviewsList.js");
+var Reviews = function Reviews(props) {
+    return React.createElement("div", { className: "reviews my-pad" }, React.createElement("div", { className: "container" }, React.createElement("div", { className: "reviews__head" }, "Reviews"), React.createElement(ReviewForm_1.default, { onSubmit: function onSubmit(vals) {
+            return console.log(vals);
+        } }), React.createElement(ReviewsList_1.default, { productID: props.productID })));
 };
 exports.default = Reviews;
 
@@ -33153,7 +33499,7 @@ var SinglePage = function (_super) {
         });
     };
     SinglePage.prototype.render = function () {
-        return React.createElement(React.Fragment, null, React.createElement(Paginate_1.default, { paths: [{ name: 'Home', path: '/' }, { name: 'Product', path: '/' }] }), this.state.isLoading && React.createElement("div", null, "Loading info..."), !this.state.isLoading && this.state.product && React.createElement(React.Fragment, null, React.createElement(ProductInfo_1.default, { product: this.state.product }), React.createElement(Reviews_1.default, null)));
+        return React.createElement(React.Fragment, null, React.createElement(Paginate_1.default, { paths: [{ name: 'Home', path: '/' }, { name: 'Product', path: '/' }] }), this.state.isLoading && React.createElement("div", null, "Loading info..."), !this.state.isLoading && this.state.product && React.createElement(React.Fragment, null, React.createElement(ProductInfo_1.default, { product: this.state.product }), React.createElement(Reviews_1.default, { productID: this.state.product.id })));
     };
     return SinglePage;
 }(React.Component);

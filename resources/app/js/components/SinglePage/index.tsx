@@ -69,7 +69,7 @@ class SinglePage extends React.Component<ISingleProductProps, ISingleProductStat
 					!this.state.isLoading && this.state.product &&
 						<React.Fragment>
 							<ProductInfo product={this.state.product}/>
-							<Reviews/>
+							<Reviews productID={this.state.product.id}/>
 						</React.Fragment>
 				}
 			</React.Fragment>

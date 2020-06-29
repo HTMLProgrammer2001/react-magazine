@@ -50,42 +50,60 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
-var API_1 = require("../../Helpers/API");
-var Paginate_1 = require("../Paginate");
-var Reviews_1 = require("./Reviews/");
-var ProductInfo_1 = require("./ProductInfo/");
-var SinglePage = (function (_super) {
-    __extends(SinglePage, _super);
-    function SinglePage(props) {
+var API_1 = require("../../../Helpers/API");
+var Review_1 = require("./Review");
+var ReviewSortForm_1 = require("./ReviewSortForm");
+var ReviewsList = (function (_super) {
+    __extends(ReviewsList, _super);
+    function ReviewsList(props) {
         var _this = _super.call(this, props) || this;
         _this.state = {
             isLoading: false,
             error: '',
-            product: null
+            comments: [],
+            total: 0
         };
+        _this.loadMore = _this.loadMore.bind(_this);
         return _this;
     }
-    SinglePage.prototype.componentDidMount = function () {
+    ReviewsList.prototype.componentDidMount = function () {
+        this.loadMore();
+    };
+    ReviewsList.prototype.render = function () {
+        return (React.createElement(React.Fragment, null,
+            React.createElement("hr", { className: "my-pad", color: "silver" }),
+            React.createElement("div", { className: "reviews-list__header" },
+                React.createElement("div", null,
+                    this.state.total,
+                    " comments"),
+                React.createElement(ReviewSortForm_1.default, { onSubmit: function (vals) { return console.log(vals); } })),
+            React.createElement("div", { className: "reviews-list my-pad" }, this.state.comments.map(function (comment) { return (React.createElement(Review_1.default, { comment: comment, key: comment.id })); })),
+            React.createElement("div", { className: "load" }, this.state.total == this.state.comments.length ?
+                false :
+                React.createElement("button", { type: "button", className: "load__more", onClick: this.loadMore }, this.state.isLoading ? 'Loading...' : 'Load More'))));
+    };
+    ReviewsList.prototype.loadMore = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var productInfoResp;
+            var commentsResp;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         this.setState({
                             isLoading: true
                         });
-                        return [4, API_1.default.getProductInfo(this.props.match.params.slug)];
+                        return [4, API_1.default.getComments(this.props.productID, this.state.comments.length)];
                     case 1:
-                        productInfoResp = _a.sent();
-                        if (API_1.default.isError(productInfoResp)) {
+                        commentsResp = _a.sent();
+                        if (API_1.default.isError(commentsResp)) {
                             this.setState({
-                                error: productInfoResp.response.data
+                                error: commentsResp.response.data
                             });
                         }
                         else {
-                            this.setState({
-                                product: productInfoResp
-                            });
+                            this.setState(function (prev) { return ({
+                                total: commentsResp.total,
+                                comments: prev.comments.concat(commentsResp.comments)
+                            }); });
                         }
                         this.setState({
                             isLoading: false
@@ -95,20 +113,8 @@ var SinglePage = (function (_super) {
             });
         });
     };
-    SinglePage.prototype.render = function () {
-        return (React.createElement(React.Fragment, null,
-            React.createElement(Paginate_1.default, { paths: [
-                    { name: 'Home', path: '/' },
-                    { name: 'Product', path: '/' }
-                ] }),
-            this.state.isLoading && React.createElement("div", null, "Loading info..."),
-            !this.state.isLoading && this.state.product &&
-                React.createElement(React.Fragment, null,
-                    React.createElement(ProductInfo_1.default, { product: this.state.product }),
-                    React.createElement(Reviews_1.default, { productID: this.state.product.id }))));
-    };
-    return SinglePage;
+    return ReviewsList;
 }(React.Component));
-exports.default = SinglePage;
+exports.default = ReviewsList;
 
-//# sourceMappingURL=index.js.map
+//# sourceMappingURL=ReviewsList.js.map

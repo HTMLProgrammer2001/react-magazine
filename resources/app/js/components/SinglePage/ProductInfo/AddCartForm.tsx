@@ -5,7 +5,7 @@ import c from 'classnames';
 import {Size} from '../../../Interfaces/IProduct';
 import ColorGroup from '../../FormElements/ColorGroup';
 import SizeGroup from '../../FormElements/SizeGroup';
-import Mark from '../../Mark';
+import NumericElement from '../../FormElements/Numeric';
 
 
 export type IAddCartData = {
@@ -57,9 +57,12 @@ const AddCartForm: React.FC<IFormProps> = (props) => {
 					<div className="order__quantity">
 						<b className="order__quantity-head">Quantity:</b>
 
-						<span
-							className="order__quantity-count"
-							contentEditable>1</span>
+						<Field
+							component={NumericElement}
+							name="count"
+							formName={props.form}
+						/>
+
 					</div>
 
 					<div className="order__actions row mt-2">
@@ -82,6 +85,7 @@ export default reduxForm<IAddCartData, IOwnProps>({
 	form: 'addCart',
 	initialValues: {
 		color: '',
-		size: ''
+		size: '',
+		count: 1
 	}
 })(AddCartForm);

@@ -1,0 +1,1 @@
+{"version":3,"sources":["Interfaces/IComment.ts"],"names":[],"mappings":"","file":"IComment.js","sourcesContent":["export type IComment = {\r\n\tid: number,\r\n\tauthor: any,\r\n\ttext: string,\r\n\tlikes: number,\r\n\tdislikes: number,\r\n\tdate: string,\r\n\tmark: number\r\n};\r\n"]}

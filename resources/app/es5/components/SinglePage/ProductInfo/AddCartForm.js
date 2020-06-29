@@ -5,6 +5,7 @@ var redux_form_1 = require("redux-form");
 var classnames_1 = require("classnames");
 var ColorGroup_1 = require("../../FormElements/ColorGroup");
 var SizeGroup_1 = require("../../FormElements/SizeGroup");
+var Numeric_1 = require("../../FormElements/Numeric");
 var AddCartForm = function (props) {
     var _a = React.useState(props.liked), isLiked = _a[0], changeLike = _a[1];
     return (React.createElement("form", { onSubmit: props.handleSubmit },
@@ -19,7 +20,7 @@ var AddCartForm = function (props) {
             React.createElement("div", { className: "order" },
                 React.createElement("div", { className: "order__quantity" },
                     React.createElement("b", { className: "order__quantity-head" }, "Quantity:"),
-                    React.createElement("span", { className: "order__quantity-count", contentEditable: true }, "1")),
+                    React.createElement(redux_form_1.Field, { component: Numeric_1.default, name: "count", formName: props.form })),
                 React.createElement("div", { className: "order__actions row mt-2" },
                     React.createElement("div", { className: classnames_1.default('order__like', { 'order__like_active': isLiked }), onClick: function () { return changeLike(!isLiked); } },
                         React.createElement("i", { className: "fas fa-heart" })),
@@ -29,7 +30,8 @@ exports.default = redux_form_1.reduxForm({
     form: 'addCart',
     initialValues: {
         color: '',
-        size: ''
+        size: '',
+        count: 1
     }
 })(AddCartForm);
 

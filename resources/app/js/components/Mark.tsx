@@ -3,7 +3,8 @@ import * as React from 'react';
 
 type IMarkProps = {
 	rating: number,
-	fixed: boolean
+	fixed: boolean,
+	onChange?: (newValue: number) => void
 };
 
 const Mark: React.FC<IMarkProps> = (props) => (
@@ -33,15 +34,6 @@ const Mark: React.FC<IMarkProps> = (props) => (
 			))}
 		</clipPath>
 
-		{new Array(5).fill(0).map((item, index) => (
-			<use
-				href="#star"
-				key={index}
-				transform={`translate(${index * 430})`}
-				className="reviews__mark-star"
-			/>
-		))}
-
 		<rect
 			x="0"
 			y="0"
@@ -50,6 +42,16 @@ const Mark: React.FC<IMarkProps> = (props) => (
 			fill="yellow"
 			className="reviews__mark-fill"
 			style={{clipPath: 'url("#clip")'}}/>
+
+		{new Array(5).fill(0).map((item, index) => (
+			<use
+				href="#star"
+				key={index}
+				transform={`translate(${index * 430})`}
+				onClick={() => !props.fixed && props.onChange ? props.onChange(index + 1) : false}
+				className="reviews__mark-star"
+			/>
+		))}
 	</svg>
 );
 

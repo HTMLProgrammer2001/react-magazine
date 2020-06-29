@@ -39,28 +39,21 @@
                 box-shadow: 0 0 3px $red;
             }
 
-            &::before, &::after{
-                display: block;
+            &:nth-child(1){
                 position: absolute;
-
-                cursor: pointer;
-
-                font-size: 1.5rem;
-            }
-
-            &::before{
-                content: '-';
-
+                left: -5px;
                 top: 5px;
-                left: 10px;
             }
 
-            &::after{
-                content: '+';
-
+            &:nth-child(3){
+                position: absolute;
+                right: -5px;
                 top: 5px;
-                right: 10px;
             }
+        }
+        
+        &-elem{
+            width: 100%;
         }
     }
 

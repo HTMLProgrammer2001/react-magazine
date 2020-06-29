@@ -1,4 +1,13 @@
 .reviews-list{
+    &__header{
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &__wrap{
+        width: 100%;
+    }
+
     &__item{
         @media all and(max-width: 600px){
             flex-direction: column;

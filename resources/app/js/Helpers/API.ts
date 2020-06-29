@@ -1,6 +1,7 @@
 import axios, {AxiosError, AxiosResponse} from 'axios';
 import {IProductsResponse} from '../Interfaces/Responses/IProductsResponse';
 import {IFullProduct} from '../Interfaces/IFullProduct';
+import {ICommentsResponse} from '../Interfaces/Responses/ICommentsResponse';
 
 
 class API{
@@ -32,6 +33,27 @@ class API{
 
 		try {
 			response = await this.clientAPI.get<IFullProduct>(`/products/${slug}`);
+		}
+		catch (err) {
+			return err as AxiosError;
+		}
+
+		return response.data;
+	}
+
+	static async getComments(productID: number, offset: number):
+		Promise<ICommentsResponse | AxiosError>{
+
+		let response: AxiosResponse;
+
+		try {
+			response = await this.clientAPI.get<ICommentsResponse>(
+				`/products/${productID}/getComments`, {
+					params: {
+						offset
+					}
+				}
+			);
 		}
 		catch (err) {
 			return err as AxiosError;
