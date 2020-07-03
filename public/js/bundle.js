@@ -31027,7 +31027,7 @@ var API = function () {
                 switch (_a.label) {
                     case 0:
                         body = {
-                            offset: offset
+                            page: offset
                         };
                         _a.label = 1;
                     case 1:
@@ -31068,6 +31068,9 @@ var API = function () {
         });
     };
     API.getComments = function (productID, offset) {
+        if (offset === void 0) {
+            offset = 1;
+        }
         return __awaiter(this, void 0, void 0, function () {
             var response, err_3;
             return __generator(this, function (_a) {
@@ -31076,7 +31079,7 @@ var API = function () {
                         _a.trys.push([0, 2,, 3]);
                         return [4, this.clientAPI.get("/products/" + productID + "/getComments", {
                             params: {
-                                offset: offset
+                                page: offset
                             }
                         })];
                     case 1:
@@ -31144,7 +31147,7 @@ exports.default = App;
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var CartItem = function CartItem(props) {
-    return React.createElement("div", { className: "table__row" }, React.createElement("div", { className: "table__col orders__product" }, React.createElement("img", { className: "orders__img", src: props.product.photo, alt: "Product picture" }), React.createElement("div", null, React.createElement("div", { className: "orders__name" }, props.product.name), React.createElement("div", { className: "orders__color" }, React.createElement("div", { className: "goods__color-item goods__color-item_black" }), React.createElement("div", { className: "orders__size" }, props.size)))), React.createElement("div", { className: "table__col orders__price" }, props.product.price), React.createElement("div", { className: "table__col orders__quantity" }, React.createElement("div", { className: "order__quantity" }, React.createElement("span", { className: "order__quantity-count", contentEditable: "true" }, props.count))), React.createElement("div", { className: "table__col orders__total" }, props.count * props.product.price), React.createElement("div", { className: "table__col orders__remove" }, React.createElement("i", { className: "fas fa-times cur" })));
+    return React.createElement("div", { className: "table__row" }, React.createElement("div", { className: "table__col orders__product" }, React.createElement("img", { className: "orders__img", src: props.product.photo, alt: "Product picture" }), React.createElement("div", null, React.createElement("div", { className: "orders__name" }, props.product.name), React.createElement("div", { className: "orders__color" }, React.createElement("div", { className: "goods__color-item", style: { background: props.color } }), React.createElement("div", { className: "orders__size" }, props.size)))), React.createElement("div", { className: "table__col orders__price" }, props.product.price), React.createElement("div", { className: "table__col orders__quantity" }, React.createElement("div", { className: "order__quantity" }, React.createElement("span", { className: "order__quantity-count", contentEditable: "true" }, props.count))), React.createElement("div", { className: "table__col orders__total" }, props.count * props.product.price), React.createElement("div", { className: "table__col orders__remove" }, React.createElement("i", { className: "fas fa-times cur" })));
 };
 exports.default = CartItem;
 
@@ -31841,7 +31844,7 @@ var NumericElement = function NumericElement(props) {
     };
     return React.createElement("span", { className: "order__quantity-count " + className }, React.createElement("span", { className: "order__quantity-control", onClick: function onClick() {
             return changeValue(value - 1);
-        } }, "-"), React.createElement("span", { className: "order__quantity-elem", contentEditable: true }, value), React.createElement("span", { className: "order__quantity-control", onClick: function onClick() {
+        } }, "-"), React.createElement("span", { className: "order__quantity-elem" }, value), React.createElement("span", { className: "order__quantity-control", onClick: function onClick() {
             return changeValue(value + 1);
         } }, "+"));
 };
@@ -32044,7 +32047,7 @@ var SliderElement = function (_super) {
             dispatch = _a.dispatch;
         var parentBox = this.parent.current.getBoundingClientRect();
         var newPos = (event.clientX - parentBox.left) / parentBox.width * 100;
-        if (this.state.which == 'left' && newPos < this.state.right - 5) {
+        if (this.state.which == 'left' && newPos < 95 - this.state.right) {
             this.setState({
                 left: newPos < 0 ? 0 : newPos
             });
@@ -32367,7 +32370,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 var GoodItem = function GoodItem(props) {
-    return React.createElement("div", { className: "goods__list-product" }, React.createElement(react_router_dom_1.Link, { to: "/products/" + props.product.slug, className: "w-100" }, React.createElement("img", { className: "goods__list-photo w-100", src: props.product.photo, alt: "Product photo" })), React.createElement("div", { className: "goods__list-info" }, React.createElement("div", { className: "goods__list-name" }, props.product.name), React.createElement("div", { className: "goods__list-price" }, "$", props.product.price)));
+    return React.createElement("div", { className: "goods__list-product" }, React.createElement(react_router_dom_1.Link, { to: "/products/" + props.product.slug, className: "w-100" }, React.createElement("img", { className: "goods__list-photo w-100", src: "/image/" + props.product.photo, alt: "Product photo" })), React.createElement("div", { className: "goods__list-info" }, React.createElement("div", { className: "goods__list-name" }, props.product.name), React.createElement("div", { className: "goods__list-price" }, "$", props.product.price)));
 };
 exports.default = GoodItem;
 
@@ -32555,6 +32558,7 @@ var GoodsList = function (_super) {
             products: [],
             loaded: 0,
             total: 0,
+            currentPage: 0,
             error: false,
             isLoading: false
         };
@@ -32567,13 +32571,13 @@ var GoodsList = function (_super) {
         var _this = this;
         return React.createElement("div", { className: "goods__items" }, React.createElement(GoodsHeader_1.default, { loaded: this.state.loaded, total: this.state.total }), React.createElement("div", { className: "goods__list" }, this.state.products.map(function (item) {
             return React.createElement(GoodItem_1.default, { product: item, key: item.id });
-        }) || React.createElement("div", null, "No products that accept this filter")), this.state.total == this.state.loaded ? false : React.createElement("div", { className: "goods__list-load" }, React.createElement("button", { type: "button", className: "goods__list-more", onClick: function onClick() {
-                return _this.getProducts(_this.state.loaded);
+        }) || React.createElement("div", null, "No products that accept this filter")), this.state.total == this.state.loaded && !this.state.isLoading ? false : React.createElement("div", { className: "goods__list-load" }, React.createElement("button", { type: "button", className: "goods__list-more", onClick: function onClick() {
+                return _this.getProducts(_this.state.currentPage + 1);
             } }, this.state.isLoading ? 'Loading...' : 'Load More')));
     };
     GoodsList.prototype.getProducts = function (offset) {
         if (offset === void 0) {
-            offset = 0;
+            offset = 1;
         }
         return __awaiter(this, void 0, void 0, function () {
             var resp, productsResponse_1;
@@ -32594,8 +32598,9 @@ var GoodsList = function (_super) {
                             productsResponse_1 = resp;
                             this.setState(function (prev) {
                                 return {
-                                    products: prev.products.concat(productsResponse_1.products),
-                                    loaded: prev.loaded + productsResponse_1.products.length,
+                                    products: prev.products.concat(productsResponse_1.data),
+                                    loaded: productsResponse_1.to,
+                                    currentPage: productsResponse_1.current_page,
                                     total: productsResponse_1.total
                                 };
                             });
@@ -32603,7 +32608,6 @@ var GoodsList = function (_super) {
                         this.setState({
                             isLoading: false
                         });
-                        console.log(resp);
                         return [2];
                 }
             });
@@ -32956,12 +32960,7 @@ var AddCartForm = function AddCartForm(props) {
         } }, React.createElement("i", { className: "fas fa-heart" })), React.createElement("button", { type: "submit", className: "order__add" }, "Add to cart")))));
 };
 exports.default = redux_form_1.reduxForm({
-    form: 'addCart',
-    initialValues: {
-        color: '',
-        size: '',
-        count: 1
-    }
+    form: 'addCart'
 })(AddCartForm);
 
 //# sourceMappingURL=AddCartForm.js.map
@@ -33013,14 +33012,35 @@ exports.default = exports.Gallery;
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 var AddCartForm_1 = __webpack_require__(/*! ./AddCartForm */ "./resources/app/es5/components/SinglePage/ProductInfo/AddCartForm.js");
 var Mark_1 = __webpack_require__(/*! ../../Mark */ "./resources/app/es5/components/Mark.js");
+var cartActions_1 = __webpack_require__(/*! ../../../redux/Actions/cartActions */ "./resources/app/es5/redux/Actions/cartActions.js");
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+    return {
+        addCart: function addCart(formVals, product) {
+            dispatch(cartActions_1.cartAdd({
+                count: formVals.count,
+                color: formVals.color,
+                size: formVals.size,
+                product: product
+            }));
+        }
+    };
+};
+var connected = react_redux_1.connect(function (state) {
+    return {};
+}, mapDispatchToProps);
 var Info = function Info(props) {
-    return React.createElement("div", { className: "product__info" }, React.createElement("div", { className: "row space-between product__info-head" }, React.createElement("div", { className: "product__name" }, props.product.name), React.createElement("div", { className: "product__price" }, "$", props.product.price.toFixed(2))), React.createElement("div", { className: "product__description" }, props.product.description), React.createElement(AddCartForm_1.default, { colors: props.product.colors, sizes: props.product.sizes, liked: props.product.liked, onSubmit: function onSubmit(vals) {
-            return console.log(vals);
+    return React.createElement("div", { className: "product__info" }, React.createElement("div", { className: "row space-between product__info-head" }, React.createElement("div", { className: "product__name" }, props.product.name), React.createElement("div", { className: "product__price" }, "$", props.product.price.toFixed(2))), React.createElement("div", { className: "product__description" }, props.product.description), React.createElement(AddCartForm_1.default, { colors: props.product.colors, sizes: props.product.sizes, liked: props.product.liked, initialValues: {
+            count: 1,
+            size: props.product.sizes[0],
+            color: props.product.colors[0]
+        }, onSubmit: function onSubmit(vals) {
+            return props.addCart(vals, props.product);
         } }), React.createElement("div", { className: "product__share" }, React.createElement("b", null, "Share in:"), React.createElement("i", { className: "fab fa-facebook-f product__share-soc" }), React.createElement("i", { className: "fab fa-twitter product__share-soc" }), React.createElement("i", { className: "fab fa-pinterest-p product__share-soc" })), React.createElement("div", { className: "product__categories" }, React.createElement("b", null, "Category:"), React.createElement("span", { className: "ml-1" }, React.createElement(react_router_dom_1.Link, { to: "/categories/" + props.product.category }, props.product.category))), React.createElement("div", { className: "product__mark my-pad" }, React.createElement("b", { className: "product__mark-head" }, "Average mark:"), React.createElement("span", null, React.createElement(Mark_1.default, { rating: props.product.mark, fixed: true }))));
 };
-exports.default = Info;
+exports.default = connected(Info);
 
 //# sourceMappingURL=Info.js.map
 
@@ -33260,7 +33280,8 @@ var ReviewsList = function (_super) {
             isLoading: false,
             error: '',
             comments: [],
-            total: 0
+            total: 0,
+            currentPage: 0
         };
         _this.loadMore = _this.loadMore.bind(_this);
         return _this;
@@ -33284,7 +33305,7 @@ var ReviewsList = function (_super) {
                         this.setState({
                             isLoading: true
                         });
-                        return [4, API_1.default.getComments(this.props.productID, this.state.comments.length)];
+                        return [4, API_1.default.getComments(this.props.productID, this.state.currentPage + 1)];
                     case 1:
                         commentsResp = _a.sent();
                         if (API_1.default.isError(commentsResp)) {
@@ -33295,7 +33316,8 @@ var ReviewsList = function (_super) {
                             this.setState(function (prev) {
                                 return {
                                     total: commentsResp.total,
-                                    comments: prev.comments.concat(commentsResp.comments)
+                                    comments: prev.comments.concat(commentsResp.data),
+                                    currentPage: commentsResp.current_page
                                 };
                             });
                         }
@@ -33534,6 +33556,40 @@ ReactDOM.render(React.createElement(react_redux_1.Provider, { store: store }, Re
 
 /***/ }),
 
+/***/ "./resources/app/es5/redux/Actions/cartActions.js":
+/*!********************************************************!*\
+  !*** ./resources/app/es5/redux/Actions/cartActions.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var actionTypes_1 = __webpack_require__(/*! ../actionTypes */ "./resources/app/es5/redux/actionTypes.js");
+exports.cartAdd = function (product) {
+    return {
+        type: actionTypes_1.CART_ADD,
+        payload: product
+    };
+};
+exports.cartRemove = function (id) {
+    return {
+        type: actionTypes_1.CART_REMOVE,
+        payload: id
+    };
+};
+exports.cartReset = function () {
+    return {
+        type: actionTypes_1.CART_RESET
+    };
+};
+
+//# sourceMappingURL=cartActions.js.map
+
+/***/ }),
+
 /***/ "./resources/app/es5/redux/Reducers/cart.js":
 /*!**************************************************!*\
   !*** ./resources/app/es5/redux/Reducers/cart.js ***!
@@ -33544,13 +33600,26 @@ ReactDOM.render(React.createElement(react_redux_1.Provider, { store: store }, Re
 "use strict";
 
 
+var __spreadArrays = undefined && undefined.__spreadArrays || function () {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) {
+        s += arguments[i].length;
+    }for (var r = Array(s), k = 0, i = 0; i < il; i++) {
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++) {
+            r[k] = a[j];
+        }
+    }return r;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
+var actionTypes_1 = __webpack_require__(/*! ../actionTypes */ "./resources/app/es5/redux/actionTypes.js");
 var initialState = [];
 var cartReducer = function cartReducer(state, action) {
     if (state === void 0) {
         state = initialState;
     }
-    console.log(2);
+    switch (action.type) {
+        case actionTypes_1.CART_ADD:
+            return __spreadArrays(state, [action.payload]);
+    }
     return state;
 };
 exports.default = cartReducer;
@@ -33583,7 +33652,6 @@ var categoryReducer = function categoryReducer(state, action) {
     if (state === void 0) {
         state = initialState;
     }
-    console.log(1);
     return state;
 };
 exports.default = categoryReducer;
@@ -33615,6 +33683,29 @@ var storeReducer = redux_1.combineReducers({
 exports.default = storeReducer;
 
 //# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/actionTypes.js":
+/*!************************************************!*\
+  !*** ./resources/app/es5/redux/actionTypes.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.CATEGORY_LOAD_START = 'CATEGORY_LOAD_START';
+exports.CATEGORY_LOAD_SUCCESS = 'CATEGORY_LOAD_SUCCESS';
+exports.CATEGORY_LOAD_ERROR = 'CATEGORY_LOAD_ERROR';
+exports.CART_ADD = 'CART_ADD';
+exports.CART_REMOVE = 'CART_REMOVE';
+exports.CART_RESET = 'CART_RESET';
+exports.CART_UPDATE = 'CART_UPDATE';
+
+//# sourceMappingURL=actionTypes.js.map
 
 /***/ })
 

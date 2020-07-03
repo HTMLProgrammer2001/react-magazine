@@ -47,7 +47,7 @@ var API = (function () {
                 switch (_a.label) {
                     case 0:
                         body = {
-                            offset: offset
+                            page: offset
                         };
                         _a.label = 1;
                     case 1:
@@ -86,6 +86,7 @@ var API = (function () {
         });
     };
     API.getComments = function (productID, offset) {
+        if (offset === void 0) { offset = 1; }
         return __awaiter(this, void 0, void 0, function () {
             var response, err_3;
             return __generator(this, function (_a) {
@@ -94,7 +95,7 @@ var API = (function () {
                         _a.trys.push([0, 2, , 3]);
                         return [4, this.clientAPI.get("/products/" + productID + "/getComments", {
                                 params: {
-                                    offset: offset
+                                    page: offset
                                 }
                             })];
                     case 1:

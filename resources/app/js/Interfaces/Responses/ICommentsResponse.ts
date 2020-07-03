@@ -3,5 +3,7 @@ import {IComment} from '../IComment';
 
 export type ICommentsResponse = {
 	total: number,
-	comments: Array<IComment>
+	current_page: number,
+	to: number,
+	data: Array<IComment>
 };

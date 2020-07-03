@@ -25,9 +25,6 @@ const initialState: CategoryState = {
 };
 
 const categoryReducer = (state: CategoryState = initialState,
-						 action: CategoryActions): CategoryState => {
-	console.log(1);
-	return state;
-};
+						 action: CategoryActions): CategoryState => state;
 
 export default categoryReducer;

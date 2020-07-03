@@ -120,7 +120,7 @@ class SliderElement extends React.Component<IElementProps, ISliderState>{
 		const newPos = (event.clientX - parentBox.left)/parentBox.width * 100;
 
 		//Move left point
-		if(this.state.which == 'left' && newPos < this.state.right - 5) {
+		if(this.state.which == 'left' && newPos < 95 - this.state.right) {
 			this.setState({
 				left: newPos < 0 ? 0 : newPos
 			});

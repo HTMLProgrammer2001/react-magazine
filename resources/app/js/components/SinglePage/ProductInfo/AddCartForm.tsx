@@ -10,7 +10,7 @@ import NumericElement from '../../FormElements/Numeric';
 
 export type IAddCartData = {
 	color: string,
-	size: string,
+	size: Size,
 	count: number
 };
 
@@ -82,10 +82,5 @@ const AddCartForm: React.FC<IFormProps> = (props) => {
 };
 
 export default reduxForm<IAddCartData, IOwnProps>({
-	form: 'addCart',
-	initialValues: {
-		color: '',
-		size: '',
-		count: 1
-	}
+	form: 'addCart'
 })(AddCartForm);

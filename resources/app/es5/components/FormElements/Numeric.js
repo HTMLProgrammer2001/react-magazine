@@ -14,7 +14,7 @@ var NumericElement = function (props) {
     };
     return (React.createElement("span", { className: "order__quantity-count " + className },
         React.createElement("span", { className: "order__quantity-control", onClick: function () { return changeValue(value - 1); } }, "-"),
-        React.createElement("span", { className: "order__quantity-elem", contentEditable: true }, value),
+        React.createElement("span", { className: "order__quantity-elem" }, value),
         React.createElement("span", { className: "order__quantity-control", onClick: function () { return changeValue(value + 1); } }, "+")));
 };
 exports.default = connected(NumericElement);

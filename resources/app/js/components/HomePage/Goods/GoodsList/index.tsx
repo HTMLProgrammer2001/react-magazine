@@ -12,6 +12,7 @@ type IGoodsState = {
 	products: Array<IProduct>,
 	loaded: number,
 	total: number,
+	currentPage: number,
 	isLoading: boolean,
 	error: boolean
 }
@@ -24,6 +25,7 @@ class GoodsList extends React.Component<IGoodsProps, IGoodsState>{
 			products: [],
 			loaded: 0,
 			total: 0,
+			currentPage: 0,
 			error: false,
 			isLoading: false
 		};
@@ -51,13 +53,13 @@ class GoodsList extends React.Component<IGoodsProps, IGoodsState>{
 				</div>
 
 				{
-					this.state.total == this.state.loaded ?
+					this.state.total == this.state.loaded && !this.state.isLoading ?
 						false :
 						<div className="goods__list-load">
 							<button
 								type="button"
 								className="goods__list-more"
-								onClick={() => this.getProducts(this.state.loaded)}
+								onClick={() => this.getProducts(this.state.currentPage + 1)}
 							>
 								{this.state.isLoading ? 'Loading...' : 'Load More'}
 							</button>
@@ -67,7 +69,7 @@ class GoodsList extends React.Component<IGoodsProps, IGoodsState>{
 		);
 	}
 
-	async getProducts(offset: number = 0){
+	async getProducts(offset: number = 1){
 		this.setState({
 			isLoading: true
 		});
@@ -83,8 +85,9 @@ class GoodsList extends React.Component<IGoodsProps, IGoodsState>{
 			const productsResponse = resp as IProductsResponse;
 
 			this.setState((prev) => ({
-				products: prev.products.concat(productsResponse.products),
-				loaded: prev.loaded + productsResponse.products.length,
+				products: prev.products.concat(productsResponse.data),
+				loaded: productsResponse.to,
+				currentPage: productsResponse.current_page,
 				total: productsResponse.total
 			}));
 		}
@@ -92,8 +95,6 @@ class GoodsList extends React.Component<IGoodsProps, IGoodsState>{
 		this.setState({
 			isLoading: false
 		});
-
-		console.log(resp);
 	}
 }
 

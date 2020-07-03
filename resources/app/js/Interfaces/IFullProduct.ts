@@ -1,13 +1,7 @@
-import {Size} from './IProduct';
+import {Size, IProduct} from './IProduct';
 
-export type IFullProduct = {
-	id: number,
-	slug: string,
-	name: string,
-	colors: Array<string>,
+export type IFullProduct = IProduct & {
 	images: Array<string>,
-	price: number,
-	sizes: Array<Size>,
 	category: string,
 	mark: number,
 	description: string,

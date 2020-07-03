@@ -11,7 +11,7 @@ class API{
 
 	static async getProducts(offset?: number): Promise<IProductsResponse | AxiosError>{
 		let body = {
-			offset
+			page: offset
 		};
 		
 		let response: AxiosResponse;
@@ -41,7 +41,7 @@ class API{
 		return response.data;
 	}
 
-	static async getComments(productID: number, offset: number):
+	static async getComments(productID: number, offset: number = 1):
 		Promise<ICommentsResponse | AxiosError>{
 
 		let response: AxiosResponse;
@@ -50,7 +50,7 @@ class API{
 			response = await this.clientAPI.get<ICommentsResponse>(
 				`/products/${productID}/getComments`, {
 					params: {
-						offset
+						page: offset
 					}
 				}
 			);

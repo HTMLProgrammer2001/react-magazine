@@ -16,7 +16,7 @@ const CartItem: React.FC<ICartItem> = (props) => (
 				<div className="orders__name">{props.product.name}</div>
 
 				<div className="orders__color">
-					<div className="goods__color-item goods__color-item_black"/>
+					<div className="goods__color-item" style={{background: props.color}}/>
 					<div className="orders__size">{props.size}</div>
 				</div>
 			</div>

@@ -2,8 +2,21 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
 var react_router_dom_1 = require("react-router-dom");
+var react_redux_1 = require("react-redux");
 var AddCartForm_1 = require("./AddCartForm");
 var Mark_1 = require("../../Mark");
+var cartActions_1 = require("../../../redux/Actions/cartActions");
+var mapDispatchToProps = function (dispatch) { return ({
+    addCart: function (formVals, product) {
+        dispatch(cartActions_1.cartAdd({
+            count: formVals.count,
+            color: formVals.color,
+            size: formVals.size,
+            product: product
+        }));
+    }
+}); };
+var connected = react_redux_1.connect(function (state) { return ({}); }, mapDispatchToProps);
 var Info = function (props) { return (React.createElement("div", { className: "product__info" },
     React.createElement("div", { className: "row space-between product__info-head" },
         React.createElement("div", { className: "product__name" }, props.product.name),
@@ -11,7 +24,11 @@ var Info = function (props) { return (React.createElement("div", { className: "p
             "$",
             props.product.price.toFixed(2))),
     React.createElement("div", { className: "product__description" }, props.product.description),
-    React.createElement(AddCartForm_1.default, { colors: props.product.colors, sizes: props.product.sizes, liked: props.product.liked, onSubmit: function (vals) { return console.log(vals); } }),
+    React.createElement(AddCartForm_1.default, { colors: props.product.colors, sizes: props.product.sizes, liked: props.product.liked, initialValues: {
+            count: 1,
+            size: props.product.sizes[0],
+            color: props.product.colors[0]
+        }, onSubmit: function (vals) { return props.addCart(vals, props.product); } }),
     React.createElement("div", { className: "product__share" },
         React.createElement("b", null, "Share in:"),
         React.createElement("i", { className: "fab fa-facebook-f product__share-soc" }),
@@ -25,6 +42,6 @@ var Info = function (props) { return (React.createElement("div", { className: "p
         React.createElement("b", { className: "product__mark-head" }, "Average mark:"),
         React.createElement("span", null,
             React.createElement(Mark_1.default, { rating: props.product.mark, fixed: true }))))); };
-exports.default = Info;
+exports.default = connected(Info);
 
 //# sourceMappingURL=Info.js.map

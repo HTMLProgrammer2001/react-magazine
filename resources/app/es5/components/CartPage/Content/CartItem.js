@@ -7,7 +7,7 @@ var CartItem = function (props) { return (React.createElement("div", { className
         React.createElement("div", null,
             React.createElement("div", { className: "orders__name" }, props.product.name),
             React.createElement("div", { className: "orders__color" },
-                React.createElement("div", { className: "goods__color-item goods__color-item_black" }),
+                React.createElement("div", { className: "goods__color-item", style: { background: props.color } }),
                 React.createElement("div", { className: "orders__size" }, props.size)))),
     React.createElement("div", { className: "table__col orders__price" }, props.product.price),
     React.createElement("div", { className: "table__col orders__quantity" },

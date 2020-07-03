@@ -11,7 +11,6 @@ var initialState = {
 };
 var categoryReducer = function (state, action) {
     if (state === void 0) { state = initialState; }
-    console.log(1);
     return state;
 };
 exports.default = categoryReducer;

@@ -27,12 +27,7 @@ var AddCartForm = function (props) {
                     React.createElement("button", { type: "submit", className: "order__add" }, "Add to cart"))))));
 };
 exports.default = redux_form_1.reduxForm({
-    form: 'addCart',
-    initialValues: {
-        color: '',
-        size: '',
-        count: 1
-    }
+    form: 'addCart'
 })(AddCartForm);
 
 //# sourceMappingURL=AddCartForm.js.map

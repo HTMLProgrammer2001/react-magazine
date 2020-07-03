@@ -1,16 +1,34 @@
 import * as React from 'react';
 import {Link} from 'react-router-dom';
+import {connect, ConnectedProps} from 'react-redux';
+import {Dispatch} from 'redux';
 
 import {IFullProduct} from '../../../Interfaces/IFullProduct';
+import {RootState} from '../../../redux/Reducers';
+import {IProduct, Size} from '../../../Interfaces/IProduct';
 import AddCartForm, {IAddCartData} from './AddCartForm';
 import Mark from '../../Mark';
+import {cartAdd} from '../../../redux/Actions/cartActions';
 
+
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+	addCart: (formVals: IAddCartData, product: IProduct) => {
+		dispatch(cartAdd({
+			count: formVals.count,
+			color: formVals.color,
+			size: formVals.size,
+			product
+		}));
+	}
+});
+
+const connected = connect((state: RootState) => ({}), mapDispatchToProps);
 
 type IInfoProps = {
 	product: IFullProduct
 };
 
-const Info: React.FC<IInfoProps> = (props) => (
+const Info: React.FC<IInfoProps & ConnectedProps<typeof connected>> = (props) => (
 	<div className="product__info">
 		<div className="row space-between product__info-head">
 			<div className="product__name">
@@ -30,7 +48,12 @@ const Info: React.FC<IInfoProps> = (props) => (
 			colors={props.product.colors}
 			sizes={props.product.sizes}
 			liked={props.product.liked}
-			onSubmit={(vals: IAddCartData) => console.log(vals)}
+			initialValues={{
+				count: 1,
+				size: props.product.sizes[0],
+				color: props.product.colors[0]
+			}}
+			onSubmit={(vals: IAddCartData) => props.addCart(vals, props.product)}
 		/>
 
 		<div className="product__share">
@@ -58,4 +81,4 @@ const Info: React.FC<IInfoProps> = (props) => (
 	</div>
 );
 
-export default Info;
+export default connected(Info);

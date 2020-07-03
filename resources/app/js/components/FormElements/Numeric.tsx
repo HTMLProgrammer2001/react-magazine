@@ -28,7 +28,7 @@ const NumericElement: React.FC<IElementProps> = (props) => {
 				onClick={() => changeValue(value - 1)}
 			>-</span>
 
-			<span className="order__quantity-elem" contentEditable>{value}</span>
+			<span className="order__quantity-elem">{value}</span>
 
 			<span className="order__quantity-control"
 				  onClick={() => changeValue(value + 1)}

@@ -57,7 +57,7 @@
         "vars-on-top": "error",
         "no-unused-vars": "off",
         "no-use-before-define": "error",
-        "camelcase": "error",
+        "camelcase": "warn",
         "block-spacing": "warn",
         "capitalized-comments": "warn",
         "comma-dangle": ["warn", "never"],

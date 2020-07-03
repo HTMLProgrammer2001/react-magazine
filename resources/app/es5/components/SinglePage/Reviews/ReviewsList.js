@@ -61,7 +61,8 @@ var ReviewsList = (function (_super) {
             isLoading: false,
             error: '',
             comments: [],
-            total: 0
+            total: 0,
+            currentPage: 0
         };
         _this.loadMore = _this.loadMore.bind(_this);
         return _this;
@@ -91,7 +92,7 @@ var ReviewsList = (function (_super) {
                         this.setState({
                             isLoading: true
                         });
-                        return [4, API_1.default.getComments(this.props.productID, this.state.comments.length)];
+                        return [4, API_1.default.getComments(this.props.productID, this.state.currentPage + 1)];
                     case 1:
                         commentsResp = _a.sent();
                         if (API_1.default.isError(commentsResp)) {
@@ -102,7 +103,8 @@ var ReviewsList = (function (_super) {
                         else {
                             this.setState(function (prev) { return ({
                                 total: commentsResp.total,
-                                comments: prev.comments.concat(commentsResp.comments)
+                                comments: prev.comments.concat(commentsResp.data),
+                                currentPage: commentsResp.current_page
                             }); });
                         }
                         this.setState({

@@ -61,6 +61,7 @@ var GoodsList = (function (_super) {
             products: [],
             loaded: 0,
             total: 0,
+            currentPage: 0,
             error: false,
             isLoading: false
         };
@@ -76,13 +77,13 @@ var GoodsList = (function (_super) {
             React.createElement("div", { className: "goods__list" }, this.state.products.map(function (item) { return (React.createElement(GoodItem_1.default, { product: item, key: item.id })); })
                 ||
                     React.createElement("div", null, "No products that accept this filter")),
-            this.state.total == this.state.loaded ?
+            this.state.total == this.state.loaded && !this.state.isLoading ?
                 false :
                 React.createElement("div", { className: "goods__list-load" },
-                    React.createElement("button", { type: "button", className: "goods__list-more", onClick: function () { return _this.getProducts(_this.state.loaded); } }, this.state.isLoading ? 'Loading...' : 'Load More'))));
+                    React.createElement("button", { type: "button", className: "goods__list-more", onClick: function () { return _this.getProducts(_this.state.currentPage + 1); } }, this.state.isLoading ? 'Loading...' : 'Load More'))));
     };
     GoodsList.prototype.getProducts = function (offset) {
-        if (offset === void 0) { offset = 0; }
+        if (offset === void 0) { offset = 1; }
         return __awaiter(this, void 0, void 0, function () {
             var resp, productsResponse_1;
             return __generator(this, function (_a) {
@@ -102,15 +103,15 @@ var GoodsList = (function (_super) {
                         else {
                             productsResponse_1 = resp;
                             this.setState(function (prev) { return ({
-                                products: prev.products.concat(productsResponse_1.products),
-                                loaded: prev.loaded + productsResponse_1.products.length,
+                                products: prev.products.concat(productsResponse_1.data),
+                                loaded: productsResponse_1.to,
+                                currentPage: productsResponse_1.current_page,
                                 total: productsResponse_1.total
                             }); });
                         }
                         this.setState({
                             isLoading: false
                         });
-                        console.log(resp);
                         return [2];
                 }
             });

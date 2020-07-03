@@ -8,7 +8,8 @@ class Product extends Model
 {
     protected $casts = [
         'colors' => 'array',
-        'sizes' => 'array'
+        'sizes' => 'array',
+        'images' => 'array'
     ];
 
     public $timestamps = false;
@@ -26,6 +27,10 @@ class Product extends Model
 
     public function orders(){
         return $this->belongsToMany(Order::class, 'orderitems');
+    }
+
+    public function likes(){
+        return $this->hasMany(Like::class);
     }
 
     //helpers

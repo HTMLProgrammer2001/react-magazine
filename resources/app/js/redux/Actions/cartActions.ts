@@ -1,14 +1,14 @@
-import {IProduct} from '../../Interfaces/IProduct';
 import {
 	CART_RESET,
 	CART_ADD,
 	CART_REMOVE,
 	CART_UPDATE
 } from '../actionTypes';
+import {ICartItem} from '../../Interfaces/ICartItem';
 
 
 //Cart action creators
-export const cartAdd = (product: IProduct) => (<const>{
+export const cartAdd = (product: ICartItem) => (<const>{
 	type: CART_ADD,
 	payload: product
 });

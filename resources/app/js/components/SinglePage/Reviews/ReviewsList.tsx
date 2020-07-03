@@ -15,7 +15,8 @@ type IReviewsState = {
 	isLoading: boolean,
 	error: string,
 	comments: Array<IComment>,
-	total: number
+	total: number,
+	currentPage: number
 }
 
 class ReviewsList extends React.Component<IReviewsProps, IReviewsState>{
@@ -26,7 +27,8 @@ class ReviewsList extends React.Component<IReviewsProps, IReviewsState>{
 			isLoading: false,
 			error: '',
 			comments: [],
-			total: 0
+			total: 0,
+			currentPage: 0
 		};
 
 		this.loadMore = this.loadMore.bind(this);
@@ -72,7 +74,7 @@ class ReviewsList extends React.Component<IReviewsProps, IReviewsState>{
 			isLoading: true
 		});
 
-		let commentsResp = await API.getComments(this.props.productID, this.state.comments.length);
+		let commentsResp = await API.getComments(this.props.productID, this.state.currentPage + 1);
 
 		if(API.isError(commentsResp)){
 			this.setState({
@@ -82,7 +84,8 @@ class ReviewsList extends React.Component<IReviewsProps, IReviewsState>{
 		else{
 			this.setState((prev) => ({
 				total: (commentsResp as ICommentsResponse).total,
-				comments: prev.comments.concat((commentsResp as ICommentsResponse).comments)
+				comments: prev.comments.concat((commentsResp as ICommentsResponse).data),
+				currentPage: (commentsResp as ICommentsResponse).current_page
 			}));
 		}
 

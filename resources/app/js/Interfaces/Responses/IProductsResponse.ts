@@ -2,5 +2,7 @@ import {IProduct} from '../IProduct';
 
 export type IProductsResponse = {
 	total: number,
-	products: Array<IProduct>
-}
+	current_page: number,
+	to: number,
+	data: Array<IProduct>
+};

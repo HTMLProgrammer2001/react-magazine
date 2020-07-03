@@ -72,7 +72,7 @@ var SliderElement = (function (_super) {
         var _a = this.props, min = _a.min, max = _a.max, dispatch = _a.dispatch;
         var parentBox = this.parent.current.getBoundingClientRect();
         var newPos = (event.clientX - parentBox.left) / parentBox.width * 100;
-        if (this.state.which == 'left' && newPos < this.state.right - 5) {
+        if (this.state.which == 'left' && newPos < 95 - this.state.right) {
             this.setState({
                 left: newPos < 0 ? 0 : newPos
             });

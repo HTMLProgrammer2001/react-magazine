@@ -13,7 +13,7 @@ const GoodItem: React.FC<IGoodItemProps> = (props) => (
 		<Link to={`/products/${props.product.slug}`} className="w-100">
 			<img
 				className="goods__list-photo w-100"
-				src={props.product.photo}
+				src={`/image/${props.product.photo}`}
 				alt="Product photo"
 			/>
 		</Link>
