@@ -39,6 +39,10 @@ class User extends Authenticatable
         return $this->hasMany(Comment::class);
     }
 
+    public function reactions(){
+        return $this->hasMany(Reaction::class);
+    }
+
     //helpers
     public function changeEmail($newEmail){
         $this->email = $newEmail;

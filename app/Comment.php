@@ -23,6 +23,10 @@ class Comment extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function reactions(){
+        return $this->hasMany(Reaction::class);
+    }
+
     //helpers
     public function setProduct(int $product_id){
         $this->product_id = $product_id;

@@ -2,18 +2,29 @@ import * as React from 'react';
 import {WrappedFieldProps, change} from 'redux-form';
 import c from 'classnames';
 import {connect, ConnectedProps} from 'react-redux';
+import {Dispatch} from 'redux';
 
 
-const connected = connect();
+const mapDispatchToProps = (dispatch: Dispatch, ownProps: IOwnProps & {checked: boolean }) => ({
+	changeValue: (name: string, newValue: string) => {
+		let newSize = ownProps.checked ? '' : newValue;
+		dispatch(change(ownProps.formName, name, newSize));
+	}
+});
 
-type IElementProps = WrappedFieldProps & React.InputHTMLAttributes<HTMLLIElement> & {
+const connected = connect(null, mapDispatchToProps);
+
+type IOwnProps = {
 	size: string,
 	viewType?: 'product' | 'goods',
 	formName: string
-} & ConnectedProps<typeof connected>;
+}
+
+type IElementProps = WrappedFieldProps & React.InputHTMLAttributes<HTMLLIElement> &
+	IOwnProps & ConnectedProps<typeof connected>;
 
 const SizeElement: React.FC<IElementProps> = (props) => {
-	const {className, formName, dispatch, viewType, size, checked, input: {name}} = props;
+	const {className, viewType, size, checked, input: {name}} = props;
 
 	const mainClass = viewType == 'product' ? 'product__size' : 'goods__size';
 
@@ -24,13 +35,7 @@ const SizeElement: React.FC<IElementProps> = (props) => {
 	return (
 		<li
 			className={classes}
-			onClick={
-				() => {
-					let newSize = checked ? '' : size;
-
-					dispatch(change(formName, name, newSize));
-				}
-			}
+			onClick={() => props.changeValue(name, size)}
 		>
 			{size}
 		</li>

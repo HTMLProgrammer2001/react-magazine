@@ -1,7 +1,10 @@
 import axios, {AxiosError, AxiosResponse} from 'axios';
+
 import {IProductsResponse} from '../Interfaces/Responses/IProductsResponse';
 import {IFullProduct} from '../Interfaces/IFullProduct';
 import {ICommentsResponse} from '../Interfaces/Responses/ICommentsResponse';
+import {IChangeLikeResponse} from '../Interfaces/Responses/IChangeLikeResponse';
+import {IRegisterFormData} from '../components/RegisterPage/RegisterForm';
 
 
 class API{
@@ -54,6 +57,34 @@ class API{
 					}
 				}
 			);
+		}
+		catch (err) {
+			return err as AxiosError;
+		}
+
+		return response.data;
+	}
+
+	static async changeLike(productID: number): Promise<IChangeLikeResponse | AxiosError>{
+		let response: AxiosResponse;
+
+		try {
+			response = await this.clientAPI.post<IChangeLikeResponse>(
+				`/products/${productID}/changeLike`
+			);
+		}
+		catch (err) {
+			return err as AxiosError;
+		}
+
+		return response.data;
+	}
+
+	static async registerUser(vals: IRegisterFormData): Promise<any | AxiosError>{
+		let response: AxiosResponse;
+
+		try {
+			response = await this.clientAPI.post<any>('/register', vals);
 		}
 		catch (err) {
 			return err as AxiosError;

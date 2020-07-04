@@ -5,9 +5,9 @@ exports.cartAdd = function (product) { return ({
     type: actionTypes_1.CART_ADD,
     payload: product
 }); };
-exports.cartRemove = function (id) { return ({
+exports.cartRemove = function (index) { return ({
     type: actionTypes_1.CART_REMOVE,
-    payload: id
+    payload: index
 }); };
 exports.cartReset = function () { return ({
     type: actionTypes_1.CART_RESET

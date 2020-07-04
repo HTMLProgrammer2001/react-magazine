@@ -13,9 +13,9 @@ export const cartAdd = (product: ICartItem) => (<const>{
 	payload: product
 });
 
-export const cartRemove = (id: number) => (<const>{
+export const cartRemove = (index: number) => (<const>{
 	type: CART_REMOVE,
-	payload: id
+	payload: index
 });
 
 export const cartReset = () => (<const>{

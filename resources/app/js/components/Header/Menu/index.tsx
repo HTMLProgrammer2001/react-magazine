@@ -27,8 +27,12 @@ const Menu: React.FC<{}> = () => {
 					Categories
 				</Link>
 
-				<Link to="/profile" className="header__item">
-					Profile
+				<Link to="/login" className="header__item">
+					Login
+				</Link>
+
+				<Link to="/register" className="header__item">
+					Register
 				</Link>
 			</div>
 

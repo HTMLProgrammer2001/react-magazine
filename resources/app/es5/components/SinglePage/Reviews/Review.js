@@ -17,7 +17,7 @@ var Review = function (_a) {
                 React.createElement("div", { className: "my-1" },
                     React.createElement(Mark_1.default, { rating: comment.mark, fixed: true })),
                 React.createElement("div", { className: "reviews-list__message" },
-                    React.createElement("p", null, comment.text)),
+                    React.createElement("p", null, comment.message)),
                 React.createElement("div", { className: "reviews-list__item-footer" },
                     React.createElement("div", { className: "reviews-list__item-mark" },
                         React.createElement("span", null,

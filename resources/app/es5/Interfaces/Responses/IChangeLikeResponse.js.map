@@ -1,0 +1,1 @@
+{"version":3,"sources":["Interfaces/Responses/IChangeLikeResponse.ts"],"names":[],"mappings":"","file":"IChangeLikeResponse.js","sourcesContent":["export type IChangeLikeResponse = {\r\n\tmessage: string\r\n};\r\n"]}

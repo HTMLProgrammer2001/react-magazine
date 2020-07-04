@@ -1,9 +1,16 @@
 import * as React from 'react';
 import {WrappedFieldProps, change} from 'redux-form';
 import {connect, ConnectedProps} from 'react-redux';
+import {Dispatch} from 'redux';
 
 
-const connected = connect();
+const mapDispatchToProps = (dispatch: Dispatch, ownProps: ISliderProps) => ({
+	changeValue: (name: string, newValue: any) => {
+		dispatch(change(ownProps.formName, name, newValue));
+	}
+});
+
+const connected = connect(null, mapDispatchToProps);
 
 type ISliderProps = {
 	min: number,
@@ -14,9 +21,7 @@ type ISliderProps = {
 type IWhich = 'left' | 'right' | null;
 
 type ISliderState = {
-	which: IWhich,
-	left: number,
-	right: number
+	which: IWhich
 }
 
 type IElementProps = WrappedFieldProps &
@@ -29,6 +34,9 @@ class SliderElement extends React.Component<IElementProps, ISliderState>{
 	left: React.RefObject<HTMLDivElement>;
 	right: React.RefObject<HTMLDivElement>;
 
+	leftPosition: number;
+	rightPosition: number;
+
 	constructor(props: IElementProps){
 		super(props);
 
@@ -37,12 +45,12 @@ class SliderElement extends React.Component<IElementProps, ISliderState>{
 		this.indicator = React.createRef<HTMLDivElement>();
 		this.left = React.createRef<HTMLDivElement>();
 		this.right = React.createRef<HTMLDivElement>();
+		this.leftPosition = 0;
+		this.rightPosition = 0;
 		
 		//Set state
 		this.state = {
-			which: null,
-			left: 0,
-			right: 0
+			which: null
 		};
 
 		//Bind events
@@ -56,13 +64,10 @@ class SliderElement extends React.Component<IElementProps, ISliderState>{
 		const {min, max, input: {value}} = this.props;
 
 		//Calculate positions
-		const leftPosition = (value.from - min)/(max - min) * 100;
-		const rightPosition = (value.to - min)/(max - min) * 100;
+		this.leftPosition = (value.from - min)/(max - min) * 100;
+		this.rightPosition = 100 - (value.to - min)/(max - min) * 100;
 
-		this.setState({
-			left: leftPosition,
-			right: rightPosition
-		});
+		this.positeSlider();
 
 		//Add document mouse move listener
 		document.addEventListener('mousemove', this.onMouseMove);
@@ -70,6 +75,12 @@ class SliderElement extends React.Component<IElementProps, ISliderState>{
 	}
 
 	componentDidUpdate(): void {
+		const {min, max, input: {value}} = this.props;
+
+		//Calculate positions
+		this.leftPosition = (value.from - min)/(max - min) * 100;
+		this.rightPosition = 100 - (value.to - min)/(max - min) * 100;
+
 		this.positeSlider();
 	}
 
@@ -105,8 +116,6 @@ class SliderElement extends React.Component<IElementProps, ISliderState>{
 		this.setState({
 			which
 		});
-
-		console.log(which);
 	}
 	
 	onMouseMove(event: any){
@@ -114,29 +123,30 @@ class SliderElement extends React.Component<IElementProps, ISliderState>{
 			return;
 		}
 
-		const {min, max, dispatch} = this.props;
+		const {min, max, input: {value}} = this.props;
 
 		const parentBox = this.parent.current!.getBoundingClientRect();
-		const newPos = (event.clientX - parentBox.left)/parentBox.width * 100;
+		let newPos = (event.clientX - parentBox.left)/parentBox.width * 100;
 
-		//Move left point
-		if(this.state.which == 'left' && newPos < 95 - this.state.right) {
-			this.setState({
-				left: newPos < 0 ? 0 : newPos
+		console.log(this.props.input.name);
+
+		//Change value
+		if(this.state.which == 'left' && newPos < 95 - this.rightPosition){
+			newPos = newPos < 0 ? 0 : newPos;
+
+			this.props.changeValue(this.props.input.name || 'priceRange', {
+				from: newPos/100 * (max - min),
+				to: value.to
 			});
 		}
-		//Move right point
-		else if(this.state.which == 'right' && newPos > this.state.left + 5){
-			this.setState({
-				right: 100 - (newPos > 100 ? 100 : newPos)
+		else if(this.state.which == 'right' && newPos > this.leftPosition + 5){
+			newPos = newPos > 100 ? 100 : newPos;
+
+			this.props.changeValue(this.props.name || 'priceRange', {
+				from: value.from,
+				to: newPos/100 * (max - min)
 			});
 		}
-
-		//Dispatch change
-		dispatch(change(this.props.formName, 'priceRange', {
-			from: this.state.left/100 * (max - min) + min,
-			to: (100 - this.state.right)/100 * (max - min) + min
-		}));
 	}
 	
 	onMouseUp(){
@@ -147,12 +157,13 @@ class SliderElement extends React.Component<IElementProps, ISliderState>{
 
 	positeSlider(){
 		//Set positions to manipulators and line
-		this.left.current!.style.left = `${this.state.left}%`;
-		this.right.current!.style.right = `${this.state.right}%`;
+		this.left.current!.style.left = `${this.leftPosition}%`;
+		this.right.current!.style.right = `${this.rightPosition}%`;
 		
-		this.indicator.current!.style.left = `${this.state.left}%`;
-		this.indicator.current!.style.right = `${this.state.right}%`;
+		this.indicator.current!.style.left = `${this.leftPosition}%`;
+		this.indicator.current!.style.right = `${this.rightPosition}%`;
 	}
 }
 
 export default connected(SliderElement);
+

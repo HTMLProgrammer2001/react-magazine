@@ -3,11 +3,13 @@ import {reducer as formReducer} from 'redux-form';
 
 import cartReducer from './cart';
 import categoryReducer from './category';
+import registerReducer from './register';
 
 
 const storeReducer = combineReducers({
 	cart: cartReducer,
 	category: categoryReducer,
+	register: registerReducer,
 	form: formReducer
 });
 

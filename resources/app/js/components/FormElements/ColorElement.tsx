@@ -2,17 +2,27 @@ import * as React from 'react';
 import {WrappedFieldProps, change} from 'redux-form';
 import c from 'classnames';
 import {connect, ConnectedProps} from 'react-redux';
+import {Dispatch} from 'redux';
 
 
-const connected = connect();
+const mapDispatchToProps = (dispatch: Dispatch, ownProps: IOwnProps) => ({
+	changeValue: (name: string, newValue: string) => {
+		dispatch(change(ownProps.formName, name, newValue));
+	}
+});
 
-type IElementProps = WrappedFieldProps & React.InputHTMLAttributes<HTMLInputElement> & {
+const connected = connect(null, mapDispatchToProps);
+
+type IOwnProps = {
 	color: string,
 	formName: string
-} & ConnectedProps<typeof connected>;
+};
+
+type IElementProps = WrappedFieldProps & React.InputHTMLAttributes<HTMLInputElement> & IOwnProps
+	& ConnectedProps<typeof connected>;
 
 const ColorElement: React.FC<IElementProps> = (props) => {
-	const {className, formName, dispatch, color, checked, input: {name}} = props;
+	const {className, color, checked, input: {name}} = props;
 
 	const classes = c(`goods__color-item ${className ? className : ''}`, {
 		'goods__color-item_active': checked
@@ -26,7 +36,7 @@ const ColorElement: React.FC<IElementProps> = (props) => {
 				() => {
 					let newColor = checked ? '' : color;
 
-					dispatch(change(formName, name, newColor));
+					props.changeValue(name, newColor);
 				}
 			}
 		/>

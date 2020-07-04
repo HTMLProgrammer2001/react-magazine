@@ -28,7 +28,7 @@ const Review: React.FC<IReviewProps> = ({comment}) => (
 				</div>
 
 				<div className="reviews-list__message">
-					<p>{comment.text}</p>
+					<p>{comment.message}</p>
 				</div>
 
 				<div className="reviews-list__item-footer">

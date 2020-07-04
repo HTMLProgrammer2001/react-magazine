@@ -31094,6 +31094,46 @@ var API = function () {
             });
         });
     };
+    API.changeLike = function (productID) {
+        return __awaiter(this, void 0, void 0, function () {
+            var response, err_4;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2,, 3]);
+                        return [4, this.clientAPI.post("/products/" + productID + "/changeLike")];
+                    case 1:
+                        response = _a.sent();
+                        return [3, 3];
+                    case 2:
+                        err_4 = _a.sent();
+                        return [2, err_4];
+                    case 3:
+                        return [2, response.data];
+                }
+            });
+        });
+    };
+    API.registerUser = function (vals) {
+        return __awaiter(this, void 0, void 0, function () {
+            var response, err_5;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2,, 3]);
+                        return [4, this.clientAPI.post('/register', vals)];
+                    case 1:
+                        response = _a.sent();
+                        return [3, 3];
+                    case 2:
+                        err_5 = _a.sent();
+                        return [2, err_5];
+                    case 3:
+                        return [2, response.data];
+                }
+            });
+        });
+    };
     API.isError = function (arg) {
         return 'response' in arg;
     };
@@ -31699,11 +31739,16 @@ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
 var classnames_1 = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
 var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-var connected = react_redux_1.connect();
+var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
+    return {
+        changeValue: function changeValue(name, newValue) {
+            dispatch(redux_form_1.change(ownProps.formName, name, newValue));
+        }
+    };
+};
+var connected = react_redux_1.connect(null, mapDispatchToProps);
 var ColorElement = function ColorElement(props) {
     var className = props.className,
-        formName = props.formName,
-        dispatch = props.dispatch,
         color = props.color,
         checked = props.checked,
         name = props.input.name;
@@ -31712,7 +31757,7 @@ var ColorElement = function ColorElement(props) {
     });
     return React.createElement("div", { className: classes, style: { background: color }, onClick: function onClick() {
             var newColor = checked ? '' : color;
-            dispatch(redux_form_1.change(formName, name, newColor));
+            props.changeValue(name, newColor);
         } });
 };
 exports.default = connected(ColorElement);
@@ -31795,18 +31840,21 @@ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
 var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 var Mark_1 = __webpack_require__(/*! ../Mark */ "./resources/app/es5/components/Mark.js");
-var connected = react_redux_1.connect();
+var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
+    return {
+        changeValue: function changeValue(name, newValue) {
+            dispatch(redux_form_1.change(ownProps.formName, name, newValue));
+        }
+    };
+};
+var connected = react_redux_1.connect(null, mapDispatchToProps);
 var MarkElement = function MarkElement(props) {
-    var formName = props.formName,
-        dispatch = props.dispatch,
-        _a = props.input,
+    var _a = props.input,
         value = _a.value,
         name = _a.name;
-    var changeValue = function changeValue(newValue) {
-        console.log(newValue);
-        dispatch(redux_form_1.change(formName, name, newValue));
-    };
-    return React.createElement(Mark_1.default, { rating: value, fixed: false, onChange: changeValue });
+    return React.createElement(Mark_1.default, { rating: value, fixed: false, onChange: function onChange(newValue) {
+            return props.changeValue(name, newValue);
+        } });
 };
 exports.default = connected(MarkElement);
 
@@ -31828,24 +31876,26 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
 var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-var connected = react_redux_1.connect();
+var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
+    return {
+        changeValue: function changeValue(name, newValue) {
+            if (newValue <= 0) {
+                return;
+            }
+            dispatch(redux_form_1.change(ownProps.formName, name, newValue));
+        }
+    };
+};
+var connected = react_redux_1.connect(null, mapDispatchToProps);
 var NumericElement = function NumericElement(props) {
     var className = props.className,
-        formName = props.formName,
-        dispatch = props.dispatch,
         _a = props.input,
         value = _a.value,
         name = _a.name;
-    var changeValue = function changeValue(newValue) {
-        if (newValue <= 0) {
-            return;
-        }
-        dispatch(redux_form_1.change(formName, name, newValue));
-    };
     return React.createElement("span", { className: "order__quantity-count " + className }, React.createElement("span", { className: "order__quantity-control", onClick: function onClick() {
-            return changeValue(value - 1);
+            return props.changeValue(name, value - 1);
         } }, "-"), React.createElement("span", { className: "order__quantity-elem" }, value), React.createElement("span", { className: "order__quantity-control", onClick: function onClick() {
-            return changeValue(value + 1);
+            return props.changeValue(name, value + 1);
         } }, "+"));
 };
 exports.default = connected(NumericElement);
@@ -31898,12 +31948,18 @@ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
 var classnames_1 = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
 var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-var connected = react_redux_1.connect();
+var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
+    return {
+        changeValue: function changeValue(name, newValue) {
+            var newSize = ownProps.checked ? '' : newValue;
+            dispatch(redux_form_1.change(ownProps.formName, name, newSize));
+        }
+    };
+};
+var connected = react_redux_1.connect(null, mapDispatchToProps);
 var SizeElement = function SizeElement(props) {
     var _a;
     var className = props.className,
-        formName = props.formName,
-        dispatch = props.dispatch,
         viewType = props.viewType,
         size = props.size,
         checked = props.checked,
@@ -31911,8 +31967,7 @@ var SizeElement = function SizeElement(props) {
     var mainClass = viewType == 'product' ? 'product__size' : 'goods__size';
     var classes = classnames_1.default(mainClass + "-item " + (className ? className : ''), (_a = {}, _a[mainClass + "-item_active"] = checked, _a));
     return React.createElement("li", { className: classes, onClick: function onClick() {
-            var newSize = checked ? '' : size;
-            dispatch(redux_form_1.change(formName, name, newSize));
+            return props.changeValue(name, size);
         } }, size);
 };
 exports.default = connected(SizeElement);
@@ -31986,7 +32041,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
 var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-var connected = react_redux_1.connect();
+var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
+    return {
+        changeValue: function changeValue(name, newValue) {
+            dispatch(redux_form_1.change(ownProps.formName, name, newValue));
+        }
+    };
+};
+var connected = react_redux_1.connect(null, mapDispatchToProps);
 var SliderElement = function (_super) {
     __extends(SliderElement, _super);
     function SliderElement(props) {
@@ -31995,10 +32057,10 @@ var SliderElement = function (_super) {
         _this.indicator = React.createRef();
         _this.left = React.createRef();
         _this.right = React.createRef();
+        _this.leftPosition = 0;
+        _this.rightPosition = 0;
         _this.state = {
-            which: null,
-            left: 0,
-            right: 0
+            which: null
         };
         _this.onMouseUp = _this.onMouseUp.bind(_this);
         _this.onMouseMove = _this.onMouseMove.bind(_this);
@@ -32009,16 +32071,19 @@ var SliderElement = function (_super) {
             min = _a.min,
             max = _a.max,
             value = _a.input.value;
-        var leftPosition = (value.from - min) / (max - min) * 100;
-        var rightPosition = (value.to - min) / (max - min) * 100;
-        this.setState({
-            left: leftPosition,
-            right: rightPosition
-        });
+        this.leftPosition = (value.from - min) / (max - min) * 100;
+        this.rightPosition = 100 - (value.to - min) / (max - min) * 100;
+        this.positeSlider();
         document.addEventListener('mousemove', this.onMouseMove);
         document.addEventListener('mouseup', this.onMouseUp);
     };
     SliderElement.prototype.componentDidUpdate = function () {
+        var _a = this.props,
+            min = _a.min,
+            max = _a.max,
+            value = _a.input.value;
+        this.leftPosition = (value.from - min) / (max - min) * 100;
+        this.rightPosition = 100 - (value.to - min) / (max - min) * 100;
         this.positeSlider();
     };
     SliderElement.prototype.render = function () {
@@ -32035,7 +32100,6 @@ var SliderElement = function (_super) {
         this.setState({
             which: which
         });
-        console.log(which);
     };
     SliderElement.prototype.onMouseMove = function (event) {
         if (!this.state.which) {
@@ -32044,22 +32108,23 @@ var SliderElement = function (_super) {
         var _a = this.props,
             min = _a.min,
             max = _a.max,
-            dispatch = _a.dispatch;
+            value = _a.input.value;
         var parentBox = this.parent.current.getBoundingClientRect();
         var newPos = (event.clientX - parentBox.left) / parentBox.width * 100;
-        if (this.state.which == 'left' && newPos < 95 - this.state.right) {
-            this.setState({
-                left: newPos < 0 ? 0 : newPos
+        console.log(this.props.input.name);
+        if (this.state.which == 'left' && newPos < 95 - this.rightPosition) {
+            newPos = newPos < 0 ? 0 : newPos;
+            this.props.changeValue(this.props.input.name || 'priceRange', {
+                from: newPos / 100 * (max - min),
+                to: value.to
             });
-        } else if (this.state.which == 'right' && newPos > this.state.left + 5) {
-            this.setState({
-                right: 100 - (newPos > 100 ? 100 : newPos)
+        } else if (this.state.which == 'right' && newPos > this.leftPosition + 5) {
+            newPos = newPos > 100 ? 100 : newPos;
+            this.props.changeValue(this.props.name || 'priceRange', {
+                from: value.from,
+                to: newPos / 100 * (max - min)
             });
         }
-        dispatch(redux_form_1.change(this.props.formName, 'priceRange', {
-            from: this.state.left / 100 * (max - min) + min,
-            to: (100 - this.state.right) / 100 * (max - min) + min
-        }));
     };
     SliderElement.prototype.onMouseUp = function () {
         this.setState({
@@ -32067,10 +32132,10 @@ var SliderElement = function (_super) {
         });
     };
     SliderElement.prototype.positeSlider = function () {
-        this.left.current.style.left = this.state.left + "%";
-        this.right.current.style.right = this.state.right + "%";
-        this.indicator.current.style.left = this.state.left + "%";
-        this.indicator.current.style.right = this.state.right + "%";
+        this.left.current.style.left = this.leftPosition + "%";
+        this.right.current.style.right = this.rightPosition + "%";
+        this.indicator.current.style.left = this.leftPosition + "%";
+        this.indicator.current.style.right = this.rightPosition + "%";
     };
     return SliderElement;
 }(React.Component);
@@ -32166,18 +32231,28 @@ exports.default = CartDropdown;
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+var cartActions_1 = __webpack_require__(/*! ../../../../redux/Actions/cartActions */ "./resources/app/es5/redux/Actions/cartActions.js");
 var mapStateToProps = function mapStateToProps(state) {
     return {
         cartItems: state.cart
     };
 };
-var connected = react_redux_1.connect(mapStateToProps);
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+    return {
+        removeItem: function removeItem(index) {
+            dispatch(cartActions_1.cartRemove(index));
+        }
+    };
+};
+var connected = react_redux_1.connect(mapStateToProps, mapDispatchToProps);
 var CartList = function CartList(props) {
     var cartPrice = props.cartItems.reduce(function (prev, data) {
         return prev + data.product.price * data.count;
     }, 0);
     return React.createElement("ul", { className: "header__product-list" }, !props.cartItems.length && React.createElement("b", null, "\u041D\u0435\u0442 \u0442\u043E\u0432\u0430\u0440\u043E\u0432"), props.cartItems.map(function (item, index) {
-        return React.createElement("li", { className: "header__product-item", key: index }, React.createElement("span", null, item.product.name, " x ", item.count), React.createElement("span", null, "$", (item.product.price * item.count).toFixed(2)), React.createElement("span", null, "\xD7"));
+        return React.createElement("li", { className: "header__product-item", key: index, onClick: function onClick() {
+                return props.removeItem(index);
+            } }, React.createElement("span", null, item.product.name, " x ", item.count), React.createElement("span", null, "$", (item.product.price * item.count).toFixed(2)), React.createElement("span", null, "\xD7"));
     }), props.cartItems.length && React.createElement("li", { className: "header__product-item" }, React.createElement("b", null, "Total"), React.createElement("span", null), React.createElement("b", null, "$", cartPrice.toFixed(2))));
 };
 exports.default = connected(CartList);
@@ -32279,7 +32354,7 @@ var Menu = function Menu() {
     var menuClasses = classnames_1.default('header__links', {
         active: isBurgerOpen
     });
-    return React.createElement("nav", { className: "header__menu" }, React.createElement("div", { className: menuClasses }, React.createElement(react_router_dom_1.Link, { to: "/", className: "header__item" }, "Home"), React.createElement(react_router_dom_1.Link, { to: "/categories", className: "header__item" }, "Categories"), React.createElement(react_router_dom_1.Link, { to: "/profile", className: "header__item" }, "Profile")), React.createElement("div", { className: "header__icons" }, React.createElement(Cart_1.default, { openMenu: openMenu, changeOpen: changeMenu }), React.createElement(Search_1.default, { openMenu: openMenu, changeOpen: changeMenu })), React.createElement(Burger_1.default, { isOpen: isBurgerOpen, changeOpen: changeBurger }));
+    return React.createElement("nav", { className: "header__menu" }, React.createElement("div", { className: menuClasses }, React.createElement(react_router_dom_1.Link, { to: "/", className: "header__item" }, "Home"), React.createElement(react_router_dom_1.Link, { to: "/categories", className: "header__item" }, "Categories"), React.createElement(react_router_dom_1.Link, { to: "/login", className: "header__item" }, "Login"), React.createElement(react_router_dom_1.Link, { to: "/register", className: "header__item" }, "Register")), React.createElement("div", { className: "header__icons" }, React.createElement(Cart_1.default, { openMenu: openMenu, changeOpen: changeMenu }), React.createElement(Search_1.default, { openMenu: openMenu, changeOpen: changeMenu })), React.createElement(Burger_1.default, { isOpen: isBurgerOpen, changeOpen: changeBurger }));
 };
 exports.default = Menu;
 
@@ -32841,7 +32916,7 @@ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
 var InputElement_1 = __webpack_require__(/*! ../FormElements/InputElement */ "./resources/app/es5/components/FormElements/InputElement.js");
 var RegisterForm = function RegisterForm(props) {
-    return React.createElement("div", { className: "container" }, React.createElement("form", { onSubmit: props.handleSubmit, className: "login my-pad" }, React.createElement("div", { className: "login__head" }, "Sign in"), React.createElement(redux_form_1.Field, { component: InputElement_1.default, type: "text", name: "firstName", placeholder: "First name", required: true }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, type: "text", name: "lastName", placeholder: "Last name", required: true }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, type: "text", name: "email", placeholder: "Email", required: true }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, type: "password", name: "password", placeholder: "Password", required: true }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, type: "password", name: "confirmPassword", placeholder: "Confirm password", required: true }), React.createElement("div", { className: "row space-between my-pad w-100" }, React.createElement("div", null), React.createElement("button", { type: "submit", className: "check__but" }, "Sign in"))));
+    return React.createElement("div", { className: "container" }, React.createElement("form", { onSubmit: props.handleSubmit, className: "login my-pad", noValidate: true }, React.createElement("div", { className: "login__head" }, "Sign in"), React.createElement(redux_form_1.Field, { component: InputElement_1.default, type: "text", name: "fullName", placeholder: "Full name", required: true }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, type: "text", name: "email", placeholder: "Email", required: true }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, type: "password", name: "password", placeholder: "Password", required: true }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, type: "password", name: "confirmPassword", placeholder: "Confirm password", required: true }), React.createElement("div", { className: "row space-between my-pad w-100" }, React.createElement("div", null), React.createElement("button", { type: "submit", className: "check__but" }, "Sign in"))));
 };
 exports.default = redux_form_1.reduxForm({
     form: 'register'
@@ -33084,7 +33159,7 @@ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var Mark_1 = __webpack_require__(/*! ../../Mark */ "./resources/app/es5/components/Mark.js");
 var Review = function Review(_a) {
     var comment = _a.comment;
-    return React.createElement(React.Fragment, null, React.createElement("span", { id: "comment_" + comment.id }), React.createElement("div", { className: "reviews-list__item row" }, React.createElement("img", { className: "reviews__ava", src: comment.author.avatar, alt: "User ava" }), React.createElement("div", { className: "reviews-list__wrap" }, React.createElement("div", { className: "reviews-list__name" }, React.createElement("p", null, comment.author.name), React.createElement("div", { className: "reviews-list__icons" }, React.createElement("i", { className: "fas fa-link reviews-list__icon" }), React.createElement("i", { className: "fas fa-exclamation-triangle reviews-list__icon" }))), React.createElement("div", { className: "my-1" }, React.createElement(Mark_1.default, { rating: comment.mark, fixed: true })), React.createElement("div", { className: "reviews-list__message" }, React.createElement("p", null, comment.text)), React.createElement("div", { className: "reviews-list__item-footer" }, React.createElement("div", { className: "reviews-list__item-mark" }, React.createElement("span", null, React.createElement("i", { className: "fas fa-angle-up" }), React.createElement("span", null, "\xA0", comment.likes)), React.createElement("span", null, React.createElement("i", { className: "fas fa-angle-down" }), React.createElement("span", null, "\xA0", comment.dislikes))), React.createElement("div", { className: "reviews-list__item-date" }, comment.date)))));
+    return React.createElement(React.Fragment, null, React.createElement("span", { id: "comment_" + comment.id }), React.createElement("div", { className: "reviews-list__item row" }, React.createElement("img", { className: "reviews__ava", src: comment.author.avatar, alt: "User ava" }), React.createElement("div", { className: "reviews-list__wrap" }, React.createElement("div", { className: "reviews-list__name" }, React.createElement("p", null, comment.author.name), React.createElement("div", { className: "reviews-list__icons" }, React.createElement("i", { className: "fas fa-link reviews-list__icon" }), React.createElement("i", { className: "fas fa-exclamation-triangle reviews-list__icon" }))), React.createElement("div", { className: "my-1" }, React.createElement(Mark_1.default, { rating: comment.mark, fixed: true })), React.createElement("div", { className: "reviews-list__message" }, React.createElement("p", null, comment.message)), React.createElement("div", { className: "reviews-list__item-footer" }, React.createElement("div", { className: "reviews-list__item-mark" }, React.createElement("span", null, React.createElement("i", { className: "fas fa-angle-up" }), React.createElement("span", null, "\xA0", comment.likes)), React.createElement("span", null, React.createElement("i", { className: "fas fa-angle-down" }), React.createElement("span", null, "\xA0", comment.dislikes))), React.createElement("div", { className: "reviews-list__item-date" }, comment.date)))));
 };
 exports.default = Review;
 
@@ -33574,10 +33649,10 @@ exports.cartAdd = function (product) {
         payload: product
     };
 };
-exports.cartRemove = function (id) {
+exports.cartRemove = function (index) {
     return {
         type: actionTypes_1.CART_REMOVE,
-        payload: id
+        payload: index
     };
 };
 exports.cartReset = function () {
@@ -33600,6 +33675,18 @@ exports.cartReset = function () {
 "use strict";
 
 
+var __assign = undefined && undefined.__assign || function () {
+    __assign = Object.assign || function (t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) {
+                if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+            }
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __spreadArrays = undefined && undefined.__spreadArrays || function () {
     for (var s = 0, i = 0, il = arguments.length; i < il; i++) {
         s += arguments[i].length;
@@ -33618,7 +33705,20 @@ var cartReducer = function cartReducer(state, action) {
     }
     switch (action.type) {
         case actionTypes_1.CART_ADD:
-            return __spreadArrays(state, [action.payload]);
+            var cartItem_1 = state.find(function (item) {
+                return item.product.id == action.payload.product.id && item.color == action.payload.color && item.size == action.payload.size;
+            });
+            if (cartItem_1) {
+                return state.map(function (item) {
+                    return item == cartItem_1 ? __assign(__assign({}, item), { count: item.count + action.payload.count, product: action.payload.product }) : item;
+                });
+            } else {
+                return __spreadArrays(state, [action.payload]);
+            }
+        case actionTypes_1.CART_REMOVE:
+            return __spreadArrays(state.slice(0, action.payload), state.slice(action.payload + 1));
+        case actionTypes_1.CART_RESET:
+            return [];
     }
     return state;
 };
@@ -33675,14 +33775,64 @@ var redux_1 = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js
 var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
 var cart_1 = __webpack_require__(/*! ./cart */ "./resources/app/es5/redux/Reducers/cart.js");
 var category_1 = __webpack_require__(/*! ./category */ "./resources/app/es5/redux/Reducers/category.js");
+var register_1 = __webpack_require__(/*! ./register */ "./resources/app/es5/redux/Reducers/register.js");
 var storeReducer = redux_1.combineReducers({
     cart: cart_1.default,
     category: category_1.default,
+    register: register_1.default,
     form: redux_form_1.reducer
 });
 exports.default = storeReducer;
 
 //# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/Reducers/register.js":
+/*!******************************************************!*\
+  !*** ./resources/app/es5/redux/Reducers/register.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __assign = undefined && undefined.__assign || function () {
+    __assign = Object.assign || function (t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) {
+                if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+            }
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var actionTypes_1 = __webpack_require__(/*! ../actionTypes */ "./resources/app/es5/redux/actionTypes.js");
+var initialState = {
+    error: null,
+    isLoading: false
+};
+var registerReducer = function registerReducer(state, action) {
+    if (state === void 0) {
+        state = initialState;
+    }
+    switch (action.type) {
+        case actionTypes_1.REGISTER_START:
+            return __assign(__assign({}, state), { error: null, isLoading: true });
+        case actionTypes_1.REGISTER_SUCCESSFULL:
+            return __assign(__assign({}, state), { isLoading: false, error: null });
+        case actionTypes_1.REGISTER_ERROR:
+            return __assign(__assign({}, state), { error: action.error, isLoading: false });
+    }
+    return state;
+};
+exports.default = registerReducer;
+
+//# sourceMappingURL=register.js.map
 
 /***/ }),
 
@@ -33704,6 +33854,14 @@ exports.CART_ADD = 'CART_ADD';
 exports.CART_REMOVE = 'CART_REMOVE';
 exports.CART_RESET = 'CART_RESET';
 exports.CART_UPDATE = 'CART_UPDATE';
+exports.USER_LOAD_START = 'USER_LOAD_START';
+exports.USER_LOAD_ERROR = 'USER_LOAD_ERROR';
+exports.USER_LOAD_SUCCESSFULL = 'USER_LOAD_SUCCESSFULL';
+exports.USER_LOGIN = 'USER_LOGIN';
+exports.USER_LOGOUT = 'USER_LOGOUT';
+exports.REGISTER_START = 'REGISTER_START';
+exports.REGISTER_ERROR = 'REGISTER_ERROR';
+exports.REGISTER_SUCCESSFULL = 'REGISTER_SUCCESSFULL';
 
 //# sourceMappingURL=actionTypes.js.map
 

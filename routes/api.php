@@ -14,23 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/getProducts', function (Request $request) {
-    $products = \App\Product::paginate(3);
+Route::get('/getProducts', 'ProductInfoController@getProducts');
+Route::get('/products/{productID}/getComments', 'ProductInfoController@getProductComments');
+Route::get('/products/{slug}', 'ProductInfoController@getProductBySlug');
 
-    return response()->json($products);
-});
+Route::post('/products/{productID}/changeLike', 'ProductInfoController@changeLike');
 
-Route::get('/products/{slug}', function ($slug) {
-    $product = \App\Product::where('slug', $slug)->first();
-
-    if(!$product)
-        abort(404, 'Product not found');
-
-    return response()->json(new \App\Http\Resources\ProductResource($product));
-});
-
-Route::get('/products/{productID}/getComments', function (Request $request, $productID) {
-    $comments = \App\Comment::where('product_id', $productID)->paginate(10);
-
-    return new \App\Http\Resources\CommentsResource($comments);
-});
+Route::post('/register', 'UserController@register');
+Route::post('/login', 'UserController@login');

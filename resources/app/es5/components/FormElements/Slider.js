@@ -16,7 +16,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
 var redux_form_1 = require("redux-form");
 var react_redux_1 = require("react-redux");
-var connected = react_redux_1.connect();
+var mapDispatchToProps = function (dispatch, ownProps) { return ({
+    changeValue: function (name, newValue) {
+        dispatch(redux_form_1.change(ownProps.formName, name, newValue));
+    }
+}); };
+var connected = react_redux_1.connect(null, mapDispatchToProps);
 var SliderElement = (function (_super) {
     __extends(SliderElement, _super);
     function SliderElement(props) {
@@ -25,10 +30,10 @@ var SliderElement = (function (_super) {
         _this.indicator = React.createRef();
         _this.left = React.createRef();
         _this.right = React.createRef();
+        _this.leftPosition = 0;
+        _this.rightPosition = 0;
         _this.state = {
-            which: null,
-            left: 0,
-            right: 0
+            which: null
         };
         _this.onMouseUp = _this.onMouseUp.bind(_this);
         _this.onMouseMove = _this.onMouseMove.bind(_this);
@@ -36,16 +41,16 @@ var SliderElement = (function (_super) {
     }
     SliderElement.prototype.componentDidMount = function () {
         var _a = this.props, min = _a.min, max = _a.max, value = _a.input.value;
-        var leftPosition = (value.from - min) / (max - min) * 100;
-        var rightPosition = (value.to - min) / (max - min) * 100;
-        this.setState({
-            left: leftPosition,
-            right: rightPosition
-        });
+        this.leftPosition = (value.from - min) / (max - min) * 100;
+        this.rightPosition = 100 - (value.to - min) / (max - min) * 100;
+        this.positeSlider();
         document.addEventListener('mousemove', this.onMouseMove);
         document.addEventListener('mouseup', this.onMouseUp);
     };
     SliderElement.prototype.componentDidUpdate = function () {
+        var _a = this.props, min = _a.min, max = _a.max, value = _a.input.value;
+        this.leftPosition = (value.from - min) / (max - min) * 100;
+        this.rightPosition = 100 - (value.to - min) / (max - min) * 100;
         this.positeSlider();
     };
     SliderElement.prototype.render = function () {
@@ -63,29 +68,29 @@ var SliderElement = (function (_super) {
         this.setState({
             which: which
         });
-        console.log(which);
     };
     SliderElement.prototype.onMouseMove = function (event) {
         if (!this.state.which) {
             return;
         }
-        var _a = this.props, min = _a.min, max = _a.max, dispatch = _a.dispatch;
+        var _a = this.props, min = _a.min, max = _a.max, value = _a.input.value;
         var parentBox = this.parent.current.getBoundingClientRect();
         var newPos = (event.clientX - parentBox.left) / parentBox.width * 100;
-        if (this.state.which == 'left' && newPos < 95 - this.state.right) {
-            this.setState({
-                left: newPos < 0 ? 0 : newPos
+        console.log(this.props.input.name);
+        if (this.state.which == 'left' && newPos < 95 - this.rightPosition) {
+            newPos = newPos < 0 ? 0 : newPos;
+            this.props.changeValue(this.props.input.name || 'priceRange', {
+                from: newPos / 100 * (max - min),
+                to: value.to
             });
         }
-        else if (this.state.which == 'right' && newPos > this.state.left + 5) {
-            this.setState({
-                right: 100 - (newPos > 100 ? 100 : newPos)
+        else if (this.state.which == 'right' && newPos > this.leftPosition + 5) {
+            newPos = newPos > 100 ? 100 : newPos;
+            this.props.changeValue(this.props.name || 'priceRange', {
+                from: value.from,
+                to: newPos / 100 * (max - min)
             });
         }
-        dispatch(redux_form_1.change(this.props.formName, 'priceRange', {
-            from: this.state.left / 100 * (max - min) + min,
-            to: (100 - this.state.right) / 100 * (max - min) + min
-        }));
     };
     SliderElement.prototype.onMouseUp = function () {
         this.setState({
@@ -93,10 +98,10 @@ var SliderElement = (function (_super) {
         });
     };
     SliderElement.prototype.positeSlider = function () {
-        this.left.current.style.left = this.state.left + "%";
-        this.right.current.style.right = this.state.right + "%";
-        this.indicator.current.style.left = this.state.left + "%";
-        this.indicator.current.style.right = this.state.right + "%";
+        this.left.current.style.left = this.leftPosition + "%";
+        this.right.current.style.right = this.rightPosition + "%";
+        this.indicator.current.style.left = this.leftPosition + "%";
+        this.indicator.current.style.right = this.rightPosition + "%";
     };
     return SliderElement;
 }(React.Component));

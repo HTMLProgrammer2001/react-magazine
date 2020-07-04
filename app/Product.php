@@ -2,6 +2,8 @@
 
 namespace App;
 
+use Carbon\Carbon;
+use http\Env\Request;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
@@ -37,5 +39,25 @@ class Product extends Model
     public function setCategory(int $category_id){
         $this->category_id = $category_id;
         $this->save();
+    }
+
+    public function changeLikeFor(int $product_id, int $user_id): bool{
+        $like = $this->likes()
+            ->where('product_id', $product_id)
+            ->where('user_id', $user_id);
+
+        if($like) {
+            $like->delete();
+
+            return false;
+        }
+        else {
+            $newLike = $this->likes()->create(['date' => Carbon::now()]);
+            $newLike->setUser($user_id);
+            $newLike->setProduct($product_id);
+            $newLike->save();
+
+            return true;
+        }
     }
 }

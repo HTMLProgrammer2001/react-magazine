@@ -109,6 +109,44 @@ var API = (function () {
             });
         });
     };
+    API.changeLike = function (productID) {
+        return __awaiter(this, void 0, void 0, function () {
+            var response, err_4;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4, this.clientAPI.post("/products/" + productID + "/changeLike")];
+                    case 1:
+                        response = _a.sent();
+                        return [3, 3];
+                    case 2:
+                        err_4 = _a.sent();
+                        return [2, err_4];
+                    case 3: return [2, response.data];
+                }
+            });
+        });
+    };
+    API.registerUser = function (vals) {
+        return __awaiter(this, void 0, void 0, function () {
+            var response, err_5;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4, this.clientAPI.post('/register', vals)];
+                    case 1:
+                        response = _a.sent();
+                        return [3, 3];
+                    case 2:
+                        err_5 = _a.sent();
+                        return [2, err_5];
+                    case 3: return [2, response.data];
+                }
+            });
+        });
+    };
     API.isError = function (arg) {
         return 'response' in arg;
     };
