@@ -10,6 +10,7 @@ import ResetPage from './ResetPage/';
 import CategoriesPage from './CategoriesPage/';
 import CheckoutPage from './CheckoutPage/';
 import SinglePage from './SinglePage/';
+import VerifyPage from './VerifyPage';
 
 
 const Content: React.FC<{}> = () => (
@@ -17,6 +18,7 @@ const Content: React.FC<{}> = () => (
 		<Route path='/' exact component={HomePage}/>
 		<Route path='/login' exact component={LoginPage}/>
 		<Route path='/register' exact component={RegisterPage}/>
+		<Route path='/verify/:id' exact component={VerifyPage}/>
 		<Route path='/cart' exact component={CartPage}/>
 		<Route path='/reset' exact component={ResetPage}/>
 		<Route path='/categories' exact component={CategoriesPage}/>

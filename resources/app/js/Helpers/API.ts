@@ -5,11 +5,16 @@ import {IFullProduct} from '../Interfaces/IFullProduct';
 import {ICommentsResponse} from '../Interfaces/Responses/ICommentsResponse';
 import {IChangeLikeResponse} from '../Interfaces/Responses/IChangeLikeResponse';
 import {IRegisterFormData} from '../components/RegisterPage/RegisterForm';
+import {ILoginFormData} from '../components/LoginPage/LoginForm';
+import {ILoadUserResponse} from '../Interfaces/Responses/ILoadUserResponse';
 
 
 class API{
 	static clientAPI = axios.create({
-		baseURL: 'http://localhost:8000/api'
+		baseURL: 'http://localhost:8000/api',
+		headers: {
+			'Content-Type': 'application/json'
+		}
 	});
 
 	static async getProducts(offset?: number): Promise<IProductsResponse | AxiosError>{
@@ -80,13 +85,57 @@ class API{
 		return response.data;
 	}
 
-	static async registerUser(vals: IRegisterFormData): Promise<any | AxiosError>{
+	static async registerUser(vals: IRegisterFormData): Promise<{message: string} | AxiosError>{
 		let response: AxiosResponse;
 
 		try {
-			response = await this.clientAPI.post<any>('/register', vals);
+			response = await this.clientAPI.post<{message: string}>('/register', vals);
 		}
 		catch (err) {
+			console.log(err.response.data);
+			return err as AxiosError;
+		}
+
+		return response.data;
+	}
+
+	static async verifyUser(id: string): Promise<{success: string} | AxiosError>{
+		let response: AxiosResponse;
+
+		try{
+			response = await this.clientAPI.get<{success: string}>(`/verify/${id}`);
+		}
+		catch (err) {
+			console.log(err.response.data);
+
+			return err as AxiosError;
+		}
+
+		return response.data;
+	}
+
+	static async loginUser(vals: ILoginFormData): Promise<ILoadUserResponse | AxiosError>{
+		let response: AxiosResponse;
+
+		try {
+			response = await this.clientAPI.post<{message: string}>('/login', vals);
+		}
+		catch (err) {
+			console.log(err.response.data);
+			return err as AxiosError;
+		}
+
+		return response.data;
+	}
+
+	static async logoutUser(): Promise<AxiosError>{
+		let response: AxiosResponse;
+
+		try {
+			response = await this.clientAPI.post<{success: string}>('/logout');
+		}
+		catch (err) {
+			console.log(err.response.data);
 			return err as AxiosError;
 		}
 

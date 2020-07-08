@@ -36,28 +36,37 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var redux_form_1 = require("redux-form");
 var registerActions_1 = require("../Actions/registerActions");
 var API_1 = require("../../Helpers/API");
-var thunkRegister = function (vals) { return function (dispatch) { return __awaiter(void 0, void 0, void 0, function () {
-    var regResponse;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                dispatch(registerActions_1.registerStart());
-                return [4, API_1.default.registerUser(vals)];
-            case 1:
-                regResponse = _a.sent();
-                console.log(regResponse);
-                if (API_1.default.isError(regResponse)) {
-                    dispatch(registerActions_1.registerError('Error'));
-                }
-                else {
-                    dispatch(regResponse.error ? regResponse.error : regResponse);
-                }
-                return [2];
-        }
-    });
-}); }; };
+var thunkRegister = function (vals, formName) {
+    return function (dispatch) { return __awaiter(void 0, void 0, void 0, function () {
+        var regResponse;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    dispatch(registerActions_1.registerStart());
+                    return [4, API_1.default.registerUser(vals)];
+                case 1:
+                    regResponse = _a.sent();
+                    console.log(regResponse);
+                    if (API_1.default.isError(regResponse)) {
+                        if (regResponse.response.data.errors) {
+                            dispatch(redux_form_1.updateSyncErrors(formName, regResponse.response.data.errors, regResponse.response.data.message));
+                        }
+                        else {
+                            dispatch(registerActions_1.registerError(regResponse.response.data.message));
+                        }
+                    }
+                    else {
+                        dispatch(redux_form_1.reset(formName));
+                        dispatch(registerActions_1.registerSuccess(regResponse.message));
+                    }
+                    return [2];
+            }
+        });
+    }); };
+};
 exports.default = thunkRegister;
 
 //# sourceMappingURL=register.js.map

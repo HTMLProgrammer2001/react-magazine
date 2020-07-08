@@ -1,20 +1,39 @@
 //My components
-import {ICartItem} from '../../Interfaces/ICartItem';
-import * as actionCreators from '../Actions/cartActions';
-import {CART_ADD} from '../actionTypes';
+import * as actionCreators from '../Actions/userActions';
+import {USER_LOAD_SUCCESSFULL, USER_RESET, USER_LOAD_ERROR, USER_LOAD_START} from '../actionTypes';
+import {InferActionTypes} from './index';
+import {IUser} from '../../Interfaces/IUser';
 
 
-type InferValuesType<T> = T extends {[key: string]: infer U} ? U : never;
-type CartActions = ReturnType<InferValuesType<typeof actionCreators>>;
+type UserActions = InferActionTypes<typeof actionCreators>;
 
-export type CartState = Array<ICartItem>;
+export type UserState = {
+	isLoading: boolean,
+	error: string,
+	token: string | null,
+	user: IUser | null
+};
 
-const initialState: CartState = [];
+const initialState: UserState = {
+	isLoading: false,
+	error: '',
+	token: null,
+	user: null
+};
 
-const cartReducer = (state: CartState = initialState, action: CartActions): CartState => {
+const cartReducer = (state: UserState = initialState, action: UserActions): UserState => {
 	switch (action.type) {
-		case CART_ADD:
-			return [...state, action.payload];
+	case USER_LOAD_START:
+		return {...state, isLoading: true};
+
+	case USER_LOAD_ERROR:
+		return {...state, isLoading: false, error: action.error};
+
+	case USER_LOAD_SUCCESSFULL:
+		return {...initialState, user: action.payload.user, token: action.payload.token};
+
+	case USER_RESET:
+		return initialState;
 	}
 
 	return state;

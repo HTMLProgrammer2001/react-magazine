@@ -13,6 +13,6 @@ var RegisterForm = function (props) { return (React.createElement("div", { class
             React.createElement("div", null),
             React.createElement("button", { type: "submit", className: "check__but" }, "Sign in"))))); };
 export default reduxForm({
-    form: 'register'
+    form: 'thunkRegister.ts'
 })(RegisterForm);
 //# sourceMappingURL=RegisterForm.js.map

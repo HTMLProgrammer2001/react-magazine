@@ -1,19 +1,20 @@
 //My components
-import {ICartItem} from '../../Interfaces/ICartItem';
 import * as actionCreators from '../Actions/registerActions';
 import {REGISTER_ERROR, REGISTER_SUCCESSFULL, REGISTER_START} from '../actionTypes';
+import {InferActionTypes} from './index';
 
 
-type InferValuesType<T> = T extends {[key: string]: infer U} ? U : never;
-type RegisterActions = ReturnType<InferValuesType<typeof actionCreators>>;
+export type RegisterActions = InferActionTypes<typeof actionCreators>;
 
 export type RegisterState = {
 	error: string | null,
+	message: string,
 	isLoading: boolean
 };
 
 const initialState: RegisterState = {
 	error: null,
+	message: '',
 	isLoading: false
 };
 
@@ -21,13 +22,13 @@ const registerReducer = (state: RegisterState = initialState, action: RegisterAc
 	RegisterState => {
 	switch (action.type) {
 	case REGISTER_START:
-		return {...state, error: null, isLoading: true};
+		return {error: null, isLoading: true, message: ''};
 
 	case REGISTER_SUCCESSFULL:
-		return {...state, isLoading: false, error: null};
+		return {isLoading: false, error: null, message: action.payload};
 
 	case REGISTER_ERROR:
-		return {...state, error: action.error, isLoading: false};
+		return {error: action.error, isLoading: false, message: ''};
 	}
 
 	return state;

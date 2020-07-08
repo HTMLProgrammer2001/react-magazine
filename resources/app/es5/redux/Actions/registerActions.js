@@ -4,9 +4,9 @@ var actionTypes_1 = require("../actionTypes");
 exports.registerStart = function () { return ({
     type: actionTypes_1.REGISTER_START
 }); };
-exports.registerSuccess = function (user) { return ({
+exports.registerSuccess = function (message) { return ({
     type: actionTypes_1.REGISTER_SUCCESSFULL,
-    payload: user
+    payload: message
 }); };
 exports.registerError = function (error) { return ({
     type: actionTypes_1.REGISTER_ERROR,

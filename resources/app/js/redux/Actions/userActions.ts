@@ -2,8 +2,7 @@ import {
 	USER_LOAD_START,
 	USER_LOAD_ERROR,
 	USER_LOAD_SUCCESSFULL,
-	USER_LOGIN,
-	USER_LOGOUT
+	USER_RESET
 } from '../actionTypes';
 import {IUser} from '../../Interfaces/IUser';
 
@@ -17,7 +16,11 @@ export const loadUserError = (error: string) => (<const>{
 	error
 });
 
-export const loadUserSuccessfull = (user: IUser) => (<const>{
+export const loadUserSuccessfull = (userInf: {user: IUser, token: string}) => (<const>{
 	type: USER_LOAD_SUCCESSFULL,
-	payload: user
+	payload: userInf
+});
+
+export const resetUser = () => (<const>{
+	type: USER_RESET
 });

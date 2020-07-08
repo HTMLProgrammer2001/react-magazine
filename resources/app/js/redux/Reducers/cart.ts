@@ -2,10 +2,10 @@
 import {ICartItem} from '../../Interfaces/ICartItem';
 import * as actionCreators from '../Actions/cartActions';
 import {CART_ADD, CART_REMOVE, CART_RESET} from '../actionTypes';
+import {InferActionTypes} from './index';
 
 
-type InferValuesType<T> = T extends {[key: string]: infer U} ? U : never;
-type CartActions = ReturnType<InferValuesType<typeof actionCreators>>;
+type CartActions = InferActionTypes<typeof actionCreators>;
 
 export type CartState = Array<ICartItem>;
 

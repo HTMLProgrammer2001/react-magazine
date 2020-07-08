@@ -13,11 +13,19 @@ export const CART_UPDATE = 'CART_UPDATE';
 export const USER_LOAD_START = 'USER_LOAD_START';
 export const USER_LOAD_ERROR = 'USER_LOAD_ERROR';
 export const USER_LOAD_SUCCESSFULL = 'USER_LOAD_SUCCESSFULL';
-
-export const USER_LOGIN = 'USER_LOGIN';
-export const USER_LOGOUT = 'USER_LOGOUT';
+export const USER_RESET = 'USER_RESET';
 
 //Register action types
 export const REGISTER_START = 'REGISTER_START';
 export const REGISTER_ERROR = 'REGISTER_ERROR';
 export const REGISTER_SUCCESSFULL = 'REGISTER_SUCCESSFULL';
+
+//Verify actions types
+export const VERIFY_START = 'VERIFY_START';
+export const VERIFY_SUCCESS = 'VERIFY_SUCCESS';
+export const VERIFY_ERROR = 'VERIFY_ERROR';
+
+//Login action types
+export const LOGIN_START = 'LOGIN_START';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_ERROR = 'LOGIN_ERROR';

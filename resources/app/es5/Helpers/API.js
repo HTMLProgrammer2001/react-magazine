@@ -141,7 +141,68 @@ var API = (function () {
                         return [3, 3];
                     case 2:
                         err_5 = _a.sent();
+                        console.log(err_5.response.data);
                         return [2, err_5];
+                    case 3: return [2, response.data];
+                }
+            });
+        });
+    };
+    API.verifyUser = function (id) {
+        return __awaiter(this, void 0, void 0, function () {
+            var response, err_6;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4, this.clientAPI.get("/verify/" + id)];
+                    case 1:
+                        response = _a.sent();
+                        return [3, 3];
+                    case 2:
+                        err_6 = _a.sent();
+                        console.log(err_6.response.data);
+                        return [2, err_6];
+                    case 3: return [2, response.data];
+                }
+            });
+        });
+    };
+    API.loginUser = function (vals) {
+        return __awaiter(this, void 0, void 0, function () {
+            var response, err_7;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4, this.clientAPI.post('/login', vals)];
+                    case 1:
+                        response = _a.sent();
+                        return [3, 3];
+                    case 2:
+                        err_7 = _a.sent();
+                        console.log(err_7.response.data);
+                        return [2, err_7];
+                    case 3: return [2, response.data];
+                }
+            });
+        });
+    };
+    API.logoutUser = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var response, err_8;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4, this.clientAPI.post('/logout')];
+                    case 1:
+                        response = _a.sent();
+                        return [3, 3];
+                    case 2:
+                        err_8 = _a.sent();
+                        console.log(err_8.response.data);
+                        return [2, err_8];
                     case 3: return [2, response.data];
                 }
             });
@@ -151,7 +212,10 @@ var API = (function () {
         return 'response' in arg;
     };
     API.clientAPI = axios_1.default.create({
-        baseURL: 'http://localhost:8000/api'
+        baseURL: 'http://localhost:8000/api',
+        headers: {
+            'Content-Type': 'application/json'
+        }
     });
     return API;
 }());

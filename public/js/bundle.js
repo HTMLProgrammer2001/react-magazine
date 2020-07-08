@@ -28623,6 +28623,42 @@ exports.default = (0, _createValues2.default)(_plain2.default);
 
 /***/ }),
 
+/***/ "./node_modules/redux-thunk/es/index.js":
+/*!**********************************************!*\
+  !*** ./node_modules/redux-thunk/es/index.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+function createThunkMiddleware(extraArgument) {
+  return function (_ref) {
+    var dispatch = _ref.dispatch,
+        getState = _ref.getState;
+    return function (next) {
+      return function (action) {
+        if (typeof action === 'function') {
+          return action(dispatch, getState, extraArgument);
+        }
+
+        return next(action);
+      };
+    };
+  };
+}
+
+var thunk = createThunkMiddleware();
+thunk.withExtraArgument = createThunkMiddleware;
+
+exports.default = thunk;
+
+/***/ }),
+
 /***/ "./node_modules/redux/es/redux.js":
 /*!****************************************!*\
   !*** ./node_modules/redux/es/redux.js ***!
@@ -31127,7 +31163,71 @@ var API = function () {
                         return [3, 3];
                     case 2:
                         err_5 = _a.sent();
+                        console.log(err_5.response.data);
                         return [2, err_5];
+                    case 3:
+                        return [2, response.data];
+                }
+            });
+        });
+    };
+    API.verifyUser = function (id) {
+        return __awaiter(this, void 0, void 0, function () {
+            var response, err_6;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2,, 3]);
+                        return [4, this.clientAPI.get("/verify/" + id)];
+                    case 1:
+                        response = _a.sent();
+                        return [3, 3];
+                    case 2:
+                        err_6 = _a.sent();
+                        console.log(err_6.response.data);
+                        return [2, err_6];
+                    case 3:
+                        return [2, response.data];
+                }
+            });
+        });
+    };
+    API.loginUser = function (vals) {
+        return __awaiter(this, void 0, void 0, function () {
+            var response, err_7;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2,, 3]);
+                        return [4, this.clientAPI.post('/login', vals)];
+                    case 1:
+                        response = _a.sent();
+                        return [3, 3];
+                    case 2:
+                        err_7 = _a.sent();
+                        console.log(err_7.response.data);
+                        return [2, err_7];
+                    case 3:
+                        return [2, response.data];
+                }
+            });
+        });
+    };
+    API.logoutUser = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var response, err_8;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2,, 3]);
+                        return [4, this.clientAPI.post('/logout')];
+                    case 1:
+                        response = _a.sent();
+                        return [3, 3];
+                    case 2:
+                        err_8 = _a.sent();
+                        console.log(err_8.response.data);
+                        return [2, err_8];
                     case 3:
                         return [2, response.data];
                 }
@@ -31138,7 +31238,10 @@ var API = function () {
         return 'response' in arg;
     };
     API.clientAPI = axios_1.default.create({
-        baseURL: 'http://localhost:8000/api'
+        baseURL: 'http://localhost:8000/api',
+        headers: {
+            'Content-Type': 'application/json'
+        }
     });
     return API;
 }();
@@ -31635,8 +31738,9 @@ var ResetPage_1 = __webpack_require__(/*! ./ResetPage/ */ "./resources/app/es5/c
 var CategoriesPage_1 = __webpack_require__(/*! ./CategoriesPage/ */ "./resources/app/es5/components/CategoriesPage/index.js");
 var CheckoutPage_1 = __webpack_require__(/*! ./CheckoutPage/ */ "./resources/app/es5/components/CheckoutPage/index.js");
 var SinglePage_1 = __webpack_require__(/*! ./SinglePage/ */ "./resources/app/es5/components/SinglePage/index.js");
+var VerifyPage_1 = __webpack_require__(/*! ./VerifyPage */ "./resources/app/es5/components/VerifyPage/index.js");
 var Content = function Content() {
-    return React.createElement(react_router_dom_1.Switch, null, React.createElement(react_router_dom_1.Route, { path: '/', exact: true, component: HomePage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/login', exact: true, component: LoginPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/register', exact: true, component: RegisterPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/cart', exact: true, component: CartPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/reset', exact: true, component: ResetPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/categories', exact: true, component: CategoriesPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/checkout', exact: true, component: CheckoutPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/products/:slug', exact: true, component: SinglePage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/', component: NotFoundPage_1.default }));
+    return React.createElement(react_router_dom_1.Switch, null, React.createElement(react_router_dom_1.Route, { path: '/', exact: true, component: HomePage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/login', exact: true, component: LoginPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/register', exact: true, component: RegisterPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/verify/:id', exact: true, component: VerifyPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/cart', exact: true, component: CartPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/reset', exact: true, component: ResetPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/categories', exact: true, component: CategoriesPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/checkout', exact: true, component: CheckoutPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/products/:slug', exact: true, component: SinglePage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/', component: NotFoundPage_1.default }));
 };
 exports.default = Content;
 
@@ -31816,8 +31920,11 @@ var InputElement = function InputElement(props) {
         _a = props.input,
         value = _a.value,
         name = _a.name,
-        onChange = _a.onChange;
-    return React.createElement("div", { className: "input  " + className }, React.createElement("input", { className: "input__elem", required: required, type: type, value: value, name: name, onChange: onChange }), React.createElement("label", { className: "input__label" }, React.createElement("span", null, placeholder), required && React.createElement("span", { className: "red" }, "*")), React.createElement("div", { className: "input__line" }));
+        onChange = _a.onChange,
+        _b = props.meta,
+        touched = _b.touched,
+        error = _b.error;
+    return React.createElement(React.Fragment, null, React.createElement("div", { className: "input  " + className }, React.createElement("input", { className: "input__elem", required: required, type: type, value: value, name: name, onChange: onChange }), React.createElement("label", { className: "input__label" }, React.createElement("span", null, placeholder), required && React.createElement("span", { className: "red" }, "*")), React.createElement("div", { className: "input__line" })), touched && error && React.createElement("small", { className: "red", style: { margin: '5px' } }, error));
 };
 exports.default = InputElement;
 
@@ -32341,10 +32448,25 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var classnames_1 = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
 var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 var Cart_1 = __webpack_require__(/*! ./Cart */ "./resources/app/es5/components/Header/Menu/Cart/index.js");
 var Search_1 = __webpack_require__(/*! ./Search */ "./resources/app/es5/components/Header/Menu/Search.js");
 var Burger_1 = __webpack_require__(/*! ./Burger */ "./resources/app/es5/components/Header/Menu/Burger.js");
-var Menu = function Menu() {
+var thunkLogout_1 = __webpack_require__(/*! ../../../redux/ThunkActions/thunkLogout */ "./resources/app/es5/redux/ThunkActions/thunkLogout.js");
+var mapStateToProps = function mapStateToProps(state) {
+    return {
+        userData: state.user
+    };
+};
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+    return {
+        logout: function logout() {
+            dispatch(thunkLogout_1.default());
+        }
+    };
+};
+var connected = react_redux_1.connect(mapStateToProps, mapDispatchToProps);
+var Menu = function Menu(props) {
     var _a = React.useState(''),
         openMenu = _a[0],
         changeMenu = _a[1];
@@ -32354,9 +32476,9 @@ var Menu = function Menu() {
     var menuClasses = classnames_1.default('header__links', {
         active: isBurgerOpen
     });
-    return React.createElement("nav", { className: "header__menu" }, React.createElement("div", { className: menuClasses }, React.createElement(react_router_dom_1.Link, { to: "/", className: "header__item" }, "Home"), React.createElement(react_router_dom_1.Link, { to: "/categories", className: "header__item" }, "Categories"), React.createElement(react_router_dom_1.Link, { to: "/login", className: "header__item" }, "Login"), React.createElement(react_router_dom_1.Link, { to: "/register", className: "header__item" }, "Register")), React.createElement("div", { className: "header__icons" }, React.createElement(Cart_1.default, { openMenu: openMenu, changeOpen: changeMenu }), React.createElement(Search_1.default, { openMenu: openMenu, changeOpen: changeMenu })), React.createElement(Burger_1.default, { isOpen: isBurgerOpen, changeOpen: changeBurger }));
+    return React.createElement("nav", { className: "header__menu" }, React.createElement("div", { className: menuClasses }, React.createElement(react_router_dom_1.Link, { to: "/", className: "header__item" }, "Home"), React.createElement(react_router_dom_1.Link, { to: "/categories", className: "header__item" }, "Categories"), props.userData.user ? React.createElement("a", { href: "#", className: "header__item", onClick: props.logout }, "Log out") : React.createElement(React.Fragment, null, React.createElement(react_router_dom_1.Link, { to: "/login", className: "header__item" }, "Login"), React.createElement(react_router_dom_1.Link, { to: "/register", className: "header__item" }, "Register"))), React.createElement("div", { className: "header__icons" }, React.createElement(Cart_1.default, { openMenu: openMenu, changeOpen: changeMenu }), React.createElement(Search_1.default, { openMenu: openMenu, changeOpen: changeMenu })), React.createElement(Burger_1.default, { isOpen: isBurgerOpen, changeOpen: changeBurger }));
 };
-exports.default = Menu;
+exports.default = connected(Menu);
 
 //# sourceMappingURL=index.js.map
 
@@ -32762,7 +32884,7 @@ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
 var InputElement_1 = __webpack_require__(/*! ../FormElements/InputElement */ "./resources/app/es5/components/FormElements/InputElement.js");
 var LoginForm = function LoginForm(props) {
-    return React.createElement("div", { className: "container" }, React.createElement("form", { onSubmit: props.handleSubmit, className: "login my-pad" }, React.createElement("div", { className: "login__head" }, "Login"), React.createElement(redux_form_1.Field, { component: InputElement_1.default, type: "text", name: "email", placeholder: "Email", required: true }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, type: "password", name: "password", placeholder: "Password", required: true }), React.createElement("div", { className: "row space-between my-pad w-100" }, React.createElement("div", null), React.createElement("button", { type: "submit", className: "check__but" }, "Login"))));
+    return React.createElement("div", { className: "container" }, React.createElement("form", { onSubmit: props.handleSubmit, className: "login my-pad" }, React.createElement("div", { className: "login__head" }, "Login"), props.loginData.error && React.createElement("div", { className: "red" }, props.loginData.error), React.createElement(redux_form_1.Field, { component: InputElement_1.default, type: "text", name: "email", placeholder: "Email", required: true }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, type: "password", name: "password", placeholder: "Password", required: true }), React.createElement("div", { className: "row space-between my-pad w-100" }, React.createElement("div", null), React.createElement("button", { type: "submit", className: "check__but" }, props.loginData.isLoading ? 'Loading...' : 'Login'))));
 };
 exports.default = redux_form_1.reduxForm({
     form: 'login'
@@ -32784,18 +32906,34 @@ exports.default = redux_form_1.reduxForm({
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 var Paginate_1 = __webpack_require__(/*! ../Paginate */ "./resources/app/es5/components/Paginate.js");
 var LoginForm_1 = __webpack_require__(/*! ./LoginForm */ "./resources/app/es5/components/LoginPage/LoginForm.js");
-var LoginPage = function LoginPage() {
+var thunkLogin_1 = __webpack_require__(/*! ../../redux/ThunkActions/thunkLogin */ "./resources/app/es5/redux/ThunkActions/thunkLogin.js");
+var mapStateToProps = function mapStateToProps(state) {
+    return {
+        loginData: state.login
+    };
+};
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+    return {
+        login: function login(vals) {
+            dispatch(thunkLogin_1.default(vals, 'login'));
+        }
+    };
+};
+var connected = react_redux_1.connect(mapStateToProps, mapDispatchToProps);
+var LoginPage = function LoginPage(props) {
     var submit = function submit(values) {
         console.log(values);
+        props.login(values);
     };
     React.useEffect(function () {
         document.title = 'Login';
     }, []);
-    return React.createElement(React.Fragment, null, React.createElement(Paginate_1.default, { paths: [{ name: 'Home', path: '/' }, { name: 'Login', path: '/login' }] }), React.createElement(LoginForm_1.default, { onSubmit: submit }));
+    return React.createElement(React.Fragment, null, React.createElement(Paginate_1.default, { paths: [{ name: 'Home', path: '/' }, { name: 'Login', path: '/login' }] }), React.createElement(LoginForm_1.default, { onSubmit: submit, loginData: props.loginData }));
 };
-exports.default = LoginPage;
+exports.default = connected(LoginPage);
 
 //# sourceMappingURL=index.js.map
 
@@ -32916,10 +33054,28 @@ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
 var InputElement_1 = __webpack_require__(/*! ../FormElements/InputElement */ "./resources/app/es5/components/FormElements/InputElement.js");
 var RegisterForm = function RegisterForm(props) {
-    return React.createElement("div", { className: "container" }, React.createElement("form", { onSubmit: props.handleSubmit, className: "login my-pad", noValidate: true }, React.createElement("div", { className: "login__head" }, "Sign in"), React.createElement(redux_form_1.Field, { component: InputElement_1.default, type: "text", name: "fullName", placeholder: "Full name", required: true }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, type: "text", name: "email", placeholder: "Email", required: true }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, type: "password", name: "password", placeholder: "Password", required: true }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, type: "password", name: "confirmPassword", placeholder: "Confirm password", required: true }), React.createElement("div", { className: "row space-between my-pad w-100" }, React.createElement("div", null), React.createElement("button", { type: "submit", className: "check__but" }, "Sign in"))));
+    return React.createElement("div", { className: "container" }, React.createElement("form", { onSubmit: props.handleSubmit, className: "login my-pad", noValidate: true }, React.createElement("div", { className: "login__head" }, "Sign in"), props.registration.error && React.createElement("div", { className: "red" }, props.registration.error), React.createElement(redux_form_1.Field, { component: InputElement_1.default, type: "text", name: "fullName", placeholder: "Full name", required: true }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, type: "text", name: "email", placeholder: "Email", required: true }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, type: "password", name: "password", placeholder: "Password", required: true }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, type: "password", name: "password_confirmation", placeholder: "Confirm password", required: true }), React.createElement("div", { className: "row space-between my-pad w-100" }, React.createElement("div", null), React.createElement("button", { type: "submit", className: "check__but" }, props.registration.isLoading ? 'Loading...' : 'Sign in'))));
+};
+var validate = function validate(values) {
+    var _a, _b;
+    var errors = {};
+    if (((_a = values.fullName) === null || _a === void 0 ? void 0 : _a.trim().split(' ').length) != 2) {
+        errors.fullName = 'Enter name and surname';
+    }
+    if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+        errors.email = 'Incorrect email';
+    }
+    if (((_b = values.password) === null || _b === void 0 ? void 0 : _b.length) < 8) {
+        errors.password = 'Password must be at least 8 chars';
+    }
+    if (values.password_confirmation != values.password) {
+        errors.password_confirmation = 'Passwords are not equals';
+    }
+    return errors;
 };
 exports.default = redux_form_1.reduxForm({
-    form: 'register'
+    form: 'thunkRegister.ts',
+    validate: validate
 })(RegisterForm);
 
 //# sourceMappingURL=RegisterForm.js.map
@@ -32938,18 +33094,34 @@ exports.default = redux_form_1.reduxForm({
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 var Paginate_1 = __webpack_require__(/*! ../Paginate */ "./resources/app/es5/components/Paginate.js");
 var RegisterForm_1 = __webpack_require__(/*! ./RegisterForm */ "./resources/app/es5/components/RegisterPage/RegisterForm.js");
-var RegisterPage = function RegisterPage() {
+var thunkRegister_1 = __webpack_require__(/*! ../../redux/ThunkActions/thunkRegister */ "./resources/app/es5/redux/ThunkActions/thunkRegister.js");
+var mapStateToProps = function mapStateToProps(state) {
+    return {
+        registration: state.register
+    };
+};
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+    return {
+        register: function register(vals) {
+            dispatch(thunkRegister_1.default(vals, 'thunkRegister.ts'));
+        }
+    };
+};
+var connected = react_redux_1.connect(mapStateToProps, mapDispatchToProps);
+var RegisterPage = function RegisterPage(props) {
     var submit = function submit(values) {
         console.log(values);
+        props.register(values);
     };
     React.useEffect(function () {
         document.title = 'Sign in';
     }, []);
-    return React.createElement(React.Fragment, null, React.createElement(Paginate_1.default, { paths: [{ name: 'Home', path: '/' }, { name: 'Register', path: '/register' }] }), React.createElement(RegisterForm_1.default, { onSubmit: submit }));
+    return React.createElement(React.Fragment, null, React.createElement(Paginate_1.default, { paths: [{ name: 'Home', path: '/' }, { name: 'Register', path: '/register' }] }), props.registration.message ? React.createElement("div", null, props.registration.message) : null, React.createElement(RegisterForm_1.default, { onSubmit: submit, registration: props.registration }));
 };
-exports.default = RegisterPage;
+exports.default = connected(RegisterPage);
 
 //# sourceMappingURL=index.js.map
 
@@ -33606,6 +33778,46 @@ exports.default = SinglePage;
 
 /***/ }),
 
+/***/ "./resources/app/es5/components/VerifyPage/index.js":
+/*!**********************************************************!*\
+  !*** ./resources/app/es5/components/VerifyPage/index.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+var Paginate_1 = __webpack_require__(/*! ../Paginate */ "./resources/app/es5/components/Paginate.js");
+var thunkVerify_1 = __webpack_require__(/*! ../../redux/ThunkActions/thunkVerify */ "./resources/app/es5/redux/ThunkActions/thunkVerify.js");
+var mapStateToProps = function mapStateToProps(state) {
+    return {
+        verifyState: state.verify
+    };
+};
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+    return {
+        verify: function verify(id) {
+            dispatch(thunkVerify_1.default(id));
+        }
+    };
+};
+var connected = react_redux_1.connect(mapStateToProps, mapDispatchToProps);
+var VerifyPage = function VerifyPage(props) {
+    React.useEffect(function () {
+        props.verify(props.match.params.id);
+    }, []);
+    return React.createElement(React.Fragment, null, React.createElement(Paginate_1.default, { paths: [{ name: 'Home', path: '/' }, { name: 'Verify email', path: '/verify' }] }), props.verifyState.isLoading && React.createElement("div", null, "Loading..."), React.createElement("div", null, props.verifyState.message ? props.verifyState.message : props.verifyState.error));
+};
+exports.default = connected(VerifyPage);
+
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
 /***/ "./resources/app/es5/main.js":
 /*!***********************************!*\
   !*** ./resources/app/es5/main.js ***!
@@ -33621,9 +33833,10 @@ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var ReactDOM = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 var redux_1 = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
 var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+var redux_thunk_1 = __webpack_require__(/*! redux-thunk */ "./node_modules/redux-thunk/es/index.js");
 var App_1 = __webpack_require__(/*! ./components/App */ "./resources/app/es5/components/App.js");
 var Reducers_1 = __webpack_require__(/*! ./redux/Reducers/ */ "./resources/app/es5/redux/Reducers/index.js");
-var store = redux_1.createStore(Reducers_1.default);
+var store = redux_1.createStore(Reducers_1.default, redux_1.applyMiddleware(redux_thunk_1.default));
 myStore = store;
 ReactDOM.render(React.createElement(react_redux_1.Provider, { store: store }, React.createElement(App_1.default, null)), document.querySelector('#root'));
 
@@ -33662,6 +33875,146 @@ exports.cartReset = function () {
 };
 
 //# sourceMappingURL=cartActions.js.map
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/Actions/loginActions.js":
+/*!*********************************************************!*\
+  !*** ./resources/app/es5/redux/Actions/loginActions.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var actionTypes_1 = __webpack_require__(/*! ../actionTypes */ "./resources/app/es5/redux/actionTypes.js");
+exports.loginStart = function () {
+    return {
+        type: actionTypes_1.LOGIN_START
+    };
+};
+exports.loginSuccess = function () {
+    return {
+        type: actionTypes_1.LOGIN_SUCCESS
+    };
+};
+exports.loginError = function (error) {
+    return {
+        type: actionTypes_1.LOGIN_ERROR,
+        error: error
+    };
+};
+
+//# sourceMappingURL=loginActions.js.map
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/Actions/registerActions.js":
+/*!************************************************************!*\
+  !*** ./resources/app/es5/redux/Actions/registerActions.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var actionTypes_1 = __webpack_require__(/*! ../actionTypes */ "./resources/app/es5/redux/actionTypes.js");
+exports.registerStart = function () {
+    return {
+        type: actionTypes_1.REGISTER_START
+    };
+};
+exports.registerSuccess = function (message) {
+    return {
+        type: actionTypes_1.REGISTER_SUCCESSFULL,
+        payload: message
+    };
+};
+exports.registerError = function (error) {
+    return {
+        type: actionTypes_1.REGISTER_ERROR,
+        error: error
+    };
+};
+
+//# sourceMappingURL=registerActions.js.map
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/Actions/userActions.js":
+/*!********************************************************!*\
+  !*** ./resources/app/es5/redux/Actions/userActions.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var actionTypes_1 = __webpack_require__(/*! ../actionTypes */ "./resources/app/es5/redux/actionTypes.js");
+exports.loadUserStart = function () {
+    return {
+        type: actionTypes_1.USER_LOAD_START
+    };
+};
+exports.loadUserError = function (error) {
+    return {
+        type: actionTypes_1.USER_LOAD_ERROR,
+        error: error
+    };
+};
+exports.loadUserSuccessfull = function (userInf) {
+    return {
+        type: actionTypes_1.USER_LOAD_SUCCESSFULL,
+        payload: userInf
+    };
+};
+exports.resetUser = function () {
+    return {
+        type: actionTypes_1.USER_RESET
+    };
+};
+
+//# sourceMappingURL=userActions.js.map
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/Actions/verifyActions.js":
+/*!**********************************************************!*\
+  !*** ./resources/app/es5/redux/Actions/verifyActions.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var actionTypes_1 = __webpack_require__(/*! ../actionTypes */ "./resources/app/es5/redux/actionTypes.js");
+exports.verifyStart = function () {
+    return {
+        type: actionTypes_1.VERIFY_START
+    };
+};
+exports.verifyError = function (error) {
+    return {
+        type: actionTypes_1.VERIFY_ERROR,
+        error: error
+    };
+};
+exports.verifySuccess = function (message) {
+    return {
+        type: actionTypes_1.VERIFY_SUCCESS,
+        payload: message
+    };
+};
+
+//# sourceMappingURL=verifyActions.js.map
 
 /***/ }),
 
@@ -33739,18 +34092,28 @@ exports.default = cartReducer;
 
 
 Object.defineProperty(exports, "__esModule", { value: true });
+var actionTypes_1 = __webpack_require__(/*! ../actionTypes */ "./resources/app/es5/redux/actionTypes.js");
 var initialState = {
     isLoading: false,
     error: null,
     categories: [{
         name: 'Test',
         productCount: 32,
-        slug: 'test'
+        slug: 'test',
+        image: '/image/noAvatar.png'
     }]
 };
 var categoryReducer = function categoryReducer(state, action) {
     if (state === void 0) {
         state = initialState;
+    }
+    switch (action.type) {
+        case actionTypes_1.CATEGORY_LOAD_START:
+            return { categories: [], isLoading: true, error: null };
+        case actionTypes_1.CATEGORY_LOAD_ERROR:
+            return { categories: [], isLoading: false, error: action.error };
+        case actionTypes_1.CATEGORY_LOAD_SUCCESS:
+            return { categories: action.payload, isLoading: false, error: null };
     }
     return state;
 };
@@ -33776,10 +34139,16 @@ var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-f
 var cart_1 = __webpack_require__(/*! ./cart */ "./resources/app/es5/redux/Reducers/cart.js");
 var category_1 = __webpack_require__(/*! ./category */ "./resources/app/es5/redux/Reducers/category.js");
 var register_1 = __webpack_require__(/*! ./register */ "./resources/app/es5/redux/Reducers/register.js");
+var verify_1 = __webpack_require__(/*! ./verify */ "./resources/app/es5/redux/Reducers/verify.js");
+var login_1 = __webpack_require__(/*! ./login */ "./resources/app/es5/redux/Reducers/login.js");
+var user_1 = __webpack_require__(/*! ./user */ "./resources/app/es5/redux/Reducers/user.js");
 var storeReducer = redux_1.combineReducers({
     cart: cart_1.default,
     category: category_1.default,
     register: register_1.default,
+    verify: verify_1.default,
+    login: login_1.default,
+    user: user_1.default,
     form: redux_form_1.reducer
 });
 exports.default = storeReducer;
@@ -33788,10 +34157,83 @@ exports.default = storeReducer;
 
 /***/ }),
 
+/***/ "./resources/app/es5/redux/Reducers/login.js":
+/*!***************************************************!*\
+  !*** ./resources/app/es5/redux/Reducers/login.js ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var actionTypes_1 = __webpack_require__(/*! ../actionTypes */ "./resources/app/es5/redux/actionTypes.js");
+var initialState = {
+    error: null,
+    isLoading: false
+};
+var loginReducer = function loginReducer(state, action) {
+    if (state === void 0) {
+        state = initialState;
+    }
+    switch (action.type) {
+        case actionTypes_1.LOGIN_START:
+            return { error: null, isLoading: true };
+        case actionTypes_1.LOGIN_SUCCESS:
+            return { isLoading: false, error: null };
+        case actionTypes_1.LOGIN_ERROR:
+            return { error: action.error, isLoading: false };
+    }
+    return state;
+};
+exports.default = loginReducer;
+
+//# sourceMappingURL=login.js.map
+
+/***/ }),
+
 /***/ "./resources/app/es5/redux/Reducers/register.js":
 /*!******************************************************!*\
   !*** ./resources/app/es5/redux/Reducers/register.js ***!
   \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var actionTypes_1 = __webpack_require__(/*! ../actionTypes */ "./resources/app/es5/redux/actionTypes.js");
+var initialState = {
+    error: null,
+    message: '',
+    isLoading: false
+};
+var registerReducer = function registerReducer(state, action) {
+    if (state === void 0) {
+        state = initialState;
+    }
+    switch (action.type) {
+        case actionTypes_1.REGISTER_START:
+            return { error: null, isLoading: true, message: '' };
+        case actionTypes_1.REGISTER_SUCCESSFULL:
+            return { isLoading: false, error: null, message: action.payload };
+        case actionTypes_1.REGISTER_ERROR:
+            return { error: action.error, isLoading: false, message: '' };
+    }
+    return state;
+};
+exports.default = registerReducer;
+
+//# sourceMappingURL=register.js.map
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/Reducers/user.js":
+/*!**************************************************!*\
+  !*** ./resources/app/es5/redux/Reducers/user.js ***!
+  \**************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -33813,26 +34255,580 @@ var __assign = undefined && undefined.__assign || function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var actionTypes_1 = __webpack_require__(/*! ../actionTypes */ "./resources/app/es5/redux/actionTypes.js");
 var initialState = {
-    error: null,
-    isLoading: false
+    isLoading: false,
+    error: '',
+    token: null,
+    user: null
 };
-var registerReducer = function registerReducer(state, action) {
+var cartReducer = function cartReducer(state, action) {
     if (state === void 0) {
         state = initialState;
     }
     switch (action.type) {
-        case actionTypes_1.REGISTER_START:
-            return __assign(__assign({}, state), { error: null, isLoading: true });
-        case actionTypes_1.REGISTER_SUCCESSFULL:
-            return __assign(__assign({}, state), { isLoading: false, error: null });
-        case actionTypes_1.REGISTER_ERROR:
-            return __assign(__assign({}, state), { error: action.error, isLoading: false });
+        case actionTypes_1.USER_LOAD_START:
+            return __assign(__assign({}, state), { isLoading: true });
+        case actionTypes_1.USER_LOAD_ERROR:
+            return __assign(__assign({}, state), { isLoading: false, error: action.error });
+        case actionTypes_1.USER_LOAD_SUCCESSFULL:
+            return __assign(__assign({}, initialState), { user: action.payload.user, token: action.payload.token });
+        case actionTypes_1.USER_RESET:
+            return initialState;
     }
     return state;
 };
-exports.default = registerReducer;
+exports.default = cartReducer;
 
-//# sourceMappingURL=register.js.map
+//# sourceMappingURL=user.js.map
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/Reducers/verify.js":
+/*!****************************************************!*\
+  !*** ./resources/app/es5/redux/Reducers/verify.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var actionTypes_1 = __webpack_require__(/*! ../actionTypes */ "./resources/app/es5/redux/actionTypes.js");
+var initialState = {
+    message: null,
+    error: null,
+    isLoading: false
+};
+var verifyReducer = function verifyReducer(state, action) {
+    if (state === void 0) {
+        state = initialState;
+    }
+    switch (action.type) {
+        case actionTypes_1.VERIFY_START:
+            return { message: null, error: null, isLoading: true };
+        case actionTypes_1.VERIFY_ERROR:
+            return { message: null, error: action.error, isLoading: false };
+        case actionTypes_1.VERIFY_SUCCESS:
+            return { message: action.payload, error: null, isLoading: false };
+    }
+    return state;
+};
+exports.default = verifyReducer;
+
+//# sourceMappingURL=verify.js.map
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/ThunkActions/thunkLogin.js":
+/*!************************************************************!*\
+  !*** ./resources/app/es5/redux/ThunkActions/thunkLogin.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
+    function adopt(value) {
+        return value instanceof P ? value : new P(function (resolve) {
+            resolve(value);
+        });
+    }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) {
+            try {
+                step(generator.next(value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function rejected(value) {
+            try {
+                step(generator["throw"](value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function step(result) {
+            result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+        }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = undefined && undefined.__generator || function (thisArg, body) {
+    var _ = { label: 0, sent: function sent() {
+            if (t[0] & 1) throw t[1];return t[1];
+        }, trys: [], ops: [] },
+        f,
+        y,
+        t,
+        g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
+        return this;
+    }), g;
+    function verb(n) {
+        return function (v) {
+            return step([n, v]);
+        };
+    }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) {
+            try {
+                if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+                if (y = 0, t) op = [op[0] & 2, t.value];
+                switch (op[0]) {
+                    case 0:case 1:
+                        t = op;break;
+                    case 4:
+                        _.label++;return { value: op[1], done: false };
+                    case 5:
+                        _.label++;y = op[1];op = [0];continue;
+                    case 7:
+                        op = _.ops.pop();_.trys.pop();continue;
+                    default:
+                        if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+                            _ = 0;continue;
+                        }
+                        if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+                            _.label = op[1];break;
+                        }
+                        if (op[0] === 6 && _.label < t[1]) {
+                            _.label = t[1];t = op;break;
+                        }
+                        if (t && _.label < t[2]) {
+                            _.label = t[2];_.ops.push(op);break;
+                        }
+                        if (t[2]) _.ops.pop();
+                        _.trys.pop();continue;
+                }
+                op = body.call(thisArg, _);
+            } catch (e) {
+                op = [6, e];y = 0;
+            } finally {
+                f = t = 0;
+            }
+        }if (op[0] & 5) throw op[1];return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
+var loginActions_1 = __webpack_require__(/*! ../Actions/loginActions */ "./resources/app/es5/redux/Actions/loginActions.js");
+var API_1 = __webpack_require__(/*! ../../Helpers/API */ "./resources/app/es5/Helpers/API.js");
+var userActions_1 = __webpack_require__(/*! ../Actions/userActions */ "./resources/app/es5/redux/Actions/userActions.js");
+var thunkLogin = function thunkLogin(vals, formName) {
+    return function (dispatch) {
+        return __awaiter(void 0, void 0, void 0, function () {
+            var loginResponse;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        dispatch(loginActions_1.loginStart());
+                        return [4, API_1.default.loginUser(vals)];
+                    case 1:
+                        loginResponse = _a.sent();
+                        console.log(loginResponse);
+                        if (API_1.default.isError(loginResponse)) {
+                            if (loginResponse.response.data.errors) {
+                                dispatch(redux_form_1.updateSyncErrors(formName, loginResponse.response.data.errors, loginResponse.response.data.message));
+                            } else {
+                                dispatch(loginActions_1.loginError(loginResponse.response.data.message));
+                            }
+                        } else {
+                            dispatch(redux_form_1.reset(formName));
+                            dispatch(userActions_1.loadUserSuccessfull(loginResponse));
+                            dispatch(loginActions_1.loginSuccess());
+                        }
+                        return [2];
+                }
+            });
+        });
+    };
+};
+exports.default = thunkLogin;
+
+//# sourceMappingURL=thunkLogin.js.map
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/ThunkActions/thunkLogout.js":
+/*!*************************************************************!*\
+  !*** ./resources/app/es5/redux/ThunkActions/thunkLogout.js ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
+    function adopt(value) {
+        return value instanceof P ? value : new P(function (resolve) {
+            resolve(value);
+        });
+    }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) {
+            try {
+                step(generator.next(value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function rejected(value) {
+            try {
+                step(generator["throw"](value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function step(result) {
+            result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+        }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = undefined && undefined.__generator || function (thisArg, body) {
+    var _ = { label: 0, sent: function sent() {
+            if (t[0] & 1) throw t[1];return t[1];
+        }, trys: [], ops: [] },
+        f,
+        y,
+        t,
+        g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
+        return this;
+    }), g;
+    function verb(n) {
+        return function (v) {
+            return step([n, v]);
+        };
+    }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) {
+            try {
+                if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+                if (y = 0, t) op = [op[0] & 2, t.value];
+                switch (op[0]) {
+                    case 0:case 1:
+                        t = op;break;
+                    case 4:
+                        _.label++;return { value: op[1], done: false };
+                    case 5:
+                        _.label++;y = op[1];op = [0];continue;
+                    case 7:
+                        op = _.ops.pop();_.trys.pop();continue;
+                    default:
+                        if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+                            _ = 0;continue;
+                        }
+                        if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+                            _.label = op[1];break;
+                        }
+                        if (op[0] === 6 && _.label < t[1]) {
+                            _.label = t[1];t = op;break;
+                        }
+                        if (t && _.label < t[2]) {
+                            _.label = t[2];_.ops.push(op);break;
+                        }
+                        if (t[2]) _.ops.pop();
+                        _.trys.pop();continue;
+                }
+                op = body.call(thisArg, _);
+            } catch (e) {
+                op = [6, e];y = 0;
+            } finally {
+                f = t = 0;
+            }
+        }if (op[0] & 5) throw op[1];return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var userActions_1 = __webpack_require__(/*! ../Actions/userActions */ "./resources/app/es5/redux/Actions/userActions.js");
+var API_1 = __webpack_require__(/*! ../../Helpers/API */ "./resources/app/es5/Helpers/API.js");
+var thunkLogout = function thunkLogout() {
+    return function (dispatch) {
+        return __awaiter(void 0, void 0, void 0, function () {
+            var logoutResponse;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        return [4, API_1.default.logoutUser()];
+                    case 1:
+                        logoutResponse = _a.sent();
+                        console.log(logoutResponse);
+                        if (API_1.default.isError(logoutResponse)) {
+                            if (logoutResponse.response.data.errors) {} else {}
+                        } else {
+                            dispatch(userActions_1.resetUser());
+                        }
+                        return [2];
+                }
+            });
+        });
+    };
+};
+exports.default = thunkLogout;
+
+//# sourceMappingURL=thunkLogout.js.map
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/ThunkActions/thunkRegister.js":
+/*!***************************************************************!*\
+  !*** ./resources/app/es5/redux/ThunkActions/thunkRegister.js ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
+    function adopt(value) {
+        return value instanceof P ? value : new P(function (resolve) {
+            resolve(value);
+        });
+    }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) {
+            try {
+                step(generator.next(value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function rejected(value) {
+            try {
+                step(generator["throw"](value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function step(result) {
+            result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+        }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = undefined && undefined.__generator || function (thisArg, body) {
+    var _ = { label: 0, sent: function sent() {
+            if (t[0] & 1) throw t[1];return t[1];
+        }, trys: [], ops: [] },
+        f,
+        y,
+        t,
+        g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
+        return this;
+    }), g;
+    function verb(n) {
+        return function (v) {
+            return step([n, v]);
+        };
+    }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) {
+            try {
+                if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+                if (y = 0, t) op = [op[0] & 2, t.value];
+                switch (op[0]) {
+                    case 0:case 1:
+                        t = op;break;
+                    case 4:
+                        _.label++;return { value: op[1], done: false };
+                    case 5:
+                        _.label++;y = op[1];op = [0];continue;
+                    case 7:
+                        op = _.ops.pop();_.trys.pop();continue;
+                    default:
+                        if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+                            _ = 0;continue;
+                        }
+                        if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+                            _.label = op[1];break;
+                        }
+                        if (op[0] === 6 && _.label < t[1]) {
+                            _.label = t[1];t = op;break;
+                        }
+                        if (t && _.label < t[2]) {
+                            _.label = t[2];_.ops.push(op);break;
+                        }
+                        if (t[2]) _.ops.pop();
+                        _.trys.pop();continue;
+                }
+                op = body.call(thisArg, _);
+            } catch (e) {
+                op = [6, e];y = 0;
+            } finally {
+                f = t = 0;
+            }
+        }if (op[0] & 5) throw op[1];return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
+var registerActions_1 = __webpack_require__(/*! ../Actions/registerActions */ "./resources/app/es5/redux/Actions/registerActions.js");
+var API_1 = __webpack_require__(/*! ../../Helpers/API */ "./resources/app/es5/Helpers/API.js");
+var thunkRegister = function thunkRegister(vals, formName) {
+    return function (dispatch) {
+        return __awaiter(void 0, void 0, void 0, function () {
+            var regResponse;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        dispatch(registerActions_1.registerStart());
+                        return [4, API_1.default.registerUser(vals)];
+                    case 1:
+                        regResponse = _a.sent();
+                        console.log(regResponse);
+                        if (API_1.default.isError(regResponse)) {
+                            if (regResponse.response.data.errors) {
+                                dispatch(redux_form_1.updateSyncErrors(formName, regResponse.response.data.errors, regResponse.response.data.message));
+                            } else {
+                                dispatch(registerActions_1.registerError(regResponse.response.data.message));
+                            }
+                        } else {
+                            dispatch(redux_form_1.reset(formName));
+                            dispatch(registerActions_1.registerSuccess(regResponse.message));
+                        }
+                        return [2];
+                }
+            });
+        });
+    };
+};
+exports.default = thunkRegister;
+
+//# sourceMappingURL=thunkRegister.js.map
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/ThunkActions/thunkVerify.js":
+/*!*************************************************************!*\
+  !*** ./resources/app/es5/redux/ThunkActions/thunkVerify.js ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
+    function adopt(value) {
+        return value instanceof P ? value : new P(function (resolve) {
+            resolve(value);
+        });
+    }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) {
+            try {
+                step(generator.next(value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function rejected(value) {
+            try {
+                step(generator["throw"](value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function step(result) {
+            result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+        }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = undefined && undefined.__generator || function (thisArg, body) {
+    var _ = { label: 0, sent: function sent() {
+            if (t[0] & 1) throw t[1];return t[1];
+        }, trys: [], ops: [] },
+        f,
+        y,
+        t,
+        g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
+        return this;
+    }), g;
+    function verb(n) {
+        return function (v) {
+            return step([n, v]);
+        };
+    }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) {
+            try {
+                if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+                if (y = 0, t) op = [op[0] & 2, t.value];
+                switch (op[0]) {
+                    case 0:case 1:
+                        t = op;break;
+                    case 4:
+                        _.label++;return { value: op[1], done: false };
+                    case 5:
+                        _.label++;y = op[1];op = [0];continue;
+                    case 7:
+                        op = _.ops.pop();_.trys.pop();continue;
+                    default:
+                        if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+                            _ = 0;continue;
+                        }
+                        if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+                            _.label = op[1];break;
+                        }
+                        if (op[0] === 6 && _.label < t[1]) {
+                            _.label = t[1];t = op;break;
+                        }
+                        if (t && _.label < t[2]) {
+                            _.label = t[2];_.ops.push(op);break;
+                        }
+                        if (t[2]) _.ops.pop();
+                        _.trys.pop();continue;
+                }
+                op = body.call(thisArg, _);
+            } catch (e) {
+                op = [6, e];y = 0;
+            } finally {
+                f = t = 0;
+            }
+        }if (op[0] & 5) throw op[1];return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var verifyActions_1 = __webpack_require__(/*! ../Actions/verifyActions */ "./resources/app/es5/redux/Actions/verifyActions.js");
+var API_1 = __webpack_require__(/*! ../../Helpers/API */ "./resources/app/es5/Helpers/API.js");
+var thunkVerify = function thunkVerify(id) {
+    return function (dispatch) {
+        return __awaiter(void 0, void 0, void 0, function () {
+            var verifyResponse;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        dispatch(verifyActions_1.verifyStart());
+                        return [4, API_1.default.verifyUser(id)];
+                    case 1:
+                        verifyResponse = _a.sent();
+                        console.log(verifyResponse);
+                        if (API_1.default.isError(verifyResponse)) {
+                            dispatch(verifyActions_1.verifyError(verifyResponse.response.data.message));
+                        } else {
+                            dispatch(verifyActions_1.verifySuccess(verifyResponse.success));
+                        }
+                        return [2];
+                }
+            });
+        });
+    };
+};
+exports.default = thunkVerify;
+
+//# sourceMappingURL=thunkVerify.js.map
 
 /***/ }),
 
@@ -33857,11 +34853,16 @@ exports.CART_UPDATE = 'CART_UPDATE';
 exports.USER_LOAD_START = 'USER_LOAD_START';
 exports.USER_LOAD_ERROR = 'USER_LOAD_ERROR';
 exports.USER_LOAD_SUCCESSFULL = 'USER_LOAD_SUCCESSFULL';
-exports.USER_LOGIN = 'USER_LOGIN';
-exports.USER_LOGOUT = 'USER_LOGOUT';
+exports.USER_RESET = 'USER_RESET';
 exports.REGISTER_START = 'REGISTER_START';
 exports.REGISTER_ERROR = 'REGISTER_ERROR';
 exports.REGISTER_SUCCESSFULL = 'REGISTER_SUCCESSFULL';
+exports.VERIFY_START = 'VERIFY_START';
+exports.VERIFY_SUCCESS = 'VERIFY_SUCCESS';
+exports.VERIFY_ERROR = 'VERIFY_ERROR';
+exports.LOGIN_START = 'LOGIN_START';
+exports.LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+exports.LOGIN_ERROR = 'LOGIN_ERROR';
 
 //# sourceMappingURL=actionTypes.js.map
 

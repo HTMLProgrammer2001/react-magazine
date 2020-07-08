@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Notifications\VerifyApiEmail;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -47,13 +48,10 @@ class User extends Authenticatable
     public function changeEmail($newEmail){
         $this->email = $newEmail;
         $this->email_verified_at = null;
-
-        $this->save();
     }
 
     public function setPassword($password){
         $this->password = bcrypt($password);
-        $this->save();
     }
 
     public function setRole(int $role){
@@ -72,6 +70,10 @@ class User extends Authenticatable
     }
 
     public function getAvatar(): string {
-        return $this->avatar ?? '/image/avatar.png';
+        return $this->avatar;
+    }
+
+    public function sendApiEmailVerification(){
+        $this->notify(new VerifyApiEmail());
     }
 }

@@ -1,39 +1,35 @@
 import * as React from 'react';
 import {reduxForm, Field, InjectedFormProps} from 'redux-form';
-import {connect, ConnectedProps} from 'react-redux';
-import {ThunkDispatch} from 'redux-thunk';
 
 import InputElement from '../FormElements/InputElement';
-import {RootState} from '../../redux/Reducers';
-import thunkRegisterCreator, {RegisterThunkAction} from '../../redux/ThunkActions/register';
 
-
-const mapStateToProps = (state: RootState) => ({
-	formData: state.register
-});
-
-const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, RegisterThunkAction>) => ({
-	register: (vals: IRegisterFormData) => {
-		dispatch(thunkRegisterCreator(vals));
-	}
-});
-
-const connected = connect(mapStateToProps, mapDispatchToProps);
 
 export type IRegisterFormData = {
 	fullName: string,
 	email: string,
 	password: string,
-	confirmPassword: string
+	password_confirmation: string
 }
 
-type IRegisterProps = InjectedFormProps<IRegisterFormData, ConnectedProps<typeof connected>>
-		& ConnectedProps<typeof connected>;
+type IOwnProps = {
+	registration: {
+		isLoading: boolean,
+		error: string | null,
+		message: string
+	}
+}
+
+type IRegisterProps = InjectedFormProps<IRegisterFormData, IOwnProps> & IOwnProps;
 
 const RegisterForm: React.FC<IRegisterProps> = (props) => (
 	<div className="container">
 		<form onSubmit={props.handleSubmit} className="login my-pad" noValidate>
 			<div className="login__head">Sign in</div>
+
+			{
+				props.registration.error &&
+					<div className="red">{props.registration.error}</div>
+			}
 
 			<Field component={InputElement} type="text" name="fullName"
 				   placeholder="Full name" required/>
@@ -41,18 +37,42 @@ const RegisterForm: React.FC<IRegisterProps> = (props) => (
 				   placeholder="Email" required/>
 			<Field component={InputElement} type="password" name="password"
 				   placeholder="Password" required/>
-			<Field component={InputElement} type="password" name="confirmPassword"
+			<Field component={InputElement} type="password" name="password_confirmation"
 				   placeholder="Confirm password" required/>
 
 			<div className="row space-between my-pad w-100">
 				<div/>
-				<button type="submit" className="check__but">Sign in</button>
+				<button type="submit" className="check__but">
+					{props.registration.isLoading ? 'Loading...' : 'Sign in'}
+				</button>
 			</div>
 		</form>
 	</div>
 );
 
-export default reduxForm<IRegisterFormData, ConnectedProps<typeof connected>>({
-	form: 'register'
-})(RegisterForm);
+const validate = (values: IRegisterFormData) => {
+	const errors: Partial<IRegisterFormData> = {};
 
+	if(values.fullName?.trim().split(' ').length != 2){
+		errors.fullName = 'Enter name and surname';
+	}
+
+	if(!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)){
+		errors.email = 'Incorrect email';
+	}
+
+	if(values.password?.length < 8){
+		errors.password = 'Password must be at least 8 chars';
+	}
+
+	if(values.password_confirmation != values.password){
+		errors.password_confirmation = 'Passwords are not equals';
+	}
+
+	return errors;
+};
+
+export default reduxForm<IRegisterFormData, IOwnProps>({
+	form: 'thunkRegister.ts',
+	validate
+})(RegisterForm);

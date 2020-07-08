@@ -22786,7 +22786,7 @@
                 var _proto = Field.prototype;
                 _proto.componentDidMount = function componentDidMount() {
                     var _this2 = this;
-                    this.props._reduxForm.register(this.name, 'Field', function () {
+                    this.props._reduxForm.thunkRegister(this.name, 'Field', function () {
                         return _this2.props.validate;
                     }, function () {
                         return _this2.props.warn;
@@ -22801,7 +22801,7 @@
                     if (oldName !== newName ||
                         !_plain2.default.deepEqual(this.props.validate, nextProps.validate) || !_plain2.default.deepEqual(this.props.warn, nextProps.warn)) {
                         this.props._reduxForm.unregister(oldName);
-                        this.props._reduxForm.register(newName, 'Field', function () {
+                        this.props._reduxForm.thunkRegister(newName, 'Field', function () {
                             return nextProps.validate;
                         }, function () {
                             return nextProps.warn;
@@ -22924,7 +22924,7 @@
                 var _proto = FieldArray.prototype;
                 _proto.componentDidMount = function componentDidMount() {
                     var _this2 = this;
-                    this.props._reduxForm.register(this.name, 'FieldArray', function () {
+                    this.props._reduxForm.thunkRegister(this.name, 'FieldArray', function () {
                         return wrapError(_this2.props.validate, '_error');
                     }, function () {
                         return wrapError(_this2.props.warn, '_warning');
@@ -22935,7 +22935,7 @@
                     var newName = (0, _prefixName2.default)(nextProps, nextProps.name);
                     if (oldName !== newName) {
                         this.props._reduxForm.unregister(oldName);
-                        this.props._reduxForm.register(newName, 'FieldArray');
+                        this.props._reduxForm.thunkRegister(newName, 'FieldArray');
                     }
                 };
                 _proto.componentWillUnmount = function componentWillUnmount() {
@@ -23235,7 +23235,7 @@
                 _proto.registerFields = function registerFields(names) {
                     var _this2 = this;
                     var props = this.props;
-                    var register = props._reduxForm.register;
+                    var register = props._reduxForm.thunkRegister;
                     names.forEach(function (name) {
                         return register((0, _prefixName2.default)(props, name), 'Field', function () {
                             return getFieldWarnAndValidate(_this2.props.validate, name);
@@ -29764,7 +29764,7 @@
                 placeholder: 'Confirm password', required: true }), React.createElement('div', { className: 'row space-between my-pad w-100' }, React.createElement('div', null), React.createElement('button', { type: 'submit', className: 'check__but' }, 'Sign in'))));
         };
         exports.default = _reduxForm.reduxForm < IRegisterFormData > {
-            form: 'register'
+            form: 'thunkRegister.ts'
         }(RegisterForm);
     }),
     "./resources/app/js/components/RegisterPage/index.tsx": (function (module, exports, __webpack_require__) {

@@ -8,9 +8,12 @@ exports.loadUserError = function (error) { return ({
     type: actionTypes_1.USER_LOAD_ERROR,
     error: error
 }); };
-exports.loadUserSuccessfull = function (user) { return ({
+exports.loadUserSuccessfull = function (userInf) { return ({
     type: actionTypes_1.USER_LOAD_SUCCESSFULL,
-    payload: user
+    payload: userInf
+}); };
+exports.resetUser = function () { return ({
+    type: actionTypes_1.USER_RESET
 }); };
 
 //# sourceMappingURL=userActions.js.map

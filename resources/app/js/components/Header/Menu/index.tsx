@@ -1,14 +1,29 @@
 import * as React from 'react';
 import c from 'classnames';
 import {Link} from 'react-router-dom';
+import {connect, ConnectedProps} from 'react-redux';
 
 //My components
 import Cart from './Cart';
 import Search from './Search';
 import Burger from './Burger';
+import {RootState} from '../../../redux/Reducers';
+import thunkLogout from '../../../redux/ThunkActions/thunkLogout';
 
 
-const Menu: React.FC<{}> = () => {
+const mapStateToProps = (state: RootState) => ({
+	userData: state.user
+});
+
+const mapDispatchToProps = (dispatch: any) => ({
+	logout: () => {
+		dispatch(thunkLogout());
+	}
+});
+
+const connected = connect(mapStateToProps, mapDispatchToProps);
+
+const Menu: React.FC<ConnectedProps<typeof connected>> = (props) => {
 	const [openMenu, changeMenu] = React.useState('');
 	const [isBurgerOpen, changeBurger] = React.useState(false);
 
@@ -27,13 +42,24 @@ const Menu: React.FC<{}> = () => {
 					Categories
 				</Link>
 
-				<Link to="/login" className="header__item">
-					Login
-				</Link>
+				{
+					props.userData.user ?
+						<a
+							href="#"
+						   className="header__item"
+							onClick={props.logout}
+						>Log out</a> :
 
-				<Link to="/register" className="header__item">
-					Register
-				</Link>
+						<React.Fragment>
+							<Link to="/login" className="header__item">
+								Login
+							</Link>
+
+							<Link to="/register" className="header__item">
+								Register
+							</Link>
+						</React.Fragment>
+				}
 			</div>
 
 			<div className="header__icons">
@@ -46,4 +72,4 @@ const Menu: React.FC<{}> = () => {
 	);
 };
 
-export default Menu;
+export default connected(Menu);

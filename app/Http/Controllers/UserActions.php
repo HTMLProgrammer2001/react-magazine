@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\User;
 use Illuminate\Http\Request;
@@ -19,25 +20,18 @@ class UserActions extends Controller
 
         //generate hash for password
         $user->setPassword($request->get('password'));
+        $user->save();
 
-        //create token of this user
-        $token = $user->createToken(config('app.name'));
+        //send verify message
+        $user->sendApiEmailVerification();
 
-        //return token and user info
+        //return answer
         return response()->json([
-            'token' => $token->accessToken,
-            'user' => $user
+            'message' => "User successfully created. Check {$request->input('email')} to activate"
         ]);
     }
 
-    public function login(Request $request){
-
-        //validate input data
-        $this->validate($request, [
-           'email' => 'required|email',
-            'password' => 'required'
-        ]);
-
+    public function login(LoginRequest $request){
         //get only email and password
         $credentials = $request->only('email', 'password');
 

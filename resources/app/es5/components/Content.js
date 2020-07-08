@@ -11,10 +11,12 @@ var ResetPage_1 = require("./ResetPage/");
 var CategoriesPage_1 = require("./CategoriesPage/");
 var CheckoutPage_1 = require("./CheckoutPage/");
 var SinglePage_1 = require("./SinglePage/");
+var VerifyPage_1 = require("./VerifyPage");
 var Content = function () { return (React.createElement(react_router_dom_1.Switch, null,
     React.createElement(react_router_dom_1.Route, { path: '/', exact: true, component: HomePage_1.default }),
     React.createElement(react_router_dom_1.Route, { path: '/login', exact: true, component: LoginPage_1.default }),
     React.createElement(react_router_dom_1.Route, { path: '/register', exact: true, component: RegisterPage_1.default }),
+    React.createElement(react_router_dom_1.Route, { path: '/verify/:id', exact: true, component: VerifyPage_1.default }),
     React.createElement(react_router_dom_1.Route, { path: '/cart', exact: true, component: CartPage_1.default }),
     React.createElement(react_router_dom_1.Route, { path: '/reset', exact: true, component: ResetPage_1.default }),
     React.createElement(react_router_dom_1.Route, { path: '/categories', exact: true, component: CategoriesPage_1.default }),

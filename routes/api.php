@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use \Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,5 +21,12 @@ Route::get('/products/{slug}', 'ProductInfoController@getProductBySlug');
 
 Route::post('/products/{productID}/changeLike', 'ProductInfoController@changeLike');
 
-Route::post('/register', 'UserController@register');
-Route::post('/login', 'UserController@login');
+Route::post('/register', 'UserActions@register');
+Route::post('/login', 'UserActions@login');
+Route::post('/logout', 'UserActions@logout');
+
+Route::get('/verify/{id}', 'VerifyController@verify')
+    ->name('verificationapi.verify');
+
+Route::get('/resend', 'VerifyController@resend')
+    ->name('verificationapi.resend');

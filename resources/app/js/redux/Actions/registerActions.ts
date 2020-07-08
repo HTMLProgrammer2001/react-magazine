@@ -3,16 +3,15 @@ import {
 	REGISTER_START,
 	REGISTER_SUCCESSFULL
 } from '../actionTypes';
-import {IUser} from '../../Interfaces/IUser';
 
 
 export const registerStart = () => (<const>{
 	type: REGISTER_START
 });
 
-export const registerSuccess = (user: IUser) => (<const>{
+export const registerSuccess = (message: string) => (<const>{
 	type: REGISTER_SUCCESSFULL,
-	payload: user
+	payload: message
 });
 
 export const registerError = (error: string) => (<const>{

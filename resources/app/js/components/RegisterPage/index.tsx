@@ -1,12 +1,29 @@
 import * as React from 'react';
+import {connect, ConnectedProps} from 'react-redux';
 
 import Paginate from '../Paginate';
+import {RootState} from '../../redux/Reducers';
 import {default as RegisterForm, IRegisterFormData} from './RegisterForm';
+import thunkRegisterCreator, {RegisterThunkAction} from '../../redux/ThunkActions/thunkRegister';
 
 
-const RegisterPage: React.FC<{}> = () => {
+const mapStateToProps = (state: RootState) => ({
+	registration: state.register
+});
+
+const mapDispatchToProps = (dispatch: any) => ({
+	register: (vals: IRegisterFormData) => {
+		dispatch(thunkRegisterCreator(vals, 'thunkRegister.ts'));
+	}
+});
+
+const connected = connect(mapStateToProps, mapDispatchToProps);
+
+
+const RegisterPage: React.FC<ConnectedProps<typeof connected>> = (props) => {
 	const submit = (values: IRegisterFormData) => {
 		console.log(values);
+		props.register(values);
 	};
 
 	React.useEffect(() => {
@@ -16,9 +33,16 @@ const RegisterPage: React.FC<{}> = () => {
 	return (
 		<React.Fragment>
 			<Paginate paths={[{name: 'Home', path: '/'}, {name: 'Register', path: '/register'}]}/>
-			<RegisterForm onSubmit={submit}/>
+
+			{
+				props.registration.message ?
+					<div>{props.registration.message}</div> :
+					null
+			}
+
+			<RegisterForm onSubmit={submit} registration={props.registration}/>
 		</React.Fragment>
 	);
 };
 
-export default RegisterPage;
+export default connected(RegisterPage);
