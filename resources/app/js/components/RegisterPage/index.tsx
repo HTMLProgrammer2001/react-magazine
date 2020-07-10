@@ -13,7 +13,7 @@ const mapStateToProps = (state: RootState) => ({
 
 const mapDispatchToProps = (dispatch: any) => ({
 	register: (vals: IRegisterFormData) => {
-		dispatch(thunkRegisterCreator(vals, 'thunkRegister.ts'));
+		dispatch(thunkRegisterCreator(vals, 'register'));
 	}
 });
 

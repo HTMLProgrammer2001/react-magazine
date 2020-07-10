@@ -23,7 +23,10 @@ Route::post('/products/{productID}/changeLike', 'ProductInfoController@changeLik
 
 Route::post('/register', 'UserActions@register');
 Route::post('/login', 'UserActions@login');
-Route::post('/logout', 'UserActions@logout');
+Route::post('/logout', 'UserActions@logout')
+    ->middleware('auth:api, verified');
+
+Route::post('/reset', 'UserActions@reset');
 
 Route::get('/verify/{id}', 'VerifyController@verify')
     ->name('verificationapi.verify');

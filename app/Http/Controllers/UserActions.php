@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\ResetRequest;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class UserActions extends Controller
 {
@@ -44,6 +46,11 @@ class UserActions extends Controller
             ]);
         }
 
+        if(!Auth::user()->hasVerifiedEmail())
+            return response()->json([
+               'message' => 'Your account not verified'
+            ], 403);
+
         //generate token
         $token = Auth::user()->createToken(config('app.name'));
 
@@ -67,7 +74,24 @@ class UserActions extends Controller
 
         //return 200 status
         return response()->json([
+            'errors' => [],
             'message' => 'Logged out'
+        ]);
+    }
+
+    public function reset(ResetRequest $request){
+        $user = User::all()->where('email', $request->input('email'))->first();
+
+        //generate token
+        $newPassword = Str::random(16);
+        $user->setPassword($newPassword);
+        $user->save();
+
+        //notify user
+        $user->sendApiResetEmail($newPassword);
+
+        return response()->json([
+            'success' => 'Reset password email was sent'
         ]);
     }
 }

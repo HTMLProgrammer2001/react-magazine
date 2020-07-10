@@ -7,6 +7,7 @@ import registerReducer from './register';
 import verifyReducer from './verify';
 import loginReducer from './login';
 import userReducer from './user';
+import resetReducer from './reset';
 
 
 const storeReducer = combineReducers({
@@ -16,6 +17,7 @@ const storeReducer = combineReducers({
 	verify: verifyReducer,
 	login: loginReducer,
 	user: userReducer,
+	reset: resetReducer,
 	form: formReducer
 });
 

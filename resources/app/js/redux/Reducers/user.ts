@@ -30,6 +30,7 @@ const cartReducer = (state: UserState = initialState, action: UserActions): User
 		return {...state, isLoading: false, error: action.error};
 
 	case USER_LOAD_SUCCESSFULL:
+		localStorage.setItem('token', action.payload.token);
 		return {...initialState, user: action.payload.user, token: action.payload.token};
 
 	case USER_RESET:

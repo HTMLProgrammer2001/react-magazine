@@ -195,7 +195,11 @@ var API = (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        return [4, this.clientAPI.post('/logout')];
+                        return [4, this.clientAPI.post('/logout', {}, {
+                                headers: {
+                                    'Authorization': "Bearer " + localStorage.getItem('token')
+                                }
+                            })];
                     case 1:
                         response = _a.sent();
                         return [3, 3];
@@ -203,6 +207,26 @@ var API = (function () {
                         err_8 = _a.sent();
                         console.log(err_8.response.data);
                         return [2, err_8];
+                    case 3: return [2, response.data];
+                }
+            });
+        });
+    };
+    API.resetUser = function (vals) {
+        return __awaiter(this, void 0, void 0, function () {
+            var response, err_9;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4, this.clientAPI.post('/reset', vals)];
+                    case 1:
+                        response = _a.sent();
+                        return [3, 3];
+                    case 2:
+                        err_9 = _a.sent();
+                        console.log(err_9.response.data);
+                        return [2, err_9];
                     case 3: return [2, response.data];
                 }
             });

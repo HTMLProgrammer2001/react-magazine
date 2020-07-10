@@ -20,5 +20,8 @@ exports.VERIFY_ERROR = 'VERIFY_ERROR';
 exports.LOGIN_START = 'LOGIN_START';
 exports.LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 exports.LOGIN_ERROR = 'LOGIN_ERROR';
+exports.RESET_START = 'RESET_START';
+exports.RESET_SUCCESS = 'RESET_SUCCESS';
+exports.RESET_ERROR = 'RESET_ERROR';
 
 //# sourceMappingURL=actionTypes.js.map

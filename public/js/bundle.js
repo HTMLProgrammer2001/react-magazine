@@ -31220,7 +31220,11 @@ var API = function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2,, 3]);
-                        return [4, this.clientAPI.post('/logout')];
+                        return [4, this.clientAPI.post('/logout', {}, {
+                            headers: {
+                                'Authorization': "Bearer " + localStorage.getItem('token')
+                            }
+                        })];
                     case 1:
                         response = _a.sent();
                         return [3, 3];
@@ -31228,6 +31232,27 @@ var API = function () {
                         err_8 = _a.sent();
                         console.log(err_8.response.data);
                         return [2, err_8];
+                    case 3:
+                        return [2, response.data];
+                }
+            });
+        });
+    };
+    API.resetUser = function (vals) {
+        return __awaiter(this, void 0, void 0, function () {
+            var response, err_9;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2,, 3]);
+                        return [4, this.clientAPI.post('/reset', vals)];
+                    case 1:
+                        response = _a.sent();
+                        return [3, 3];
+                    case 2:
+                        err_9 = _a.sent();
+                        console.log(err_9.response.data);
+                        return [2, err_9];
                     case 3:
                         return [2, response.data];
                 }
@@ -33106,7 +33131,7 @@ var mapStateToProps = function mapStateToProps(state) {
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     return {
         register: function register(vals) {
-            dispatch(thunkRegister_1.default(vals, 'thunkRegister.ts'));
+            dispatch(thunkRegister_1.default(vals, 'register'));
         }
     };
 };
@@ -33142,7 +33167,7 @@ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
 var InputElement_1 = __webpack_require__(/*! ../FormElements/InputElement */ "./resources/app/es5/components/FormElements/InputElement.js");
 var ResetForm = function ResetForm(props) {
-    return React.createElement("form", { className: "reset", onSubmit: props.handleSubmit }, React.createElement("div", { className: "container my-pad" }, React.createElement("div", { className: "login__head" }, "Reset password"), React.createElement(redux_form_1.Field, { component: InputElement_1.default, type: "email", name: "email", placeholder: "Email", required: true }), React.createElement("div", { className: "row space-between my-pad w-100" }, React.createElement("div", null), React.createElement("button", { type: "submit", className: "check__but" }, "Reset"))));
+    return React.createElement("form", { className: "reset", onSubmit: props.handleSubmit }, React.createElement("div", { className: "container my-pad" }, React.createElement("div", { className: "login__head" }, "Reset password"), props.resetState.error && React.createElement("div", { className: "red" }, props.error), props.resetState.message && React.createElement("div", null, props.resetState.message), React.createElement(redux_form_1.Field, { component: InputElement_1.default, type: "email", name: "email", placeholder: "Email", required: true }), React.createElement("div", { className: "row space-between my-pad w-100" }, React.createElement("div", null), React.createElement("button", { type: "submit", className: "check__but" }, props.resetState.isLoading ? 'Loading...' : 'Reset'))));
 };
 exports.default = redux_form_1.reduxForm({
     form: 'reset'
@@ -33164,18 +33189,35 @@ exports.default = redux_form_1.reduxForm({
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 var Paginate_1 = __webpack_require__(/*! ../Paginate */ "./resources/app/es5/components/Paginate.js");
 var ResetForm_1 = __webpack_require__(/*! ./ResetForm */ "./resources/app/es5/components/ResetPage/ResetForm.js");
-var ResetPage = function ResetPage() {
+var thunkReset_1 = __webpack_require__(/*! ../../redux/ThunkActions/thunkReset */ "./resources/app/es5/redux/ThunkActions/thunkReset.js");
+var mapStateToProps = function mapStateToProps(state) {
+    return {
+        resetState: state.reset
+    };
+};
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+    return {
+        reset: function reset(vals) {
+            dispatch(thunkReset_1.default(vals, 'reset'));
+        }
+    };
+};
+var connected = react_redux_1.connect(mapStateToProps, mapDispatchToProps);
+var ResetPage = function ResetPage(props) {
     React.useEffect(function () {
         document.title = 'Reset password';
     }, []);
     var onSubmit = function onSubmit(vals) {
+        props.reset(vals);
         console.log(vals);
     };
-    return React.createElement(React.Fragment, null, React.createElement(Paginate_1.default, { paths: [{ name: 'Home', path: '/' }, { name: 'Reset password', path: '/reset' }] }), React.createElement(ResetForm_1.default, { onSubmit: onSubmit }));
+    console.log(props.resetState);
+    return React.createElement(React.Fragment, null, React.createElement(Paginate_1.default, { paths: [{ name: 'Home', path: '/' }, { name: 'Reset password', path: '/reset' }] }), React.createElement(ResetForm_1.default, { onSubmit: onSubmit, resetState: props.resetState }));
 };
-exports.default = ResetPage;
+exports.default = connected(ResetPage);
 
 //# sourceMappingURL=index.js.map
 
@@ -33945,6 +33987,40 @@ exports.registerError = function (error) {
 
 /***/ }),
 
+/***/ "./resources/app/es5/redux/Actions/resetActions.js":
+/*!*********************************************************!*\
+  !*** ./resources/app/es5/redux/Actions/resetActions.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var actionTypes_1 = __webpack_require__(/*! ../actionTypes */ "./resources/app/es5/redux/actionTypes.js");
+exports.resetStart = function () {
+    return {
+        type: actionTypes_1.RESET_START
+    };
+};
+exports.resetSuccess = function (message) {
+    return {
+        type: actionTypes_1.RESET_SUCCESS,
+        payload: message
+    };
+};
+exports.resetError = function (error) {
+    return {
+        type: actionTypes_1.RESET_ERROR,
+        error: error
+    };
+};
+
+//# sourceMappingURL=resetActions.js.map
+
+/***/ }),
+
 /***/ "./resources/app/es5/redux/Actions/userActions.js":
 /*!********************************************************!*\
   !*** ./resources/app/es5/redux/Actions/userActions.js ***!
@@ -34142,6 +34218,7 @@ var register_1 = __webpack_require__(/*! ./register */ "./resources/app/es5/redu
 var verify_1 = __webpack_require__(/*! ./verify */ "./resources/app/es5/redux/Reducers/verify.js");
 var login_1 = __webpack_require__(/*! ./login */ "./resources/app/es5/redux/Reducers/login.js");
 var user_1 = __webpack_require__(/*! ./user */ "./resources/app/es5/redux/Reducers/user.js");
+var reset_1 = __webpack_require__(/*! ./reset */ "./resources/app/es5/redux/Reducers/reset.js");
 var storeReducer = redux_1.combineReducers({
     cart: cart_1.default,
     category: category_1.default,
@@ -34149,6 +34226,7 @@ var storeReducer = redux_1.combineReducers({
     verify: verify_1.default,
     login: login_1.default,
     user: user_1.default,
+    reset: reset_1.default,
     form: redux_form_1.reducer
 });
 exports.default = storeReducer;
@@ -34230,6 +34308,43 @@ exports.default = registerReducer;
 
 /***/ }),
 
+/***/ "./resources/app/es5/redux/Reducers/reset.js":
+/*!***************************************************!*\
+  !*** ./resources/app/es5/redux/Reducers/reset.js ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var actionTypes_1 = __webpack_require__(/*! ../actionTypes */ "./resources/app/es5/redux/actionTypes.js");
+var initialState = {
+    error: null,
+    message: '',
+    isLoading: false
+};
+var registerReducer = function registerReducer(state, action) {
+    if (state === void 0) {
+        state = initialState;
+    }
+    switch (action.type) {
+        case actionTypes_1.RESET_START:
+            return { isLoading: true, message: '', error: null };
+        case actionTypes_1.RESET_SUCCESS:
+            return { isLoading: false, message: action.payload, error: null };
+        case actionTypes_1.RESET_ERROR:
+            return { isLoading: false, message: '', error: action.error };
+    }
+    return state;
+};
+exports.default = registerReducer;
+
+//# sourceMappingURL=reset.js.map
+
+/***/ }),
+
 /***/ "./resources/app/es5/redux/Reducers/user.js":
 /*!**************************************************!*\
   !*** ./resources/app/es5/redux/Reducers/user.js ***!
@@ -34270,6 +34385,7 @@ var cartReducer = function cartReducer(state, action) {
         case actionTypes_1.USER_LOAD_ERROR:
             return __assign(__assign({}, state), { isLoading: false, error: action.error });
         case actionTypes_1.USER_LOAD_SUCCESSFULL:
+            localStorage.setItem('token', action.payload.token);
             return __assign(__assign({}, initialState), { user: action.payload.user, token: action.payload.token });
         case actionTypes_1.USER_RESET:
             return initialState;
@@ -34707,6 +34823,137 @@ exports.default = thunkRegister;
 
 /***/ }),
 
+/***/ "./resources/app/es5/redux/ThunkActions/thunkReset.js":
+/*!************************************************************!*\
+  !*** ./resources/app/es5/redux/ThunkActions/thunkReset.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
+    function adopt(value) {
+        return value instanceof P ? value : new P(function (resolve) {
+            resolve(value);
+        });
+    }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) {
+            try {
+                step(generator.next(value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function rejected(value) {
+            try {
+                step(generator["throw"](value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function step(result) {
+            result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+        }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = undefined && undefined.__generator || function (thisArg, body) {
+    var _ = { label: 0, sent: function sent() {
+            if (t[0] & 1) throw t[1];return t[1];
+        }, trys: [], ops: [] },
+        f,
+        y,
+        t,
+        g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
+        return this;
+    }), g;
+    function verb(n) {
+        return function (v) {
+            return step([n, v]);
+        };
+    }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) {
+            try {
+                if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+                if (y = 0, t) op = [op[0] & 2, t.value];
+                switch (op[0]) {
+                    case 0:case 1:
+                        t = op;break;
+                    case 4:
+                        _.label++;return { value: op[1], done: false };
+                    case 5:
+                        _.label++;y = op[1];op = [0];continue;
+                    case 7:
+                        op = _.ops.pop();_.trys.pop();continue;
+                    default:
+                        if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+                            _ = 0;continue;
+                        }
+                        if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+                            _.label = op[1];break;
+                        }
+                        if (op[0] === 6 && _.label < t[1]) {
+                            _.label = t[1];t = op;break;
+                        }
+                        if (t && _.label < t[2]) {
+                            _.label = t[2];_.ops.push(op);break;
+                        }
+                        if (t[2]) _.ops.pop();
+                        _.trys.pop();continue;
+                }
+                op = body.call(thisArg, _);
+            } catch (e) {
+                op = [6, e];y = 0;
+            } finally {
+                f = t = 0;
+            }
+        }if (op[0] & 5) throw op[1];return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
+var resetActions_1 = __webpack_require__(/*! ../Actions/resetActions */ "./resources/app/es5/redux/Actions/resetActions.js");
+var API_1 = __webpack_require__(/*! ../../Helpers/API */ "./resources/app/es5/Helpers/API.js");
+var thunkReset = function thunkReset(vals, formName) {
+    return function (dispatch) {
+        return __awaiter(void 0, void 0, void 0, function () {
+            var regResponse;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        dispatch(resetActions_1.resetStart());
+                        return [4, API_1.default.resetUser(vals)];
+                    case 1:
+                        regResponse = _a.sent();
+                        console.log(regResponse);
+                        if (API_1.default.isError(regResponse)) {
+                            if (regResponse.response.data.errors) {
+                                dispatch(redux_form_1.updateSyncErrors(formName, regResponse.response.data.errors, regResponse.response.data.message));
+                            } else {
+                                dispatch(resetActions_1.resetError(regResponse.response.data.message));
+                            }
+                        } else {
+                            dispatch(redux_form_1.reset(formName));
+                            dispatch(resetActions_1.resetSuccess(regResponse.success));
+                        }
+                        return [2];
+                }
+            });
+        });
+    };
+};
+exports.default = thunkReset;
+
+//# sourceMappingURL=thunkReset.js.map
+
+/***/ }),
+
 /***/ "./resources/app/es5/redux/ThunkActions/thunkVerify.js":
 /*!*************************************************************!*\
   !*** ./resources/app/es5/redux/ThunkActions/thunkVerify.js ***!
@@ -34863,6 +35110,9 @@ exports.VERIFY_ERROR = 'VERIFY_ERROR';
 exports.LOGIN_START = 'LOGIN_START';
 exports.LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 exports.LOGIN_ERROR = 'LOGIN_ERROR';
+exports.RESET_START = 'RESET_START';
+exports.RESET_SUCCESS = 'RESET_SUCCESS';
+exports.RESET_ERROR = 'RESET_ERROR';
 
 //# sourceMappingURL=actionTypes.js.map
 

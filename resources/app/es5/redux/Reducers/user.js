@@ -26,6 +26,7 @@ var cartReducer = function (state, action) {
         case actionTypes_1.USER_LOAD_ERROR:
             return __assign(__assign({}, state), { isLoading: false, error: action.error });
         case actionTypes_1.USER_LOAD_SUCCESSFULL:
+            localStorage.setItem('token', action.payload.token);
             return __assign(__assign({}, initialState), { user: action.payload.user, token: action.payload.token });
         case actionTypes_1.USER_RESET:
             return initialState;

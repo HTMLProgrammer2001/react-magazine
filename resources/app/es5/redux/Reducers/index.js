@@ -8,6 +8,7 @@ var register_1 = require("./register");
 var verify_1 = require("./verify");
 var login_1 = require("./login");
 var user_1 = require("./user");
+var reset_1 = require("./reset");
 var storeReducer = redux_1.combineReducers({
     cart: cart_1.default,
     category: category_1.default,
@@ -15,6 +16,7 @@ var storeReducer = redux_1.combineReducers({
     verify: verify_1.default,
     login: login_1.default,
     user: user_1.default,
+    reset: reset_1.default,
     form: redux_form_1.reducer
 });
 exports.default = storeReducer;

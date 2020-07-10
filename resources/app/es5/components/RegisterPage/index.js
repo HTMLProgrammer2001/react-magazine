@@ -10,7 +10,7 @@ var mapStateToProps = function (state) { return ({
 }); };
 var mapDispatchToProps = function (dispatch) { return ({
     register: function (vals) {
-        dispatch(thunkRegister_1.default(vals, 'thunkRegister.ts'));
+        dispatch(thunkRegister_1.default(vals, 'register'));
     }
 }); };
 var connected = react_redux_1.connect(mapStateToProps, mapDispatchToProps);

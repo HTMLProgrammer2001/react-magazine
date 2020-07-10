@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Notifications\ResetApiPassword;
 use App\Notifications\VerifyApiEmail;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -75,5 +76,9 @@ class User extends Authenticatable
 
     public function sendApiEmailVerification(){
         $this->notify(new VerifyApiEmail());
+    }
+
+    public function sendApiResetEmail($token){
+        $this->notify(new ResetApiPassword($token));
     }
 }

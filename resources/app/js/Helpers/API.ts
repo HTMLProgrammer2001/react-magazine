@@ -7,6 +7,7 @@ import {IChangeLikeResponse} from '../Interfaces/Responses/IChangeLikeResponse';
 import {IRegisterFormData} from '../components/RegisterPage/RegisterForm';
 import {ILoginFormData} from '../components/LoginPage/LoginForm';
 import {ILoadUserResponse} from '../Interfaces/Responses/ILoadUserResponse';
+import {IResetFormData} from '../components/ResetPage/ResetForm';
 
 
 class API{
@@ -128,11 +129,29 @@ class API{
 		return response.data;
 	}
 
-	static async logoutUser(): Promise<AxiosError>{
+	static async logoutUser(): Promise<{success: string} | AxiosError>{
 		let response: AxiosResponse;
 
 		try {
-			response = await this.clientAPI.post<{success: string}>('/logout');
+			response = await this.clientAPI.post<{success: string}>('/logout', {}, {
+				headers: {
+					'Authorization': `Bearer ${localStorage.getItem('token')}`
+				}
+			});
+		}
+		catch (err) {
+			console.log(err.response.data);
+			return err as AxiosError;
+		}
+
+		return response.data;
+	}
+
+	static async resetUser(vals: IResetFormData): Promise<{success: string} | AxiosError>{
+		let response: AxiosResponse;
+
+		try {
+			response = await this.clientAPI.post<{success: string}>('/reset', vals);
 		}
 		catch (err) {
 			console.log(err.response.data);

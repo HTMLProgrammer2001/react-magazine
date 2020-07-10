@@ -29,3 +29,8 @@ export const VERIFY_ERROR = 'VERIFY_ERROR';
 export const LOGIN_START = 'LOGIN_START';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_ERROR = 'LOGIN_ERROR';
+
+//Reset action types
+export const RESET_START = 'RESET_START';
+export const RESET_SUCCESS = 'RESET_SUCCESS';
+export const RESET_ERROR = 'RESET_ERROR';
