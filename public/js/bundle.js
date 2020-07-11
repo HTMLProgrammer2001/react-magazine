@@ -31315,7 +31315,7 @@ exports.default = App;
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var CartItem = function CartItem(props) {
-    return React.createElement("div", { className: "table__row" }, React.createElement("div", { className: "table__col orders__product" }, React.createElement("img", { className: "orders__img", src: props.product.photo, alt: "Product picture" }), React.createElement("div", null, React.createElement("div", { className: "orders__name" }, props.product.name), React.createElement("div", { className: "orders__color" }, React.createElement("div", { className: "goods__color-item", style: { background: props.color } }), React.createElement("div", { className: "orders__size" }, props.size)))), React.createElement("div", { className: "table__col orders__price" }, props.product.price), React.createElement("div", { className: "table__col orders__quantity" }, React.createElement("div", { className: "order__quantity" }, React.createElement("span", { className: "order__quantity-count", contentEditable: "true" }, props.count))), React.createElement("div", { className: "table__col orders__total" }, props.count * props.product.price), React.createElement("div", { className: "table__col orders__remove" }, React.createElement("i", { className: "fas fa-times cur" })));
+    return React.createElement("div", { className: "table__row" }, React.createElement("div", { className: "table__col orders__product" }, React.createElement("img", { className: "orders__img", src: props.product.photo, alt: "Product picture" }), React.createElement("div", null, React.createElement("div", { className: "orders__name" }, props.product.name), React.createElement("div", { className: "orders__color" }, React.createElement("div", { className: "goods__color-item", style: { background: props.color } }), React.createElement("div", { className: "orders__size" }, props.size)))), React.createElement("div", { className: "table__col orders__price" }, props.product.price), React.createElement("div", { className: "table__col orders__quantity" }, React.createElement("div", { className: "order__quantity" }, React.createElement("span", { className: "order__quantity-count" }, props.count))), React.createElement("div", { className: "table__col orders__total" }, props.count * props.product.price), React.createElement("div", { className: "table__col orders__remove" }, React.createElement("i", { className: "fas fa-times cur", onClick: props.removeItem })));
 };
 exports.default = CartItem;
 
@@ -31347,13 +31347,33 @@ var __assign = undefined && undefined.__assign || function () {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 var CartItem_1 = __webpack_require__(/*! ./CartItem */ "./resources/app/es5/components/CartPage/Content/CartItem.js");
+var cartActions_1 = __webpack_require__(/*! ../../../redux/Actions/cartActions */ "./resources/app/es5/redux/Actions/cartActions.js");
+var mapStateToProps = function mapStateToProps(state) {
+    return {
+        cartItems: state.cart
+    };
+};
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+    return {
+        removeItem: function removeItem(index) {
+            dispatch(cartActions_1.cartRemove(index));
+        },
+        clearCart: function clearCart() {
+            dispatch(cartActions_1.cartReset());
+        }
+    };
+};
+var connected = react_redux_1.connect(mapStateToProps, mapDispatchToProps);
 var CartTable = function CartTable(props) {
     return React.createElement("div", { className: "container" }, React.createElement("div", { className: "table__wrap my-pad" }, React.createElement("div", { className: "table" }, React.createElement("div", { className: "table__head" }, React.createElement("div", { className: "table__head-item table__head-item_lg" }, "Product"), React.createElement("div", { className: "table__head-item" }, "Price"), React.createElement("div", { className: "table__head-item" }, "Quantity"), React.createElement("div", { className: "table__head-item" }, "Total"), React.createElement("div", { className: "table__head-item" })), React.createElement("div", { className: "table__content" }, props.cartItems.map(function (item, index) {
-        return React.createElement(CartItem_1.default, __assign({ key: index }, item));
-    })))), React.createElement("div", { className: "orders__actions" }, React.createElement("div", { className: "orders__clear" }, "Clear cart"), React.createElement("div", { className: "orders__update" }, "Update cart")));
+        return React.createElement(CartItem_1.default, __assign({ key: index, removeItem: function removeItem() {
+                return props.removeItem(index);
+            } }, item));
+    })))), React.createElement("div", { className: "orders__actions" }, React.createElement("div", { className: "orders__clear", onClick: props.clearCart }, "Clear cart"), React.createElement("div", { className: "orders__update" }, "Update cart")));
 };
-exports.default = CartTable;
+exports.default = connected(CartTable);
 
 //# sourceMappingURL=CartTable.js.map
 
@@ -31371,13 +31391,20 @@ exports.default = CartTable;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-var Checkout = function Checkout(props) {
-    var cartPrice = props.cartItems.reduce(function (prev, item) {
-        return prev + item.count * item.product.price;
-    }, 0).toFixed(2);
-    return React.createElement("div", { className: "container" }, React.createElement("div", { className: "check my-pad" }, React.createElement("div", { className: "check__box" }, React.createElement("b", { className: "check__head mb-10" }, "Cart Total"), React.createElement("div", { className: "check__subtotal mb-10 row space-between" }, React.createElement("div", { className: "check__subtotal-head" }, "Subtotal:"), React.createElement("div", { className: "check__subtotal-price" }, "$", cartPrice)), React.createElement("div", { className: "check__shipping mb-10 row space-between" }, React.createElement("div", { className: "check__shipping-head" }, "Shipping:"), React.createElement("div", { className: "check__shipping-list" }, "FREE SHIPPING")), React.createElement("hr", null), React.createElement("div", { className: "check__result mb-10 row space-between" }, React.createElement("div", { className: "check__result-head" }, "Total"), React.createElement("div", { className: "check__result-price" }, "$", cartPrice))), React.createElement("button", { type: "button", className: "check__but my-pad" }, "Checkout")));
+var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+var mapStateToProps = function mapStateToProps(state) {
+    return {
+        cartPrice: state.cart.reduce(function (prev, item) {
+            return prev + item.count * item.product.price;
+        }, 0).toFixed(2)
+    };
 };
-exports.default = Checkout;
+var connected = react_redux_1.connect(mapStateToProps);
+var Checkout = function Checkout(props) {
+    return React.createElement("div", { className: "container" }, React.createElement("div", { className: "check my-pad" }, React.createElement("div", { className: "check__box" }, React.createElement("b", { className: "check__head mb-10" }, "Cart Total"), React.createElement("div", { className: "check__subtotal mb-10 row space-between" }, React.createElement("div", { className: "check__subtotal-head" }, "Subtotal:"), React.createElement("div", { className: "check__subtotal-price" }, "$", props.cartPrice)), React.createElement("div", { className: "check__shipping mb-10 row space-between" }, React.createElement("div", { className: "check__shipping-head" }, "Shipping:"), React.createElement("div", { className: "check__shipping-list" }, "FREE SHIPPING")), React.createElement("hr", null), React.createElement("div", { className: "check__result mb-10 row space-between" }, React.createElement("div", { className: "check__result-head" }, "Total"), React.createElement("div", { className: "check__result-price" }, "$", props.cartPrice))), React.createElement(react_router_dom_1.NavLink, { to: "/checkout", className: "check__but my-pad" }, "Checkout")));
+};
+exports.default = connected(Checkout);
 
 //# sourceMappingURL=Checkout.js.map
 
@@ -31397,8 +31424,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var CartTable_1 = __webpack_require__(/*! ./CartTable */ "./resources/app/es5/components/CartPage/Content/CartTable.js");
 var Checkout_1 = __webpack_require__(/*! ./Checkout */ "./resources/app/es5/components/CartPage/Content/Checkout.js");
-var Content = function Content(props) {
-    return React.createElement(React.Fragment, null, React.createElement(CartTable_1.default, { cartItems: props.cartItems }), React.createElement(Checkout_1.default, { cartItems: props.cartItems }));
+var Content = function Content() {
+    return React.createElement(React.Fragment, null, React.createElement(CartTable_1.default, null), React.createElement(Checkout_1.default, null));
 };
 exports.default = Content;
 
@@ -31446,7 +31473,7 @@ var Empty_1 = __webpack_require__(/*! ./Empty */ "./resources/app/es5/components
 var Content_1 = __webpack_require__(/*! ./Content/ */ "./resources/app/es5/components/CartPage/Content/index.js");
 var mapStateToProps = function mapStateToProps(state) {
     return {
-        cart: state.cart
+        isEmpty: !state.cart.length
     };
 };
 var cartConnected = react_redux_1.connect(mapStateToProps);
@@ -31454,7 +31481,7 @@ var CartPage = function CartPage(props) {
     React.useEffect(function () {
         document.title = 'Cart';
     }, []);
-    return React.createElement(React.Fragment, null, React.createElement(Paginate_1.default, { paths: [{ name: 'Home', path: '/' }, { name: 'Cart', path: '/cart' }] }), props.cart.length ? React.createElement(Content_1.default, { cartItems: props.cart }) : React.createElement(Empty_1.default, null));
+    return React.createElement(React.Fragment, null, React.createElement(Paginate_1.default, { paths: [{ name: 'Home', path: '/' }, { name: 'Cart', path: '/cart' }] }), props.isEmpty ? React.createElement(Empty_1.default, null) : React.createElement(Content_1.default, null));
 };
 exports.default = cartConnected(CartPage);
 

@@ -1,51 +1,53 @@
 import * as React from 'react';
+import {connect, ConnectedProps} from 'react-redux';
+import {NavLink} from 'react-router-dom';
 
-import {ICartItem} from '../../../Interfaces/ICartItem';
-
-type ICartCheckoutProps = {
-	cartItems: Array<ICartItem>
-};
+import {RootState} from '../../../redux/Reducers';
 
 
-const Checkout: React.FC<ICartCheckoutProps> = (props) => {
-	const cartPrice = props.cartItems.reduce((prev, item) => (
+const mapStateToProps = (state: RootState) => ({
+	cartPrice: state.cart.reduce((prev, item) => (
 		prev + item.count * item.product.price
-	), 0).toFixed(2);
+	), 0).toFixed(2)
+});
+
+const connected = connect(mapStateToProps);
 
 
-	return (
-		<div className="container">
-			<div className="check my-pad">
-				<div className="check__box">
-					<b className="check__head mb-10">Cart Total</b>
+const Checkout: React.FC<ConnectedProps<typeof connected>> = (props) => (
+	<div className="container">
+		<div className="check my-pad">
+			<div className="check__box">
+				<b className="check__head mb-10">Cart Total</b>
 
-					<div className="check__subtotal mb-10 row space-between">
-						<div className="check__subtotal-head">Subtotal:</div>
+				<div className="check__subtotal mb-10 row space-between">
+					<div className="check__subtotal-head">Subtotal:</div>
 
-						<div className="check__subtotal-price">
-							${cartPrice}
-						</div>
-					</div>
-
-					<div className="check__shipping mb-10 row space-between">
-						<div className="check__shipping-head">Shipping:</div>
-						<div className="check__shipping-list">FREE SHIPPING</div>
-					</div>
-
-					<hr/>
-
-					<div className="check__result mb-10 row space-between">
-						<div className="check__result-head">Total</div>
-						<div className="check__result-price">
-							${cartPrice}
-						</div>
+					<div className="check__subtotal-price">
+						${props.cartPrice}
 					</div>
 				</div>
 
-				<button type="button" className="check__but my-pad">Checkout</button>
-			</div>
-		</div>
-	);
-};
+				<div className="check__shipping mb-10 row space-between">
+					<div className="check__shipping-head">Shipping:</div>
+					<div className="check__shipping-list">FREE SHIPPING</div>
+				</div>
 
-export default Checkout;
+				<hr/>
+
+				<div className="check__result mb-10 row space-between">
+					<div className="check__result-head">Total</div>
+					<div className="check__result-price">
+						${props.cartPrice}
+					</div>
+				</div>
+			</div>
+
+			<NavLink to="/checkout" className="check__but my-pad">
+				Checkout
+			</NavLink>
+		</div>
+	</div>
+);
+
+export default connected(Checkout);

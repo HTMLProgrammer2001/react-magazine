@@ -6,6 +6,7 @@ import API from '../../../../Helpers/API';
 import GoodItem from './GoodItem';
 import GoodsHeader from './GoodsHeader';
 
+
 type IGoodsProps = {};
 
 type IGoodsState = {

@@ -9,7 +9,7 @@ import Content from './Content/';
 
 //Redux data to props
 const mapStateToProps = (state: RootState) => ({
-	cart: state.cart
+	isEmpty: !state.cart.length
 });
 
 const cartConnected = connect(mapStateToProps);
@@ -25,7 +25,7 @@ const CartPage: React.FC<ICartProps> = (props: ICartProps) => {
 		<React.Fragment>
 			<Paginate paths={[{name: 'Home', path: '/'}, {name: 'Cart', path: '/cart'}]}/>
 
-			{props.cart.length ? <Content cartItems={props.cart}/> : <Empty/>}
+			{props.isEmpty ? <Empty/> : <Content/>}
 		</React.Fragment>
 	);
 };
