@@ -1,1 +1,0 @@
-{"version":3,"sources":["Interfaces/IFullProduct.ts"],"names":[],"mappings":"","file":"IFullProduct.js","sourcesContent":["import {Size, IProduct} from './IProduct';\r\n\r\nexport type IFullProduct = IProduct & {\r\n\timages: Array<string>,\r\n\tcategory: string,\r\n\tmark: number,\r\n\tdescription: string,\r\n\tliked: boolean\r\n};\r\n"]}

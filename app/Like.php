@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Like extends Model
 {
     protected $fillable = ['date'];
+    public $timestamps = false;
 
     //relations
     public function user(){

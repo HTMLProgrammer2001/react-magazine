@@ -1,1 +1,0 @@
-{"version":3,"sources":["Interfaces/IUser.ts"],"names":[],"mappings":"","file":"IUser.js","sourcesContent":["export type IUser = {\r\n\tid: number,\r\n\tavatar: string,\r\n\tname: string\r\n};\r\n"]}

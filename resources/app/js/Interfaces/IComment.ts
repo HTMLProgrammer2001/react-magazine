@@ -6,6 +6,8 @@ export type IComment = {
 	message: string,
 	likes: number,
 	dislikes: number,
+	isLiked: boolean,
 	date: string,
-	mark: number
+	mark: number,
+	curReaction: string | null
 };

@@ -1,80 +1,56 @@
 import * as React from 'react';
 import {RouteComponentProps} from 'react-router-dom';
+import {connect, ConnectedProps} from 'react-redux';
 
-import {IFullProduct} from '../../Interfaces/IFullProduct';
-
-import API from '../../Helpers/API';
 import Paginate from '../Paginate';
 import Reviews from './Reviews/';
 import ProductInfo from './ProductInfo/';
+import {RootState} from '../../redux/Reducers';
+import thunkProduct from '../../redux/ThunkActions/thunkProduct';
 
+
+const mapStateToProps = (state: RootState) => ({
+	...state.single.product
+});
+
+const mapDispatchToProps = (dispatch: any) => ({
+	loadProduct: (slug: string) => {
+		dispatch(thunkProduct(slug));
+	}
+});
+
+const connected = connect(mapStateToProps, mapDispatchToProps);
 
 type IRouteParams = {
 	slug: string
 };
 
-type ISingleProductState = {
-	isLoading: boolean,
-	error: string,
-	product: IFullProduct | null
-}
+type ISingleProductProps = RouteComponentProps<IRouteParams> & ConnectedProps<typeof connected>;
 
-type ISingleProductProps = RouteComponentProps<IRouteParams>;
+const SinglePage: React.FC<ISingleProductProps> = (props) => {
+	React.useEffect(() => {
+		if(!props.data || props.data.slug != props.match.params.slug)
+			props.loadProduct(props.match.params.slug);
+	}, []);
 
-class SinglePage extends React.Component<ISingleProductProps, ISingleProductState>{
-	constructor(props: ISingleProductProps){
-		super(props);
+	return (
+		<React.Fragment>
+			<Paginate paths={[
+				{name: 'Home', path: '/'},
+				{name: 'Product', path: '/'}
+			]}/>
 
-		this.state = {
-			isLoading: false,
-			error: '',
-			product: null
-		};
-	}
-	
-	async componentDidMount(){
-		this.setState({
-			isLoading: true
-		});
+			{props.isLoading && <div>Loading info...</div>}
 
-		let productInfoResp = await API.getProductInfo(this.props.match.params.slug);
+			{
+				!props.isLoading && props.data &&
+				<React.Fragment>
+					<ProductInfo product={props.data}/>
+					<Reviews/>
+				</React.Fragment>
+			}
+		</React.Fragment>
+	);
+};
 
-		if(API.isError(productInfoResp)){
-			this.setState({
-				error: productInfoResp.response!.data
-			});
-		}
-		else{
-			this.setState({
-				product: productInfoResp
-			});
-		}
-
-		this.setState({
-			isLoading: false
-		});
-	}
-
-	render(){
-		return (
-			<React.Fragment>
-				<Paginate paths={[
-					{name: 'Home', path: '/'},
-					{name: 'Product', path: '/'}
-				]}/>
-
-				{this.state.isLoading && <div>Loading info...</div>}
-
-				{
-					!this.state.isLoading && this.state.product &&
-						<React.Fragment>
-							<ProductInfo product={this.state.product}/>
-							<Reviews productID={this.state.product.id}/>
-						</React.Fragment>
-				}
-			</React.Fragment>
-		);
-	}
-}
-
-export default SinglePage;
+export default connected(SinglePage);

@@ -15,6 +15,11 @@ class ProductResource extends JsonResource
      */
     public function toArray($request)
     {
+        $userID = false;
+
+        if(auth('api')->user())
+            $userID = auth('api')->user()->id;
+
         return array_merge(parent::toArray($request), [
             'colors' => json_decode($this->colors),
             'sizes' => json_decode($this->sizes),
@@ -22,7 +27,7 @@ class ProductResource extends JsonResource
                 return '/image/' . $item;
             }, json_decode($this->images)),
             'mark' => $this->comments()->avg('mark'),
-            'liked' => !!$this->likes()->where('user_id', $request->user()->id ?? false )->first()
+            'liked' => !!$this->likes()->where('user_id', $userID )->first()
         ]);
     }
 }

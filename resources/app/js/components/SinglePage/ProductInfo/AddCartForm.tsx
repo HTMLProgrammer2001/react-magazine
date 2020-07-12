@@ -1,11 +1,11 @@
 import * as React from 'react';
 import {reduxForm, InjectedFormProps, Field} from 'redux-form';
-import c from 'classnames';
 
 import {Size} from '../../../Interfaces/IProduct';
 import ColorGroup from '../../FormElements/ColorGroup';
 import SizeGroup from '../../FormElements/SizeGroup';
 import NumericElement from '../../FormElements/Numeric';
+import Like from './Like';
 
 
 export type IAddCartData = {
@@ -22,64 +22,55 @@ type IOwnProps = {
 
 type IFormProps = InjectedFormProps<IAddCartData, IOwnProps> & IOwnProps;
 
-const AddCartForm: React.FC<IFormProps> = (props) => {
-	const [isLiked, changeLike] = React.useState(props.liked);
+const AddCartForm: React.FC<IFormProps> = (props) => (
+	<form onSubmit={props.handleSubmit}>
+		<div className="row space-between product__facilities">
+			<div className="product__size row">
+				<p>Size:</p>
 
-	return (
-		<form onSubmit={props.handleSubmit}>
-			<div className="row space-between product__facilities">
-				<div className="product__size row">
-					<p>Size:</p>
-
-					<Field
-						component={SizeGroup}
-						name="size"
-						viewType="product"
-						formName={props.form}
-						sizes={props.sizes}
-					/>
-				</div>
-
-				<div className="product__color row">
-					<p>Color:</p>
-
-					<Field
-						component={ColorGroup}
-						name="color"
-						formName={props.form}
-						colors={props.colors}
-					/>
-				</div>
+				<Field
+					component={SizeGroup}
+					name="size"
+					viewType="product"
+					formName={props.form}
+					sizes={props.sizes}
+				/>
 			</div>
 
-			<div className="my-pad">
-				<div className="order">
-					<div className="order__quantity">
-						<b className="order__quantity-head">Quantity:</b>
+			<div className="product__color row">
+				<p>Color:</p>
 
-						<Field
-							component={NumericElement}
-							name="count"
-							formName={props.form}
-						/>
+				<Field
+					component={ColorGroup}
+					name="color"
+					formName={props.form}
+					colors={props.colors}
+				/>
+			</div>
+		</div>
 
-					</div>
+		<div className="my-pad">
+			<div className="order">
+				<div className="order__quantity">
+					<b className="order__quantity-head">Quantity:</b>
 
-					<div className="order__actions row mt-2">
-						<div
-							className={c('order__like', {'order__like_active': isLiked})}
-							onClick={() => changeLike(!isLiked)}
-						>
-							<i className="fas fa-heart"/>
-						</div>
+					<Field
+						component={NumericElement}
+						name="count"
+						formName={props.form}
+					/>
 
-						<button type="submit" className="order__add">Add to cart</button>
-					</div>
+				</div>
+
+				<div className="order__actions row mt-2">
+					<Like/>
+
+					<button type="submit" className="order__add">Add to cart</button>
 				</div>
 			</div>
-		</form>
-	);
-};
+		</div>
+	</form>
+);
 
 export default reduxForm<IAddCartData, IOwnProps>({
 	form: 'addCart'

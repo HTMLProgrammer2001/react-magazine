@@ -8,6 +8,7 @@ import verifyReducer from './verify';
 import loginReducer from './login';
 import userReducer from './user';
 import resetReducer from './reset';
+import singleReducer from './Single';
 
 
 const storeReducer = combineReducers({
@@ -18,6 +19,7 @@ const storeReducer = combineReducers({
 	login: loginReducer,
 	user: userReducer,
 	reset: resetReducer,
+	single: singleReducer,
 	form: formReducer
 });
 

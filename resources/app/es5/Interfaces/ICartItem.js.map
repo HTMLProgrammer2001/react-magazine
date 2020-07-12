@@ -1,1 +1,0 @@
-{"version":3,"sources":["Interfaces/ICartItem.ts"],"names":[],"mappings":"","file":"ICartItem.js","sourcesContent":["import {IProduct, Size} from './IProduct';\r\n\r\nexport type ICartItem = {\r\n\tproduct: IProduct,\r\n\tcount: number,\r\n\tsize: Size,\r\n\tcolor: string\r\n};\r\n"]}

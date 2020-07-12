@@ -1,18 +1,26 @@
 import * as React from 'react';
+import c from 'classnames';
+import {connect, ConnectedProps} from 'react-redux';
+
 import Mark from '../../Mark';
 import {IComment} from '../../../Interfaces/IComment';
+import thunkReactionChange from '../../../redux/ThunkActions/thunkReactionChange';
 
+
+const connected = connect(null, {
+	changeReaction: thunkReactionChange
+});
 
 type IReviewProps = {
 	comment: IComment
-}
+} & ConnectedProps<typeof connected>
 
-const Review: React.FC<IReviewProps> = ({comment}) => (
+const Review: React.FC<IReviewProps> = ({comment, changeReaction}) => (
 	<React.Fragment>
 		<span id={`comment_${comment.id}`}/>
 
 		<div className="reviews-list__item row">
-			<img className="reviews__ava" src={comment.author.avatar} alt="User ava"/>
+			<img className="reviews__ava" src={`/image/${comment.author.avatar}`} alt="User ava"/>
 			<div className="reviews-list__wrap">
 				<div className="reviews-list__name">
 					<p>{comment.author.name}</p>
@@ -35,12 +43,24 @@ const Review: React.FC<IReviewProps> = ({comment}) => (
 					<div className="reviews-list__item-mark">
 						<span>
 							<i className="fas fa-angle-up"/>
-							<span>&nbsp;{comment.likes}</span>
+							<span
+								className={c({active: comment.curReaction == 'up'})}
+								onClick={() => {
+									if(comment.curReaction != 'up')
+										changeReaction(comment.id, 'up');
+								}}
+							>&nbsp;{comment.likes}</span>
 						</span>
 
 						<span>
 							<i className="fas fa-angle-down"/>
-							<span>&nbsp;{comment.dislikes}</span>
+							<span
+								className={c({active: comment.curReaction == 'down'})}
+								onClick={() => {
+									if(comment.curReaction != 'down')
+										changeReaction(comment.id, 'down');
+								}}
+							>&nbsp;{comment.dislikes}</span>
 						</span>
 					</div>
 
@@ -51,4 +71,4 @@ const Review: React.FC<IReviewProps> = ({comment}) => (
 	</React.Fragment>
 );
 
-export default Review;
+export default connected(Review);

@@ -1,98 +1,64 @@
 import * as React from 'react';
+import {connect, ConnectedProps} from 'react-redux';
 
-import {IComment} from '../../../Interfaces/IComment';
-import {ICommentsResponse} from '../../../Interfaces/Responses/ICommentsResponse';
-import API from '../../../Helpers/API';
 import Review from './Review';
 import ReviewSortForm, {IReviewSortFormData} from './ReviewSortForm';
+import {RootState} from '../../../redux/Reducers';
+import thunkComment from '../../../redux/ThunkActions/thunkComment';
+import {commentReset} from '../../../redux/Actions/Single/commentsActions';
 
 
-type IReviewsProps = {
-	productID: number
-}
+const mapStateToProps = (state: RootState) => ({
+	...state.single.comments,
+	curProductID: state.single.product.data!.id
+});
 
-type IReviewsState = {
-	isLoading: boolean,
-	error: string,
-	comments: Array<IComment>,
-	total: number,
-	currentPage: number
-}
-
-class ReviewsList extends React.Component<IReviewsProps, IReviewsState>{
-	constructor(props: IReviewsProps){
-		super(props);
-
-		this.state = {
-			isLoading: false,
-			error: '',
-			comments: [],
-			total: 0,
-			currentPage: 0
-		};
-
-		this.loadMore = this.loadMore.bind(this);
+const mapDispatchToProps = (dispatch: any) => ({
+	loadComments: (productID: number, offset: number) => {
+		dispatch(thunkComment(offset));
+	},
+	changedSort: (productID: number) => {
+		dispatch(commentReset());
+		dispatch(thunkComment(productID, 1));
 	}
+});
 
-	componentDidMount(): void {
-		this.loadMore();
-	}
+const connected = connect(mapStateToProps, mapDispatchToProps);
 
-	render(){
-		return (
-			<React.Fragment>
-				<hr className="my-pad" color="silver"/>
-				<div className="reviews-list__header">
-					<div>{this.state.total} comments</div>
-					<ReviewSortForm onSubmit={(vals: IReviewSortFormData) => console.log(vals)}/>
-				</div>
+const ReviewsList: React.FC<ConnectedProps<typeof connected>> = (props) => (
+	<React.Fragment>
+		<hr className="my-pad" color="silver"/>
+		<div className="reviews-list__header">
+			<div>{props.totalCount} comments</div>
 
-				<div className="reviews-list my-pad">
-					{this.state.comments.map( (comment) => (
-						<Review
-							comment={comment}
-							key={comment.id}
-						/>
-					) )}
-				</div>
+			<ReviewSortForm onSubmit={() => props.changedSort(props.curProductID)}/>
+		</div>
 
-				<div className="load">
-					{
-						this.state.total == this.state.comments.length ?
-							false :
-							<button type="button" className="load__more" onClick={this.loadMore}>
-								{this.state.isLoading ? 'Loading...' : 'Load More'}
-							</button>
-					}
-				</div>
-			</React.Fragment>
-		);
-	}
+		<div className="reviews-list my-pad">
+			{props.comments.map((comment) => (
+				<Review
+					comment={comment}
+					key={comment.id}
+				/>
+			))}
+		</div>
 
-	async loadMore(){
-		this.setState({
-			isLoading: true
-		});
+		<div className="load">
+			{
+				props.totalCount == props.comments.length ?
+					false :
+					<button
+						type="button"
+						className="load__more"
+						onClick={
+							() => props.loadComments(props.curProductID, props.currentPage + 1)
+						}
+					>
+						{props.isLoading ? 'Loading...' : 'Load More'}
+					</button>
+			}
+		</div>
+	</React.Fragment>
+);
 
-		let commentsResp = await API.getComments(this.props.productID, this.state.currentPage + 1);
-
-		if(API.isError(commentsResp)){
-			this.setState({
-				error: commentsResp.response!.data
-			});
-		}
-		else{
-			this.setState((prev) => ({
-				total: (commentsResp as ICommentsResponse).total,
-				comments: prev.comments.concat((commentsResp as ICommentsResponse).data),
-				currentPage: (commentsResp as ICommentsResponse).current_page
-			}));
-		}
-
-		this.setState({
-			isLoading: false
-		});
-	}
-}
-
-export default ReviewsList;
+export default connected(ReviewsList);

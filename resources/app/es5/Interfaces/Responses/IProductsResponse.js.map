@@ -1,1 +1,0 @@
-{"version":3,"sources":["Interfaces/Responses/IProductsResponse.ts"],"names":[],"mappings":"","file":"IProductsResponse.js","sourcesContent":["import {IProduct} from '../IProduct';\r\n\r\nexport type IProductsResponse = {\r\n\ttotal: number,\r\n\tcurrent_page: number,\r\n\tto: number,\r\n\tdata: Array<IProduct>\r\n};\r\n"]}

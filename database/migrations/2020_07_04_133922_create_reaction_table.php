@@ -20,10 +20,10 @@ class CreateReactionTable extends Migration
             $table->bigInteger('comment_id')->unsigned();
             $table->dateTime('date');
 
-            $table->foreign('user_id')->references('id')
+            $table->foreign('comment_id')->references('id')
                 ->on('comments')->onDelete('cascade');
 
-            $table->foreign('comment_id')->references('id')
+            $table->foreign('user_id')->references('id')
                 ->on('users')->onDelete('cascade');
         });
     }

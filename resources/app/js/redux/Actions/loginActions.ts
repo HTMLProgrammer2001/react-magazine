@@ -4,8 +4,6 @@ import {
 	LOGIN_SUCCESS
 } from '../actionTypes';
 
-import {IUser} from '../../Interfaces/IUser';
-
 
 export const loginStart = () => (<const>{
 	type: LOGIN_START

@@ -1,1 +1,0 @@
-{"version":3,"sources":["Interfaces/Responses/ICommentsResponse.ts"],"names":[],"mappings":"","file":"ICommentsResponse.js","sourcesContent":["import {IComment} from '../IComment';\r\n\r\n\r\nexport type ICommentsResponse = {\r\n\ttotal: number,\r\n\tcurrent_page: number,\r\n\tto: number,\r\n\tdata: Array<IComment>\r\n};\r\n"]}

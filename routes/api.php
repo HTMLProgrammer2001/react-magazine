@@ -19,7 +19,11 @@ Route::get('/getProducts', 'ProductInfoController@getProducts');
 Route::get('/products/{productID}/getComments', 'ProductInfoController@getProductComments');
 Route::get('/products/{slug}', 'ProductInfoController@getProductBySlug');
 
-Route::post('/products/{productID}/changeLike', 'ProductInfoController@changeLike');
+Route::post('/products/{productID}/changeLike', 'ProductInfoController@changeLike')
+    ->middleware('auth:api');
+
+Route::post('/comments/{commentID}/addReaction', 'CommentController@addReaction')
+    ->middleware('auth:api');
 
 Route::post('/register', 'UserActions@register');
 Route::post('/login', 'UserActions@login');

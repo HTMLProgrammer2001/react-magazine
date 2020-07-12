@@ -41,10 +41,9 @@ class Product extends Model
         $this->save();
     }
 
-    public function changeLikeFor(int $product_id, int $user_id): bool{
+    public function changeLikeFor(int $user_id): bool{
         $like = $this->likes()
-            ->where('product_id', $product_id)
-            ->where('user_id', $user_id);
+            ->where('user_id', $user_id)->first();
 
         if($like) {
             $like->delete();
@@ -52,9 +51,9 @@ class Product extends Model
             return false;
         }
         else {
-            $newLike = $this->likes()->create(['date' => Carbon::now()]);
+            $newLike = new Like(['date' => Carbon::now()]);
             $newLike->setUser($user_id);
-            $newLike->setProduct($product_id);
+            $newLike->setProduct($this->id);
             $newLike->save();
 
             return true;

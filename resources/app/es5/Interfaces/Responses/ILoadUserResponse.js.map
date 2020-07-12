@@ -1,1 +1,0 @@
-{"version":3,"sources":["Interfaces/Responses/ILoadUserResponse.ts"],"names":[],"mappings":"","file":"ILoadUserResponse.js","sourcesContent":["import {IUser} from '../IUser';\r\n\r\nexport type ILoadUserResponse = {\r\n\ttoken: string,\r\n\tuser: IUser\r\n}\r\n"]}

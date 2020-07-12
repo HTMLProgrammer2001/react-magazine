@@ -6,13 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Reaction extends Model
 {
+    const TYPE_UP = 'up';
+    const TYPE_DOWN = 'down';
+
     protected $casts = [
         'date' => 'datetime'
     ];
 
     public $timestamps = false;
 
-    protected $fillable = ['date'];
+    protected $fillable = ['date', 'type'];
 
     //relations
     public function comment(){
@@ -25,10 +28,23 @@ class Reaction extends Model
 
     //helpers
     public function setUser(int $user_id){
+        if(!$user_id)
+            return;
+
         $this->user_id = $user_id;
     }
 
     public function setComment(int $comment_id){
+        if(!$comment_id)
+            return;
+
         $this->comment_id = $comment_id;
+    }
+
+    public function setType(string $type){
+        if(!$type)
+            return;
+
+        $this->type = $type;
     }
 }

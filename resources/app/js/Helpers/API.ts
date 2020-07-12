@@ -41,7 +41,11 @@ class API{
 		let response: AxiosResponse;
 
 		try {
-			response = await this.clientAPI.get<IFullProduct>(`/products/${slug}`);
+			response = await this.clientAPI.get<IFullProduct>(`/products/${slug}`, {
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem('token')}`
+				}
+			});
 		}
 		catch (err) {
 			return err as AxiosError;
@@ -50,7 +54,7 @@ class API{
 		return response.data;
 	}
 
-	static async getComments(productID: number, offset: number = 1):
+	static async getComments(productID: number, offset: number = 1, sortType?: string):
 		Promise<ICommentsResponse | AxiosError>{
 
 		let response: AxiosResponse;
@@ -59,7 +63,8 @@ class API{
 			response = await this.clientAPI.get<ICommentsResponse>(
 				`/products/${productID}/getComments`, {
 					params: {
-						page: offset
+						page: offset,
+						sortType
 					}
 				}
 			);
@@ -76,7 +81,11 @@ class API{
 
 		try {
 			response = await this.clientAPI.post<IChangeLikeResponse>(
-				`/products/${productID}/changeLike`
+				`/products/${productID}/changeLike`, {}, {
+					headers: {
+						Authorization: `Bearer ${localStorage.getItem('token')}`
+					}
+				}
 			);
 		}
 		catch (err) {
@@ -152,6 +161,28 @@ class API{
 
 		try {
 			response = await this.clientAPI.post<{success: string}>('/reset', vals);
+		}
+		catch (err) {
+			console.log(err.response.data);
+			return err as AxiosError;
+		}
+
+		return response.data;
+	}
+
+	static async changeReaction(commentID: number, reaction: string):
+		Promise<{success: boolean} | AxiosError>{
+
+		let response: AxiosResponse;
+
+		try{
+			response = await this.clientAPI.post(`/comments/${commentID}/addReaction`, {
+				reaction
+			}, {
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem('token')}`
+				}
+			});
 		}
 		catch (err) {
 			console.log(err.response.data);

@@ -14,11 +14,19 @@ class CommentResource extends JsonResource
      */
     public function toArray($request)
     {
+        $curReaction = null;
+
+        if(auth('api')->user()){
+            $userID = auth('api')->user()->id;
+            $curReaction = $this->reactions()->where('user_id', $userID)->first();
+        }
+
         return array_merge(parent::toArray($request), [
             'author' => new UserShortResouce($this->user),
             'likes' => $this->reactions()->where('type', 'up')->count(),
             'date' => $this->date->format('d.m.Y h:i:s'),
-            'dislikes' => $this->reactions()->where('type', 'down')->count()
+            'dislikes' => $this->reactions()->where('type', 'down')->count(),
+            'curReaction' => $curReaction ? $curReaction->type : null
         ]);
     }
 }

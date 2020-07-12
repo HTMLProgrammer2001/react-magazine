@@ -1,1 +1,0 @@
-{"version":3,"sources":["Interfaces/ICategory.ts"],"names":[],"mappings":"","file":"ICategory.js","sourcesContent":["export type ICategory = {\r\n\tname: string,\r\n\tslug: string,\r\n\timage?: string,\r\n\tproductCount: number\r\n};\r\n"]}
