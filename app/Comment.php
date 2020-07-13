@@ -28,13 +28,17 @@ class Comment extends Model
     }
 
     //helpers
-    public function setProduct(int $product_id){
+    public function setProduct(?int $product_id){
+        if(!$product_id)
+            return;
+
         $this->product_id = $product_id;
-        $this->save();
     }
 
-    public function setUser(int $user_id){
+    public function setUser(?int $user_id){
+        if(!$user_id)
+            return;
+
         $this->user_id = $user_id;
-        $this->save();
     }
 }

@@ -6,34 +6,31 @@ import {CATEGORY_LOAD_START, CATEGORY_LOAD_SUCCESS, CATEGORY_LOAD_ERROR} from '.
 
 
 //Action type
-type CategoryActions = InferActionTypes<typeof actionCreators>;
+export type CategoryActions = InferActionTypes<typeof actionCreators>;
 
 export type CategoryState = {
 	isLoading: boolean,
 	error: string | null,
+	loaded: boolean,
 	categories: Array<ICategory>
 };
 
 const initialState: CategoryState = {
 	isLoading: false,
+	loaded: false,
 	error: null,
-	categories: [{
-		name: 'Test',
-		productCount: 32,
-		slug: 'test',
-		image: '/image/noAvatar.png'
-	}]
+	categories: []
 };
 
 const categoryReducer = (state: CategoryState = initialState,
 						 action: CategoryActions): CategoryState => {
 	switch (action.type) {
 	case CATEGORY_LOAD_START:
-		return {categories: [], isLoading: true, error: null};
+		return {...state, isLoading: true, error: null};
 	case CATEGORY_LOAD_ERROR:
-		return {categories: [], isLoading: false, error: action.error};
+		return {...state, isLoading: false, error: action.error};
 	case CATEGORY_LOAD_SUCCESS:
-		return {categories: action.payload, isLoading: false, error: null};
+		return {categories: action.payload, isLoading: false, error: null, loaded: true};
 	}
 
 	return state;

@@ -12,7 +12,11 @@ const CategoryItem: React.FC<ICategoryItemProps> = (props) => (
 	<Link to={`/categories/${props.category.slug}`}
 		  className="categories__item">
 
-		<img className="categories__img" src={props.category.image} alt="Category"/>
+		<img
+			className="categories__img"
+			src={`/image/${props.category.image}`}
+			alt="Category"
+		/>
 
 		<div className="categories__products center w-100"
 			 style={{flexDirection: 'column'}}>

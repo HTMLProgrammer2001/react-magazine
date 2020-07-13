@@ -1,18 +1,14 @@
 import * as React from 'react';
-import {connect, ConnectedProps} from 'react-redux';
 
 import {ICategory} from '../../Interfaces/ICategory';
 import CategoryItem from './CategoryItem';
-import {RootState} from '../../redux/Reducers';
 
 
-const mapStateToProps = (state: RootState) => ({
-	categories: state.category.categories
-});
+type ICategoriesListProps = {
+	categories: ICategory[]
+}
 
-const connected = connect(mapStateToProps);
-
-const CategoriesList: React.FC<ConnectedProps<typeof connected>> = (props) => (
+const CategoriesList: React.FC<ICategoriesListProps> = (props) => (
 	<div className="container">
 		<div className="categories my-pad">
 			{!props.categories.length && <b>Нет категорий</b>}
@@ -26,4 +22,4 @@ const CategoriesList: React.FC<ConnectedProps<typeof connected>> = (props) => (
 	</div>
 );
 
-export default connected(CategoriesList);
+export default CategoriesList;

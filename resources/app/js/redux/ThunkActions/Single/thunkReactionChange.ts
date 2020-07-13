@@ -1,8 +1,8 @@
 import {ThunkAction, ThunkDispatch} from 'redux-thunk';
 
-import {RootState} from '../Reducers';
-import {commentReactionChange} from '../Actions/Single/commentsActions';
-import API from '../../Helpers/API';
+import {RootState} from '../../Reducers';
+import {commentReactionChange} from '../../Actions/Single/commentsActions';
+import API from '../../../Helpers/API';
 
 
 type ReactionAction = ReturnType<typeof commentReactionChange>;

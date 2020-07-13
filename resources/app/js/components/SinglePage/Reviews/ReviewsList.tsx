@@ -4,7 +4,7 @@ import {connect, ConnectedProps} from 'react-redux';
 import Review from './Review';
 import ReviewSortForm, {IReviewSortFormData} from './ReviewSortForm';
 import {RootState} from '../../../redux/Reducers';
-import thunkComment from '../../../redux/ThunkActions/thunkComment';
+import thunkComment from '../../../redux/ThunkActions/Single/thunkComment';
 import {commentReset} from '../../../redux/Actions/Single/commentsActions';
 
 

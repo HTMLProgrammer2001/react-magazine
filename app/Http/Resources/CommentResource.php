@@ -15,6 +15,14 @@ class CommentResource extends JsonResource
     public function toArray($request)
     {
         $curReaction = null;
+        $userInfo = [];
+
+        if(!$this->user)
+            $userInfo = [
+                'fullName' => $this->name,
+                'avatar' => 'noAva.jpg',
+                'id' => null
+            ];
 
         if(auth('api')->user()){
             $userID = auth('api')->user()->id;
@@ -22,7 +30,7 @@ class CommentResource extends JsonResource
         }
 
         return array_merge(parent::toArray($request), [
-            'author' => new UserShortResouce($this->user),
+            'author' => $this->user ? new UserShortResouce($this->user) : $userInfo,
             'likes' => $this->reactions()->where('type', 'up')->count(),
             'date' => $this->date->format('d.m.Y h:i:s'),
             'dislikes' => $this->reactions()->where('type', 'down')->count(),

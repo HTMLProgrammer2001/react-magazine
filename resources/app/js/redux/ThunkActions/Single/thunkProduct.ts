@@ -1,10 +1,10 @@
 import {ThunkAction, ThunkDispatch} from 'redux-thunk';
 
-import {RootState} from '../Reducers';
-import {ProductActions} from '../Reducers/Single/product';
-import {productStart, productError, productSuccess} from '../Actions/Single/productActions';
-import API from '../../Helpers/API';
-import {commentReset} from '../Actions/Single/commentsActions';
+import {RootState} from '../../Reducers';
+import {ProductActions} from '../../Reducers/Single/product';
+import {productStart, productError, productSuccess} from '../../Actions/Single/productActions';
+import API from '../../../Helpers/API';
+import {commentReset} from '../../Actions/Single/commentsActions';
 
 
 export type ProductThunkAction = ThunkAction<void, RootState, unknown, ProductActions>;

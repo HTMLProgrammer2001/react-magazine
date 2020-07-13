@@ -6,7 +6,7 @@ import Paginate from '../Paginate';
 import Reviews from './Reviews/';
 import ProductInfo from './ProductInfo/';
 import {RootState} from '../../redux/Reducers';
-import thunkProduct from '../../redux/ThunkActions/thunkProduct';
+import thunkProduct from '../../redux/ThunkActions/Single/thunkProduct';
 
 
 const mapStateToProps = (state: RootState) => ({

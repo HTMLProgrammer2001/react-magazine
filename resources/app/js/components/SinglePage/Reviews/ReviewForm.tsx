@@ -1,7 +1,10 @@
 import * as React from 'react';
 import {reduxForm, InjectedFormProps, Field} from 'redux-form';
-import InputElement from '../../FormElements/InputElement';
+import {connect, ConnectedProps} from 'react-redux';
+
 import MarkElement from '../../FormElements/MarkElement';
+import {RootState} from '../../../redux/Reducers';
+import UserData from './UserData';
 
 
 export type IReviewFormData = {
@@ -11,10 +14,29 @@ export type IReviewFormData = {
 	message: string
 };
 
-const ReviewForm: React.FC<InjectedFormProps<IReviewFormData>> = (props) => (
+const mapStateToProps = (state: RootState) => ({
+	commentData: state.single.addComment,
+	user: state.user.user
+});
+
+const connected = connect(mapStateToProps);
+
+type IOwnProps = ConnectedProps<typeof connected>;
+type IReviewFormProps = InjectedFormProps<IReviewFormData, IOwnProps> & IOwnProps;
+
+const ReviewForm: React.FC<IReviewFormProps> = (props) => (
 	<form className="reviews__form" onSubmit={props.handleSubmit} noValidate>
+		{
+			props.commentData.error &&
+				<div className="red">{props.commentData.error}</div>
+		}
+
 		<div className="row">
-			<img className="reviews__ava" src="/image/ava.png" alt="Ava"/>
+			<img
+				className="reviews__ava"
+				src={`/image/${props.user ? props.user.avatar : 'noAva.jpg'}`}
+				alt="Ava"
+			/>
 
 			<div className="reviews__wrap">
 				<Field
@@ -24,19 +46,12 @@ const ReviewForm: React.FC<InjectedFormProps<IReviewFormData>> = (props) => (
 				/>
 
 				<div className="reviews__comment">
-					<Field
-						component={InputElement}
-						name="email"
-						placeholder="Email"
-						required
-					/>
-
-					<Field
-						component={InputElement}
-						name="userName"
-						placeholder="Name"
-						required
-					/>
+					{
+						props.user ?
+							<div>{props.user.fullName}</div>
+							:
+							<UserData/>
+					}
 
 					<div className="input">
 						<Field component="textarea"
@@ -57,7 +72,7 @@ const ReviewForm: React.FC<InjectedFormProps<IReviewFormData>> = (props) => (
 	</form>
 );
 
-export default reduxForm<IReviewFormData>({
+const ReviewFormRedux = reduxForm<IReviewFormData, IOwnProps>({
 	form: 'productReview',
 	initialValues: {
 		mark: 0,
@@ -66,3 +81,5 @@ export default reduxForm<IReviewFormData>({
 		message: ''
 	}
 })(ReviewForm);
+
+export default connected(ReviewFormRedux);

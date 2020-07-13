@@ -8,6 +8,8 @@ import {IRegisterFormData} from '../components/RegisterPage/RegisterForm';
 import {ILoginFormData} from '../components/LoginPage/LoginForm';
 import {ILoadUserResponse} from '../Interfaces/Responses/ILoadUserResponse';
 import {IResetFormData} from '../components/ResetPage/ResetForm';
+import {IReviewFormData} from '../components/SinglePage/Reviews/ReviewForm';
+import {ICategory} from '../Interfaces/ICategory';
 
 
 class API{
@@ -65,6 +67,8 @@ class API{
 					params: {
 						page: offset,
 						sortType
+					}, headers: {
+						'Authorization': `Bearer ${localStorage.getItem('token')}`
 					}
 				}
 			);
@@ -183,6 +187,39 @@ class API{
 					Authorization: `Bearer ${localStorage.getItem('token')}`
 				}
 			});
+		}
+		catch (err) {
+			console.log(err.response.data);
+			return err as AxiosError;
+		}
+
+		return response.data;
+	}
+
+	static async addComment(productID: number, vals: IReviewFormData):
+		Promise<{success: boolean} | AxiosError>{
+		let response: AxiosResponse;
+
+		try{
+			response = await this.clientAPI.post(`/products/${productID}/addComment`, vals, {
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem('token')}`
+				}
+			});
+		}
+		catch (err) {
+			console.log(err.response.data);
+			return err as AxiosError;
+		}
+
+		return response.data;
+	}
+
+	static async getCategories(): Promise<ICategory[] | AxiosError>{
+		let response: AxiosResponse;
+
+		try{
+			response = await this.clientAPI.get('/categories');
 		}
 		catch (err) {
 			console.log(err.response.data);

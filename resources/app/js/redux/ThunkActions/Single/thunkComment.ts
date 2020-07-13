@@ -1,10 +1,10 @@
 import {ThunkAction, ThunkDispatch} from 'redux-thunk';
 import {formValueSelector} from 'redux-form';
 
-import {RootState} from '../Reducers';
-import {CommentActions} from '../Reducers/Single/comments';
-import {commentError, commentStart, commentSuccess} from '../Actions/Single/commentsActions';
-import API from '../../Helpers/API';
+import {RootState} from '../../Reducers';
+import {CommentActions} from '../../Reducers/Single/comments';
+import {commentError, commentStart, commentSuccess} from '../../Actions/Single/commentsActions';
+import API from '../../../Helpers/API';
 
 
 export type CommentThunkAction = ThunkAction<void, RootState, unknown, CommentActions>;

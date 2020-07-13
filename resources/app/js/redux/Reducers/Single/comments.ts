@@ -74,13 +74,15 @@ const commentReducer = (state: CommentState = initialState, action: CommentActio
 				};
 
 				//Set new value of likes and dislikes
-				newComment.likes = comment.curReaction == 'up' && comment.curReaction ?
-					comment.likes - 1 :
-					comment.likes + 1;
+				if(action.payload.reaction == 'up')
+					newComment.likes = comment.likes + 1;
+				else if(comment.curReaction == 'up')
+					newComment.likes = comment.likes - 1;
 
-				newComment.dislikes = comment.curReaction == 'down' && comment.curReaction ?
-					comment.dislikes - 1 :
-					comment.dislikes + 1;
+				if(action.payload.reaction == 'down')
+					newComment.dislikes = comment.dislikes + 1;
+				else if(comment.curReaction == 'down')
+					newComment.dislikes = comment.dislikes - 1;
 
 				return newComment;
 			})

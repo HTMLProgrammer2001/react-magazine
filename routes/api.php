@@ -25,6 +25,10 @@ Route::post('/products/{productID}/changeLike', 'ProductInfoController@changeLik
 Route::post('/comments/{commentID}/addReaction', 'CommentController@addReaction')
     ->middleware('auth:api');
 
+Route::post('/products/{productID}/addComment', 'CommentController@create');
+
+Route::get('/categories', 'CategoriesController@getAll');
+
 Route::post('/register', 'UserActions@register');
 Route::post('/login', 'UserActions@login');
 Route::post('/logout', 'UserActions@logout')

@@ -31121,6 +31121,8 @@ var API = function () {
                             params: {
                                 page: offset,
                                 sortType: sortType
+                            }, headers: {
+                                'Authorization': "Bearer " + localStorage.getItem('token')
                             }
                         })];
                     case 1:
@@ -31289,6 +31291,52 @@ var API = function () {
                         err_10 = _a.sent();
                         console.log(err_10.response.data);
                         return [2, err_10];
+                    case 3:
+                        return [2, response.data];
+                }
+            });
+        });
+    };
+    API.addComment = function (productID, vals) {
+        return __awaiter(this, void 0, void 0, function () {
+            var response, err_11;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2,, 3]);
+                        return [4, this.clientAPI.post("/products/" + productID + "/addComment", vals, {
+                            headers: {
+                                Authorization: "Bearer " + localStorage.getItem('token')
+                            }
+                        })];
+                    case 1:
+                        response = _a.sent();
+                        return [3, 3];
+                    case 2:
+                        err_11 = _a.sent();
+                        console.log(err_11.response.data);
+                        return [2, err_11];
+                    case 3:
+                        return [2, response.data];
+                }
+            });
+        });
+    };
+    API.getCategories = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var response, err_12;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2,, 3]);
+                        return [4, this.clientAPI.get('/categories')];
+                    case 1:
+                        response = _a.sent();
+                        return [3, 3];
+                    case 2:
+                        err_12 = _a.sent();
+                        console.log(err_12.response.data);
+                        return [2, err_12];
                     case 3:
                         return [2, response.data];
                 }
@@ -31537,20 +31585,13 @@ exports.default = cartConnected(CartPage);
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 var CategoryItem_1 = __webpack_require__(/*! ./CategoryItem */ "./resources/app/es5/components/CategoriesPage/CategoryItem.js");
-var mapStateToProps = function mapStateToProps(state) {
-    return {
-        categories: state.category.categories
-    };
-};
-var connected = react_redux_1.connect(mapStateToProps);
 var CategoriesList = function CategoriesList(props) {
     return React.createElement("div", { className: "container" }, React.createElement("div", { className: "categories my-pad" }, !props.categories.length && React.createElement("b", null, "\u041D\u0435\u0442 \u043A\u0430\u0442\u0435\u0433\u043E\u0440\u0438\u0439"), props.categories.map(function (category) {
         return React.createElement(CategoryItem_1.default, { key: category.slug, category: category });
     })));
 };
-exports.default = connected(CategoriesList);
+exports.default = CategoriesList;
 
 //# sourceMappingURL=CategoriesList.js.map
 
@@ -31570,7 +31611,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 var CategoryItem = function CategoryItem(props) {
-    return React.createElement(react_router_dom_1.Link, { to: "/categories/" + props.category.slug, className: "categories__item" }, React.createElement("img", { className: "categories__img", src: props.category.image, alt: "Category" }), React.createElement("div", { className: "categories__products center w-100", style: { flexDirection: 'column' } }, React.createElement("div", null, props.category.name), React.createElement("div", null, props.category.productCount, " products")));
+    return React.createElement(react_router_dom_1.Link, { to: "/categories/" + props.category.slug, className: "categories__item" }, React.createElement("img", { className: "categories__img", src: "/image/" + props.category.image, alt: "Category" }), React.createElement("div", { className: "categories__products center w-100", style: { flexDirection: 'column' } }, React.createElement("div", null, props.category.name), React.createElement("div", null, props.category.productCount, " products")));
 };
 exports.default = CategoryItem;
 
@@ -31590,15 +31631,26 @@ exports.default = CategoryItem;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 var Paginate_1 = __webpack_require__(/*! ../Paginate */ "./resources/app/es5/components/Paginate.js");
 var CategoriesList_1 = __webpack_require__(/*! ./CategoriesList */ "./resources/app/es5/components/CategoriesPage/CategoriesList.js");
-var CategoriesPage = function CategoriesPage() {
+var thunkCategory_1 = __webpack_require__(/*! ../../redux/ThunkActions/thunkCategory */ "./resources/app/es5/redux/ThunkActions/thunkCategory.js");
+var mapStateToProps = function mapStateToProps(state) {
+    return {
+        categoriesState: state.category
+    };
+};
+var connected = react_redux_1.connect(mapStateToProps, {
+    loadCategories: thunkCategory_1.default
+});
+var CategoriesPage = function CategoriesPage(props) {
     React.useEffect(function () {
         document.title = 'Categories';
+        if (!props.categoriesState.loaded) props.loadCategories();
     }, []);
-    return React.createElement(React.Fragment, null, React.createElement(Paginate_1.default, { paths: [{ name: 'Home', path: '/' }, { name: 'Categories', path: '/categories' }] }), React.createElement(CategoriesList_1.default, null));
+    return React.createElement(React.Fragment, null, React.createElement(Paginate_1.default, { paths: [{ name: 'Home', path: '/' }, { name: 'Categories', path: '/categories' }] }), props.categoriesState.isLoading && React.createElement("div", null, "Loading..."), props.categoriesState.error && React.createElement("div", { className: "red" }, props.categoriesState.error), React.createElement(CategoriesList_1.default, { categories: props.categoriesState.categories }));
 };
-exports.default = CategoriesPage;
+exports.default = connected(CategoriesPage);
 
 //# sourceMappingURL=index.js.map
 
@@ -33466,18 +33518,18 @@ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var classnames_1 = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
 var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 var Mark_1 = __webpack_require__(/*! ../../Mark */ "./resources/app/es5/components/Mark.js");
-var thunkReactionChange_1 = __webpack_require__(/*! ../../../redux/ThunkActions/thunkReactionChange */ "./resources/app/es5/redux/ThunkActions/thunkReactionChange.js");
+var thunkReactionChange_1 = __webpack_require__(/*! ../../../redux/ThunkActions/Single/thunkReactionChange */ "./resources/app/es5/redux/ThunkActions/Single/thunkReactionChange.js");
 var connected = react_redux_1.connect(null, {
     changeReaction: thunkReactionChange_1.default
 });
 var Review = function Review(_a) {
     var comment = _a.comment,
         changeReaction = _a.changeReaction;
-    return React.createElement(React.Fragment, null, React.createElement("span", { id: "comment_" + comment.id }), React.createElement("div", { className: "reviews-list__item row" }, React.createElement("img", { className: "reviews__ava", src: "/image/" + comment.author.avatar, alt: "User ava" }), React.createElement("div", { className: "reviews-list__wrap" }, React.createElement("div", { className: "reviews-list__name" }, React.createElement("p", null, comment.author.name), React.createElement("div", { className: "reviews-list__icons" }, React.createElement("i", { className: "fas fa-link reviews-list__icon" }), React.createElement("i", { className: "fas fa-exclamation-triangle reviews-list__icon" }))), React.createElement("div", { className: "my-1" }, React.createElement(Mark_1.default, { rating: comment.mark, fixed: true })), React.createElement("div", { className: "reviews-list__message" }, React.createElement("p", null, comment.message)), React.createElement("div", { className: "reviews-list__item-footer" }, React.createElement("div", { className: "reviews-list__item-mark" }, React.createElement("span", null, React.createElement("i", { className: "fas fa-angle-up" }), React.createElement("span", { className: classnames_1.default({ active: comment.curReaction == 'up' }), onClick: function onClick() {
+    return React.createElement(React.Fragment, null, React.createElement("span", { id: "comment_" + comment.id }), React.createElement("div", { className: "reviews-list__item row" }, React.createElement("img", { className: "reviews__ava", src: "/image/" + comment.author.avatar, alt: "User ava" }), React.createElement("div", { className: "reviews-list__wrap" }, React.createElement("div", { className: "reviews-list__name" }, React.createElement("p", null, comment.author.fullName), React.createElement("div", { className: "reviews-list__icons" }, React.createElement("i", { className: "fas fa-link reviews-list__icon" }), React.createElement("i", { className: "fas fa-exclamation-triangle reviews-list__icon" }))), React.createElement("div", { className: "my-1" }, React.createElement(Mark_1.default, { rating: comment.mark, fixed: true })), React.createElement("div", { className: "reviews-list__message" }, React.createElement("p", null, comment.message)), React.createElement("div", { className: "reviews-list__item-footer" }, React.createElement("div", { className: "reviews-list__item-mark" }, React.createElement("span", { onClick: function onClick() {
             if (comment.curReaction != 'up') changeReaction(comment.id, 'up');
-        } }, "\xA0", comment.likes)), React.createElement("span", null, React.createElement("i", { className: "fas fa-angle-down" }), React.createElement("span", { className: classnames_1.default({ active: comment.curReaction == 'down' }), onClick: function onClick() {
+        } }, React.createElement("i", { className: "fas fa-angle-up" }), React.createElement("span", { className: classnames_1.default({ active: comment.curReaction == 'up' }) }, "\xA0", comment.likes)), React.createElement("span", { onClick: function onClick() {
             if (comment.curReaction != 'down') changeReaction(comment.id, 'down');
-        } }, "\xA0", comment.dislikes))), React.createElement("div", { className: "reviews-list__item-date" }, comment.date)))));
+        } }, React.createElement("i", { className: "fas fa-angle-down" }), React.createElement("span", { className: classnames_1.default({ active: comment.curReaction == 'down' }) }, "\xA0", comment.dislikes))), React.createElement("div", { className: "reviews-list__item-date" }, comment.date)))));
 };
 exports.default = connected(Review);
 
@@ -33498,12 +33550,20 @@ exports.default = connected(Review);
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
-var InputElement_1 = __webpack_require__(/*! ../../FormElements/InputElement */ "./resources/app/es5/components/FormElements/InputElement.js");
+var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 var MarkElement_1 = __webpack_require__(/*! ../../FormElements/MarkElement */ "./resources/app/es5/components/FormElements/MarkElement.js");
-var ReviewForm = function ReviewForm(props) {
-    return React.createElement("form", { className: "reviews__form", onSubmit: props.handleSubmit, noValidate: true }, React.createElement("div", { className: "row" }, React.createElement("img", { className: "reviews__ava", src: "/image/ava.png", alt: "Ava" }), React.createElement("div", { className: "reviews__wrap" }, React.createElement(redux_form_1.Field, { component: MarkElement_1.default, name: "mark", formName: props.form }), React.createElement("div", { className: "reviews__comment" }, React.createElement(redux_form_1.Field, { component: InputElement_1.default, name: "email", placeholder: "Email", required: true }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, name: "userName", placeholder: "Name", required: true }), React.createElement("div", { className: "input" }, React.createElement(redux_form_1.Field, { component: "textarea", className: "input__elem", rows: 1, required: true, name: "message" }), React.createElement("label", { className: "input__label" }, "Message"), React.createElement("div", { className: "input__line", style: { bottom: '4px' } })), React.createElement("button", { type: "submit", className: "reviews__but" }, "Send")))));
+var UserData_1 = __webpack_require__(/*! ./UserData */ "./resources/app/es5/components/SinglePage/Reviews/UserData.js");
+var mapStateToProps = function mapStateToProps(state) {
+    return {
+        commentData: state.single.addComment,
+        user: state.user.user
+    };
 };
-exports.default = redux_form_1.reduxForm({
+var connected = react_redux_1.connect(mapStateToProps);
+var ReviewForm = function ReviewForm(props) {
+    return React.createElement("form", { className: "reviews__form", onSubmit: props.handleSubmit, noValidate: true }, props.commentData.error && React.createElement("div", { className: "red" }, props.commentData.error), React.createElement("div", { className: "row" }, React.createElement("img", { className: "reviews__ava", src: "/image/" + (props.user ? props.user.avatar : 'noAva.jpg'), alt: "Ava" }), React.createElement("div", { className: "reviews__wrap" }, React.createElement(redux_form_1.Field, { component: MarkElement_1.default, name: "mark", formName: props.form }), React.createElement("div", { className: "reviews__comment" }, props.user ? React.createElement("div", null, props.user.fullName) : React.createElement(UserData_1.default, null), React.createElement("div", { className: "input" }, React.createElement(redux_form_1.Field, { component: "textarea", className: "input__elem", rows: 1, required: true, name: "message" }), React.createElement("label", { className: "input__label" }, "Message"), React.createElement("div", { className: "input__line", style: { bottom: '4px' } })), React.createElement("button", { type: "submit", className: "reviews__but" }, "Send")))));
+};
+var ReviewFormRedux = redux_form_1.reduxForm({
     form: 'productReview',
     initialValues: {
         mark: 0,
@@ -33512,6 +33572,7 @@ exports.default = redux_form_1.reduxForm({
         message: ''
     }
 })(ReviewForm);
+exports.default = connected(ReviewFormRedux);
 
 //# sourceMappingURL=ReviewForm.js.map
 
@@ -33575,7 +33636,7 @@ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 var Review_1 = __webpack_require__(/*! ./Review */ "./resources/app/es5/components/SinglePage/Reviews/Review.js");
 var ReviewSortForm_1 = __webpack_require__(/*! ./ReviewSortForm */ "./resources/app/es5/components/SinglePage/Reviews/ReviewSortForm.js");
-var thunkComment_1 = __webpack_require__(/*! ../../../redux/ThunkActions/thunkComment */ "./resources/app/es5/redux/ThunkActions/thunkComment.js");
+var thunkComment_1 = __webpack_require__(/*! ../../../redux/ThunkActions/Single/thunkComment */ "./resources/app/es5/redux/ThunkActions/Single/thunkComment.js");
 var commentsActions_1 = __webpack_require__(/*! ../../../redux/Actions/Single/commentsActions */ "./resources/app/es5/redux/Actions/Single/commentsActions.js");
 var mapStateToProps = function mapStateToProps(state) {
     return __assign(__assign({}, state.single.comments), { curProductID: state.single.product.data.id });
@@ -33607,6 +33668,29 @@ exports.default = connected(ReviewsList);
 
 /***/ }),
 
+/***/ "./resources/app/es5/components/SinglePage/Reviews/UserData.js":
+/*!*********************************************************************!*\
+  !*** ./resources/app/es5/components/SinglePage/Reviews/UserData.js ***!
+  \*********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
+var InputElement_1 = __webpack_require__(/*! ../../FormElements/InputElement */ "./resources/app/es5/components/FormElements/InputElement.js");
+var UserData = function UserData() {
+    return React.createElement(React.Fragment, null, React.createElement(redux_form_1.Field, { component: InputElement_1.default, name: "email", placeholder: "Email", required: true }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, name: "name", placeholder: "Name", required: true }));
+};
+exports.default = UserData;
+
+//# sourceMappingURL=UserData.js.map
+
+/***/ }),
+
 /***/ "./resources/app/es5/components/SinglePage/Reviews/index.js":
 /*!******************************************************************!*\
   !*** ./resources/app/es5/components/SinglePage/Reviews/index.js ***!
@@ -33619,14 +33703,26 @@ exports.default = connected(ReviewsList);
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 var ReviewForm_1 = __webpack_require__(/*! ./ReviewForm */ "./resources/app/es5/components/SinglePage/Reviews/ReviewForm.js");
 var ReviewsList_1 = __webpack_require__(/*! ./ReviewsList */ "./resources/app/es5/components/SinglePage/Reviews/ReviewsList.js");
-var Reviews = function Reviews() {
-    return React.createElement("div", { className: "reviews my-pad" }, React.createElement("div", { className: "container" }, React.createElement("div", { className: "reviews__head" }, "Reviews"), React.createElement(ReviewForm_1.default, { onSubmit: function onSubmit(vals) {
-            return console.log(vals);
-        } }), React.createElement(ReviewsList_1.default, null)));
+var thunkAddComment_1 = __webpack_require__(/*! ../../../redux/ThunkActions/Single/thunkAddComment */ "./resources/app/es5/redux/ThunkActions/Single/thunkAddComment.js");
+var mapStateToProps = function mapStateToProps(state) {
+    return {
+        productID: state.single.product.data.id
+    };
 };
-exports.default = Reviews;
+var connected = react_redux_1.connect(mapStateToProps, {
+    addComment: thunkAddComment_1.default
+});
+var Reviews = function Reviews(props) {
+    var onSubmit = function onSubmit(vals) {
+        console.log(vals);
+        props.addComment(props.productID, vals, 'productReview');
+    };
+    return React.createElement("div", { className: "reviews my-pad" }, React.createElement("div", { className: "container" }, React.createElement("div", { className: "reviews__head" }, "Reviews"), React.createElement(ReviewForm_1.default, { onSubmit: onSubmit }), React.createElement(ReviewsList_1.default, null)));
+};
+exports.default = connected(Reviews);
 
 //# sourceMappingURL=index.js.map
 
@@ -33660,7 +33756,7 @@ var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react
 var Paginate_1 = __webpack_require__(/*! ../Paginate */ "./resources/app/es5/components/Paginate.js");
 var Reviews_1 = __webpack_require__(/*! ./Reviews/ */ "./resources/app/es5/components/SinglePage/Reviews/index.js");
 var ProductInfo_1 = __webpack_require__(/*! ./ProductInfo/ */ "./resources/app/es5/components/SinglePage/ProductInfo/index.js");
-var thunkProduct_1 = __webpack_require__(/*! ../../redux/ThunkActions/thunkProduct */ "./resources/app/es5/redux/ThunkActions/thunkProduct.js");
+var thunkProduct_1 = __webpack_require__(/*! ../../redux/ThunkActions/Single/thunkProduct */ "./resources/app/es5/redux/ThunkActions/Single/thunkProduct.js");
 var mapStateToProps = function mapStateToProps(state) {
     return __assign({}, state.single.product);
 };
@@ -33747,6 +33843,39 @@ myStore = store;
 ReactDOM.render(React.createElement(react_redux_1.Provider, { store: store }, React.createElement(App_1.default, null)), document.querySelector('#root'));
 
 //# sourceMappingURL=main.js.map
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/Actions/Single/addCommentActions.js":
+/*!*********************************************************************!*\
+  !*** ./resources/app/es5/redux/Actions/Single/addCommentActions.js ***!
+  \*********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var actionTypes_1 = __webpack_require__(/*! ../../actionTypes */ "./resources/app/es5/redux/actionTypes.js");
+exports.commentAddStart = function () {
+    return {
+        type: actionTypes_1.COMMENT_ADD_START
+    };
+};
+exports.commentAddError = function (error) {
+    return {
+        type: actionTypes_1.COMMENT_ADD_ERROR,
+        error: error
+    };
+};
+exports.commentAddSuccess = function () {
+    return {
+        type: actionTypes_1.COMMENT_ADD_SUCCESS
+    };
+};
+
+//# sourceMappingURL=addCommentActions.js.map
 
 /***/ }),
 
@@ -33866,6 +33995,40 @@ exports.cartReset = function () {
 };
 
 //# sourceMappingURL=cartActions.js.map
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/Actions/categoryActions.js":
+/*!************************************************************!*\
+  !*** ./resources/app/es5/redux/Actions/categoryActions.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var actionTypes_1 = __webpack_require__(/*! ../actionTypes */ "./resources/app/es5/redux/actionTypes.js");
+exports.categoryLoadStart = function () {
+    return {
+        type: actionTypes_1.CATEGORY_LOAD_START
+    };
+};
+exports.categoryLoadSuccess = function (payload) {
+    return {
+        type: actionTypes_1.CATEGORY_LOAD_SUCCESS,
+        payload: payload
+    };
+};
+exports.categoryLoadFailure = function (error) {
+    return {
+        type: actionTypes_1.CATEGORY_LOAD_ERROR,
+        error: error
+    };
+};
+
+//# sourceMappingURL=categoryActions.js.map
 
 /***/ }),
 
@@ -34043,6 +34206,42 @@ exports.verifySuccess = function (message) {
 
 /***/ }),
 
+/***/ "./resources/app/es5/redux/Reducers/Single/addComment.js":
+/*!***************************************************************!*\
+  !*** ./resources/app/es5/redux/Reducers/Single/addComment.js ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var actionTypes_1 = __webpack_require__(/*! ../../actionTypes */ "./resources/app/es5/redux/actionTypes.js");
+var initialState = {
+    isLoading: false,
+    error: null
+};
+var addCommentReducer = function addCommentReducer(state, action) {
+    if (state === void 0) {
+        state = initialState;
+    }
+    switch (action.type) {
+        case actionTypes_1.COMMENT_ADD_START:
+            return { isLoading: true, error: null };
+        case actionTypes_1.COMMENT_ADD_ERROR:
+            return { isLoading: false, error: action.error };
+        case actionTypes_1.COMMENT_ADD_SUCCESS:
+            return { isLoading: false, error: null };
+    }
+    return state;
+};
+exports.default = addCommentReducer;
+
+//# sourceMappingURL=addComment.js.map
+
+/***/ }),
+
 /***/ "./resources/app/es5/redux/Reducers/Single/comments.js":
 /*!*************************************************************!*\
   !*** ./resources/app/es5/redux/Reducers/Single/comments.js ***!
@@ -34100,8 +34299,8 @@ var commentReducer = function commentReducer(state, action) {
             return __assign(__assign({}, state), { comments: state.comments.map(function (comment) {
                     if (comment.id != action.payload.commentID) return comment;
                     var newComment = __assign(__assign({}, comment), { curReaction: action.payload.reaction });
-                    newComment.likes = comment.curReaction == 'up' && comment.curReaction ? comment.likes - 1 : comment.likes + 1;
-                    newComment.dislikes = comment.curReaction == 'down' && comment.curReaction ? comment.dislikes - 1 : comment.dislikes + 1;
+                    if (action.payload.reaction == 'up') newComment.likes = comment.likes + 1;else if (comment.curReaction == 'up') newComment.likes = comment.likes - 1;
+                    if (action.payload.reaction == 'down') newComment.dislikes = comment.dislikes + 1;else if (comment.curReaction == 'down') newComment.dislikes = comment.dislikes - 1;
                     return newComment;
                 }) });
     }
@@ -34127,9 +34326,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var redux_1 = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
 var comments_1 = __webpack_require__(/*! ./comments */ "./resources/app/es5/redux/Reducers/Single/comments.js");
 var product_1 = __webpack_require__(/*! ./product */ "./resources/app/es5/redux/Reducers/Single/product.js");
+var addComment_1 = __webpack_require__(/*! ./addComment */ "./resources/app/es5/redux/Reducers/Single/addComment.js");
 exports.default = redux_1.combineReducers({
     comments: comments_1.default,
-    product: product_1.default
+    product: product_1.default,
+    addComment: addComment_1.default
 });
 
 //# sourceMappingURL=index.js.map
@@ -34260,17 +34461,25 @@ exports.default = cartReducer;
 "use strict";
 
 
+var __assign = undefined && undefined.__assign || function () {
+    __assign = Object.assign || function (t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) {
+                if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+            }
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var actionTypes_1 = __webpack_require__(/*! ../actionTypes */ "./resources/app/es5/redux/actionTypes.js");
 var initialState = {
     isLoading: false,
+    loaded: false,
     error: null,
-    categories: [{
-        name: 'Test',
-        productCount: 32,
-        slug: 'test',
-        image: '/image/noAvatar.png'
-    }]
+    categories: []
 };
 var categoryReducer = function categoryReducer(state, action) {
     if (state === void 0) {
@@ -34278,11 +34487,11 @@ var categoryReducer = function categoryReducer(state, action) {
     }
     switch (action.type) {
         case actionTypes_1.CATEGORY_LOAD_START:
-            return { categories: [], isLoading: true, error: null };
+            return __assign(__assign({}, state), { isLoading: true, error: null });
         case actionTypes_1.CATEGORY_LOAD_ERROR:
-            return { categories: [], isLoading: false, error: action.error };
+            return __assign(__assign({}, state), { isLoading: false, error: action.error });
         case actionTypes_1.CATEGORY_LOAD_SUCCESS:
-            return { categories: action.payload, isLoading: false, error: null };
+            return { categories: action.payload, isLoading: false, error: null, loaded: true };
     }
     return state;
 };
@@ -34530,10 +34739,10 @@ exports.default = verifyReducer;
 
 /***/ }),
 
-/***/ "./resources/app/es5/redux/ThunkActions/thunkComment.js":
-/*!**************************************************************!*\
-  !*** ./resources/app/es5/redux/ThunkActions/thunkComment.js ***!
-  \**************************************************************/
+/***/ "./resources/app/es5/redux/ThunkActions/Single/thunkAddComment.js":
+/*!************************************************************************!*\
+  !*** ./resources/app/es5/redux/ThunkActions/Single/thunkAddComment.js ***!
+  \************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -34625,8 +34834,139 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
-var commentsActions_1 = __webpack_require__(/*! ../Actions/Single/commentsActions */ "./resources/app/es5/redux/Actions/Single/commentsActions.js");
-var API_1 = __webpack_require__(/*! ../../Helpers/API */ "./resources/app/es5/Helpers/API.js");
+var addCommentActions_1 = __webpack_require__(/*! ../../Actions/Single/addCommentActions */ "./resources/app/es5/redux/Actions/Single/addCommentActions.js");
+var API_1 = __webpack_require__(/*! ../../../Helpers/API */ "./resources/app/es5/Helpers/API.js");
+var thunkAddComment = function thunkAddComment(productID, vals, formName) {
+    return function (dispatch) {
+        return __awaiter(void 0, void 0, void 0, function () {
+            var addCommentResponse;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        dispatch(addCommentActions_1.commentAddStart());
+                        return [4, API_1.default.addComment(productID, vals)];
+                    case 1:
+                        addCommentResponse = _a.sent();
+                        console.log(addCommentResponse);
+                        if (API_1.default.isError(addCommentResponse)) {
+                            if (addCommentResponse.response.data.errors) {
+                                dispatch(redux_form_1.updateSyncErrors(formName, addCommentResponse.response.data.errors, addCommentResponse.response.data.message));
+                            } else {
+                                dispatch(addCommentActions_1.commentAddError(addCommentResponse.response.data.message));
+                            }
+                        } else {
+                            dispatch(redux_form_1.reset(formName));
+                            dispatch(addCommentActions_1.commentAddSuccess());
+                        }
+                        return [2];
+                }
+            });
+        });
+    };
+};
+exports.default = thunkAddComment;
+
+//# sourceMappingURL=thunkAddComment.js.map
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/ThunkActions/Single/thunkComment.js":
+/*!*********************************************************************!*\
+  !*** ./resources/app/es5/redux/ThunkActions/Single/thunkComment.js ***!
+  \*********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
+    function adopt(value) {
+        return value instanceof P ? value : new P(function (resolve) {
+            resolve(value);
+        });
+    }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) {
+            try {
+                step(generator.next(value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function rejected(value) {
+            try {
+                step(generator["throw"](value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function step(result) {
+            result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+        }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = undefined && undefined.__generator || function (thisArg, body) {
+    var _ = { label: 0, sent: function sent() {
+            if (t[0] & 1) throw t[1];return t[1];
+        }, trys: [], ops: [] },
+        f,
+        y,
+        t,
+        g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
+        return this;
+    }), g;
+    function verb(n) {
+        return function (v) {
+            return step([n, v]);
+        };
+    }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) {
+            try {
+                if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+                if (y = 0, t) op = [op[0] & 2, t.value];
+                switch (op[0]) {
+                    case 0:case 1:
+                        t = op;break;
+                    case 4:
+                        _.label++;return { value: op[1], done: false };
+                    case 5:
+                        _.label++;y = op[1];op = [0];continue;
+                    case 7:
+                        op = _.ops.pop();_.trys.pop();continue;
+                    default:
+                        if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+                            _ = 0;continue;
+                        }
+                        if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+                            _.label = op[1];break;
+                        }
+                        if (op[0] === 6 && _.label < t[1]) {
+                            _.label = t[1];t = op;break;
+                        }
+                        if (t && _.label < t[2]) {
+                            _.label = t[2];_.ops.push(op);break;
+                        }
+                        if (t[2]) _.ops.pop();
+                        _.trys.pop();continue;
+                }
+                op = body.call(thisArg, _);
+            } catch (e) {
+                op = [6, e];y = 0;
+            } finally {
+                f = t = 0;
+            }
+        }if (op[0] & 5) throw op[1];return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
+var commentsActions_1 = __webpack_require__(/*! ../../Actions/Single/commentsActions */ "./resources/app/es5/redux/Actions/Single/commentsActions.js");
+var API_1 = __webpack_require__(/*! ../../../Helpers/API */ "./resources/app/es5/Helpers/API.js");
 var thunkComment = function thunkComment(productID, offset) {
     if (offset === void 0) {
         offset = 1;
@@ -34657,6 +34997,377 @@ var thunkComment = function thunkComment(productID, offset) {
 exports.default = thunkComment;
 
 //# sourceMappingURL=thunkComment.js.map
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/ThunkActions/Single/thunkProduct.js":
+/*!*********************************************************************!*\
+  !*** ./resources/app/es5/redux/ThunkActions/Single/thunkProduct.js ***!
+  \*********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
+    function adopt(value) {
+        return value instanceof P ? value : new P(function (resolve) {
+            resolve(value);
+        });
+    }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) {
+            try {
+                step(generator.next(value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function rejected(value) {
+            try {
+                step(generator["throw"](value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function step(result) {
+            result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+        }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = undefined && undefined.__generator || function (thisArg, body) {
+    var _ = { label: 0, sent: function sent() {
+            if (t[0] & 1) throw t[1];return t[1];
+        }, trys: [], ops: [] },
+        f,
+        y,
+        t,
+        g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
+        return this;
+    }), g;
+    function verb(n) {
+        return function (v) {
+            return step([n, v]);
+        };
+    }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) {
+            try {
+                if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+                if (y = 0, t) op = [op[0] & 2, t.value];
+                switch (op[0]) {
+                    case 0:case 1:
+                        t = op;break;
+                    case 4:
+                        _.label++;return { value: op[1], done: false };
+                    case 5:
+                        _.label++;y = op[1];op = [0];continue;
+                    case 7:
+                        op = _.ops.pop();_.trys.pop();continue;
+                    default:
+                        if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+                            _ = 0;continue;
+                        }
+                        if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+                            _.label = op[1];break;
+                        }
+                        if (op[0] === 6 && _.label < t[1]) {
+                            _.label = t[1];t = op;break;
+                        }
+                        if (t && _.label < t[2]) {
+                            _.label = t[2];_.ops.push(op);break;
+                        }
+                        if (t[2]) _.ops.pop();
+                        _.trys.pop();continue;
+                }
+                op = body.call(thisArg, _);
+            } catch (e) {
+                op = [6, e];y = 0;
+            } finally {
+                f = t = 0;
+            }
+        }if (op[0] & 5) throw op[1];return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var productActions_1 = __webpack_require__(/*! ../../Actions/Single/productActions */ "./resources/app/es5/redux/Actions/Single/productActions.js");
+var API_1 = __webpack_require__(/*! ../../../Helpers/API */ "./resources/app/es5/Helpers/API.js");
+var commentsActions_1 = __webpack_require__(/*! ../../Actions/Single/commentsActions */ "./resources/app/es5/redux/Actions/Single/commentsActions.js");
+var thunkProduct = function thunkProduct(slug) {
+    return function (dispatch) {
+        return __awaiter(void 0, void 0, void 0, function () {
+            var productResponse;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        dispatch(productActions_1.productStart());
+                        dispatch(commentsActions_1.commentReset());
+                        return [4, API_1.default.getProductInfo(slug)];
+                    case 1:
+                        productResponse = _a.sent();
+                        if (API_1.default.isError(productResponse)) {
+                            dispatch(productActions_1.productError(productResponse.message));
+                        } else {
+                            dispatch(productActions_1.productSuccess(productResponse));
+                        }
+                        return [2];
+                }
+            });
+        });
+    };
+};
+exports.default = thunkProduct;
+
+//# sourceMappingURL=thunkProduct.js.map
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/ThunkActions/Single/thunkReactionChange.js":
+/*!****************************************************************************!*\
+  !*** ./resources/app/es5/redux/ThunkActions/Single/thunkReactionChange.js ***!
+  \****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
+    function adopt(value) {
+        return value instanceof P ? value : new P(function (resolve) {
+            resolve(value);
+        });
+    }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) {
+            try {
+                step(generator.next(value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function rejected(value) {
+            try {
+                step(generator["throw"](value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function step(result) {
+            result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+        }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = undefined && undefined.__generator || function (thisArg, body) {
+    var _ = { label: 0, sent: function sent() {
+            if (t[0] & 1) throw t[1];return t[1];
+        }, trys: [], ops: [] },
+        f,
+        y,
+        t,
+        g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
+        return this;
+    }), g;
+    function verb(n) {
+        return function (v) {
+            return step([n, v]);
+        };
+    }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) {
+            try {
+                if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+                if (y = 0, t) op = [op[0] & 2, t.value];
+                switch (op[0]) {
+                    case 0:case 1:
+                        t = op;break;
+                    case 4:
+                        _.label++;return { value: op[1], done: false };
+                    case 5:
+                        _.label++;y = op[1];op = [0];continue;
+                    case 7:
+                        op = _.ops.pop();_.trys.pop();continue;
+                    default:
+                        if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+                            _ = 0;continue;
+                        }
+                        if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+                            _.label = op[1];break;
+                        }
+                        if (op[0] === 6 && _.label < t[1]) {
+                            _.label = t[1];t = op;break;
+                        }
+                        if (t && _.label < t[2]) {
+                            _.label = t[2];_.ops.push(op);break;
+                        }
+                        if (t[2]) _.ops.pop();
+                        _.trys.pop();continue;
+                }
+                op = body.call(thisArg, _);
+            } catch (e) {
+                op = [6, e];y = 0;
+            } finally {
+                f = t = 0;
+            }
+        }if (op[0] & 5) throw op[1];return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var commentsActions_1 = __webpack_require__(/*! ../../Actions/Single/commentsActions */ "./resources/app/es5/redux/Actions/Single/commentsActions.js");
+var API_1 = __webpack_require__(/*! ../../../Helpers/API */ "./resources/app/es5/Helpers/API.js");
+var thunkReactionChange = function thunkReactionChange(commentID, reaction) {
+    return function (dispatch) {
+        return __awaiter(void 0, void 0, void 0, function () {
+            var reactionResponse;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        return [4, API_1.default.changeReaction(commentID, reaction)];
+                    case 1:
+                        reactionResponse = _a.sent();
+                        if (!API_1.default.isError(reactionResponse) && reactionResponse.success) {
+                            dispatch(commentsActions_1.commentReactionChange(commentID, reaction));
+                        }
+                        return [2];
+                }
+            });
+        });
+    };
+};
+exports.default = thunkReactionChange;
+
+//# sourceMappingURL=thunkReactionChange.js.map
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/ThunkActions/thunkCategory.js":
+/*!***************************************************************!*\
+  !*** ./resources/app/es5/redux/ThunkActions/thunkCategory.js ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
+    function adopt(value) {
+        return value instanceof P ? value : new P(function (resolve) {
+            resolve(value);
+        });
+    }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) {
+            try {
+                step(generator.next(value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function rejected(value) {
+            try {
+                step(generator["throw"](value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function step(result) {
+            result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+        }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = undefined && undefined.__generator || function (thisArg, body) {
+    var _ = { label: 0, sent: function sent() {
+            if (t[0] & 1) throw t[1];return t[1];
+        }, trys: [], ops: [] },
+        f,
+        y,
+        t,
+        g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
+        return this;
+    }), g;
+    function verb(n) {
+        return function (v) {
+            return step([n, v]);
+        };
+    }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) {
+            try {
+                if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+                if (y = 0, t) op = [op[0] & 2, t.value];
+                switch (op[0]) {
+                    case 0:case 1:
+                        t = op;break;
+                    case 4:
+                        _.label++;return { value: op[1], done: false };
+                    case 5:
+                        _.label++;y = op[1];op = [0];continue;
+                    case 7:
+                        op = _.ops.pop();_.trys.pop();continue;
+                    default:
+                        if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+                            _ = 0;continue;
+                        }
+                        if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+                            _.label = op[1];break;
+                        }
+                        if (op[0] === 6 && _.label < t[1]) {
+                            _.label = t[1];t = op;break;
+                        }
+                        if (t && _.label < t[2]) {
+                            _.label = t[2];_.ops.push(op);break;
+                        }
+                        if (t[2]) _.ops.pop();
+                        _.trys.pop();continue;
+                }
+                op = body.call(thisArg, _);
+            } catch (e) {
+                op = [6, e];y = 0;
+            } finally {
+                f = t = 0;
+            }
+        }if (op[0] & 5) throw op[1];return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var categoryActions_1 = __webpack_require__(/*! ../Actions/categoryActions */ "./resources/app/es5/redux/Actions/categoryActions.js");
+var API_1 = __webpack_require__(/*! ../../Helpers/API */ "./resources/app/es5/Helpers/API.js");
+var thunkCategory = function thunkCategory() {
+    return function (dispatch) {
+        return __awaiter(void 0, void 0, void 0, function () {
+            var categoryResponse;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        dispatch(categoryActions_1.categoryLoadStart());
+                        return [4, API_1.default.getCategories()];
+                    case 1:
+                        categoryResponse = _a.sent();
+                        if (API_1.default.isError(categoryResponse)) {
+                            dispatch(categoryActions_1.categoryLoadFailure(categoryResponse.message));
+                        } else {
+                            dispatch(categoryActions_1.categoryLoadSuccess(categoryResponse));
+                        }
+                        return [2];
+                }
+            });
+        });
+    };
+};
+exports.default = thunkCategory;
+
+//# sourceMappingURL=thunkCategory.js.map
 
 /***/ }),
 
@@ -34914,253 +35625,6 @@ var thunkLogout = function thunkLogout() {
 exports.default = thunkLogout;
 
 //# sourceMappingURL=thunkLogout.js.map
-
-/***/ }),
-
-/***/ "./resources/app/es5/redux/ThunkActions/thunkProduct.js":
-/*!**************************************************************!*\
-  !*** ./resources/app/es5/redux/ThunkActions/thunkProduct.js ***!
-  \**************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
-    function adopt(value) {
-        return value instanceof P ? value : new P(function (resolve) {
-            resolve(value);
-        });
-    }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) {
-            try {
-                step(generator.next(value));
-            } catch (e) {
-                reject(e);
-            }
-        }
-        function rejected(value) {
-            try {
-                step(generator["throw"](value));
-            } catch (e) {
-                reject(e);
-            }
-        }
-        function step(result) {
-            result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
-        }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = undefined && undefined.__generator || function (thisArg, body) {
-    var _ = { label: 0, sent: function sent() {
-            if (t[0] & 1) throw t[1];return t[1];
-        }, trys: [], ops: [] },
-        f,
-        y,
-        t,
-        g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
-        return this;
-    }), g;
-    function verb(n) {
-        return function (v) {
-            return step([n, v]);
-        };
-    }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) {
-            try {
-                if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-                if (y = 0, t) op = [op[0] & 2, t.value];
-                switch (op[0]) {
-                    case 0:case 1:
-                        t = op;break;
-                    case 4:
-                        _.label++;return { value: op[1], done: false };
-                    case 5:
-                        _.label++;y = op[1];op = [0];continue;
-                    case 7:
-                        op = _.ops.pop();_.trys.pop();continue;
-                    default:
-                        if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
-                            _ = 0;continue;
-                        }
-                        if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
-                            _.label = op[1];break;
-                        }
-                        if (op[0] === 6 && _.label < t[1]) {
-                            _.label = t[1];t = op;break;
-                        }
-                        if (t && _.label < t[2]) {
-                            _.label = t[2];_.ops.push(op);break;
-                        }
-                        if (t[2]) _.ops.pop();
-                        _.trys.pop();continue;
-                }
-                op = body.call(thisArg, _);
-            } catch (e) {
-                op = [6, e];y = 0;
-            } finally {
-                f = t = 0;
-            }
-        }if (op[0] & 5) throw op[1];return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var productActions_1 = __webpack_require__(/*! ../Actions/Single/productActions */ "./resources/app/es5/redux/Actions/Single/productActions.js");
-var API_1 = __webpack_require__(/*! ../../Helpers/API */ "./resources/app/es5/Helpers/API.js");
-var commentsActions_1 = __webpack_require__(/*! ../Actions/Single/commentsActions */ "./resources/app/es5/redux/Actions/Single/commentsActions.js");
-var thunkProduct = function thunkProduct(slug) {
-    return function (dispatch) {
-        return __awaiter(void 0, void 0, void 0, function () {
-            var productResponse;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        dispatch(productActions_1.productStart());
-                        dispatch(commentsActions_1.commentReset());
-                        return [4, API_1.default.getProductInfo(slug)];
-                    case 1:
-                        productResponse = _a.sent();
-                        if (API_1.default.isError(productResponse)) {
-                            dispatch(productActions_1.productError(productResponse.message));
-                        } else {
-                            dispatch(productActions_1.productSuccess(productResponse));
-                        }
-                        return [2];
-                }
-            });
-        });
-    };
-};
-exports.default = thunkProduct;
-
-//# sourceMappingURL=thunkProduct.js.map
-
-/***/ }),
-
-/***/ "./resources/app/es5/redux/ThunkActions/thunkReactionChange.js":
-/*!*********************************************************************!*\
-  !*** ./resources/app/es5/redux/ThunkActions/thunkReactionChange.js ***!
-  \*********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
-    function adopt(value) {
-        return value instanceof P ? value : new P(function (resolve) {
-            resolve(value);
-        });
-    }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) {
-            try {
-                step(generator.next(value));
-            } catch (e) {
-                reject(e);
-            }
-        }
-        function rejected(value) {
-            try {
-                step(generator["throw"](value));
-            } catch (e) {
-                reject(e);
-            }
-        }
-        function step(result) {
-            result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
-        }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = undefined && undefined.__generator || function (thisArg, body) {
-    var _ = { label: 0, sent: function sent() {
-            if (t[0] & 1) throw t[1];return t[1];
-        }, trys: [], ops: [] },
-        f,
-        y,
-        t,
-        g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
-        return this;
-    }), g;
-    function verb(n) {
-        return function (v) {
-            return step([n, v]);
-        };
-    }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) {
-            try {
-                if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-                if (y = 0, t) op = [op[0] & 2, t.value];
-                switch (op[0]) {
-                    case 0:case 1:
-                        t = op;break;
-                    case 4:
-                        _.label++;return { value: op[1], done: false };
-                    case 5:
-                        _.label++;y = op[1];op = [0];continue;
-                    case 7:
-                        op = _.ops.pop();_.trys.pop();continue;
-                    default:
-                        if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
-                            _ = 0;continue;
-                        }
-                        if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
-                            _.label = op[1];break;
-                        }
-                        if (op[0] === 6 && _.label < t[1]) {
-                            _.label = t[1];t = op;break;
-                        }
-                        if (t && _.label < t[2]) {
-                            _.label = t[2];_.ops.push(op);break;
-                        }
-                        if (t[2]) _.ops.pop();
-                        _.trys.pop();continue;
-                }
-                op = body.call(thisArg, _);
-            } catch (e) {
-                op = [6, e];y = 0;
-            } finally {
-                f = t = 0;
-            }
-        }if (op[0] & 5) throw op[1];return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var commentsActions_1 = __webpack_require__(/*! ../Actions/Single/commentsActions */ "./resources/app/es5/redux/Actions/Single/commentsActions.js");
-var API_1 = __webpack_require__(/*! ../../Helpers/API */ "./resources/app/es5/Helpers/API.js");
-var thunkReactionChange = function thunkReactionChange(commentID, reaction) {
-    return function (dispatch) {
-        return __awaiter(void 0, void 0, void 0, function () {
-            var reactionResponse;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        return [4, API_1.default.changeReaction(commentID, reaction)];
-                    case 1:
-                        reactionResponse = _a.sent();
-                        if (!API_1.default.isError(reactionResponse) && reactionResponse.success) {
-                            dispatch(commentsActions_1.commentReactionChange(commentID, reaction));
-                        }
-                        return [2];
-                }
-            });
-        });
-    };
-};
-exports.default = thunkReactionChange;
-
-//# sourceMappingURL=thunkReactionChange.js.map
 
 /***/ }),
 
@@ -35715,6 +36179,9 @@ exports.PRODUCT_COMMENT_START = 'PRODUCT_COMMENT_START';
 exports.PRODUCT_COMMENT_SUCCESS = 'PRODUCT_COMMENT_SUCCESS';
 exports.PRODUCT_COMMENT_ERROR = 'PRODUCT_COMMENT_ERROR';
 exports.PRODUCT_COMMENT_REACTION_CHANGE = 'PRODUCT_COMMENT_REACTION_CHANGE';
+exports.COMMENT_ADD_START = 'COMMENT_ADD_START';
+exports.COMMENT_ADD_SUCCESS = 'COMMENT_ADD_SUCCESS';
+exports.COMMENT_ADD_ERROR = 'COMMENT_ADD_ERROR';
 
 //# sourceMappingURL=actionTypes.js.map
 
