@@ -50,7 +50,13 @@ export const PRODUCT_COMMENT_ERROR = 'PRODUCT_COMMENT_ERROR';
 
 export const PRODUCT_COMMENT_REACTION_CHANGE = 'PRODUCT_COMMENT_REACTION_CHANGE';
 
-//Add comment from action types
+//Add comment form action types
 export const COMMENT_ADD_START = 'COMMENT_ADD_START';
 export const COMMENT_ADD_SUCCESS = 'COMMENT_ADD_SUCCESS';
 export const COMMENT_ADD_ERROR = 'COMMENT_ADD_ERROR';
+
+//Add product action types
+export const PRODUCT_LIST_START = 'PRODUCT_LIST_START';
+export const PRODUCT_LIST_SUCCESS = 'PRODUCT_LIST_SUCCESS';
+export const PRODUCT_LIST_ERROR = 'PRODUCT_LIST_ERROR';
+export const PRODUCT_LIST_RESET = 'PRODUCT_LIST_RESET';

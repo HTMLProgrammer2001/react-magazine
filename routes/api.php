@@ -15,7 +15,7 @@ use \Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/getProducts', 'ProductInfoController@getProducts');
+Route::post('/getProducts', 'ProductInfoController@getProducts');
 Route::get('/products/{productID}/getComments', 'ProductInfoController@getProductComments');
 Route::get('/products/{slug}', 'ProductInfoController@getProductBySlug');
 

@@ -1,102 +1,65 @@
 import * as React from 'react';
+import {connect, ConnectedProps} from 'react-redux';
 
-import {IProduct} from '../../../../Interfaces/IProduct';
-import {IProductsResponse} from '../../../../Interfaces/Responses/IProductsResponse';
-import API from '../../../../Helpers/API';
 import GoodItem from './GoodItem';
 import GoodsHeader from './GoodsHeader';
+import {RootState} from '../../../../redux/Reducers';
+import thunkProductList from '../../../../redux/ThunkActions/thunkProductList';
 
 
-type IGoodsProps = {};
+const mapStateToProps = (state: RootState) => ({
+	goodsListState: state.productList,
+	loadedGoods: state.productList.products.length
+});
 
-type IGoodsState = {
-	products: Array<IProduct>,
-	loaded: number,
-	total: number,
-	currentPage: number,
-	isLoading: boolean,
-	error: boolean
-}
+const connected = connect(mapStateToProps, {
+	loadGoods: thunkProductList
+});
 
-class GoodsList extends React.Component<IGoodsProps, IGoodsState>{
-	constructor(props: IGoodsProps){
-		super(props);
+type IGoodsProps = ConnectedProps<typeof connected>;
 
-		this.state = {
-			products: [],
-			loaded: 0,
-			total: 0,
-			currentPage: 0,
-			error: false,
-			isLoading: false
-		};
-	}
+const GoodsList: React.FC<IGoodsProps> = (props) => {
+	React.useEffect(() => {
+		if(!props.loadedGoods)
+			props.loadGoods();
+	}, []);
 
-	componentDidMount(){
-		this.getProducts();
-	}
+	return (
+		<div className="goods__items">
+			<GoodsHeader
+				loaded={props.loadedGoods}
+				total={props.goodsListState.totalCount}/>
 
-	render(){
-		return (
-			<div className="goods__items">
-				<GoodsHeader
-					loaded={this.state.loaded}
-					total={this.state.total}/>
-
-				<div className="goods__list">
-					{
-						this.state.products.map( (item) => (
-							<GoodItem product={item} key={item.id}/>
-						))
-							||
-						<div>No products that accept this filter</div>
-					}
-				</div>
-
+			<div className="goods__list">
 				{
-					this.state.total == this.state.loaded && !this.state.isLoading ?
-						false :
-						<div className="goods__list-load">
-							<button
-								type="button"
-								className="goods__list-more"
-								onClick={() => this.getProducts(this.state.currentPage + 1)}
-							>
-								{this.state.isLoading ? 'Loading...' : 'Load More'}
-							</button>
-						</div>
+					props.goodsListState.products.map((item) => (
+						<GoodItem product={item} key={item.id}/>
+					))
+					||
+					<div>No products that accept this filter</div>
 				}
 			</div>
-		);
-	}
 
-	async getProducts(offset: number = 1){
-		this.setState({
-			isLoading: true
-		});
+			{
+				props.loadedGoods == props.goodsListState.totalCount &&
+				!props.goodsListState.isLoading ?
+					false :
+					<div className="goods__list-load">
+						<button
+							type="button"
+							className="goods__list-more"
+							onClick={
+								() => {
+									props.loadGoods(props.goodsListState.currentPage + 1);
+								}
+							}
+						>
+							{props.goodsListState.isLoading ? 'Loading...' : 'Load More'}
+						</button>
+					</div>
+			}
+		</div>
+	);
+};
 
-		let resp = await API.getProducts(offset);
-
-		if(API.isError(resp)){
-			this.setState({
-				error: resp.response!.data
-			});
-		}
-		else{
-			const productsResponse = resp as IProductsResponse;
-
-			this.setState((prev) => ({
-				products: prev.products.concat(productsResponse.data),
-				loaded: productsResponse.to,
-				currentPage: productsResponse.current_page,
-				total: productsResponse.total
-			}));
-		}
-
-		this.setState({
-			isLoading: false
-		});
-	}
-}
-
-export default GoodsList;
+export default connected(GoodsList);

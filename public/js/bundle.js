@@ -31056,7 +31056,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var axios_1 = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 var API = function () {
     function API() {}
-    API.getProducts = function (offset) {
+    API.getProducts = function (filters, offset) {
         return __awaiter(this, void 0, void 0, function () {
             var body, response, err_1;
             return __generator(this, function (_a) {
@@ -31068,7 +31068,7 @@ var API = function () {
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3,, 4]);
-                        return [4, this.clientAPI.get('/getProducts', {
+                        return [4, this.clientAPI.post('/getProducts', filters, {
                             params: body
                         })];
                     case 2:
@@ -32780,179 +32780,32 @@ exports.default = redux_form_1.reduxForm({
 "use strict";
 
 
-var __extends = undefined && undefined.__extends || function () {
-    var _extendStatics = function extendStatics(d, b) {
-        _extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function (d, b) {
-            d.__proto__ = b;
-        } || function (d, b) {
-            for (var p in b) {
-                if (b.hasOwnProperty(p)) d[p] = b[p];
-            }
-        };
-        return _extendStatics(d, b);
-    };
-    return function (d, b) {
-        _extendStatics(d, b);
-        function __() {
-            this.constructor = d;
-        }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-}();
-var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
-    function adopt(value) {
-        return value instanceof P ? value : new P(function (resolve) {
-            resolve(value);
-        });
-    }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) {
-            try {
-                step(generator.next(value));
-            } catch (e) {
-                reject(e);
-            }
-        }
-        function rejected(value) {
-            try {
-                step(generator["throw"](value));
-            } catch (e) {
-                reject(e);
-            }
-        }
-        function step(result) {
-            result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
-        }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = undefined && undefined.__generator || function (thisArg, body) {
-    var _ = { label: 0, sent: function sent() {
-            if (t[0] & 1) throw t[1];return t[1];
-        }, trys: [], ops: [] },
-        f,
-        y,
-        t,
-        g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
-        return this;
-    }), g;
-    function verb(n) {
-        return function (v) {
-            return step([n, v]);
-        };
-    }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) {
-            try {
-                if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-                if (y = 0, t) op = [op[0] & 2, t.value];
-                switch (op[0]) {
-                    case 0:case 1:
-                        t = op;break;
-                    case 4:
-                        _.label++;return { value: op[1], done: false };
-                    case 5:
-                        _.label++;y = op[1];op = [0];continue;
-                    case 7:
-                        op = _.ops.pop();_.trys.pop();continue;
-                    default:
-                        if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
-                            _ = 0;continue;
-                        }
-                        if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
-                            _.label = op[1];break;
-                        }
-                        if (op[0] === 6 && _.label < t[1]) {
-                            _.label = t[1];t = op;break;
-                        }
-                        if (t && _.label < t[2]) {
-                            _.label = t[2];_.ops.push(op);break;
-                        }
-                        if (t[2]) _.ops.pop();
-                        _.trys.pop();continue;
-                }
-                op = body.call(thisArg, _);
-            } catch (e) {
-                op = [6, e];y = 0;
-            } finally {
-                f = t = 0;
-            }
-        }if (op[0] & 5) throw op[1];return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-var API_1 = __webpack_require__(/*! ../../../../Helpers/API */ "./resources/app/es5/Helpers/API.js");
+var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 var GoodItem_1 = __webpack_require__(/*! ./GoodItem */ "./resources/app/es5/components/HomePage/Goods/GoodsList/GoodItem.js");
 var GoodsHeader_1 = __webpack_require__(/*! ./GoodsHeader */ "./resources/app/es5/components/HomePage/Goods/GoodsList/GoodsHeader.js");
-var GoodsList = function (_super) {
-    __extends(GoodsList, _super);
-    function GoodsList(props) {
-        var _this = _super.call(this, props) || this;
-        _this.state = {
-            products: [],
-            loaded: 0,
-            total: 0,
-            currentPage: 0,
-            error: false,
-            isLoading: false
-        };
-        return _this;
-    }
-    GoodsList.prototype.componentDidMount = function () {
-        this.getProducts();
+var thunkProductList_1 = __webpack_require__(/*! ../../../../redux/ThunkActions/thunkProductList */ "./resources/app/es5/redux/ThunkActions/thunkProductList.js");
+var mapStateToProps = function mapStateToProps(state) {
+    return {
+        goodsListState: state.productList,
+        loadedGoods: state.productList.products.length
     };
-    GoodsList.prototype.render = function () {
-        var _this = this;
-        return React.createElement("div", { className: "goods__items" }, React.createElement(GoodsHeader_1.default, { loaded: this.state.loaded, total: this.state.total }), React.createElement("div", { className: "goods__list" }, this.state.products.map(function (item) {
-            return React.createElement(GoodItem_1.default, { product: item, key: item.id });
-        }) || React.createElement("div", null, "No products that accept this filter")), this.state.total == this.state.loaded && !this.state.isLoading ? false : React.createElement("div", { className: "goods__list-load" }, React.createElement("button", { type: "button", className: "goods__list-more", onClick: function onClick() {
-                return _this.getProducts(_this.state.currentPage + 1);
-            } }, this.state.isLoading ? 'Loading...' : 'Load More')));
-    };
-    GoodsList.prototype.getProducts = function (offset) {
-        if (offset === void 0) {
-            offset = 1;
-        }
-        return __awaiter(this, void 0, void 0, function () {
-            var resp, productsResponse_1;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        this.setState({
-                            isLoading: true
-                        });
-                        return [4, API_1.default.getProducts(offset)];
-                    case 1:
-                        resp = _a.sent();
-                        if (API_1.default.isError(resp)) {
-                            this.setState({
-                                error: resp.response.data
-                            });
-                        } else {
-                            productsResponse_1 = resp;
-                            this.setState(function (prev) {
-                                return {
-                                    products: prev.products.concat(productsResponse_1.data),
-                                    loaded: productsResponse_1.to,
-                                    currentPage: productsResponse_1.current_page,
-                                    total: productsResponse_1.total
-                                };
-                            });
-                        }
-                        this.setState({
-                            isLoading: false
-                        });
-                        return [2];
-                }
-            });
-        });
-    };
-    return GoodsList;
-}(React.Component);
-exports.default = GoodsList;
+};
+var connected = react_redux_1.connect(mapStateToProps, {
+    loadGoods: thunkProductList_1.default
+});
+var GoodsList = function GoodsList(props) {
+    React.useEffect(function () {
+        if (!props.loadedGoods) props.loadGoods();
+    }, []);
+    return React.createElement("div", { className: "goods__items" }, React.createElement(GoodsHeader_1.default, { loaded: props.loadedGoods, total: props.goodsListState.totalCount }), React.createElement("div", { className: "goods__list" }, props.goodsListState.products.map(function (item) {
+        return React.createElement(GoodItem_1.default, { product: item, key: item.id });
+    }) || React.createElement("div", null, "No products that accept this filter")), props.loadedGoods == props.goodsListState.totalCount && !props.goodsListState.isLoading ? false : React.createElement("div", { className: "goods__list-load" }, React.createElement("button", { type: "button", className: "goods__list-more", onClick: function onClick() {
+            props.loadGoods(props.goodsListState.currentPage + 1);
+        } }, props.goodsListState.isLoading ? 'Loading...' : 'Load More')));
+};
+exports.default = connected(GoodsList);
 
 //# sourceMappingURL=index.js.map
 
@@ -32970,14 +32823,27 @@ exports.default = GoodsList;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 var GoodsList_1 = __webpack_require__(/*! ./GoodsList/ */ "./resources/app/es5/components/HomePage/Goods/GoodsList/index.js");
 var GoodsForm_1 = __webpack_require__(/*! ./GoodsForm/ */ "./resources/app/es5/components/HomePage/Goods/GoodsForm/index.js");
-var Goods = function Goods() {
+var productListActions_1 = __webpack_require__(/*! ../../../redux/Actions/productListActions */ "./resources/app/es5/redux/Actions/productListActions.js");
+var thunkProductList_1 = __webpack_require__(/*! ../../../redux/ThunkActions/thunkProductList */ "./resources/app/es5/redux/ThunkActions/thunkProductList.js");
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+    return {
+        reloadGoods: function reloadGoods() {
+            dispatch(productListActions_1.productListReset());
+            dispatch(thunkProductList_1.default());
+        }
+    };
+};
+var connected = react_redux_1.connect(null, mapDispatchToProps);
+var Goods = function Goods(props) {
     return React.createElement("div", { className: "goods" }, React.createElement("div", { className: "container" }, React.createElement(GoodsList_1.default, null), React.createElement(GoodsForm_1.default, { onSubmit: function onSubmit(vals) {
-            return console.log(vals);
+            console.log(vals);
+            props.reloadGoods();
         } })));
 };
-exports.default = Goods;
+exports.default = connected(Goods);
 
 //# sourceMappingURL=index.js.map
 
@@ -34065,6 +33931,45 @@ exports.loginError = function (error) {
 
 /***/ }),
 
+/***/ "./resources/app/es5/redux/Actions/productListActions.js":
+/*!***************************************************************!*\
+  !*** ./resources/app/es5/redux/Actions/productListActions.js ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var actionTypes_1 = __webpack_require__(/*! ../actionTypes */ "./resources/app/es5/redux/actionTypes.js");
+exports.productListStart = function () {
+    return {
+        type: actionTypes_1.PRODUCT_LIST_START
+    };
+};
+exports.productListSuccess = function (productResponse) {
+    return {
+        type: actionTypes_1.PRODUCT_LIST_SUCCESS,
+        payload: productResponse
+    };
+};
+exports.productListError = function (error) {
+    return {
+        type: actionTypes_1.PRODUCT_LIST_ERROR,
+        error: error
+    };
+};
+exports.productListReset = function () {
+    return {
+        type: actionTypes_1.PRODUCT_LIST_RESET
+    };
+};
+
+//# sourceMappingURL=productListActions.js.map
+
+/***/ }),
+
 /***/ "./resources/app/es5/redux/Actions/registerActions.js":
 /*!************************************************************!*\
   !*** ./resources/app/es5/redux/Actions/registerActions.js ***!
@@ -34522,6 +34427,7 @@ var login_1 = __webpack_require__(/*! ./login */ "./resources/app/es5/redux/Redu
 var user_1 = __webpack_require__(/*! ./user */ "./resources/app/es5/redux/Reducers/user.js");
 var reset_1 = __webpack_require__(/*! ./reset */ "./resources/app/es5/redux/Reducers/reset.js");
 var Single_1 = __webpack_require__(/*! ./Single */ "./resources/app/es5/redux/Reducers/Single/index.js");
+var productList_1 = __webpack_require__(/*! ./productList */ "./resources/app/es5/redux/Reducers/productList.js");
 var storeReducer = redux_1.combineReducers({
     cart: cart_1.default,
     category: category_1.default,
@@ -34531,6 +34437,7 @@ var storeReducer = redux_1.combineReducers({
     user: user_1.default,
     reset: reset_1.default,
     single: Single_1.default,
+    productList: productList_1.default,
     form: redux_form_1.reducer
 });
 exports.default = storeReducer;
@@ -34572,6 +34479,68 @@ var loginReducer = function loginReducer(state, action) {
 exports.default = loginReducer;
 
 //# sourceMappingURL=login.js.map
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/Reducers/productList.js":
+/*!*********************************************************!*\
+  !*** ./resources/app/es5/redux/Reducers/productList.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __assign = undefined && undefined.__assign || function () {
+    __assign = Object.assign || function (t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) {
+                if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+            }
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+var __spreadArrays = undefined && undefined.__spreadArrays || function () {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) {
+        s += arguments[i].length;
+    }for (var r = Array(s), k = 0, i = 0; i < il; i++) {
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++) {
+            r[k] = a[j];
+        }
+    }return r;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var actionTypes_1 = __webpack_require__(/*! ../actionTypes */ "./resources/app/es5/redux/actionTypes.js");
+var initialState = {
+    totalCount: 0,
+    currentPage: 0,
+    isLoading: false,
+    error: null,
+    products: []
+};
+var productListReducer = function productListReducer(state, action) {
+    if (state === void 0) {
+        state = initialState;
+    }
+    switch (action.type) {
+        case actionTypes_1.PRODUCT_LIST_RESET:
+            return __assign({}, initialState);
+        case actionTypes_1.PRODUCT_LIST_START:
+            return __assign(__assign({}, state), { error: null, isLoading: false });
+        case actionTypes_1.PRODUCT_LIST_ERROR:
+            return __assign(__assign({}, state), { isLoading: false, error: action.error });
+        case actionTypes_1.PRODUCT_LIST_SUCCESS:
+            return __assign(__assign({}, state), { isLoading: false, error: null, products: __spreadArrays(state.products, action.payload.data), totalCount: action.payload.total, currentPage: action.payload.current_page });
+    }
+    return state;
+};
+exports.default = productListReducer;
+
+//# sourceMappingURL=productList.js.map
 
 /***/ }),
 
@@ -35628,6 +35597,137 @@ exports.default = thunkLogout;
 
 /***/ }),
 
+/***/ "./resources/app/es5/redux/ThunkActions/thunkProductList.js":
+/*!******************************************************************!*\
+  !*** ./resources/app/es5/redux/ThunkActions/thunkProductList.js ***!
+  \******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
+    function adopt(value) {
+        return value instanceof P ? value : new P(function (resolve) {
+            resolve(value);
+        });
+    }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) {
+            try {
+                step(generator.next(value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function rejected(value) {
+            try {
+                step(generator["throw"](value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function step(result) {
+            result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+        }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = undefined && undefined.__generator || function (thisArg, body) {
+    var _ = { label: 0, sent: function sent() {
+            if (t[0] & 1) throw t[1];return t[1];
+        }, trys: [], ops: [] },
+        f,
+        y,
+        t,
+        g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
+        return this;
+    }), g;
+    function verb(n) {
+        return function (v) {
+            return step([n, v]);
+        };
+    }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) {
+            try {
+                if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+                if (y = 0, t) op = [op[0] & 2, t.value];
+                switch (op[0]) {
+                    case 0:case 1:
+                        t = op;break;
+                    case 4:
+                        _.label++;return { value: op[1], done: false };
+                    case 5:
+                        _.label++;y = op[1];op = [0];continue;
+                    case 7:
+                        op = _.ops.pop();_.trys.pop();continue;
+                    default:
+                        if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+                            _ = 0;continue;
+                        }
+                        if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+                            _.label = op[1];break;
+                        }
+                        if (op[0] === 6 && _.label < t[1]) {
+                            _.label = t[1];t = op;break;
+                        }
+                        if (t && _.label < t[2]) {
+                            _.label = t[2];_.ops.push(op);break;
+                        }
+                        if (t[2]) _.ops.pop();
+                        _.trys.pop();continue;
+                }
+                op = body.call(thisArg, _);
+            } catch (e) {
+                op = [6, e];y = 0;
+            } finally {
+                f = t = 0;
+            }
+        }if (op[0] & 5) throw op[1];return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
+var productListActions_1 = __webpack_require__(/*! ../Actions/productListActions */ "./resources/app/es5/redux/Actions/productListActions.js");
+var API_1 = __webpack_require__(/*! ../../Helpers/API */ "./resources/app/es5/Helpers/API.js");
+var thunkProductList = function thunkProductList(offset) {
+    if (offset === void 0) {
+        offset = 1;
+    }
+    return function (dispatch, getState) {
+        return __awaiter(void 0, void 0, void 0, function () {
+            var selector, filters, productListResponse;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        dispatch(productListActions_1.productListStart());
+                        selector = redux_form_1.getFormValues('productFilter');
+                        filters = selector(getState());
+                        console.log(filters);
+                        return [4, API_1.default.getProducts(filters, offset)];
+                    case 1:
+                        productListResponse = _a.sent();
+                        if (API_1.default.isError(productListResponse)) {
+                            dispatch(productListActions_1.productListError(productListResponse.message));
+                        } else {
+                            dispatch(productListActions_1.productListSuccess(productListResponse));
+                        }
+                        return [2];
+                }
+            });
+        });
+    };
+};
+exports.default = thunkProductList;
+
+//# sourceMappingURL=thunkProductList.js.map
+
+/***/ }),
+
 /***/ "./resources/app/es5/redux/ThunkActions/thunkRegister.js":
 /*!***************************************************************!*\
   !*** ./resources/app/es5/redux/ThunkActions/thunkRegister.js ***!
@@ -36182,6 +36282,10 @@ exports.PRODUCT_COMMENT_REACTION_CHANGE = 'PRODUCT_COMMENT_REACTION_CHANGE';
 exports.COMMENT_ADD_START = 'COMMENT_ADD_START';
 exports.COMMENT_ADD_SUCCESS = 'COMMENT_ADD_SUCCESS';
 exports.COMMENT_ADD_ERROR = 'COMMENT_ADD_ERROR';
+exports.PRODUCT_LIST_START = 'PRODUCT_LIST_START';
+exports.PRODUCT_LIST_SUCCESS = 'PRODUCT_LIST_SUCCESS';
+exports.PRODUCT_LIST_ERROR = 'PRODUCT_LIST_ERROR';
+exports.PRODUCT_LIST_RESET = 'PRODUCT_LIST_RESET';
 
 //# sourceMappingURL=actionTypes.js.map
 

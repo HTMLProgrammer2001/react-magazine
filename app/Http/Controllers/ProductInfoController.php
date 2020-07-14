@@ -10,8 +10,22 @@ use Illuminate\Http\Request;
 
 class ProductInfoController extends Controller
 {
-    public function getProducts(){
-        return response()->json(Product::paginate(config('app.PRODUCT_PAGINATE_SIZE', 3)));
+    public function getProducts(Request $request){
+        $range = $request->input('priceRange');
+        $color = $request->input('color');
+        $size = $request->input('size');
+
+        $productQuery = Product::query();
+        $productQuery->whereBetween('price', [$range['from'], $range['to']]);
+
+        if($color)
+            $productQuery->where( 'colors', 'like', "%{$color}%" );
+
+        if($size)
+            $productQuery->where('sizes', 'like', "%{$size}%");
+
+        $pagSize = config('app.PRODUCT_PAGINATE_SIZE', 3);
+        return response()->json($productQuery->paginate($pagSize));
     }
 
     public function getProductBySlug(string $slug){

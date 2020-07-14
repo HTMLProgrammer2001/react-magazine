@@ -10,6 +10,7 @@ import {ILoadUserResponse} from '../Interfaces/Responses/ILoadUserResponse';
 import {IResetFormData} from '../components/ResetPage/ResetForm';
 import {IReviewFormData} from '../components/SinglePage/Reviews/ReviewForm';
 import {ICategory} from '../Interfaces/ICategory';
+import {IGoodsFormData} from "../components/HomePage/Goods/GoodsForm";
 
 
 class API{
@@ -20,7 +21,9 @@ class API{
 		}
 	});
 
-	static async getProducts(offset?: number): Promise<IProductsResponse | AxiosError>{
+	static async getProducts(filters: IGoodsFormData, offset?: number)
+		: Promise<IProductsResponse | AxiosError>{
+
 		let body = {
 			page: offset
 		};
@@ -28,9 +31,10 @@ class API{
 		let response: AxiosResponse;
 
 		try {
-			response = await this.clientAPI.get<Array<IProductsResponse>>('/getProducts', {
-				params: body
-			});
+			response = await this.clientAPI.post<Array<IProductsResponse>>(
+				'/getProducts', filters, {
+					params: body
+				});
 		}
 		catch (err) {
 			return err as AxiosError;

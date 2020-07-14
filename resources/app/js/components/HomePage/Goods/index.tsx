@@ -1,16 +1,35 @@
 import * as React from 'react';
+import {connect, ConnectedProps} from 'react-redux';
 
 import GoodsItems from './GoodsList/';
 import GoodsForm, {IGoodsFormData} from './GoodsForm/';
+import {productListReset} from '../../../redux/Actions/productListActions';
+import thunkProductList from '../../../redux/ThunkActions/thunkProductList';
 
 
-const Goods: React.FC<{}> = () => (
+const mapDispatchToProps = (dispatch: any) => ({
+	reloadGoods(){
+		dispatch(productListReset());
+		dispatch(thunkProductList());
+	}
+});
+
+const connected = connect(null, mapDispatchToProps);
+
+const Goods: React.FC<ConnectedProps<typeof connected>> = (props) => (
 	<div className="goods">
 		<div className="container">
 			<GoodsItems/>
-			<GoodsForm onSubmit={(vals: IGoodsFormData) => console.log(vals)}/>
+
+			<GoodsForm onSubmit={
+				(vals: IGoodsFormData) => {
+					console.log(vals);
+					props.reloadGoods();
+				}
+			}/>
 		</div>
 	</div>
 );
 
-export default Goods;
+export default connected(Goods);
+
