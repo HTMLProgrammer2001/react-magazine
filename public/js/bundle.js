@@ -31343,6 +31343,27 @@ var API = function () {
             });
         });
     };
+    API.getFilters = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var response, err_13;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2,, 3]);
+                        return [4, this.clientAPI.get('/productFilters')];
+                    case 1:
+                        response = _a.sent();
+                        return [3, 3];
+                    case 2:
+                        err_13 = _a.sent();
+                        console.log(err_13.response.data);
+                        return [2, err_13];
+                    case 3:
+                        return [2, response.data];
+                }
+            });
+        });
+    };
     API.isError = function (arg) {
         return 'response' in arg;
     };
@@ -31959,7 +31980,7 @@ var CheckboxGroup = function CheckboxGroup(props) {
         value = _a.value,
         name = _a.name;
     return React.createElement(React.Fragment, null, options.map(function (option, index) {
-        return React.createElement(redux_form_1.Field, { component: CheckboxElement_1.default, placeholder: option, key: index, formName: formName, style: { margin: '5px 0' }, name: name + "[" + option + "]", checked: !!value[option] });
+        return React.createElement(redux_form_1.Field, { component: CheckboxElement_1.default, placeholder: option.text, key: index, formName: formName, style: { margin: '5px 0' }, name: name + "[" + option.value + "]", checked: !!value[option.value] });
     }));
 };
 exports.default = CheckboxGroup;
@@ -32668,22 +32689,28 @@ var Slider_1 = __webpack_require__(/*! ../../../FormElements/Slider */ "./resour
 var selector = redux_form_1.formValueSelector('productFilter');
 var connected = react_redux_1.connect(function (state) {
     return {
-        range: selector(state, 'priceRange')
+        range: selector(state, 'priceRange'),
+        filters: state.filter.filters
     };
 });
 var GoodsForm = function GoodsForm(props) {
     var _a, _b;
-    return React.createElement("form", { className: "goods__form", onSubmit: props.handleSubmit }, React.createElement("div", { className: "goods__form-head" }, "Product Categories"), React.createElement("div", { className: "goods__categories" }, React.createElement(redux_form_1.Field, { component: CheckboxGroup_1.default, name: "categories", formName: props.form, options: ['T1', 'T2', 'T3'] })), React.createElement("div", { className: "goods__form-head" }, "Filter by color"), React.createElement("div", { className: "goods__color" }, React.createElement(redux_form_1.Field, { component: ColorGroup_1.default, name: "color", formName: props.form, colors: ['red', 'green', 'yellow', 'black'] })), React.createElement("div", { className: "goods__form-head" }, "Filter by size"), React.createElement(redux_form_1.Field, { component: SizeGroup_1.default, name: "size", formName: props.form, sizes: ['XS', 'S', 'M', 'L', 'XL'] }), React.createElement("div", { className: "goods__form-head" }, "Filter by price"), React.createElement(redux_form_1.Field, { component: Slider_1.default, name: "priceRange", formName: props.form, min: 0, max: 1000 }), React.createElement("div", { className: "goods__price-range" }, "Price: $", (_a = props.range) === null || _a === void 0 ? void 0 : _a.from.toFixed(2), " - $", (_b = props.range) === null || _b === void 0 ? void 0 : _b.to.toFixed(2)), React.createElement("button", { type: "submit", className: "goods__form-button" }, "Filter"));
+    return React.createElement("form", { className: "goods__form", onSubmit: props.handleSubmit }, React.createElement("div", { className: "goods__form-head" }, "Product Categories"), React.createElement("div", { className: "goods__categories" }, React.createElement(redux_form_1.Field, { component: CheckboxGroup_1.default, name: "categories", formName: props.form, options: props.filters.categories.map(function (cat) {
+            return {
+                text: cat.name,
+                value: cat.id
+            };
+        }) })), React.createElement("div", { className: "goods__form-head" }, "Filter by color"), React.createElement("div", { className: "goods__color" }, React.createElement(redux_form_1.Field, { component: ColorGroup_1.default, name: "color", formName: props.form, colors: props.filters.colors })), React.createElement("div", { className: "goods__form-head" }, "Filter by size"), React.createElement(redux_form_1.Field, { component: SizeGroup_1.default, name: "size", formName: props.form, sizes: ['XS', 'S', 'M', 'L', 'XL'] }), React.createElement("div", { className: "goods__form-head" }, "Filter by price"), React.createElement(redux_form_1.Field, { component: Slider_1.default, name: "priceRange", formName: props.form, min: props.filters.priceRange.from, max: props.filters.priceRange.to }), React.createElement("div", { className: "goods__price-range" }, "Price: $", (_a = props.range) === null || _a === void 0 ? void 0 : _a.from.toFixed(2), " - $", (_b = props.range) === null || _b === void 0 ? void 0 : _b.to.toFixed(2)), React.createElement("button", { type: "submit", className: "goods__form-button" }, "Filter"));
 };
 var GoodsFormRedux = redux_form_1.reduxForm({
     form: 'productFilter',
     initialValues: {
         categories: {},
         color: '',
-        size: 'S',
+        size: '',
         priceRange: {
-            from: 100,
-            to: 500
+            from: 0,
+            to: 200
         }
     }
 })(GoodsForm);
@@ -32785,7 +32812,7 @@ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 var GoodItem_1 = __webpack_require__(/*! ./GoodItem */ "./resources/app/es5/components/HomePage/Goods/GoodsList/GoodItem.js");
 var GoodsHeader_1 = __webpack_require__(/*! ./GoodsHeader */ "./resources/app/es5/components/HomePage/Goods/GoodsList/GoodsHeader.js");
-var thunkProductList_1 = __webpack_require__(/*! ../../../../redux/ThunkActions/thunkProductList */ "./resources/app/es5/redux/ThunkActions/thunkProductList.js");
+var thunkProductList_1 = __webpack_require__(/*! ../../../../redux/ThunkActions/Home/thunkProductList */ "./resources/app/es5/redux/ThunkActions/Home/thunkProductList.js");
 var mapStateToProps = function mapStateToProps(state) {
     return {
         goodsListState: state.productList,
@@ -32826,22 +32853,34 @@ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 var GoodsList_1 = __webpack_require__(/*! ./GoodsList/ */ "./resources/app/es5/components/HomePage/Goods/GoodsList/index.js");
 var GoodsForm_1 = __webpack_require__(/*! ./GoodsForm/ */ "./resources/app/es5/components/HomePage/Goods/GoodsForm/index.js");
-var productListActions_1 = __webpack_require__(/*! ../../../redux/Actions/productListActions */ "./resources/app/es5/redux/Actions/productListActions.js");
-var thunkProductList_1 = __webpack_require__(/*! ../../../redux/ThunkActions/thunkProductList */ "./resources/app/es5/redux/ThunkActions/thunkProductList.js");
+var productListActions_1 = __webpack_require__(/*! ../../../redux/Actions/Home/productListActions */ "./resources/app/es5/redux/Actions/Home/productListActions.js");
+var thunkProductList_1 = __webpack_require__(/*! ../../../redux/ThunkActions/Home/thunkProductList */ "./resources/app/es5/redux/ThunkActions/Home/thunkProductList.js");
+var thunkFilters_1 = __webpack_require__(/*! ../../../redux/ThunkActions/Home/thunkFilters */ "./resources/app/es5/redux/ThunkActions/Home/thunkFilters.js");
+var mapStateToProps = function mapStateToProps(state) {
+    return {
+        filterState: state.filter
+    };
+};
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     return {
         reloadGoods: function reloadGoods() {
             dispatch(productListActions_1.productListReset());
             dispatch(thunkProductList_1.default());
+        },
+        loadFilters: function loadFilters() {
+            dispatch(thunkFilters_1.default());
         }
     };
 };
-var connected = react_redux_1.connect(null, mapDispatchToProps);
+var connected = react_redux_1.connect(mapStateToProps, mapDispatchToProps);
 var Goods = function Goods(props) {
-    return React.createElement("div", { className: "goods" }, React.createElement("div", { className: "container" }, React.createElement(GoodsList_1.default, null), React.createElement(GoodsForm_1.default, { onSubmit: function onSubmit(vals) {
+    React.useEffect(function () {
+        if (!props.filterState.filters) props.loadFilters();
+    }, []);
+    return React.createElement("div", { className: "goods" }, React.createElement("div", { className: "container" }, props.filterState.isLoading && React.createElement("div", null, "Loading..."), props.filterState.error && React.createElement("div", { className: "red" }, props.filterState.error), props.filterState.filters && React.createElement(React.Fragment, null, React.createElement(GoodsList_1.default, null), React.createElement(GoodsForm_1.default, { onSubmit: function onSubmit(vals) {
             console.log(vals);
             props.reloadGoods();
-        } })));
+        } }))));
 };
 exports.default = connected(Goods);
 
@@ -33712,6 +33751,79 @@ ReactDOM.render(React.createElement(react_redux_1.Provider, { store: store }, Re
 
 /***/ }),
 
+/***/ "./resources/app/es5/redux/Actions/Home/filterActions.js":
+/*!***************************************************************!*\
+  !*** ./resources/app/es5/redux/Actions/Home/filterActions.js ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var actionTypes_1 = __webpack_require__(/*! ../../actionTypes */ "./resources/app/es5/redux/actionTypes.js");
+exports.filterStart = function () {
+    return {
+        type: actionTypes_1.FILTER_START
+    };
+};
+exports.filterSuccess = function (filters) {
+    return {
+        type: actionTypes_1.FILTER_SUCCESS,
+        payload: filters
+    };
+};
+exports.filterError = function (error) {
+    return {
+        type: actionTypes_1.FILTER_ERROR,
+        error: error
+    };
+};
+
+//# sourceMappingURL=filterActions.js.map
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/Actions/Home/productListActions.js":
+/*!********************************************************************!*\
+  !*** ./resources/app/es5/redux/Actions/Home/productListActions.js ***!
+  \********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var actionTypes_1 = __webpack_require__(/*! ../../actionTypes */ "./resources/app/es5/redux/actionTypes.js");
+exports.productListStart = function () {
+    return {
+        type: actionTypes_1.PRODUCT_LIST_START
+    };
+};
+exports.productListSuccess = function (productResponse) {
+    return {
+        type: actionTypes_1.PRODUCT_LIST_SUCCESS,
+        payload: productResponse
+    };
+};
+exports.productListError = function (error) {
+    return {
+        type: actionTypes_1.PRODUCT_LIST_ERROR,
+        error: error
+    };
+};
+exports.productListReset = function () {
+    return {
+        type: actionTypes_1.PRODUCT_LIST_RESET
+    };
+};
+
+//# sourceMappingURL=productListActions.js.map
+
+/***/ }),
+
 /***/ "./resources/app/es5/redux/Actions/Single/addCommentActions.js":
 /*!*********************************************************************!*\
   !*** ./resources/app/es5/redux/Actions/Single/addCommentActions.js ***!
@@ -33931,45 +34043,6 @@ exports.loginError = function (error) {
 
 /***/ }),
 
-/***/ "./resources/app/es5/redux/Actions/productListActions.js":
-/*!***************************************************************!*\
-  !*** ./resources/app/es5/redux/Actions/productListActions.js ***!
-  \***************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var actionTypes_1 = __webpack_require__(/*! ../actionTypes */ "./resources/app/es5/redux/actionTypes.js");
-exports.productListStart = function () {
-    return {
-        type: actionTypes_1.PRODUCT_LIST_START
-    };
-};
-exports.productListSuccess = function (productResponse) {
-    return {
-        type: actionTypes_1.PRODUCT_LIST_SUCCESS,
-        payload: productResponse
-    };
-};
-exports.productListError = function (error) {
-    return {
-        type: actionTypes_1.PRODUCT_LIST_ERROR,
-        error: error
-    };
-};
-exports.productListReset = function () {
-    return {
-        type: actionTypes_1.PRODUCT_LIST_RESET
-    };
-};
-
-//# sourceMappingURL=productListActions.js.map
-
-/***/ }),
-
 /***/ "./resources/app/es5/redux/Actions/registerActions.js":
 /*!************************************************************!*\
   !*** ./resources/app/es5/redux/Actions/registerActions.js ***!
@@ -34108,6 +34181,105 @@ exports.verifySuccess = function (message) {
 };
 
 //# sourceMappingURL=verifyActions.js.map
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/Reducers/Home/filter.js":
+/*!*********************************************************!*\
+  !*** ./resources/app/es5/redux/Reducers/Home/filter.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var actionTypes_1 = __webpack_require__(/*! ../../actionTypes */ "./resources/app/es5/redux/actionTypes.js");
+var initialState = {
+    isLoading: false,
+    error: null,
+    filters: null
+};
+var filtersReducer = function filtersReducer(state, action) {
+    if (state === void 0) {
+        state = initialState;
+    }
+    switch (action.type) {
+        case actionTypes_1.FILTER_START:
+            return { isLoading: true, error: null, filters: null };
+        case actionTypes_1.FILTER_ERROR:
+            return { isLoading: false, error: action.error, filters: null };
+        case actionTypes_1.FILTER_SUCCESS:
+            return { isLoading: false, error: null, filters: action.payload };
+    }
+    return state;
+};
+exports.default = filtersReducer;
+
+//# sourceMappingURL=filter.js.map
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/Reducers/Home/productList.js":
+/*!**************************************************************!*\
+  !*** ./resources/app/es5/redux/Reducers/Home/productList.js ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __assign = undefined && undefined.__assign || function () {
+    __assign = Object.assign || function (t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) {
+                if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+            }
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+var __spreadArrays = undefined && undefined.__spreadArrays || function () {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) {
+        s += arguments[i].length;
+    }for (var r = Array(s), k = 0, i = 0; i < il; i++) {
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++) {
+            r[k] = a[j];
+        }
+    }return r;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var actionTypes_1 = __webpack_require__(/*! ../../actionTypes */ "./resources/app/es5/redux/actionTypes.js");
+var initialState = {
+    totalCount: 0,
+    currentPage: 0,
+    isLoading: false,
+    error: null,
+    products: []
+};
+var productListReducer = function productListReducer(state, action) {
+    if (state === void 0) {
+        state = initialState;
+    }
+    switch (action.type) {
+        case actionTypes_1.PRODUCT_LIST_RESET:
+            return __assign({}, initialState);
+        case actionTypes_1.PRODUCT_LIST_START:
+            return __assign(__assign({}, state), { error: null, isLoading: false });
+        case actionTypes_1.PRODUCT_LIST_ERROR:
+            return __assign(__assign({}, state), { isLoading: false, error: action.error });
+        case actionTypes_1.PRODUCT_LIST_SUCCESS:
+            return __assign(__assign({}, state), { isLoading: false, error: null, products: __spreadArrays(state.products, action.payload.data), totalCount: action.payload.total, currentPage: action.payload.current_page });
+    }
+    return state;
+};
+exports.default = productListReducer;
+
+//# sourceMappingURL=productList.js.map
 
 /***/ }),
 
@@ -34427,7 +34599,8 @@ var login_1 = __webpack_require__(/*! ./login */ "./resources/app/es5/redux/Redu
 var user_1 = __webpack_require__(/*! ./user */ "./resources/app/es5/redux/Reducers/user.js");
 var reset_1 = __webpack_require__(/*! ./reset */ "./resources/app/es5/redux/Reducers/reset.js");
 var Single_1 = __webpack_require__(/*! ./Single */ "./resources/app/es5/redux/Reducers/Single/index.js");
-var productList_1 = __webpack_require__(/*! ./productList */ "./resources/app/es5/redux/Reducers/productList.js");
+var productList_1 = __webpack_require__(/*! ./Home/productList */ "./resources/app/es5/redux/Reducers/Home/productList.js");
+var filter_1 = __webpack_require__(/*! ./Home/filter */ "./resources/app/es5/redux/Reducers/Home/filter.js");
 var storeReducer = redux_1.combineReducers({
     cart: cart_1.default,
     category: category_1.default,
@@ -34438,6 +34611,7 @@ var storeReducer = redux_1.combineReducers({
     reset: reset_1.default,
     single: Single_1.default,
     productList: productList_1.default,
+    filter: filter_1.default,
     form: redux_form_1.reducer
 });
 exports.default = storeReducer;
@@ -34479,68 +34653,6 @@ var loginReducer = function loginReducer(state, action) {
 exports.default = loginReducer;
 
 //# sourceMappingURL=login.js.map
-
-/***/ }),
-
-/***/ "./resources/app/es5/redux/Reducers/productList.js":
-/*!*********************************************************!*\
-  !*** ./resources/app/es5/redux/Reducers/productList.js ***!
-  \*********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var __assign = undefined && undefined.__assign || function () {
-    __assign = Object.assign || function (t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) {
-                if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-            }
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
-var __spreadArrays = undefined && undefined.__spreadArrays || function () {
-    for (var s = 0, i = 0, il = arguments.length; i < il; i++) {
-        s += arguments[i].length;
-    }for (var r = Array(s), k = 0, i = 0; i < il; i++) {
-        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++) {
-            r[k] = a[j];
-        }
-    }return r;
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var actionTypes_1 = __webpack_require__(/*! ../actionTypes */ "./resources/app/es5/redux/actionTypes.js");
-var initialState = {
-    totalCount: 0,
-    currentPage: 0,
-    isLoading: false,
-    error: null,
-    products: []
-};
-var productListReducer = function productListReducer(state, action) {
-    if (state === void 0) {
-        state = initialState;
-    }
-    switch (action.type) {
-        case actionTypes_1.PRODUCT_LIST_RESET:
-            return __assign({}, initialState);
-        case actionTypes_1.PRODUCT_LIST_START:
-            return __assign(__assign({}, state), { error: null, isLoading: false });
-        case actionTypes_1.PRODUCT_LIST_ERROR:
-            return __assign(__assign({}, state), { isLoading: false, error: action.error });
-        case actionTypes_1.PRODUCT_LIST_SUCCESS:
-            return __assign(__assign({}, state), { isLoading: false, error: null, products: __spreadArrays(state.products, action.payload.data), totalCount: action.payload.total, currentPage: action.payload.current_page });
-    }
-    return state;
-};
-exports.default = productListReducer;
-
-//# sourceMappingURL=productList.js.map
 
 /***/ }),
 
@@ -34705,6 +34817,261 @@ var verifyReducer = function verifyReducer(state, action) {
 exports.default = verifyReducer;
 
 //# sourceMappingURL=verify.js.map
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/ThunkActions/Home/thunkFilters.js":
+/*!*******************************************************************!*\
+  !*** ./resources/app/es5/redux/ThunkActions/Home/thunkFilters.js ***!
+  \*******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
+    function adopt(value) {
+        return value instanceof P ? value : new P(function (resolve) {
+            resolve(value);
+        });
+    }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) {
+            try {
+                step(generator.next(value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function rejected(value) {
+            try {
+                step(generator["throw"](value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function step(result) {
+            result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+        }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = undefined && undefined.__generator || function (thisArg, body) {
+    var _ = { label: 0, sent: function sent() {
+            if (t[0] & 1) throw t[1];return t[1];
+        }, trys: [], ops: [] },
+        f,
+        y,
+        t,
+        g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
+        return this;
+    }), g;
+    function verb(n) {
+        return function (v) {
+            return step([n, v]);
+        };
+    }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) {
+            try {
+                if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+                if (y = 0, t) op = [op[0] & 2, t.value];
+                switch (op[0]) {
+                    case 0:case 1:
+                        t = op;break;
+                    case 4:
+                        _.label++;return { value: op[1], done: false };
+                    case 5:
+                        _.label++;y = op[1];op = [0];continue;
+                    case 7:
+                        op = _.ops.pop();_.trys.pop();continue;
+                    default:
+                        if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+                            _ = 0;continue;
+                        }
+                        if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+                            _.label = op[1];break;
+                        }
+                        if (op[0] === 6 && _.label < t[1]) {
+                            _.label = t[1];t = op;break;
+                        }
+                        if (t && _.label < t[2]) {
+                            _.label = t[2];_.ops.push(op);break;
+                        }
+                        if (t[2]) _.ops.pop();
+                        _.trys.pop();continue;
+                }
+                op = body.call(thisArg, _);
+            } catch (e) {
+                op = [6, e];y = 0;
+            } finally {
+                f = t = 0;
+            }
+        }if (op[0] & 5) throw op[1];return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var filterActions_1 = __webpack_require__(/*! ../../Actions/Home/filterActions */ "./resources/app/es5/redux/Actions/Home/filterActions.js");
+var API_1 = __webpack_require__(/*! ../../../Helpers/API */ "./resources/app/es5/Helpers/API.js");
+var thunkFilter = function thunkFilter() {
+    return function (dispatch) {
+        return __awaiter(void 0, void 0, void 0, function () {
+            var filterResponse;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        dispatch(filterActions_1.filterStart());
+                        return [4, API_1.default.getFilters()];
+                    case 1:
+                        filterResponse = _a.sent();
+                        if (API_1.default.isError(filterResponse)) {
+                            dispatch(filterActions_1.filterError(filterResponse.message));
+                        } else {
+                            dispatch(filterActions_1.filterSuccess(filterResponse));
+                        }
+                        return [2];
+                }
+            });
+        });
+    };
+};
+exports.default = thunkFilter;
+
+//# sourceMappingURL=thunkFilters.js.map
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/ThunkActions/Home/thunkProductList.js":
+/*!***********************************************************************!*\
+  !*** ./resources/app/es5/redux/ThunkActions/Home/thunkProductList.js ***!
+  \***********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
+    function adopt(value) {
+        return value instanceof P ? value : new P(function (resolve) {
+            resolve(value);
+        });
+    }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) {
+            try {
+                step(generator.next(value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function rejected(value) {
+            try {
+                step(generator["throw"](value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function step(result) {
+            result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+        }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = undefined && undefined.__generator || function (thisArg, body) {
+    var _ = { label: 0, sent: function sent() {
+            if (t[0] & 1) throw t[1];return t[1];
+        }, trys: [], ops: [] },
+        f,
+        y,
+        t,
+        g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
+        return this;
+    }), g;
+    function verb(n) {
+        return function (v) {
+            return step([n, v]);
+        };
+    }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) {
+            try {
+                if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+                if (y = 0, t) op = [op[0] & 2, t.value];
+                switch (op[0]) {
+                    case 0:case 1:
+                        t = op;break;
+                    case 4:
+                        _.label++;return { value: op[1], done: false };
+                    case 5:
+                        _.label++;y = op[1];op = [0];continue;
+                    case 7:
+                        op = _.ops.pop();_.trys.pop();continue;
+                    default:
+                        if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+                            _ = 0;continue;
+                        }
+                        if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+                            _.label = op[1];break;
+                        }
+                        if (op[0] === 6 && _.label < t[1]) {
+                            _.label = t[1];t = op;break;
+                        }
+                        if (t && _.label < t[2]) {
+                            _.label = t[2];_.ops.push(op);break;
+                        }
+                        if (t[2]) _.ops.pop();
+                        _.trys.pop();continue;
+                }
+                op = body.call(thisArg, _);
+            } catch (e) {
+                op = [6, e];y = 0;
+            } finally {
+                f = t = 0;
+            }
+        }if (op[0] & 5) throw op[1];return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
+var productListActions_1 = __webpack_require__(/*! ../../Actions/Home/productListActions */ "./resources/app/es5/redux/Actions/Home/productListActions.js");
+var API_1 = __webpack_require__(/*! ../../../Helpers/API */ "./resources/app/es5/Helpers/API.js");
+var thunkProductList = function thunkProductList(offset) {
+    if (offset === void 0) {
+        offset = 1;
+    }
+    return function (dispatch, getState) {
+        return __awaiter(void 0, void 0, void 0, function () {
+            var selector, filters, productListResponse;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        dispatch(productListActions_1.productListStart());
+                        selector = redux_form_1.getFormValues('productFilter');
+                        filters = selector(getState());
+                        console.log(filters);
+                        return [4, API_1.default.getProducts(filters, offset)];
+                    case 1:
+                        productListResponse = _a.sent();
+                        if (API_1.default.isError(productListResponse)) {
+                            dispatch(productListActions_1.productListError(productListResponse.message));
+                        } else {
+                            dispatch(productListActions_1.productListSuccess(productListResponse));
+                        }
+                        return [2];
+                }
+            });
+        });
+    };
+};
+exports.default = thunkProductList;
+
+//# sourceMappingURL=thunkProductList.js.map
 
 /***/ }),
 
@@ -35597,137 +35964,6 @@ exports.default = thunkLogout;
 
 /***/ }),
 
-/***/ "./resources/app/es5/redux/ThunkActions/thunkProductList.js":
-/*!******************************************************************!*\
-  !*** ./resources/app/es5/redux/ThunkActions/thunkProductList.js ***!
-  \******************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
-    function adopt(value) {
-        return value instanceof P ? value : new P(function (resolve) {
-            resolve(value);
-        });
-    }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) {
-            try {
-                step(generator.next(value));
-            } catch (e) {
-                reject(e);
-            }
-        }
-        function rejected(value) {
-            try {
-                step(generator["throw"](value));
-            } catch (e) {
-                reject(e);
-            }
-        }
-        function step(result) {
-            result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
-        }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = undefined && undefined.__generator || function (thisArg, body) {
-    var _ = { label: 0, sent: function sent() {
-            if (t[0] & 1) throw t[1];return t[1];
-        }, trys: [], ops: [] },
-        f,
-        y,
-        t,
-        g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
-        return this;
-    }), g;
-    function verb(n) {
-        return function (v) {
-            return step([n, v]);
-        };
-    }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) {
-            try {
-                if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-                if (y = 0, t) op = [op[0] & 2, t.value];
-                switch (op[0]) {
-                    case 0:case 1:
-                        t = op;break;
-                    case 4:
-                        _.label++;return { value: op[1], done: false };
-                    case 5:
-                        _.label++;y = op[1];op = [0];continue;
-                    case 7:
-                        op = _.ops.pop();_.trys.pop();continue;
-                    default:
-                        if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
-                            _ = 0;continue;
-                        }
-                        if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
-                            _.label = op[1];break;
-                        }
-                        if (op[0] === 6 && _.label < t[1]) {
-                            _.label = t[1];t = op;break;
-                        }
-                        if (t && _.label < t[2]) {
-                            _.label = t[2];_.ops.push(op);break;
-                        }
-                        if (t[2]) _.ops.pop();
-                        _.trys.pop();continue;
-                }
-                op = body.call(thisArg, _);
-            } catch (e) {
-                op = [6, e];y = 0;
-            } finally {
-                f = t = 0;
-            }
-        }if (op[0] & 5) throw op[1];return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
-var productListActions_1 = __webpack_require__(/*! ../Actions/productListActions */ "./resources/app/es5/redux/Actions/productListActions.js");
-var API_1 = __webpack_require__(/*! ../../Helpers/API */ "./resources/app/es5/Helpers/API.js");
-var thunkProductList = function thunkProductList(offset) {
-    if (offset === void 0) {
-        offset = 1;
-    }
-    return function (dispatch, getState) {
-        return __awaiter(void 0, void 0, void 0, function () {
-            var selector, filters, productListResponse;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        dispatch(productListActions_1.productListStart());
-                        selector = redux_form_1.getFormValues('productFilter');
-                        filters = selector(getState());
-                        console.log(filters);
-                        return [4, API_1.default.getProducts(filters, offset)];
-                    case 1:
-                        productListResponse = _a.sent();
-                        if (API_1.default.isError(productListResponse)) {
-                            dispatch(productListActions_1.productListError(productListResponse.message));
-                        } else {
-                            dispatch(productListActions_1.productListSuccess(productListResponse));
-                        }
-                        return [2];
-                }
-            });
-        });
-    };
-};
-exports.default = thunkProductList;
-
-//# sourceMappingURL=thunkProductList.js.map
-
-/***/ }),
-
 /***/ "./resources/app/es5/redux/ThunkActions/thunkRegister.js":
 /*!***************************************************************!*\
   !*** ./resources/app/es5/redux/ThunkActions/thunkRegister.js ***!
@@ -36286,6 +36522,9 @@ exports.PRODUCT_LIST_START = 'PRODUCT_LIST_START';
 exports.PRODUCT_LIST_SUCCESS = 'PRODUCT_LIST_SUCCESS';
 exports.PRODUCT_LIST_ERROR = 'PRODUCT_LIST_ERROR';
 exports.PRODUCT_LIST_RESET = 'PRODUCT_LIST_RESET';
+exports.FILTER_START = 'FILTER_START';
+exports.FILTER_SUCCESS = 'FILTER_SUCCESS';
+exports.FILTER_ERROR = 'FILTER_ERROR';
 
 //# sourceMappingURL=actionTypes.js.map
 

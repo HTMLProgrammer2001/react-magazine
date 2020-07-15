@@ -10,7 +10,8 @@ import {ILoadUserResponse} from '../Interfaces/Responses/ILoadUserResponse';
 import {IResetFormData} from '../components/ResetPage/ResetForm';
 import {IReviewFormData} from '../components/SinglePage/Reviews/ReviewForm';
 import {ICategory} from '../Interfaces/ICategory';
-import {IGoodsFormData} from "../components/HomePage/Goods/GoodsForm";
+import {IGoodsFormData} from '../components/HomePage/Goods/GoodsForm';
+import {IFilter} from '../Interfaces/IFilter';
 
 
 class API{
@@ -224,6 +225,20 @@ class API{
 
 		try{
 			response = await this.clientAPI.get('/categories');
+		}
+		catch (err) {
+			console.log(err.response.data);
+			return err as AxiosError;
+		}
+
+		return response.data;
+	}
+
+	static async getFilters(): Promise<IFilter | AxiosError>{
+		let response: AxiosResponse;
+
+		try{
+			response = await this.clientAPI.get<IFilter>('/productFilters');
 		}
 		catch (err) {
 			console.log(err.response.data);

@@ -14,6 +14,7 @@ class ProductInfoController extends Controller
         $range = $request->input('priceRange');
         $color = $request->input('color');
         $size = $request->input('size');
+        $categories = $request->input('categories');
 
         $productQuery = Product::query();
         $productQuery->whereBetween('price', [$range['from'], $range['to']]);
@@ -23,6 +24,16 @@ class ProductInfoController extends Controller
 
         if($size)
             $productQuery->where('sizes', 'like', "%{$size}%");
+
+        if($categories){
+            $catIDs = array_keys($categories);
+
+            $catIDs = array_filter($catIDs, function($catID) use($categories){
+               return $categories[$catID];
+            });
+
+            $productQuery->whereIn('category_id', $catIDs);
+        }
 
         $pagSize = config('app.PRODUCT_PAGINATE_SIZE', 3);
         return response()->json($productQuery->paginate($pagSize));

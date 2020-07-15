@@ -12,7 +12,8 @@ import Slider from '../../../FormElements/Slider';
 const selector = formValueSelector('productFilter');
 
 const connected = connect((state: RootState) => ({
-	range: selector(state, 'priceRange')
+	range: selector(state, 'priceRange'),
+	filters: state.filter.filters
 }));
 
 export type IGoodsFormData = {
@@ -37,7 +38,10 @@ const GoodsForm: React.FC<InjectedFormProps<IGoodsFormData, IOwnProps> & IOwnPro
 				component={CheckboxGroup}
 				name="categories"
 				formName={props.form}
-				options={['T1', 'T2', 'T3']}
+				options={props.filters!.categories.map((cat) => ({
+					text: cat.name,
+					value: cat.id
+				}))}
 			/>
 		</div>
 
@@ -47,7 +51,7 @@ const GoodsForm: React.FC<InjectedFormProps<IGoodsFormData, IOwnProps> & IOwnPro
 				component={ColorGroup}
 				name="color"
 				formName={props.form}
-				colors={['red', 'green', 'yellow', 'black']}
+				colors={props.filters!.colors}
 			/>
 		</div>
 
@@ -64,8 +68,8 @@ const GoodsForm: React.FC<InjectedFormProps<IGoodsFormData, IOwnProps> & IOwnPro
 			component={Slider}
 			name="priceRange"
 			formName={props.form}
-			min={0}
-			max={1000}
+			min={props.filters!.priceRange.from}
+			max={props.filters!.priceRange.to}
 		/>
 
 		<div className="goods__price-range">
@@ -81,12 +85,13 @@ const GoodsFormRedux = reduxForm<IGoodsFormData, IOwnProps>({
 	initialValues: {
 		categories: {},
 		color: '',
-		size: 'S',
+		size: '',
 		priceRange: {
-			from: 100,
-			to: 500
+			from: 0,
+			to: 200
 		}
 	}
 })(GoodsForm);
 
 export default connected(GoodsFormRedux);
+

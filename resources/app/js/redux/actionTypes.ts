@@ -60,3 +60,8 @@ export const PRODUCT_LIST_START = 'PRODUCT_LIST_START';
 export const PRODUCT_LIST_SUCCESS = 'PRODUCT_LIST_SUCCESS';
 export const PRODUCT_LIST_ERROR = 'PRODUCT_LIST_ERROR';
 export const PRODUCT_LIST_RESET = 'PRODUCT_LIST_RESET';
+
+//Product filter action types
+export const FILTER_START = 'FILTER_START';
+export const FILTER_SUCCESS = 'FILTER_SUCCESS';
+export const FILTER_ERROR = 'FILTER_ERROR';

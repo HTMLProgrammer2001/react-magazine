@@ -9,7 +9,8 @@ import loginReducer from './login';
 import userReducer from './user';
 import resetReducer from './reset';
 import singleReducer from './Single';
-import productListReducer from './productList';
+import productListReducer from './Home/productList';
+import filterReducer from './Home/filter';
 
 
 const storeReducer = combineReducers({
@@ -22,6 +23,7 @@ const storeReducer = combineReducers({
 	reset: resetReducer,
 	single: singleReducer,
 	productList: productListReducer,
+	filter: filterReducer,
 	form: formReducer
 });
 

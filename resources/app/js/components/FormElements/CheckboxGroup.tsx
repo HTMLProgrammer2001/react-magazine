@@ -5,7 +5,7 @@ import CheckboxElement from './CheckboxElement';
 
 
 type IElementProps = WrappedFieldProps & React.InputHTMLAttributes<HTMLInputElement> & {
-	options: Array<string>,
+	options: Array<{text: string, value: any}>,
 	formName: string
 };
 
@@ -15,15 +15,15 @@ const CheckboxGroup: React.FC<IElementProps> = (props) => {
 	return (
 		<React.Fragment>
 			{
-				options.map((option: string, index: number) => (
+				options.map((option, index: number) => (
 					<Field
 						component={CheckboxElement}
-						placeholder={option}
+						placeholder={option.text}
 						key={index}
 						formName={formName}
 						style={{margin: '5px 0'}}
-						name={`${name}[${option}]`}
-						checked={!!value[option]}
+						name={`${name}[${option.value}]`}
+						checked={!!value[option.value]}
 					/>
 				))
 			}
