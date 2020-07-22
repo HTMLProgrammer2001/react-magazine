@@ -7,9 +7,7 @@ import Payment from './Payment/';
 
 
 export type IBillingFormData = {
-	first: string,
-	last: string,
-	company: string,
+	fullName: string,
 	country: string,
 	city: string,
 	postcode: string,
@@ -27,25 +25,9 @@ const BillingForm: React.FC<IBillingProps> = (props) => (
 			<div className="billing__head">Billing Details</div>
 
 			<form className="billing__form" onSubmit={props.handleSubmit} noValidate>
-				<div className="row">
-					<Field component={InputElement}
-						   placeholder="First Name"
-						   name="first"
-						   type="text"
-						   className="mr-1"
-						   required/>
-
-					<Field component={InputElement}
-						   placeholder="Last Name"
-						   name="last"
-						   type="text"
-						   className="ml-1"
-						   required/>
-				</div>
-
 				<Field component={InputElement}
-					   placeholder="Company Name"
-					   name="company"
+					   placeholder="Full name"
+					   name="fullName"
 					   type="text"
 					   required/>
 

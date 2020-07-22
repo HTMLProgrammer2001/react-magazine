@@ -3,8 +3,8 @@ import {
 	CART_ADD,
 	CART_REMOVE,
 	CART_UPDATE
-} from '../actionTypes';
-import {ICartItem} from '../../Interfaces/ICartItem';
+} from '../../actionTypes';
+import {ICartItem} from '../../../Interfaces/ICartItem';
 
 
 //Cart action creators

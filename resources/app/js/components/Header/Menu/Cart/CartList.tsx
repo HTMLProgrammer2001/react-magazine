@@ -4,7 +4,7 @@ import {Dispatch} from 'redux';
 
 import {RootState} from '../../../../redux/Reducers';
 import {ICartItem} from '../../../../Interfaces/ICartItem';
-import {cartRemove} from '../../../../redux/Actions/cartActions';
+import {cartRemove} from '../../../../redux/Actions/App/cartActions';
 
 
 const mapStateToProps = (state: RootState) => ({

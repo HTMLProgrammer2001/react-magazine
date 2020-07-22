@@ -1,13 +1,13 @@
 //My components
-import * as actionCreators from '../../Actions/Home/productListActions';
+import * as actionCreators from '../Actions/productListActions';
 import {
 	PRODUCT_LIST_ERROR,
 	PRODUCT_LIST_SUCCESS,
 	PRODUCT_LIST_START,
 	PRODUCT_LIST_RESET
-} from '../../actionTypes';
-import {InferActionTypes} from '../index';
-import {IProduct} from '../../../Interfaces/IProduct';
+} from '../actionTypes';
+import {InferActionTypes} from './index';
+import {IProduct} from '../../Interfaces/IProduct';
 
 
 export type ProductListActions = InferActionTypes<typeof actionCreators>;

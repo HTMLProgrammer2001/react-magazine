@@ -1,11 +1,16 @@
 //My components
-import * as actionCreators from '../Actions/userActions';
-import {USER_LOAD_SUCCESSFULL, USER_RESET, USER_LOAD_ERROR, USER_LOAD_START} from '../actionTypes';
-import {InferActionTypes} from './index';
-import {IUser} from '../../Interfaces/IUser';
+import * as actionCreators from '../../Actions/App/userActions';
+import {
+	USER_LOAD_SUCCESSFULL,
+	USER_RESET,
+	USER_LOAD_ERROR,
+	USER_LOAD_START
+} from '../../actionTypes';
+import {InferActionTypes} from '../index';
+import {IUser} from '../../../Interfaces/IUser';
 
 
-type UserActions = InferActionTypes<typeof actionCreators>;
+export type UserActions = InferActionTypes<typeof actionCreators>;
 
 export type UserState = {
 	isLoading: boolean,

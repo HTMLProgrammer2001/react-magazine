@@ -98,4 +98,8 @@ class UserActions extends Controller
     public function changePassword(ChangeRequest $request){
 
     }
+
+    public function me(Request $request){
+        return response()->json($request->user());
+    }
 }

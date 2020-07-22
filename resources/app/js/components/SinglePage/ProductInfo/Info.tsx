@@ -8,7 +8,7 @@ import {RootState} from '../../../redux/Reducers';
 import {IProduct, Size} from '../../../Interfaces/IProduct';
 import AddCartForm, {IAddCartData} from './AddCartForm';
 import Mark from '../../Mark';
-import {cartAdd} from '../../../redux/Actions/cartActions';
+import {cartAdd} from '../../../redux/Actions/App/cartActions';
 
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

@@ -3,8 +3,8 @@ import {
 	USER_LOAD_ERROR,
 	USER_LOAD_SUCCESSFULL,
 	USER_RESET
-} from '../actionTypes';
-import {IUser} from '../../Interfaces/IUser';
+} from '../../actionTypes';
+import {IUser} from '../../../Interfaces/IUser';
 
 
 export const loadUserStart = () => (<const>{

@@ -5,7 +5,7 @@ import {ICartItem} from '../../../Interfaces/ICartItem';
 import CartItem from './CartItem';
 import {RootState} from '../../../redux/Reducers';
 import {Action, Dispatch} from 'redux';
-import {cartRemove, cartReset} from '../../../redux/Actions/cartActions';
+import {cartRemove, cartReset} from '../../../redux/Actions/App/cartActions';
 
 
 const mapStateToProps = (state: RootState) => ({

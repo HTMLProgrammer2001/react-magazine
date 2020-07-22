@@ -1,5 +1,5 @@
 //My components
-import * as actionCreators from '../../Actions/Home/filterActions';
+import * as actionCreators from '../../Actions/App/filterActions';
 import {
 	FILTER_ERROR,
 	FILTER_SUCCESS,

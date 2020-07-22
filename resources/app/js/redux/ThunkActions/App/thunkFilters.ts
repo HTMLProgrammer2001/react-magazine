@@ -1,12 +1,12 @@
 import {ThunkAction, ThunkDispatch} from 'redux-thunk';
 
 import {RootState} from '../../Reducers';
-import {FilterActions} from '../../Reducers/Home/filter';
+import {FilterActions} from '../../Reducers/App/filter';
 import {
 	filterError,
 	filterStart,
 	filterSuccess
-} from '../../Actions/Home/filterActions';
+} from '../../Actions/App/filterActions';
 import API from '../../../Helpers/API';
 
 

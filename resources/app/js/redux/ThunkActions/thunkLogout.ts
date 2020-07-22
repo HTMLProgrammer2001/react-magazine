@@ -1,7 +1,7 @@
 import {ThunkAction, ThunkDispatch} from 'redux-thunk';
 
 import {RootState} from '../Reducers';
-import {resetUser} from '../Actions/userActions';
+import {resetUser} from '../Actions/App/userActions';
 import API from '../../Helpers/API';
 
 

@@ -1,8 +1,8 @@
 //My components
-import {ICartItem} from '../../Interfaces/ICartItem';
-import * as actionCreators from '../Actions/cartActions';
-import {CART_ADD, CART_REMOVE, CART_RESET} from '../actionTypes';
-import {InferActionTypes} from './index';
+import {ICartItem} from '../../../Interfaces/ICartItem';
+import * as actionCreators from '../../Actions/App/cartActions';
+import {CART_ADD, CART_REMOVE, CART_RESET} from '../../actionTypes';
+import {InferActionTypes} from '../index';
 
 
 type CartActions = InferActionTypes<typeof actionCreators>;
@@ -11,9 +11,18 @@ export type CartState = Array<ICartItem>;
 
 const initialState: CartState = [];
 
+//Function that convert cart items for set in local storage
+const cartToStorage = (products: Array<ICartItem>) => (
+	products.map((prod) => ({
+		...prod,
+		product: prod.product.id
+	}))
+);
+
 const cartReducer = (state: CartState = initialState, action: CartActions): CartState => {
 	switch (action.type) {
 	case CART_ADD:
+		//Try to find cart item with same characteristics
 		let cartItem: ICartItem | undefined = state.find((item: ICartItem) => (
 			item.product.id == action.payload.product.id
 			&& item.color == action.payload.color
@@ -21,6 +30,7 @@ const cartReducer = (state: CartState = initialState, action: CartActions): Cart
 		));
 
 		if(cartItem) {
+			//If we find it than add count to this item
 			return state.map((item: ICartItem) => (
 				item == cartItem ?
 					{
@@ -32,6 +42,7 @@ const cartReducer = (state: CartState = initialState, action: CartActions): Cart
 			));
 		}
 		else {
+			//Add new cart item
 			return [...state, action.payload];
 		}
 
@@ -41,6 +52,9 @@ const cartReducer = (state: CartState = initialState, action: CartActions): Cart
 	case CART_RESET:
 		return [];
 	}
+
+	//Set cart items to storage
+	localStorage.setItem('cartItems', JSON.stringify(cartToStorage(state)));
 
 	return state;
 };

@@ -33,22 +33,25 @@ type IOwnProps = ConnectedProps<typeof connected> & RouteComponentProps<{}>;
 
 const GoodsForm: React.FC<InjectedFormProps<IGoodsFormData, IOwnProps> & IOwnProps> = (props) => {
 	React.useEffect(() => {
+		//Get params
 		const params = new URLSearchParams(props.location.search);
 		const catValue: {[key: number]: boolean} = {};
 
 		if(params.get('category')){
+			//Find default category
 			const cat = props.filters!.categories!.find((item) => (
 				item.slug == params.get('category')
 			));
 
+			//Set to true
 			if(cat)
 				catValue[cat.id] = true;
 
-			console.log(catValue);
-
+			//Change form values
 			props.dispatch(change('productFilter', 'categories', catValue));
 		}
 
+		//Send form
 		props.dispatch(submit('productFilter'));
 	}, []);
 

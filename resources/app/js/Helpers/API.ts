@@ -14,6 +14,7 @@ import {IGoodsFormData} from '../components/HomePage/Goods/GoodsForm';
 import {IFilter} from '../Interfaces/IFilter';
 import {IChangeFormData} from '../components/ChangePasswordPage/ChangeForm';
 import {ISearchResponse} from '../Interfaces/Responses/ISearchResponse';
+import {IUser} from '../Interfaces/IUser';
 
 
 class API{
@@ -280,6 +281,24 @@ class API{
 				params: {
 					search: text,
 					page
+				}
+			});
+		}
+		catch (err) {
+			console.log(err.response.data);
+			return err as AxiosError;
+		}
+
+		return response.data;
+	}
+
+	static async getUser(): Promise<IUser | AxiosError>{
+		let response: AxiosResponse;
+
+		try{
+			response = await this.clientAPI.get<IUser>('/me', {
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem('token')}`
 				}
 			});
 		}

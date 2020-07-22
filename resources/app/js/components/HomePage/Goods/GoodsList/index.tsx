@@ -4,7 +4,7 @@ import {connect, ConnectedProps} from 'react-redux';
 import GoodItem from './GoodItem';
 import GoodsHeader from './GoodsHeader';
 import {RootState} from '../../../../redux/Reducers';
-import thunkProductList from '../../../../redux/ThunkActions/Home/thunkProductList';
+import thunkProductList from '../../../../redux/ThunkActions/thunkProductList';
 
 
 const mapStateToProps = (state: RootState) => ({

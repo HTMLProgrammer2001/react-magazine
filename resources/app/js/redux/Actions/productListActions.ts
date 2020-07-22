@@ -3,9 +3,9 @@ import {
 	PRODUCT_LIST_RESET,
 	PRODUCT_LIST_START,
 	PRODUCT_LIST_SUCCESS
-} from '../../actionTypes';
+} from '../actionTypes';
 
-import {IProductsResponse} from '../../../Interfaces/Responses/IProductsResponse';
+import {IProductsResponse} from '../../Interfaces/Responses/IProductsResponse';
 
 
 export const productListStart = () => (<const>{

@@ -75,3 +75,6 @@ export const CHANGE_ERROR = 'CHANGE_ERROR';
 export const SEARCH_START = 'SEARCH_START';
 export const SEARCH_SUCCESS = 'SEARCH_SUCCESS';
 export const SEARCH_ERROR = 'SEARCH_ERROR';
+
+//Initialization action types
+export const APP_INITIALIZED = 'APP_INITIALIZED';

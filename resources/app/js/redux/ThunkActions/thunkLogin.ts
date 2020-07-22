@@ -6,7 +6,7 @@ import {RootState} from '../Reducers';
 import {LoginActions} from '../Reducers/login';
 import {loginError, loginStart, loginSuccess} from '../Actions/loginActions';
 import API from '../../Helpers/API';
-import {loadUserSuccessfull} from '../Actions/userActions';
+import {loadUserSuccessfull} from '../Actions/App/userActions';
 
 
 export type LoginThunkAction = ThunkAction<void, RootState, unknown, LoginActions>;

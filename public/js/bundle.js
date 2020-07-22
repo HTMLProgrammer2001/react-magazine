@@ -31430,6 +31430,31 @@ var API = function () {
             });
         });
     };
+    API.getUser = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var response, err_16;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2,, 3]);
+                        return [4, this.clientAPI.get('/me', {
+                            headers: {
+                                Authorization: "Bearer " + localStorage.getItem('token')
+                            }
+                        })];
+                    case 1:
+                        response = _a.sent();
+                        return [3, 3];
+                    case 2:
+                        err_16 = _a.sent();
+                        console.log(err_16.response.data);
+                        return [2, err_16];
+                    case 3:
+                        return [2, response.data];
+                }
+            });
+        });
+    };
     API.isError = function (arg) {
         return 'response' in arg;
     };
@@ -31460,14 +31485,28 @@ exports.default = API;
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 var Header_1 = __webpack_require__(/*! ./Header/ */ "./resources/app/es5/components/Header/index.js");
 var Footer_1 = __webpack_require__(/*! ./Footer */ "./resources/app/es5/components/Footer.js");
 var Content_1 = __webpack_require__(/*! ./Content */ "./resources/app/es5/components/Content.js");
 var Newsletter_1 = __webpack_require__(/*! ./Newsletter */ "./resources/app/es5/components/Newsletter.js");
-var App = function App() {
+var thunkInitialize_1 = __webpack_require__(/*! ../redux/ThunkActions/App/thunkInitialize */ "./resources/app/es5/redux/ThunkActions/App/thunkInitialize.js");
+var mapStateToProps = function mapStateToProps(state) {
+    return {
+        initialized: state.app.initialized
+    };
+};
+var connected = react_redux_1.connect(mapStateToProps, {
+    initialize: thunkInitialize_1.default
+});
+var App = function App(props) {
+    React.useEffect(function () {
+        if (!props.initialized) props.initialize();
+    }, []);
+    if (!props.initialized) return React.createElement("div", null, "Loading...");
     return React.createElement(react_router_dom_1.BrowserRouter, null, React.createElement(Header_1.default, null), React.createElement(Content_1.default, null), React.createElement(Newsletter_1.default, null), React.createElement(Footer_1.default, null));
 };
-exports.default = App;
+exports.default = connected(App);
 
 //# sourceMappingURL=App.js.map
 
@@ -31520,7 +31559,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 var CartItem_1 = __webpack_require__(/*! ./CartItem */ "./resources/app/es5/components/CartPage/Content/CartItem.js");
-var cartActions_1 = __webpack_require__(/*! ../../../redux/Actions/cartActions */ "./resources/app/es5/redux/Actions/cartActions.js");
+var cartActions_1 = __webpack_require__(/*! ../../../redux/Actions/App/cartActions */ "./resources/app/es5/redux/Actions/App/cartActions.js");
 var mapStateToProps = function mapStateToProps(state) {
     return {
         cartItems: state.cart
@@ -31826,7 +31865,7 @@ var InputElement_1 = __webpack_require__(/*! ../../FormElements/InputElement */ 
 var CreateAccountForm_1 = __webpack_require__(/*! ./CreateAccountForm */ "./resources/app/es5/components/CheckoutPage/Form/CreateAccountForm.js");
 var Payment_1 = __webpack_require__(/*! ./Payment/ */ "./resources/app/es5/components/CheckoutPage/Form/Payment/index.js");
 var BillingForm = function BillingForm(props) {
-    return React.createElement("div", { className: "container" }, React.createElement("div", { className: "billing my-pad" }, React.createElement("div", { className: "billing__head" }, "Billing Details"), React.createElement("form", { className: "billing__form", onSubmit: props.handleSubmit, noValidate: true }, React.createElement("div", { className: "row" }, React.createElement(redux_form_1.Field, { component: InputElement_1.default, placeholder: "First Name", name: "first", type: "text", className: "mr-1", required: true }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, placeholder: "Last Name", name: "last", type: "text", className: "ml-1", required: true })), React.createElement(redux_form_1.Field, { component: InputElement_1.default, placeholder: "Company Name", name: "company", type: "text", required: true }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, placeholder: "Country", name: "country", type: "text", required: true }), React.createElement("div", { className: "row" }, React.createElement(redux_form_1.Field, { component: InputElement_1.default, placeholder: "Town / City", name: "city", type: "text", className: "mr-1", required: true }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, placeholder: "Postcode / Zip", name: "postcode", type: "text", className: "ml-1", required: true })), React.createElement(redux_form_1.Field, { component: InputElement_1.default, placeholder: "Street Address", name: "address", type: "text", required: true }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, placeholder: "Phone", name: "phone", type: "text", required: true }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, placeholder: "Email address", name: "email", type: "email", required: true }), React.createElement(CreateAccountForm_1.default, null), React.createElement("div", null, "Order Notes"), React.createElement("div", { className: "text-muted" }, "Notes about your order like delivery species e.g."), React.createElement("div", { className: "input" }, React.createElement(redux_form_1.Field, { component: "textarea", className: "input__elem", rows: 1, name: "notes" }), React.createElement("div", { className: "input__line", style: { bottom: '4px' } })), React.createElement(Payment_1.default, null))));
+    return React.createElement("div", { className: "container" }, React.createElement("div", { className: "billing my-pad" }, React.createElement("div", { className: "billing__head" }, "Billing Details"), React.createElement("form", { className: "billing__form", onSubmit: props.handleSubmit, noValidate: true }, React.createElement(redux_form_1.Field, { component: InputElement_1.default, placeholder: "Full name", name: "fullName", type: "text", required: true }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, placeholder: "Country", name: "country", type: "text", required: true }), React.createElement("div", { className: "row" }, React.createElement(redux_form_1.Field, { component: InputElement_1.default, placeholder: "Town / City", name: "city", type: "text", className: "mr-1", required: true }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, placeholder: "Postcode / Zip", name: "postcode", type: "text", className: "ml-1", required: true })), React.createElement(redux_form_1.Field, { component: InputElement_1.default, placeholder: "Street Address", name: "address", type: "text", required: true }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, placeholder: "Phone", name: "phone", type: "text", required: true }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, placeholder: "Email address", name: "email", type: "email", required: true }), React.createElement(CreateAccountForm_1.default, null), React.createElement("div", null, "Order Notes"), React.createElement("div", { className: "text-muted" }, "Notes about your order like delivery species e.g."), React.createElement("div", { className: "input" }, React.createElement(redux_form_1.Field, { component: "textarea", className: "input__elem", rows: 1, name: "notes" }), React.createElement("div", { className: "input__line", style: { bottom: '4px' } })), React.createElement(Payment_1.default, null))));
 };
 exports.default = redux_form_1.reduxForm({
     form: 'billing'
@@ -32633,7 +32672,7 @@ exports.default = CartDropdown;
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-var cartActions_1 = __webpack_require__(/*! ../../../../redux/Actions/cartActions */ "./resources/app/es5/redux/Actions/cartActions.js");
+var cartActions_1 = __webpack_require__(/*! ../../../../redux/Actions/App/cartActions */ "./resources/app/es5/redux/Actions/App/cartActions.js");
 var mapStateToProps = function mapStateToProps(state) {
     return {
         cartItems: state.cart
@@ -32869,7 +32908,6 @@ var GoodsForm = function GoodsForm(props) {
                 return item.slug == params.get('category');
             });
             if (cat) catValue[cat.id] = true;
-            console.log(catValue);
             props.dispatch(redux_form_1.change('productFilter', 'categories', catValue));
         }
         props.dispatch(redux_form_1.submit('productFilter'));
@@ -32991,7 +33029,7 @@ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 var GoodItem_1 = __webpack_require__(/*! ./GoodItem */ "./resources/app/es5/components/HomePage/Goods/GoodsList/GoodItem.js");
 var GoodsHeader_1 = __webpack_require__(/*! ./GoodsHeader */ "./resources/app/es5/components/HomePage/Goods/GoodsList/GoodsHeader.js");
-var thunkProductList_1 = __webpack_require__(/*! ../../../../redux/ThunkActions/Home/thunkProductList */ "./resources/app/es5/redux/ThunkActions/Home/thunkProductList.js");
+var thunkProductList_1 = __webpack_require__(/*! ../../../../redux/ThunkActions/thunkProductList */ "./resources/app/es5/redux/ThunkActions/thunkProductList.js");
 var mapStateToProps = function mapStateToProps(state) {
     return {
         goodsListState: state.productList,
@@ -33029,9 +33067,8 @@ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 var GoodsList_1 = __webpack_require__(/*! ./GoodsList/ */ "./resources/app/es5/components/HomePage/Goods/GoodsList/index.js");
 var GoodsForm_1 = __webpack_require__(/*! ./GoodsForm/ */ "./resources/app/es5/components/HomePage/Goods/GoodsForm/index.js");
-var productListActions_1 = __webpack_require__(/*! ../../../redux/Actions/Home/productListActions */ "./resources/app/es5/redux/Actions/Home/productListActions.js");
-var thunkProductList_1 = __webpack_require__(/*! ../../../redux/ThunkActions/Home/thunkProductList */ "./resources/app/es5/redux/ThunkActions/Home/thunkProductList.js");
-var thunkFilters_1 = __webpack_require__(/*! ../../../redux/ThunkActions/Home/thunkFilters */ "./resources/app/es5/redux/ThunkActions/Home/thunkFilters.js");
+var productListActions_1 = __webpack_require__(/*! ../../../redux/Actions/productListActions */ "./resources/app/es5/redux/Actions/productListActions.js");
+var thunkProductList_1 = __webpack_require__(/*! ../../../redux/ThunkActions/thunkProductList */ "./resources/app/es5/redux/ThunkActions/thunkProductList.js");
 var mapStateToProps = function mapStateToProps(state) {
     return {
         filterState: state.filter
@@ -33042,17 +33079,11 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
         reloadGoods: function reloadGoods() {
             dispatch(productListActions_1.productListReset());
             dispatch(thunkProductList_1.default());
-        },
-        loadFilters: function loadFilters() {
-            dispatch(thunkFilters_1.default());
         }
     };
 };
 var connected = react_redux_1.connect(mapStateToProps, mapDispatchToProps);
 var Goods = function Goods(props) {
-    React.useEffect(function () {
-        if (!props.filterState.filters) props.loadFilters();
-    }, []);
     return React.createElement("div", { className: "goods" }, React.createElement("div", { className: "container" }, props.filterState.isLoading && React.createElement("div", null, "Loading..."), props.filterState.error && React.createElement("div", { className: "red" }, props.filterState.error), props.filterState.filters && React.createElement(React.Fragment, null, React.createElement(GoodsList_1.default, null), React.createElement(GoodsForm_1.default, { onSubmit: function onSubmit(vals) {
             console.log(vals);
             props.reloadGoods();
@@ -33535,7 +33566,7 @@ var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_mod
 var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 var AddCartForm_1 = __webpack_require__(/*! ./AddCartForm */ "./resources/app/es5/components/SinglePage/ProductInfo/AddCartForm.js");
 var Mark_1 = __webpack_require__(/*! ../../Mark */ "./resources/app/es5/components/Mark.js");
-var cartActions_1 = __webpack_require__(/*! ../../../redux/Actions/cartActions */ "./resources/app/es5/redux/Actions/cartActions.js");
+var cartActions_1 = __webpack_require__(/*! ../../../redux/Actions/App/cartActions */ "./resources/app/es5/redux/Actions/App/cartActions.js");
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     return {
         addCart: function addCart(formVals, product) {
@@ -33967,10 +33998,44 @@ ReactDOM.render(React.createElement(react_redux_1.Provider, { store: store }, Re
 
 /***/ }),
 
-/***/ "./resources/app/es5/redux/Actions/Home/filterActions.js":
-/*!***************************************************************!*\
-  !*** ./resources/app/es5/redux/Actions/Home/filterActions.js ***!
-  \***************************************************************/
+/***/ "./resources/app/es5/redux/Actions/App/cartActions.js":
+/*!************************************************************!*\
+  !*** ./resources/app/es5/redux/Actions/App/cartActions.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var actionTypes_1 = __webpack_require__(/*! ../../actionTypes */ "./resources/app/es5/redux/actionTypes.js");
+exports.cartAdd = function (product) {
+    return {
+        type: actionTypes_1.CART_ADD,
+        payload: product
+    };
+};
+exports.cartRemove = function (index) {
+    return {
+        type: actionTypes_1.CART_REMOVE,
+        payload: index
+    };
+};
+exports.cartReset = function () {
+    return {
+        type: actionTypes_1.CART_RESET
+    };
+};
+
+//# sourceMappingURL=cartActions.js.map
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/Actions/App/filterActions.js":
+/*!**************************************************************!*\
+  !*** ./resources/app/es5/redux/Actions/App/filterActions.js ***!
+  \**************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -34001,10 +34066,10 @@ exports.filterError = function (error) {
 
 /***/ }),
 
-/***/ "./resources/app/es5/redux/Actions/Home/productListActions.js":
-/*!********************************************************************!*\
-  !*** ./resources/app/es5/redux/Actions/Home/productListActions.js ***!
-  \********************************************************************/
+/***/ "./resources/app/es5/redux/Actions/App/userActions.js":
+/*!************************************************************!*\
+  !*** ./resources/app/es5/redux/Actions/App/userActions.js ***!
+  \************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -34013,30 +34078,30 @@ exports.filterError = function (error) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var actionTypes_1 = __webpack_require__(/*! ../../actionTypes */ "./resources/app/es5/redux/actionTypes.js");
-exports.productListStart = function () {
+exports.loadUserStart = function () {
     return {
-        type: actionTypes_1.PRODUCT_LIST_START
+        type: actionTypes_1.USER_LOAD_START
     };
 };
-exports.productListSuccess = function (productResponse) {
+exports.loadUserError = function (error) {
     return {
-        type: actionTypes_1.PRODUCT_LIST_SUCCESS,
-        payload: productResponse
-    };
-};
-exports.productListError = function (error) {
-    return {
-        type: actionTypes_1.PRODUCT_LIST_ERROR,
+        type: actionTypes_1.USER_LOAD_ERROR,
         error: error
     };
 };
-exports.productListReset = function () {
+exports.loadUserSuccessfull = function (userInf) {
     return {
-        type: actionTypes_1.PRODUCT_LIST_RESET
+        type: actionTypes_1.USER_LOAD_SUCCESSFULL,
+        payload: userInf
+    };
+};
+exports.resetUser = function () {
+    return {
+        type: actionTypes_1.USER_RESET
     };
 };
 
-//# sourceMappingURL=productListActions.js.map
+//# sourceMappingURL=userActions.js.map
 
 /***/ }),
 
@@ -34158,10 +34223,10 @@ exports.productLikeChange = function (liked) {
 
 /***/ }),
 
-/***/ "./resources/app/es5/redux/Actions/cartActions.js":
-/*!********************************************************!*\
-  !*** ./resources/app/es5/redux/Actions/cartActions.js ***!
-  \********************************************************/
+/***/ "./resources/app/es5/redux/Actions/appActions.js":
+/*!*******************************************************!*\
+  !*** ./resources/app/es5/redux/Actions/appActions.js ***!
+  \*******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -34170,25 +34235,13 @@ exports.productLikeChange = function (liked) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var actionTypes_1 = __webpack_require__(/*! ../actionTypes */ "./resources/app/es5/redux/actionTypes.js");
-exports.cartAdd = function (product) {
+exports.initialize = function () {
     return {
-        type: actionTypes_1.CART_ADD,
-        payload: product
-    };
-};
-exports.cartRemove = function (index) {
-    return {
-        type: actionTypes_1.CART_REMOVE,
-        payload: index
-    };
-};
-exports.cartReset = function () {
-    return {
-        type: actionTypes_1.CART_RESET
+        type: actionTypes_1.APP_INITIALIZED
     };
 };
 
-//# sourceMappingURL=cartActions.js.map
+//# sourceMappingURL=appActions.js.map
 
 /***/ }),
 
@@ -34289,6 +34342,45 @@ exports.loginError = function (error) {
 };
 
 //# sourceMappingURL=loginActions.js.map
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/Actions/productListActions.js":
+/*!***************************************************************!*\
+  !*** ./resources/app/es5/redux/Actions/productListActions.js ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var actionTypes_1 = __webpack_require__(/*! ../actionTypes */ "./resources/app/es5/redux/actionTypes.js");
+exports.productListStart = function () {
+    return {
+        type: actionTypes_1.PRODUCT_LIST_START
+    };
+};
+exports.productListSuccess = function (productResponse) {
+    return {
+        type: actionTypes_1.PRODUCT_LIST_SUCCESS,
+        payload: productResponse
+    };
+};
+exports.productListError = function (error) {
+    return {
+        type: actionTypes_1.PRODUCT_LIST_ERROR,
+        error: error
+    };
+};
+exports.productListReset = function () {
+    return {
+        type: actionTypes_1.PRODUCT_LIST_RESET
+    };
+};
+
+//# sourceMappingURL=productListActions.js.map
 
 /***/ }),
 
@@ -34395,45 +34487,6 @@ exports.searchSuccess = function (response) {
 
 /***/ }),
 
-/***/ "./resources/app/es5/redux/Actions/userActions.js":
-/*!********************************************************!*\
-  !*** ./resources/app/es5/redux/Actions/userActions.js ***!
-  \********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var actionTypes_1 = __webpack_require__(/*! ../actionTypes */ "./resources/app/es5/redux/actionTypes.js");
-exports.loadUserStart = function () {
-    return {
-        type: actionTypes_1.USER_LOAD_START
-    };
-};
-exports.loadUserError = function (error) {
-    return {
-        type: actionTypes_1.USER_LOAD_ERROR,
-        error: error
-    };
-};
-exports.loadUserSuccessfull = function (userInf) {
-    return {
-        type: actionTypes_1.USER_LOAD_SUCCESSFULL,
-        payload: userInf
-    };
-};
-exports.resetUser = function () {
-    return {
-        type: actionTypes_1.USER_RESET
-    };
-};
-
-//# sourceMappingURL=userActions.js.map
-
-/***/ }),
-
 /***/ "./resources/app/es5/redux/Actions/verifyActions.js":
 /*!**********************************************************!*\
   !*** ./resources/app/es5/redux/Actions/verifyActions.js ***!
@@ -34468,10 +34521,110 @@ exports.verifySuccess = function (message) {
 
 /***/ }),
 
-/***/ "./resources/app/es5/redux/Reducers/Home/filter.js":
-/*!*********************************************************!*\
-  !*** ./resources/app/es5/redux/Reducers/Home/filter.js ***!
-  \*********************************************************/
+/***/ "./resources/app/es5/redux/Reducers/App/app.js":
+/*!*****************************************************!*\
+  !*** ./resources/app/es5/redux/Reducers/App/app.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var actionTypes_1 = __webpack_require__(/*! ../../actionTypes */ "./resources/app/es5/redux/actionTypes.js");
+var initialState = {
+    initialized: false
+};
+var appReducer = function appReducer(state, action) {
+    if (state === void 0) {
+        state = initialState;
+    }
+    switch (action.type) {
+        case actionTypes_1.APP_INITIALIZED:
+            return { initialized: true };
+    }
+    return state;
+};
+exports.default = appReducer;
+
+//# sourceMappingURL=app.js.map
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/Reducers/App/cart.js":
+/*!******************************************************!*\
+  !*** ./resources/app/es5/redux/Reducers/App/cart.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __assign = undefined && undefined.__assign || function () {
+    __assign = Object.assign || function (t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) {
+                if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+            }
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+var __spreadArrays = undefined && undefined.__spreadArrays || function () {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) {
+        s += arguments[i].length;
+    }for (var r = Array(s), k = 0, i = 0; i < il; i++) {
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++) {
+            r[k] = a[j];
+        }
+    }return r;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var actionTypes_1 = __webpack_require__(/*! ../../actionTypes */ "./resources/app/es5/redux/actionTypes.js");
+var initialState = [];
+var cartToStorage = function cartToStorage(products) {
+    return products.map(function (prod) {
+        return __assign(__assign({}, prod), { product: prod.product.id });
+    });
+};
+var cartReducer = function cartReducer(state, action) {
+    if (state === void 0) {
+        state = initialState;
+    }
+    switch (action.type) {
+        case actionTypes_1.CART_ADD:
+            var cartItem_1 = state.find(function (item) {
+                return item.product.id == action.payload.product.id && item.color == action.payload.color && item.size == action.payload.size;
+            });
+            if (cartItem_1) {
+                return state.map(function (item) {
+                    return item == cartItem_1 ? __assign(__assign({}, item), { count: item.count + action.payload.count, product: action.payload.product }) : item;
+                });
+            } else {
+                return __spreadArrays(state, [action.payload]);
+            }
+        case actionTypes_1.CART_REMOVE:
+            return __spreadArrays(state.slice(0, action.payload), state.slice(action.payload + 1));
+        case actionTypes_1.CART_RESET:
+            return [];
+    }
+    localStorage.setItem('cartItems', JSON.stringify(cartToStorage(state)));
+    return state;
+};
+exports.default = cartReducer;
+
+//# sourceMappingURL=cart.js.map
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/Reducers/App/filter.js":
+/*!********************************************************!*\
+  !*** ./resources/app/es5/redux/Reducers/App/filter.js ***!
+  \********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -34505,10 +34658,10 @@ exports.default = filtersReducer;
 
 /***/ }),
 
-/***/ "./resources/app/es5/redux/Reducers/Home/productList.js":
-/*!**************************************************************!*\
-  !*** ./resources/app/es5/redux/Reducers/Home/productList.js ***!
-  \**************************************************************/
+/***/ "./resources/app/es5/redux/Reducers/App/user.js":
+/*!******************************************************!*\
+  !*** ./resources/app/es5/redux/Reducers/App/user.js ***!
+  \******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -34527,43 +34680,34 @@ var __assign = undefined && undefined.__assign || function () {
     };
     return __assign.apply(this, arguments);
 };
-var __spreadArrays = undefined && undefined.__spreadArrays || function () {
-    for (var s = 0, i = 0, il = arguments.length; i < il; i++) {
-        s += arguments[i].length;
-    }for (var r = Array(s), k = 0, i = 0; i < il; i++) {
-        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++) {
-            r[k] = a[j];
-        }
-    }return r;
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 var actionTypes_1 = __webpack_require__(/*! ../../actionTypes */ "./resources/app/es5/redux/actionTypes.js");
 var initialState = {
-    totalCount: 0,
-    currentPage: 0,
     isLoading: false,
-    error: null,
-    products: []
+    error: '',
+    token: null,
+    user: null
 };
-var productListReducer = function productListReducer(state, action) {
+var cartReducer = function cartReducer(state, action) {
     if (state === void 0) {
         state = initialState;
     }
     switch (action.type) {
-        case actionTypes_1.PRODUCT_LIST_RESET:
-            return __assign({}, initialState);
-        case actionTypes_1.PRODUCT_LIST_START:
-            return __assign(__assign({}, state), { error: null, isLoading: false });
-        case actionTypes_1.PRODUCT_LIST_ERROR:
+        case actionTypes_1.USER_LOAD_START:
+            return __assign(__assign({}, state), { isLoading: true });
+        case actionTypes_1.USER_LOAD_ERROR:
             return __assign(__assign({}, state), { isLoading: false, error: action.error });
-        case actionTypes_1.PRODUCT_LIST_SUCCESS:
-            return __assign(__assign({}, state), { isLoading: false, error: null, products: __spreadArrays(state.products, action.payload.data), totalCount: action.payload.total, currentPage: action.payload.current_page });
+        case actionTypes_1.USER_LOAD_SUCCESSFULL:
+            localStorage.setItem('token', action.payload.token);
+            return __assign(__assign({}, initialState), { user: action.payload.user, token: action.payload.token });
+        case actionTypes_1.USER_RESET:
+            return initialState;
     }
     return state;
 };
-exports.default = productListReducer;
+exports.default = cartReducer;
 
-//# sourceMappingURL=productList.js.map
+//# sourceMappingURL=user.js.map
 
 /***/ }),
 
@@ -34749,69 +34893,6 @@ exports.default = productReducer;
 
 /***/ }),
 
-/***/ "./resources/app/es5/redux/Reducers/cart.js":
-/*!**************************************************!*\
-  !*** ./resources/app/es5/redux/Reducers/cart.js ***!
-  \**************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var __assign = undefined && undefined.__assign || function () {
-    __assign = Object.assign || function (t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) {
-                if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-            }
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
-var __spreadArrays = undefined && undefined.__spreadArrays || function () {
-    for (var s = 0, i = 0, il = arguments.length; i < il; i++) {
-        s += arguments[i].length;
-    }for (var r = Array(s), k = 0, i = 0; i < il; i++) {
-        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++) {
-            r[k] = a[j];
-        }
-    }return r;
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var actionTypes_1 = __webpack_require__(/*! ../actionTypes */ "./resources/app/es5/redux/actionTypes.js");
-var initialState = [];
-var cartReducer = function cartReducer(state, action) {
-    if (state === void 0) {
-        state = initialState;
-    }
-    switch (action.type) {
-        case actionTypes_1.CART_ADD:
-            var cartItem_1 = state.find(function (item) {
-                return item.product.id == action.payload.product.id && item.color == action.payload.color && item.size == action.payload.size;
-            });
-            if (cartItem_1) {
-                return state.map(function (item) {
-                    return item == cartItem_1 ? __assign(__assign({}, item), { count: item.count + action.payload.count, product: action.payload.product }) : item;
-                });
-            } else {
-                return __spreadArrays(state, [action.payload]);
-            }
-        case actionTypes_1.CART_REMOVE:
-            return __spreadArrays(state.slice(0, action.payload), state.slice(action.payload + 1));
-        case actionTypes_1.CART_RESET:
-            return [];
-    }
-    return state;
-};
-exports.default = cartReducer;
-
-//# sourceMappingURL=cart.js.map
-
-/***/ }),
-
 /***/ "./resources/app/es5/redux/Reducers/category.js":
 /*!******************************************************!*\
   !*** ./resources/app/es5/redux/Reducers/category.js ***!
@@ -34911,18 +34992,19 @@ exports.default = loginReducer;
 Object.defineProperty(exports, "__esModule", { value: true });
 var redux_1 = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
 var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
-var cart_1 = __webpack_require__(/*! ./cart */ "./resources/app/es5/redux/Reducers/cart.js");
+var cart_1 = __webpack_require__(/*! ./App/cart */ "./resources/app/es5/redux/Reducers/App/cart.js");
 var category_1 = __webpack_require__(/*! ./category */ "./resources/app/es5/redux/Reducers/category.js");
 var register_1 = __webpack_require__(/*! ./register */ "./resources/app/es5/redux/Reducers/register.js");
 var verify_1 = __webpack_require__(/*! ./verify */ "./resources/app/es5/redux/Reducers/verify.js");
 var login_1 = __webpack_require__(/*! ./login */ "./resources/app/es5/redux/Reducers/login.js");
-var user_1 = __webpack_require__(/*! ./user */ "./resources/app/es5/redux/Reducers/user.js");
+var user_1 = __webpack_require__(/*! ./App/user */ "./resources/app/es5/redux/Reducers/App/user.js");
 var reset_1 = __webpack_require__(/*! ./reset */ "./resources/app/es5/redux/Reducers/reset.js");
 var Single_1 = __webpack_require__(/*! ./Single */ "./resources/app/es5/redux/Reducers/Single/index.js");
-var productList_1 = __webpack_require__(/*! ./Home/productList */ "./resources/app/es5/redux/Reducers/Home/productList.js");
-var filter_1 = __webpack_require__(/*! ./Home/filter */ "./resources/app/es5/redux/Reducers/Home/filter.js");
+var productList_1 = __webpack_require__(/*! ./productList */ "./resources/app/es5/redux/Reducers/productList.js");
+var filter_1 = __webpack_require__(/*! ./App/filter */ "./resources/app/es5/redux/Reducers/App/filter.js");
 var change_1 = __webpack_require__(/*! ./change */ "./resources/app/es5/redux/Reducers/change.js");
 var search_1 = __webpack_require__(/*! ./search */ "./resources/app/es5/redux/Reducers/search.js");
+var app_1 = __webpack_require__(/*! ./App/app */ "./resources/app/es5/redux/Reducers/App/app.js");
 var storeReducer = redux_1.combineReducers({
     cart: cart_1.default,
     category: category_1.default,
@@ -34936,6 +35018,7 @@ var storeReducer = redux_1.combineReducers({
     filter: filter_1.default,
     change: change_1.default,
     search: search_1.default,
+    app: app_1.default,
     form: redux_form_1.reducer
 });
 exports.default = storeReducer;
@@ -34977,6 +35060,68 @@ var loginReducer = function loginReducer(state, action) {
 exports.default = loginReducer;
 
 //# sourceMappingURL=login.js.map
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/Reducers/productList.js":
+/*!*********************************************************!*\
+  !*** ./resources/app/es5/redux/Reducers/productList.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __assign = undefined && undefined.__assign || function () {
+    __assign = Object.assign || function (t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) {
+                if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+            }
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+var __spreadArrays = undefined && undefined.__spreadArrays || function () {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) {
+        s += arguments[i].length;
+    }for (var r = Array(s), k = 0, i = 0; i < il; i++) {
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++) {
+            r[k] = a[j];
+        }
+    }return r;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var actionTypes_1 = __webpack_require__(/*! ../actionTypes */ "./resources/app/es5/redux/actionTypes.js");
+var initialState = {
+    totalCount: 0,
+    currentPage: 0,
+    isLoading: false,
+    error: null,
+    products: []
+};
+var productListReducer = function productListReducer(state, action) {
+    if (state === void 0) {
+        state = initialState;
+    }
+    switch (action.type) {
+        case actionTypes_1.PRODUCT_LIST_RESET:
+            return __assign({}, initialState);
+        case actionTypes_1.PRODUCT_LIST_START:
+            return __assign(__assign({}, state), { error: null, isLoading: false });
+        case actionTypes_1.PRODUCT_LIST_ERROR:
+            return __assign(__assign({}, state), { isLoading: false, error: action.error });
+        case actionTypes_1.PRODUCT_LIST_SUCCESS:
+            return __assign(__assign({}, state), { isLoading: false, error: null, products: __spreadArrays(state.products, action.payload.data), totalCount: action.payload.total, currentPage: action.payload.current_page });
+    }
+    return state;
+};
+exports.default = productListReducer;
+
+//# sourceMappingURL=productList.js.map
 
 /***/ }),
 
@@ -35115,59 +35260,6 @@ exports.default = searchReducer;
 
 /***/ }),
 
-/***/ "./resources/app/es5/redux/Reducers/user.js":
-/*!**************************************************!*\
-  !*** ./resources/app/es5/redux/Reducers/user.js ***!
-  \**************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var __assign = undefined && undefined.__assign || function () {
-    __assign = Object.assign || function (t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) {
-                if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-            }
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var actionTypes_1 = __webpack_require__(/*! ../actionTypes */ "./resources/app/es5/redux/actionTypes.js");
-var initialState = {
-    isLoading: false,
-    error: '',
-    token: null,
-    user: null
-};
-var cartReducer = function cartReducer(state, action) {
-    if (state === void 0) {
-        state = initialState;
-    }
-    switch (action.type) {
-        case actionTypes_1.USER_LOAD_START:
-            return __assign(__assign({}, state), { isLoading: true });
-        case actionTypes_1.USER_LOAD_ERROR:
-            return __assign(__assign({}, state), { isLoading: false, error: action.error });
-        case actionTypes_1.USER_LOAD_SUCCESSFULL:
-            localStorage.setItem('token', action.payload.token);
-            return __assign(__assign({}, initialState), { user: action.payload.user, token: action.payload.token });
-        case actionTypes_1.USER_RESET:
-            return initialState;
-    }
-    return state;
-};
-exports.default = cartReducer;
-
-//# sourceMappingURL=user.js.map
-
-/***/ }),
-
 /***/ "./resources/app/es5/redux/Reducers/verify.js":
 /*!****************************************************!*\
   !*** ./resources/app/es5/redux/Reducers/verify.js ***!
@@ -35205,10 +35297,10 @@ exports.default = verifyReducer;
 
 /***/ }),
 
-/***/ "./resources/app/es5/redux/ThunkActions/Home/thunkFilters.js":
-/*!*******************************************************************!*\
-  !*** ./resources/app/es5/redux/ThunkActions/Home/thunkFilters.js ***!
-  \*******************************************************************/
+/***/ "./resources/app/es5/redux/ThunkActions/App/thunkFilters.js":
+/*!******************************************************************!*\
+  !*** ./resources/app/es5/redux/ThunkActions/App/thunkFilters.js ***!
+  \******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -35299,7 +35391,7 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var filterActions_1 = __webpack_require__(/*! ../../Actions/Home/filterActions */ "./resources/app/es5/redux/Actions/Home/filterActions.js");
+var filterActions_1 = __webpack_require__(/*! ../../Actions/App/filterActions */ "./resources/app/es5/redux/Actions/App/filterActions.js");
 var API_1 = __webpack_require__(/*! ../../../Helpers/API */ "./resources/app/es5/Helpers/API.js");
 var thunkFilter = function thunkFilter() {
     return function (dispatch) {
@@ -35329,10 +35421,10 @@ exports.default = thunkFilter;
 
 /***/ }),
 
-/***/ "./resources/app/es5/redux/ThunkActions/Home/thunkProductList.js":
-/*!***********************************************************************!*\
-  !*** ./resources/app/es5/redux/ThunkActions/Home/thunkProductList.js ***!
-  \***********************************************************************/
+/***/ "./resources/app/es5/redux/ThunkActions/App/thunkInitialize.js":
+/*!*********************************************************************!*\
+  !*** ./resources/app/es5/redux/ThunkActions/App/thunkInitialize.js ***!
+  \*********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -35423,30 +35515,142 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
-var productListActions_1 = __webpack_require__(/*! ../../Actions/Home/productListActions */ "./resources/app/es5/redux/Actions/Home/productListActions.js");
-var API_1 = __webpack_require__(/*! ../../../Helpers/API */ "./resources/app/es5/Helpers/API.js");
-var thunkProductList = function thunkProductList(offset) {
-    if (offset === void 0) {
-        offset = 1;
-    }
-    return function (dispatch, getState) {
+var appActions_1 = __webpack_require__(/*! ../../Actions/appActions */ "./resources/app/es5/redux/Actions/appActions.js");
+var thunkFilters_1 = __webpack_require__(/*! ./thunkFilters */ "./resources/app/es5/redux/ThunkActions/App/thunkFilters.js");
+var thunkUser_1 = __webpack_require__(/*! ./thunkUser */ "./resources/app/es5/redux/ThunkActions/App/thunkUser.js");
+var thunkInitialize = function thunkInitialize() {
+    return function (dispatch) {
         return __awaiter(void 0, void 0, void 0, function () {
-            var selector, filters, productListResponse;
+            var filters, user;
+            return __generator(this, function (_a) {
+                filters = dispatch(thunkFilters_1.default()), user = dispatch(thunkUser_1.default());
+                Promise.all([filters, user]).then(function () {
+                    dispatch(appActions_1.initialize());
+                });
+                return [2];
+            });
+        });
+    };
+};
+exports.default = thunkInitialize;
+
+//# sourceMappingURL=thunkInitialize.js.map
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/ThunkActions/App/thunkUser.js":
+/*!***************************************************************!*\
+  !*** ./resources/app/es5/redux/ThunkActions/App/thunkUser.js ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
+    function adopt(value) {
+        return value instanceof P ? value : new P(function (resolve) {
+            resolve(value);
+        });
+    }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) {
+            try {
+                step(generator.next(value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function rejected(value) {
+            try {
+                step(generator["throw"](value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function step(result) {
+            result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+        }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = undefined && undefined.__generator || function (thisArg, body) {
+    var _ = { label: 0, sent: function sent() {
+            if (t[0] & 1) throw t[1];return t[1];
+        }, trys: [], ops: [] },
+        f,
+        y,
+        t,
+        g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
+        return this;
+    }), g;
+    function verb(n) {
+        return function (v) {
+            return step([n, v]);
+        };
+    }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) {
+            try {
+                if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+                if (y = 0, t) op = [op[0] & 2, t.value];
+                switch (op[0]) {
+                    case 0:case 1:
+                        t = op;break;
+                    case 4:
+                        _.label++;return { value: op[1], done: false };
+                    case 5:
+                        _.label++;y = op[1];op = [0];continue;
+                    case 7:
+                        op = _.ops.pop();_.trys.pop();continue;
+                    default:
+                        if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+                            _ = 0;continue;
+                        }
+                        if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+                            _.label = op[1];break;
+                        }
+                        if (op[0] === 6 && _.label < t[1]) {
+                            _.label = t[1];t = op;break;
+                        }
+                        if (t && _.label < t[2]) {
+                            _.label = t[2];_.ops.push(op);break;
+                        }
+                        if (t[2]) _.ops.pop();
+                        _.trys.pop();continue;
+                }
+                op = body.call(thisArg, _);
+            } catch (e) {
+                op = [6, e];y = 0;
+            } finally {
+                f = t = 0;
+            }
+        }if (op[0] & 5) throw op[1];return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var userActions_1 = __webpack_require__(/*! ../../Actions/App/userActions */ "./resources/app/es5/redux/Actions/App/userActions.js");
+var API_1 = __webpack_require__(/*! ../../../Helpers/API */ "./resources/app/es5/Helpers/API.js");
+var thunkUser = function thunkUser() {
+    return function (dispatch) {
+        return __awaiter(void 0, void 0, void 0, function () {
+            var token, userResponse;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        dispatch(productListActions_1.productListStart());
-                        selector = redux_form_1.getFormValues('productFilter');
-                        filters = selector(getState());
-                        console.log(filters);
-                        return [4, API_1.default.getProducts(filters, offset)];
+                        token = localStorage.getItem('token');
+                        if (!token) return [2];
+                        dispatch(userActions_1.loadUserStart());
+                        return [4, API_1.default.getUser()];
                     case 1:
-                        productListResponse = _a.sent();
-                        if (API_1.default.isError(productListResponse)) {
-                            dispatch(productListActions_1.productListError(productListResponse.message));
+                        userResponse = _a.sent();
+                        if (API_1.default.isError(userResponse)) {
+                            dispatch(userActions_1.loadUserError(userResponse.message));
                         } else {
-                            dispatch(productListActions_1.productListSuccess(productListResponse));
+                            dispatch(userActions_1.loadUserSuccessfull({ user: userResponse, token: token }));
                         }
                         return [2];
                 }
@@ -35454,9 +35658,9 @@ var thunkProductList = function thunkProductList(offset) {
         });
     };
 };
-exports.default = thunkProductList;
+exports.default = thunkUser;
 
-//# sourceMappingURL=thunkProductList.js.map
+//# sourceMappingURL=thunkUser.js.map
 
 /***/ }),
 
@@ -36318,7 +36522,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
 var loginActions_1 = __webpack_require__(/*! ../Actions/loginActions */ "./resources/app/es5/redux/Actions/loginActions.js");
 var API_1 = __webpack_require__(/*! ../../Helpers/API */ "./resources/app/es5/Helpers/API.js");
-var userActions_1 = __webpack_require__(/*! ../Actions/userActions */ "./resources/app/es5/redux/Actions/userActions.js");
+var userActions_1 = __webpack_require__(/*! ../Actions/App/userActions */ "./resources/app/es5/redux/Actions/App/userActions.js");
 var thunkLogin = function thunkLogin(vals, formName) {
     return function (dispatch) {
         return __awaiter(void 0, void 0, void 0, function () {
@@ -36448,7 +36652,7 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var userActions_1 = __webpack_require__(/*! ../Actions/userActions */ "./resources/app/es5/redux/Actions/userActions.js");
+var userActions_1 = __webpack_require__(/*! ../Actions/App/userActions */ "./resources/app/es5/redux/Actions/App/userActions.js");
 var API_1 = __webpack_require__(/*! ../../Helpers/API */ "./resources/app/es5/Helpers/API.js");
 var thunkLogout = function thunkLogout() {
     return function (dispatch) {
@@ -36475,6 +36679,137 @@ var thunkLogout = function thunkLogout() {
 exports.default = thunkLogout;
 
 //# sourceMappingURL=thunkLogout.js.map
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/ThunkActions/thunkProductList.js":
+/*!******************************************************************!*\
+  !*** ./resources/app/es5/redux/ThunkActions/thunkProductList.js ***!
+  \******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
+    function adopt(value) {
+        return value instanceof P ? value : new P(function (resolve) {
+            resolve(value);
+        });
+    }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) {
+            try {
+                step(generator.next(value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function rejected(value) {
+            try {
+                step(generator["throw"](value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function step(result) {
+            result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+        }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = undefined && undefined.__generator || function (thisArg, body) {
+    var _ = { label: 0, sent: function sent() {
+            if (t[0] & 1) throw t[1];return t[1];
+        }, trys: [], ops: [] },
+        f,
+        y,
+        t,
+        g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
+        return this;
+    }), g;
+    function verb(n) {
+        return function (v) {
+            return step([n, v]);
+        };
+    }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) {
+            try {
+                if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+                if (y = 0, t) op = [op[0] & 2, t.value];
+                switch (op[0]) {
+                    case 0:case 1:
+                        t = op;break;
+                    case 4:
+                        _.label++;return { value: op[1], done: false };
+                    case 5:
+                        _.label++;y = op[1];op = [0];continue;
+                    case 7:
+                        op = _.ops.pop();_.trys.pop();continue;
+                    default:
+                        if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+                            _ = 0;continue;
+                        }
+                        if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+                            _.label = op[1];break;
+                        }
+                        if (op[0] === 6 && _.label < t[1]) {
+                            _.label = t[1];t = op;break;
+                        }
+                        if (t && _.label < t[2]) {
+                            _.label = t[2];_.ops.push(op);break;
+                        }
+                        if (t[2]) _.ops.pop();
+                        _.trys.pop();continue;
+                }
+                op = body.call(thisArg, _);
+            } catch (e) {
+                op = [6, e];y = 0;
+            } finally {
+                f = t = 0;
+            }
+        }if (op[0] & 5) throw op[1];return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
+var productListActions_1 = __webpack_require__(/*! ../Actions/productListActions */ "./resources/app/es5/redux/Actions/productListActions.js");
+var API_1 = __webpack_require__(/*! ../../Helpers/API */ "./resources/app/es5/Helpers/API.js");
+var thunkProductList = function thunkProductList(offset) {
+    if (offset === void 0) {
+        offset = 1;
+    }
+    return function (dispatch, getState) {
+        return __awaiter(void 0, void 0, void 0, function () {
+            var selector, filters, productListResponse;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        dispatch(productListActions_1.productListStart());
+                        selector = redux_form_1.getFormValues('productFilter');
+                        filters = selector(getState());
+                        console.log(filters);
+                        return [4, API_1.default.getProducts(filters, offset)];
+                    case 1:
+                        productListResponse = _a.sent();
+                        if (API_1.default.isError(productListResponse)) {
+                            dispatch(productListActions_1.productListError(productListResponse.message));
+                        } else {
+                            dispatch(productListActions_1.productListSuccess(productListResponse));
+                        }
+                        return [2];
+                }
+            });
+        });
+    };
+};
+exports.default = thunkProductList;
+
+//# sourceMappingURL=thunkProductList.js.map
 
 /***/ }),
 
@@ -37172,6 +37507,7 @@ exports.CHANGE_ERROR = 'CHANGE_ERROR';
 exports.SEARCH_START = 'SEARCH_START';
 exports.SEARCH_SUCCESS = 'SEARCH_SUCCESS';
 exports.SEARCH_ERROR = 'SEARCH_ERROR';
+exports.APP_INITIALIZED = 'APP_INITIALIZED';
 
 //# sourceMappingURL=actionTypes.js.map
 

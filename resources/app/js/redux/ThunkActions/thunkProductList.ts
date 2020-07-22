@@ -1,15 +1,15 @@
 import {ThunkAction, ThunkDispatch} from 'redux-thunk';
 import {getFormValues} from 'redux-form';
 
-import {RootState} from '../../Reducers';
-import {ProductListActions} from '../../Reducers/Home/productList';
+import {RootState} from '../Reducers';
+import {ProductListActions} from '../Reducers/productList';
 import {
 	productListError,
 	productListStart,
 	productListSuccess
-} from '../../Actions/Home/productListActions';
-import API from '../../../Helpers/API';
-import {IGoodsFormData} from '../../../components/HomePage/Goods/GoodsForm';
+} from '../Actions/productListActions';
+import API from '../../Helpers/API';
+import {IGoodsFormData} from '../../components/HomePage/Goods/GoodsForm';
 
 
 export type ProductListThunkAction = ThunkAction<void, RootState, unknown, ProductListActions>;

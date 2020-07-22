@@ -1,18 +1,19 @@
 import {combineReducers} from 'redux';
 import {reducer as formReducer} from 'redux-form';
 
-import cartReducer from './cart';
+import cartReducer from './App/cart';
 import categoryReducer from './category';
 import registerReducer from './register';
 import verifyReducer from './verify';
 import loginReducer from './login';
-import userReducer from './user';
+import userReducer from './App/user';
 import resetReducer from './reset';
 import singleReducer from './Single';
-import productListReducer from './Home/productList';
-import filterReducer from './Home/filter';
+import productListReducer from './productList';
+import filterReducer from './App/filter';
 import changeReducer from './change';
 import searchReducer from './search';
+import appReducer from './App/app';
 
 
 const storeReducer = combineReducers({
@@ -28,6 +29,7 @@ const storeReducer = combineReducers({
 	filter: filterReducer,
 	change: changeReducer,
 	search: searchReducer,
+	app: appReducer,
 	form: formReducer
 });
 
