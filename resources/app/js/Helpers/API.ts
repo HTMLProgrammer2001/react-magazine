@@ -12,6 +12,8 @@ import {IReviewFormData} from '../components/SinglePage/Reviews/ReviewForm';
 import {ICategory} from '../Interfaces/ICategory';
 import {IGoodsFormData} from '../components/HomePage/Goods/GoodsForm';
 import {IFilter} from '../Interfaces/IFilter';
+import {IChangeFormData} from '../components/ChangePasswordPage/ChangeForm';
+import {ISearchResponse} from '../Interfaces/Responses/ISearchResponse';
 
 
 class API{
@@ -239,6 +241,47 @@ class API{
 
 		try{
 			response = await this.clientAPI.get<IFilter>('/productFilters');
+		}
+		catch (err) {
+			console.log(err.response.data);
+			return err as AxiosError;
+		}
+
+		return response.data;
+	}
+
+	static async changePassword(id: string, vals: IChangeFormData):
+		Promise<{success: boolean} | AxiosError>{
+
+		let response: AxiosResponse;
+
+		try{
+			response = await this.clientAPI.post<IChangeFormData>('/changePassword', {
+				...vals
+			}, {
+				params: {
+					id
+				}
+			});
+		}
+		catch (err) {
+			console.log(err.response.data);
+			return err as AxiosError;
+		}
+
+		return response.data;
+	}
+
+	static async search(text: string, page: number = 1): Promise<ISearchResponse | AxiosError>{
+		let response: AxiosResponse;
+
+		try{
+			response = await this.clientAPI.get<ISearchResponse>('/search', {
+				params: {
+					search: text,
+					page
+				}
+			});
 		}
 		catch (err) {
 			console.log(err.response.data);

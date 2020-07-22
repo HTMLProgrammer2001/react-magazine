@@ -62,10 +62,9 @@ function scss(){
 function javascript(){
 	return gulp.src(`${SRC_PATH}/js/**/*.t*`)
 
-	//Linters
-	// .pipe(eslint())
-	// .pipe(eslint.formatEach('compact', process.stderr))
-	// .pipe(eslint.failAfterError())
+		//Linters
+		// .pipe(eslint())
+		// .pipe(eslint.formatEach('compact', process.stderr))
 
 		//Create source maps
 		.pipe(sourceMap.init())

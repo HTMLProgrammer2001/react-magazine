@@ -1,6 +1,7 @@
 import * as React from 'react';
-import {reduxForm, InjectedFormProps, Field, formValueSelector} from 'redux-form';
+import {reduxForm, InjectedFormProps, Field, formValueSelector, change, submit} from 'redux-form';
 import {connect, ConnectedProps} from 'react-redux';
+import {withRouter, RouteComponentProps} from 'react-router';
 
 import {RootState} from '../../../../redux/Reducers';
 import CheckboxGroup from '../../../FormElements/CheckboxGroup';
@@ -28,57 +29,79 @@ export type IGoodsFormData = {
 	}
 }
 
-type IOwnProps = ConnectedProps<typeof connected>;
+type IOwnProps = ConnectedProps<typeof connected> & RouteComponentProps<{}>;
 
-const GoodsForm: React.FC<InjectedFormProps<IGoodsFormData, IOwnProps> & IOwnProps> = (props) => (
-	<form className="goods__form" onSubmit={props.handleSubmit}>
-		<div className="goods__form-head">Product Categories</div>
-		<div className="goods__categories">
+const GoodsForm: React.FC<InjectedFormProps<IGoodsFormData, IOwnProps> & IOwnProps> = (props) => {
+	React.useEffect(() => {
+		const params = new URLSearchParams(props.location.search);
+		const catValue: {[key: number]: boolean} = {};
+
+		if(params.get('category')){
+			const cat = props.filters!.categories!.find((item) => (
+				item.slug == params.get('category')
+			));
+
+			if(cat)
+				catValue[cat.id] = true;
+
+			console.log(catValue);
+
+			props.dispatch(change('productFilter', 'categories', catValue));
+		}
+
+		props.dispatch(submit('productFilter'));
+	}, []);
+
+	return (
+		<form className="goods__form" onSubmit={props.handleSubmit}>
+			<div className="goods__form-head">Product Categories</div>
+			<div className="goods__categories">
+				<Field
+					component={CheckboxGroup}
+					name="categories"
+					formName={props.form}
+					options={props.filters!.categories.map((cat) => ({
+						text: cat.name,
+						value: cat.id
+					}))}
+				/>
+			</div>
+
+			<div className="goods__form-head">Filter by color</div>
+			<div className="goods__color">
+				<Field
+					component={ColorGroup}
+					name="color"
+					formName={props.form}
+					colors={props.filters!.colors}
+				/>
+			</div>
+
+			<div className="goods__form-head">Filter by size</div>
 			<Field
-				component={CheckboxGroup}
-				name="categories"
+				component={SizeGroup}
+				name="size"
 				formName={props.form}
-				options={props.filters!.categories.map((cat) => ({
-					text: cat.name,
-					value: cat.id
-				}))}
+				sizes={['XS', 'S', 'M', 'L', 'XL']}
 			/>
-		</div>
 
-		<div className="goods__form-head">Filter by color</div>
-		<div className="goods__color">
+			<div className="goods__form-head">Filter by price</div>
 			<Field
-				component={ColorGroup}
-				name="color"
+				component={Slider}
+				name="priceRange"
 				formName={props.form}
-				colors={props.filters!.colors}
+				min={props.filters!.priceRange.from}
+				max={props.filters!.priceRange.to}
 			/>
-		</div>
 
-		<div className="goods__form-head">Filter by size</div>
-		<Field
-			component={SizeGroup}
-			name="size"
-			formName={props.form}
-			sizes={['XS', 'S', 'M', 'L', 'XL']}
-		/>
+			<div className="goods__price-range">
+				Price: ${props.range?.from.toFixed(2)} - ${props.range?.to.toFixed(2)}
+			</div>
 
-		<div className="goods__form-head">Filter by price</div>
-		<Field
-			component={Slider}
-			name="priceRange"
-			formName={props.form}
-			min={props.filters!.priceRange.from}
-			max={props.filters!.priceRange.to}
-		/>
-
-		<div className="goods__price-range">
-			Price: ${props.range?.from.toFixed(2)} - ${props.range?.to.toFixed(2)}
-		</div>
-
-		<button type="submit" className="goods__form-button">Filter</button>
-	</form>
-);
+			<button type="submit" className="goods__form-button">Filter</button>
+		</form>
+	);
+};
 
 const GoodsFormRedux = reduxForm<IGoodsFormData, IOwnProps>({
 	form: 'productFilter',
@@ -93,5 +116,4 @@ const GoodsFormRedux = reduxForm<IGoodsFormData, IOwnProps>({
 	}
 })(GoodsForm);
 
-export default connected(GoodsFormRedux);
-
+export default withRouter(connected(GoodsFormRedux));

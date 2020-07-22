@@ -13,7 +13,9 @@ const Newsletter: React.FC<InjectedFormProps<{}>> = (props) => (
 						Get timely updates from your favorite products
 					</div>
 
-					<form className="subscribe__form" onSubmit={props.handleSubmit}>
+					<form className="subscribe__form"
+						  onSubmit={(vals: any) => console.log(vals)}
+					>
 						<div className="subscribe__form-wrap">
 							<i className="fas fa-envelope subscribe__icon"/>
 

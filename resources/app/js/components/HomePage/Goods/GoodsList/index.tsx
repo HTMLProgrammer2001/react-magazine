@@ -19,11 +19,6 @@ const connected = connect(mapStateToProps, {
 type IGoodsProps = ConnectedProps<typeof connected>;
 
 const GoodsList: React.FC<IGoodsProps> = (props) => {
-	React.useEffect(() => {
-		if(!props.loadedGoods)
-			props.loadGoods();
-	}, []);
-
 	return (
 		<div className="goods__items">
 			<GoodsHeader
@@ -32,11 +27,12 @@ const GoodsList: React.FC<IGoodsProps> = (props) => {
 
 			<div className="goods__list">
 				{
-					props.goodsListState.products.map((item) => (
-						<GoodItem product={item} key={item.id}/>
-					))
-					||
-					<div>No products that accept this filter</div>
+					props.loadedGoods ?
+						props.goodsListState.products.map((item) => (
+							<GoodItem product={item} key={item.id}/>
+						))
+						:
+						<div>No products that accept this filter</div>
 				}
 			</div>
 

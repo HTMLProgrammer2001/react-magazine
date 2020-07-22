@@ -7,6 +7,7 @@ use App\Notifications\VerifyApiEmail;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
@@ -49,6 +50,13 @@ class User extends Authenticatable
     public function changeEmail($newEmail){
         $this->email = $newEmail;
         $this->email_verified_at = null;
+    }
+
+    public function generateToken(){
+        $newToken = Str::random();
+        $this->token = $newToken;
+
+        return $newToken;
     }
 
     public function setPassword($password){

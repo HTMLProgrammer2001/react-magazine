@@ -27,10 +27,7 @@ const ResetPage: React.FC<ConnectedProps<typeof connected>> = (props) => {
 
 	let onSubmit = (vals: IResetFormData) => {
 		props.reset(vals);
-		console.log(vals);
 	};
-
-	console.log(props.resetState);
 
 	return (
 		<React.Fragment>

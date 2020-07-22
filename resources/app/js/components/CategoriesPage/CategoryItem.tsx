@@ -9,7 +9,7 @@ type ICategoryItemProps = {
 };
 
 const CategoryItem: React.FC<ICategoryItemProps> = (props) => (
-	<Link to={`/categories/${props.category.slug}`}
+	<Link to={`/?category=${props.category.slug}`}
 		  className="categories__item">
 
 		<img

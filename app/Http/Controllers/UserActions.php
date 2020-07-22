@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ChangeRequest;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\ResetRequest;
@@ -83,15 +84,18 @@ class UserActions extends Controller
         $user = User::all()->where('email', $request->input('email'))->first();
 
         //generate token
-        $newPassword = Str::random(16);
-        $user->setPassword($newPassword);
+        $token = $user->generateToken();
         $user->save();
 
         //notify user
-        $user->sendApiResetEmail($newPassword);
+        $user->sendApiResetEmail($token);
 
         return response()->json([
             'success' => 'Reset password email was sent'
         ]);
+    }
+
+    public function changePassword(ChangeRequest $request){
+
     }
 }

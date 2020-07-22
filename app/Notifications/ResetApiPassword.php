@@ -10,10 +10,10 @@ class ResetApiPassword extends ResetPassword
 {
     use Queueable;
 
-    public function __construct($newPassword)
+    public function __construct($token)
     {
-        parent::__construct($newPassword);
-        $this->pass = $newPassword;
+        parent::__construct($token);
+        $this->pass = $token;
     }
 
     public function via($notifiable)
@@ -26,6 +26,7 @@ class ResetApiPassword extends ResetPassword
         return (new MailMessage)
             ->subject('Reset password in magazine')
             ->line('You are receiving this mail because we received password reset request')
-            ->line('Your new password is ' . $this->pass);
+            ->line('For reseting password visit this link ')
+            ->action('Reset', url('/reset/' . $this->token));
     }
 }

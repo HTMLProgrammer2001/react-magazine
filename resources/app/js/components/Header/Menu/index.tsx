@@ -5,7 +5,7 @@ import {connect, ConnectedProps} from 'react-redux';
 
 //My components
 import Cart from './Cart';
-import Search from './Search';
+import Search from './Search/';
 import Burger from './Burger';
 import {RootState} from '../../../redux/Reducers';
 import thunkLogout from '../../../redux/ThunkActions/thunkLogout';

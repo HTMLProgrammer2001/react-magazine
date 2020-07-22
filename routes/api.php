@@ -43,3 +43,11 @@ Route::get('/verify/{id}', 'VerifyController@verify')
 
 Route::get('/resend', 'VerifyController@resend')
     ->name('verificationapi.resend');
+
+Route::post('/subscribe', 'SubscribeController@createSubscribe');
+Route::put('/subscribe', 'SubscribeController@verifySubscribe');
+Route::delete('/subscribe', 'SubscribeController@unSubscribe');
+
+Route::post('/changePassword', 'UserActions@changePassword');
+
+Route::get('/search', 'SearchController');

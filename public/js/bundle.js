@@ -30969,6 +30969,18 @@ module.exports = function (module) {
 "use strict";
 
 
+var __assign = undefined && undefined.__assign || function () {
+    __assign = Object.assign || function (t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) {
+                if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+            }
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
     function adopt(value) {
         return value instanceof P ? value : new P(function (resolve) {
@@ -31364,6 +31376,60 @@ var API = function () {
             });
         });
     };
+    API.changePassword = function (id, vals) {
+        return __awaiter(this, void 0, void 0, function () {
+            var response, err_14;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2,, 3]);
+                        return [4, this.clientAPI.post('/changePassword', __assign({}, vals), {
+                            params: {
+                                id: id
+                            }
+                        })];
+                    case 1:
+                        response = _a.sent();
+                        return [3, 3];
+                    case 2:
+                        err_14 = _a.sent();
+                        console.log(err_14.response.data);
+                        return [2, err_14];
+                    case 3:
+                        return [2, response.data];
+                }
+            });
+        });
+    };
+    API.search = function (text, page) {
+        if (page === void 0) {
+            page = 1;
+        }
+        return __awaiter(this, void 0, void 0, function () {
+            var response, err_15;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2,, 3]);
+                        return [4, this.clientAPI.get('/search', {
+                            params: {
+                                search: text,
+                                page: page
+                            }
+                        })];
+                    case 1:
+                        response = _a.sent();
+                        return [3, 3];
+                    case 2:
+                        err_15 = _a.sent();
+                        console.log(err_15.response.data);
+                        return [2, err_15];
+                    case 3:
+                        return [2, response.data];
+                }
+            });
+        });
+    };
     API.isError = function (arg) {
         return 'response' in arg;
     };
@@ -31632,7 +31698,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 var CategoryItem = function CategoryItem(props) {
-    return React.createElement(react_router_dom_1.Link, { to: "/categories/" + props.category.slug, className: "categories__item" }, React.createElement("img", { className: "categories__img", src: "/image/" + props.category.image, alt: "Category" }), React.createElement("div", { className: "categories__products center w-100", style: { flexDirection: 'column' } }, React.createElement("div", null, props.category.name), React.createElement("div", null, props.category.productCount, " products")));
+    return React.createElement(react_router_dom_1.Link, { to: "/?category=" + props.category.slug, className: "categories__item" }, React.createElement("img", { className: "categories__img", src: "/image/" + props.category.image, alt: "Category" }), React.createElement("div", { className: "categories__products center w-100", style: { flexDirection: 'column' } }, React.createElement("div", null, props.category.name), React.createElement("div", null, props.category.productCount, " products")));
 };
 exports.default = CategoryItem;
 
@@ -31672,6 +31738,72 @@ var CategoriesPage = function CategoriesPage(props) {
     return React.createElement(React.Fragment, null, React.createElement(Paginate_1.default, { paths: [{ name: 'Home', path: '/' }, { name: 'Categories', path: '/categories' }] }), props.categoriesState.isLoading && React.createElement("div", null, "Loading..."), props.categoriesState.error && React.createElement("div", { className: "red" }, props.categoriesState.error), React.createElement(CategoriesList_1.default, { categories: props.categoriesState.categories }));
 };
 exports.default = connected(CategoriesPage);
+
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ "./resources/app/es5/components/ChangePasswordPage/ChangeForm.js":
+/*!***********************************************************************!*\
+  !*** ./resources/app/es5/components/ChangePasswordPage/ChangeForm.js ***!
+  \***********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
+var InputElement_1 = __webpack_require__(/*! ../FormElements/InputElement */ "./resources/app/es5/components/FormElements/InputElement.js");
+var ChangeForm = function ChangeForm(props) {
+    return React.createElement("div", { className: "container" }, React.createElement("form", { onSubmit: props.handleSubmit, className: "login my-pad" }, React.createElement("div", { className: "login__head" }, "Change password"), props.changeData.error && React.createElement("div", { className: "red" }, props.changeData.error), React.createElement(redux_form_1.Field, { component: InputElement_1.default, type: "password", name: "password", placeholder: "Password", required: true }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, type: "password", name: "password_confirmation", placeholder: "Password confirmation", required: true }), React.createElement("div", { className: "row space-between my-pad w-100" }, React.createElement("div", null), React.createElement("button", { type: "submit", className: "check__but" }, props.changeData.isLoading ? 'Loading...' : 'Change'))));
+};
+exports.default = redux_form_1.reduxForm({
+    form: 'change'
+})(ChangeForm);
+
+//# sourceMappingURL=ChangeForm.js.map
+
+/***/ }),
+
+/***/ "./resources/app/es5/components/ChangePasswordPage/index.js":
+/*!******************************************************************!*\
+  !*** ./resources/app/es5/components/ChangePasswordPage/index.js ***!
+  \******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+var react_router_1 = __webpack_require__(/*! react-router */ "./node_modules/react-router/esm/react-router.js");
+var Paginate_1 = __webpack_require__(/*! ../Paginate */ "./resources/app/es5/components/Paginate.js");
+var ChangeForm_1 = __webpack_require__(/*! ./ChangeForm */ "./resources/app/es5/components/ChangePasswordPage/ChangeForm.js");
+var thunkChange_1 = __webpack_require__(/*! ../../redux/ThunkActions/thunkChange */ "./resources/app/es5/redux/ThunkActions/thunkChange.js");
+var mapStateToProps = function mapStateToProps(state) {
+    return {
+        changeFormState: state.change
+    };
+};
+var connected = react_redux_1.connect(mapStateToProps, {
+    changePassword: thunkChange_1.default
+});
+var ChangePage = function ChangePage(props) {
+    var submit = function submit(values) {
+        console.log(values);
+        props.changePassword(props.match.params.id, values, 'change');
+    };
+    React.useEffect(function () {
+        document.title = 'Change password';
+    }, []);
+    return React.createElement(React.Fragment, null, React.createElement(Paginate_1.default, { paths: [{ name: 'Home', path: '/' }, { name: 'Change password', path: '/change' }] }), React.createElement(ChangeForm_1.default, { onSubmit: submit, changeData: props.changeFormState }));
+};
+exports.default = connected(react_router_1.withRouter(ChangePage));
 
 //# sourceMappingURL=index.js.map
 
@@ -31900,8 +32032,10 @@ var CategoriesPage_1 = __webpack_require__(/*! ./CategoriesPage/ */ "./resources
 var CheckoutPage_1 = __webpack_require__(/*! ./CheckoutPage/ */ "./resources/app/es5/components/CheckoutPage/index.js");
 var SinglePage_1 = __webpack_require__(/*! ./SinglePage/ */ "./resources/app/es5/components/SinglePage/index.js");
 var VerifyPage_1 = __webpack_require__(/*! ./VerifyPage */ "./resources/app/es5/components/VerifyPage/index.js");
+var ChangePasswordPage_1 = __webpack_require__(/*! ./ChangePasswordPage */ "./resources/app/es5/components/ChangePasswordPage/index.js");
+var SearchPage_1 = __webpack_require__(/*! ./SearchPage */ "./resources/app/es5/components/SearchPage/index.js");
 var Content = function Content() {
-    return React.createElement(react_router_dom_1.Switch, null, React.createElement(react_router_dom_1.Route, { path: '/', exact: true, component: HomePage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/login', exact: true, component: LoginPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/register', exact: true, component: RegisterPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/verify/:id', exact: true, component: VerifyPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/cart', exact: true, component: CartPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/reset', exact: true, component: ResetPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/categories', exact: true, component: CategoriesPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/checkout', exact: true, component: CheckoutPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/products/:slug', exact: true, component: SinglePage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/', component: NotFoundPage_1.default }));
+    return React.createElement(react_router_dom_1.Switch, null, React.createElement(react_router_dom_1.Route, { path: '/', exact: true, component: HomePage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/login', exact: true, component: LoginPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/register', exact: true, component: RegisterPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/verify/:id', exact: true, component: VerifyPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/reset', exact: true, component: ResetPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/reset/:id', exact: true, component: ChangePasswordPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/cart', exact: true, component: CartPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/categories', exact: true, component: CategoriesPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/checkout', exact: true, component: CheckoutPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/products/:slug', exact: true, component: SinglePage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/search', exact: true, component: SearchPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/', component: NotFoundPage_1.default }));
 };
 exports.default = Content;
 
@@ -32566,10 +32700,35 @@ exports.default = connected(Cart);
 
 /***/ }),
 
-/***/ "./resources/app/es5/components/Header/Menu/Search.js":
-/*!************************************************************!*\
-  !*** ./resources/app/es5/components/Header/Menu/Search.js ***!
-  \************************************************************/
+/***/ "./resources/app/es5/components/Header/Menu/Search/SearchForm.js":
+/*!***********************************************************************!*\
+  !*** ./resources/app/es5/components/Header/Menu/Search/SearchForm.js ***!
+  \***********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
+var InputElement_1 = __webpack_require__(/*! ../../../FormElements/InputElement */ "./resources/app/es5/components/FormElements/InputElement.js");
+var SearchForm = function SearchForm(props) {
+    return React.createElement("form", { onSubmit: props.handleSubmit, noValidate: true }, React.createElement(redux_form_1.Field, { component: InputElement_1.default, name: "search", type: "text", placeholder: "Search", required: true }));
+};
+exports.default = redux_form_1.reduxForm({
+    form: 'search'
+})(SearchForm);
+
+//# sourceMappingURL=SearchForm.js.map
+
+/***/ }),
+
+/***/ "./resources/app/es5/components/Header/Menu/Search/index.js":
+/*!******************************************************************!*\
+  !*** ./resources/app/es5/components/Header/Menu/Search/index.js ***!
+  \******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -32579,19 +32738,25 @@ exports.default = connected(Cart);
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var classnames_1 = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+var SearchForm_1 = __webpack_require__(/*! ./SearchForm */ "./resources/app/es5/components/Header/Menu/Search/SearchForm.js");
 var Search = function Search(props) {
     var searchClasses = classnames_1.default('header__icon dropdown', {
         active: props.openMenu == 'search'
     });
-    return React.createElement(React.Fragment, null, React.createElement("span", { className: searchClasses }, React.createElement("i", { className: "fas fa-search dropdown__elem", onClick: function onClick() {
+    var onSubmit = function onSubmit(values) {
+        console.log(values);
+        props.history.push("/search?search=" + values.search);
+    };
+    return React.createElement("span", { className: searchClasses }, React.createElement("i", { className: "fas fa-search dropdown__elem", onClick: function onClick() {
             props.changeOpen(function (prev) {
                 return prev == 'search' ? '' : 'search';
             });
-        } }), React.createElement("div", { className: "dropdown__body" }, React.createElement("div", { className: "dropdown__content" }, React.createElement("div", { className: "input" }, React.createElement("input", { className: "input__elem", required: true }), React.createElement("label", { className: "input__label" }, "Search"), React.createElement("div", { className: "input__line" }))))));
+        } }), React.createElement("div", { className: "dropdown__body" }, React.createElement("div", { className: "dropdown__content" }, React.createElement(SearchForm_1.default, { onSubmit: onSubmit }))));
 };
-exports.default = Search;
+exports.default = react_router_dom_1.withRouter(Search);
 
-//# sourceMappingURL=Search.js.map
+//# sourceMappingURL=index.js.map
 
 /***/ }),
 
@@ -32611,7 +32776,7 @@ var classnames_1 = __webpack_require__(/*! classnames */ "./node_modules/classna
 var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 var Cart_1 = __webpack_require__(/*! ./Cart */ "./resources/app/es5/components/Header/Menu/Cart/index.js");
-var Search_1 = __webpack_require__(/*! ./Search */ "./resources/app/es5/components/Header/Menu/Search.js");
+var Search_1 = __webpack_require__(/*! ./Search/ */ "./resources/app/es5/components/Header/Menu/Search/index.js");
 var Burger_1 = __webpack_require__(/*! ./Burger */ "./resources/app/es5/components/Header/Menu/Burger.js");
 var thunkLogout_1 = __webpack_require__(/*! ../../../redux/ThunkActions/thunkLogout */ "./resources/app/es5/redux/ThunkActions/thunkLogout.js");
 var mapStateToProps = function mapStateToProps(state) {
@@ -32682,6 +32847,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
 var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+var react_router_1 = __webpack_require__(/*! react-router */ "./node_modules/react-router/esm/react-router.js");
 var CheckboxGroup_1 = __webpack_require__(/*! ../../../FormElements/CheckboxGroup */ "./resources/app/es5/components/FormElements/CheckboxGroup.js");
 var ColorGroup_1 = __webpack_require__(/*! ../../../FormElements/ColorGroup */ "./resources/app/es5/components/FormElements/ColorGroup.js");
 var SizeGroup_1 = __webpack_require__(/*! ../../../FormElements/SizeGroup */ "./resources/app/es5/components/FormElements/SizeGroup.js");
@@ -32695,6 +32861,19 @@ var connected = react_redux_1.connect(function (state) {
 });
 var GoodsForm = function GoodsForm(props) {
     var _a, _b;
+    React.useEffect(function () {
+        var params = new URLSearchParams(props.location.search);
+        var catValue = {};
+        if (params.get('category')) {
+            var cat = props.filters.categories.find(function (item) {
+                return item.slug == params.get('category');
+            });
+            if (cat) catValue[cat.id] = true;
+            console.log(catValue);
+            props.dispatch(redux_form_1.change('productFilter', 'categories', catValue));
+        }
+        props.dispatch(redux_form_1.submit('productFilter'));
+    }, []);
     return React.createElement("form", { className: "goods__form", onSubmit: props.handleSubmit }, React.createElement("div", { className: "goods__form-head" }, "Product Categories"), React.createElement("div", { className: "goods__categories" }, React.createElement(redux_form_1.Field, { component: CheckboxGroup_1.default, name: "categories", formName: props.form, options: props.filters.categories.map(function (cat) {
             return {
                 text: cat.name,
@@ -32714,7 +32893,7 @@ var GoodsFormRedux = redux_form_1.reduxForm({
         }
     }
 })(GoodsForm);
-exports.default = connected(GoodsFormRedux);
+exports.default = react_router_1.withRouter(connected(GoodsFormRedux));
 
 //# sourceMappingURL=index.js.map
 
@@ -32823,12 +33002,9 @@ var connected = react_redux_1.connect(mapStateToProps, {
     loadGoods: thunkProductList_1.default
 });
 var GoodsList = function GoodsList(props) {
-    React.useEffect(function () {
-        if (!props.loadedGoods) props.loadGoods();
-    }, []);
-    return React.createElement("div", { className: "goods__items" }, React.createElement(GoodsHeader_1.default, { loaded: props.loadedGoods, total: props.goodsListState.totalCount }), React.createElement("div", { className: "goods__list" }, props.goodsListState.products.map(function (item) {
+    return React.createElement("div", { className: "goods__items" }, React.createElement(GoodsHeader_1.default, { loaded: props.loadedGoods, total: props.goodsListState.totalCount }), React.createElement("div", { className: "goods__list" }, props.loadedGoods ? props.goodsListState.products.map(function (item) {
         return React.createElement(GoodItem_1.default, { product: item, key: item.id });
-    }) || React.createElement("div", null, "No products that accept this filter")), props.loadedGoods == props.goodsListState.totalCount && !props.goodsListState.isLoading ? false : React.createElement("div", { className: "goods__list-load" }, React.createElement("button", { type: "button", className: "goods__list-more", onClick: function onClick() {
+    }) : React.createElement("div", null, "No products that accept this filter")), props.loadedGoods == props.goodsListState.totalCount && !props.goodsListState.isLoading ? false : React.createElement("div", { className: "goods__list-load" }, React.createElement("button", { type: "button", className: "goods__list-more", onClick: function onClick() {
             props.loadGoods(props.goodsListState.currentPage + 1);
         } }, props.goodsListState.isLoading ? 'Loading...' : 'Load More')));
 };
@@ -33025,7 +33201,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
 var Newsletter = function Newsletter(props) {
-    return React.createElement("div", { className: "subscribe" }, React.createElement("div", { className: "container" }, React.createElement("div", { className: "subscribe__wrap" }, React.createElement("div", { className: "subscribe__content" }, React.createElement("div", { className: "subscribe__head" }, "Newsletter"), React.createElement("div", { className: "subscribe__desc" }, "Get timely updates from your favorite products"), React.createElement("form", { className: "subscribe__form", onSubmit: props.handleSubmit }, React.createElement("div", { className: "subscribe__form-wrap" }, React.createElement("i", { className: "fas fa-envelope subscribe__icon" }), React.createElement(redux_form_1.Field, { component: "input", name: "email", className: "subscribe__email", placeholder: "Enter your email" })), React.createElement("button", { type: "submit", className: "subscribe__but" }, React.createElement("i", { className: "fas fa-paper-plane" })))))));
+    return React.createElement("div", { className: "subscribe" }, React.createElement("div", { className: "container" }, React.createElement("div", { className: "subscribe__wrap" }, React.createElement("div", { className: "subscribe__content" }, React.createElement("div", { className: "subscribe__head" }, "Newsletter"), React.createElement("div", { className: "subscribe__desc" }, "Get timely updates from your favorite products"), React.createElement("form", { className: "subscribe__form", onSubmit: function onSubmit(vals) {
+            return console.log(vals);
+        } }, React.createElement("div", { className: "subscribe__form-wrap" }, React.createElement("i", { className: "fas fa-envelope subscribe__icon" }), React.createElement(redux_form_1.Field, { component: "input", name: "email", className: "subscribe__email", placeholder: "Enter your email" })), React.createElement("button", { type: "submit", className: "subscribe__but" }, React.createElement("i", { className: "fas fa-paper-plane" })))))));
 };
 exports.default = redux_form_1.reduxForm({
     form: 'newsletter'
@@ -33232,12 +33410,50 @@ var ResetPage = function ResetPage(props) {
     }, []);
     var onSubmit = function onSubmit(vals) {
         props.reset(vals);
-        console.log(vals);
     };
-    console.log(props.resetState);
     return React.createElement(React.Fragment, null, React.createElement(Paginate_1.default, { paths: [{ name: 'Home', path: '/' }, { name: 'Reset password', path: '/reset' }] }), React.createElement(ResetForm_1.default, { onSubmit: onSubmit, resetState: props.resetState }));
 };
 exports.default = connected(ResetPage);
+
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ "./resources/app/es5/components/SearchPage/index.js":
+/*!**********************************************************!*\
+  !*** ./resources/app/es5/components/SearchPage/index.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+var Paginate_1 = __webpack_require__(/*! ../Paginate */ "./resources/app/es5/components/Paginate.js");
+var thunkSearch_1 = __webpack_require__(/*! ../../redux/ThunkActions/thunkSearch */ "./resources/app/es5/redux/ThunkActions/thunkSearch.js");
+var mapStateToProps = function mapStateToProps(state) {
+    return {
+        searchState: state.search,
+        productCount: state.search.products.length
+    };
+};
+var connected = react_redux_1.connect(mapStateToProps, {
+    loadSearch: thunkSearch_1.default
+});
+var SearchPage = function SearchPage(props) {
+    React.useEffect(function () {
+        props.loadSearch(props.location.search.split('=')[1]);
+    }, []);
+    return React.createElement(React.Fragment, null, React.createElement(Paginate_1.default, { paths: [{ name: 'Home', path: '/' }, { name: 'Search', path: '/search' }] }), React.createElement("div", null, React.createElement("div", null, "Loaded ", props.productCount, " of ", props.searchState.totalCount), props.productCount ? props.searchState.products.map(function (item) {
+        return React.createElement("div", { key: item.id }, item.name);
+    }) : React.createElement("div", null, "No products was found for ", props.searchState.search)), props.searchState.error && React.createElement("div", null, props.searchState.error), props.productCount == props.searchState.totalCount && !props.searchState.isLoading ? false : React.createElement("div", { className: "goods__list-load" }, React.createElement("button", { type: "button", className: "goods__list-more", onClick: function onClick() {
+            props.loadSearch(props.searchState.search, props.searchState.currentPage + 1);
+        } }, props.searchState.isLoading ? 'Loading...' : 'Load More')));
+};
+exports.default = connected(SearchPage);
 
 //# sourceMappingURL=index.js.map
 
@@ -34010,6 +34226,39 @@ exports.categoryLoadFailure = function (error) {
 
 /***/ }),
 
+/***/ "./resources/app/es5/redux/Actions/changeActions.js":
+/*!**********************************************************!*\
+  !*** ./resources/app/es5/redux/Actions/changeActions.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var actionTypes_1 = __webpack_require__(/*! ../actionTypes */ "./resources/app/es5/redux/actionTypes.js");
+exports.changeStart = function () {
+    return {
+        type: actionTypes_1.CHANGE_START
+    };
+};
+exports.changeError = function (error) {
+    return {
+        type: actionTypes_1.CHANGE_ERROR,
+        error: error
+    };
+};
+exports.changeSuccess = function () {
+    return {
+        type: actionTypes_1.CHANGE_SUCCESS
+    };
+};
+
+//# sourceMappingURL=changeActions.js.map
+
+/***/ }),
+
 /***/ "./resources/app/es5/redux/Actions/loginActions.js":
 /*!*********************************************************!*\
   !*** ./resources/app/es5/redux/Actions/loginActions.js ***!
@@ -34108,6 +34357,41 @@ exports.resetError = function (error) {
 };
 
 //# sourceMappingURL=resetActions.js.map
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/Actions/searchActions.js":
+/*!**********************************************************!*\
+  !*** ./resources/app/es5/redux/Actions/searchActions.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var actionTypes_1 = __webpack_require__(/*! ../actionTypes */ "./resources/app/es5/redux/actionTypes.js");
+exports.searchStart = function (search) {
+    return {
+        type: actionTypes_1.SEARCH_START,
+        payload: search
+    };
+};
+exports.searchError = function (error) {
+    return {
+        type: actionTypes_1.SEARCH_ERROR,
+        error: error
+    };
+};
+exports.searchSuccess = function (response) {
+    return {
+        type: actionTypes_1.SEARCH_SUCCESS,
+        payload: response
+    };
+};
+
+//# sourceMappingURL=searchActions.js.map
 
 /***/ }),
 
@@ -34578,6 +34862,42 @@ exports.default = categoryReducer;
 
 /***/ }),
 
+/***/ "./resources/app/es5/redux/Reducers/change.js":
+/*!****************************************************!*\
+  !*** ./resources/app/es5/redux/Reducers/change.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var actionTypes_1 = __webpack_require__(/*! ../actionTypes */ "./resources/app/es5/redux/actionTypes.js");
+var initialState = {
+    error: null,
+    isLoading: false
+};
+var loginReducer = function loginReducer(state, action) {
+    if (state === void 0) {
+        state = initialState;
+    }
+    switch (action.type) {
+        case actionTypes_1.CHANGE_START:
+            return { error: null, isLoading: true };
+        case actionTypes_1.CHANGE_SUCCESS:
+            return { isLoading: false, error: null };
+        case actionTypes_1.CHANGE_ERROR:
+            return { error: action.error, isLoading: false };
+    }
+    return state;
+};
+exports.default = loginReducer;
+
+//# sourceMappingURL=change.js.map
+
+/***/ }),
+
 /***/ "./resources/app/es5/redux/Reducers/index.js":
 /*!***************************************************!*\
   !*** ./resources/app/es5/redux/Reducers/index.js ***!
@@ -34601,6 +34921,8 @@ var reset_1 = __webpack_require__(/*! ./reset */ "./resources/app/es5/redux/Redu
 var Single_1 = __webpack_require__(/*! ./Single */ "./resources/app/es5/redux/Reducers/Single/index.js");
 var productList_1 = __webpack_require__(/*! ./Home/productList */ "./resources/app/es5/redux/Reducers/Home/productList.js");
 var filter_1 = __webpack_require__(/*! ./Home/filter */ "./resources/app/es5/redux/Reducers/Home/filter.js");
+var change_1 = __webpack_require__(/*! ./change */ "./resources/app/es5/redux/Reducers/change.js");
+var search_1 = __webpack_require__(/*! ./search */ "./resources/app/es5/redux/Reducers/search.js");
 var storeReducer = redux_1.combineReducers({
     cart: cart_1.default,
     category: category_1.default,
@@ -34612,6 +34934,8 @@ var storeReducer = redux_1.combineReducers({
     single: Single_1.default,
     productList: productList_1.default,
     filter: filter_1.default,
+    change: change_1.default,
+    search: search_1.default,
     form: redux_form_1.reducer
 });
 exports.default = storeReducer;
@@ -34727,6 +35051,67 @@ var registerReducer = function registerReducer(state, action) {
 exports.default = registerReducer;
 
 //# sourceMappingURL=reset.js.map
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/Reducers/search.js":
+/*!****************************************************!*\
+  !*** ./resources/app/es5/redux/Reducers/search.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __assign = undefined && undefined.__assign || function () {
+    __assign = Object.assign || function (t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) {
+                if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+            }
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+var __spreadArrays = undefined && undefined.__spreadArrays || function () {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) {
+        s += arguments[i].length;
+    }for (var r = Array(s), k = 0, i = 0; i < il; i++) {
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++) {
+            r[k] = a[j];
+        }
+    }return r;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var actionTypes_1 = __webpack_require__(/*! ../actionTypes */ "./resources/app/es5/redux/actionTypes.js");
+var initialState = {
+    error: null,
+    products: [],
+    totalCount: 0,
+    currentPage: 1,
+    search: '',
+    isLoading: false
+};
+var searchReducer = function searchReducer(state, action) {
+    if (state === void 0) {
+        state = initialState;
+    }
+    switch (action.type) {
+        case actionTypes_1.SEARCH_START:
+            return __assign(__assign({}, state), { search: action.payload, isLoading: true, error: null });
+        case actionTypes_1.SEARCH_SUCCESS:
+            return __assign(__assign({}, state), { isLoading: false, products: __spreadArrays(state.products, action.payload.data), totalCount: action.payload.total, currentPage: action.payload.current_page, error: null });
+        case actionTypes_1.SEARCH_ERROR:
+            return __assign(__assign({}, state), { isLoading: false, error: action.error });
+    }
+    return state;
+};
+exports.default = searchReducer;
+
+//# sourceMappingURL=search.js.map
 
 /***/ }),
 
@@ -35707,6 +36092,135 @@ exports.default = thunkCategory;
 
 /***/ }),
 
+/***/ "./resources/app/es5/redux/ThunkActions/thunkChange.js":
+/*!*************************************************************!*\
+  !*** ./resources/app/es5/redux/ThunkActions/thunkChange.js ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
+    function adopt(value) {
+        return value instanceof P ? value : new P(function (resolve) {
+            resolve(value);
+        });
+    }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) {
+            try {
+                step(generator.next(value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function rejected(value) {
+            try {
+                step(generator["throw"](value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function step(result) {
+            result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+        }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = undefined && undefined.__generator || function (thisArg, body) {
+    var _ = { label: 0, sent: function sent() {
+            if (t[0] & 1) throw t[1];return t[1];
+        }, trys: [], ops: [] },
+        f,
+        y,
+        t,
+        g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
+        return this;
+    }), g;
+    function verb(n) {
+        return function (v) {
+            return step([n, v]);
+        };
+    }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) {
+            try {
+                if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+                if (y = 0, t) op = [op[0] & 2, t.value];
+                switch (op[0]) {
+                    case 0:case 1:
+                        t = op;break;
+                    case 4:
+                        _.label++;return { value: op[1], done: false };
+                    case 5:
+                        _.label++;y = op[1];op = [0];continue;
+                    case 7:
+                        op = _.ops.pop();_.trys.pop();continue;
+                    default:
+                        if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+                            _ = 0;continue;
+                        }
+                        if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+                            _.label = op[1];break;
+                        }
+                        if (op[0] === 6 && _.label < t[1]) {
+                            _.label = t[1];t = op;break;
+                        }
+                        if (t && _.label < t[2]) {
+                            _.label = t[2];_.ops.push(op);break;
+                        }
+                        if (t[2]) _.ops.pop();
+                        _.trys.pop();continue;
+                }
+                op = body.call(thisArg, _);
+            } catch (e) {
+                op = [6, e];y = 0;
+            } finally {
+                f = t = 0;
+            }
+        }if (op[0] & 5) throw op[1];return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
+var changeActions_1 = __webpack_require__(/*! ../Actions/changeActions */ "./resources/app/es5/redux/Actions/changeActions.js");
+var API_1 = __webpack_require__(/*! ../../Helpers/API */ "./resources/app/es5/Helpers/API.js");
+var thunkChange = function thunkChange(id, vals, formName) {
+    return function (dispatch) {
+        return __awaiter(void 0, void 0, void 0, function () {
+            var changeResponse;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        dispatch(changeActions_1.changeStart());
+                        return [4, API_1.default.changePassword(id, vals)];
+                    case 1:
+                        changeResponse = _a.sent();
+                        if (API_1.default.isError(changeResponse)) {
+                            if (changeResponse.response.data.errors) {
+                                dispatch(redux_form_1.updateSyncErrors(formName, changeResponse.response.data.errors, changeResponse.response.data.message));
+                            }
+                            dispatch(changeActions_1.changeError(changeResponse.response.data.message));
+                        } else {
+                            dispatch(redux_form_1.reset(formName));
+                            dispatch(changeActions_1.changeSuccess());
+                        }
+                        return [2];
+                }
+            });
+        });
+    };
+};
+exports.default = thunkChange;
+
+//# sourceMappingURL=thunkChange.js.map
+
+/***/ }),
+
 /***/ "./resources/app/es5/redux/ThunkActions/thunkLogin.js":
 /*!************************************************************!*\
   !*** ./resources/app/es5/redux/ThunkActions/thunkLogin.js ***!
@@ -36226,6 +36740,133 @@ exports.default = thunkReset;
 
 /***/ }),
 
+/***/ "./resources/app/es5/redux/ThunkActions/thunkSearch.js":
+/*!*************************************************************!*\
+  !*** ./resources/app/es5/redux/ThunkActions/thunkSearch.js ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
+    function adopt(value) {
+        return value instanceof P ? value : new P(function (resolve) {
+            resolve(value);
+        });
+    }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) {
+            try {
+                step(generator.next(value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function rejected(value) {
+            try {
+                step(generator["throw"](value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function step(result) {
+            result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+        }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = undefined && undefined.__generator || function (thisArg, body) {
+    var _ = { label: 0, sent: function sent() {
+            if (t[0] & 1) throw t[1];return t[1];
+        }, trys: [], ops: [] },
+        f,
+        y,
+        t,
+        g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
+        return this;
+    }), g;
+    function verb(n) {
+        return function (v) {
+            return step([n, v]);
+        };
+    }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) {
+            try {
+                if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+                if (y = 0, t) op = [op[0] & 2, t.value];
+                switch (op[0]) {
+                    case 0:case 1:
+                        t = op;break;
+                    case 4:
+                        _.label++;return { value: op[1], done: false };
+                    case 5:
+                        _.label++;y = op[1];op = [0];continue;
+                    case 7:
+                        op = _.ops.pop();_.trys.pop();continue;
+                    default:
+                        if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+                            _ = 0;continue;
+                        }
+                        if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+                            _.label = op[1];break;
+                        }
+                        if (op[0] === 6 && _.label < t[1]) {
+                            _.label = t[1];t = op;break;
+                        }
+                        if (t && _.label < t[2]) {
+                            _.label = t[2];_.ops.push(op);break;
+                        }
+                        if (t[2]) _.ops.pop();
+                        _.trys.pop();continue;
+                }
+                op = body.call(thisArg, _);
+            } catch (e) {
+                op = [6, e];y = 0;
+            } finally {
+                f = t = 0;
+            }
+        }if (op[0] & 5) throw op[1];return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var searchActions_1 = __webpack_require__(/*! ../Actions/searchActions */ "./resources/app/es5/redux/Actions/searchActions.js");
+var API_1 = __webpack_require__(/*! ../../Helpers/API */ "./resources/app/es5/Helpers/API.js");
+var thunkSearch = function thunkSearch(text, page) {
+    if (page === void 0) {
+        page = 1;
+    }
+    return function (dispatch) {
+        return __awaiter(void 0, void 0, void 0, function () {
+            var searchResponse;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        dispatch(searchActions_1.searchStart(text));
+                        return [4, API_1.default.search(text, page)];
+                    case 1:
+                        searchResponse = _a.sent();
+                        if (API_1.default.isError(searchResponse)) {
+                            dispatch(searchActions_1.searchError(searchResponse.message));
+                        } else {
+                            dispatch(searchActions_1.searchSuccess(searchResponse));
+                        }
+                        return [2];
+                }
+            });
+        });
+    };
+};
+exports.default = thunkSearch;
+
+//# sourceMappingURL=thunkSearch.js.map
+
+/***/ }),
+
 /***/ "./resources/app/es5/redux/ThunkActions/thunkToggleLike.js":
 /*!*****************************************************************!*\
   !*** ./resources/app/es5/redux/ThunkActions/thunkToggleLike.js ***!
@@ -36525,6 +37166,12 @@ exports.PRODUCT_LIST_RESET = 'PRODUCT_LIST_RESET';
 exports.FILTER_START = 'FILTER_START';
 exports.FILTER_SUCCESS = 'FILTER_SUCCESS';
 exports.FILTER_ERROR = 'FILTER_ERROR';
+exports.CHANGE_START = 'CHANGE_START';
+exports.CHANGE_SUCCESS = 'CHANGE_SUCCESS';
+exports.CHANGE_ERROR = 'CHANGE_ERROR';
+exports.SEARCH_START = 'SEARCH_START';
+exports.SEARCH_SUCCESS = 'SEARCH_SUCCESS';
+exports.SEARCH_ERROR = 'SEARCH_ERROR';
 
 //# sourceMappingURL=actionTypes.js.map
 

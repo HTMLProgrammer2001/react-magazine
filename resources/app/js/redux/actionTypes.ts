@@ -65,3 +65,13 @@ export const PRODUCT_LIST_RESET = 'PRODUCT_LIST_RESET';
 export const FILTER_START = 'FILTER_START';
 export const FILTER_SUCCESS = 'FILTER_SUCCESS';
 export const FILTER_ERROR = 'FILTER_ERROR';
+
+//Change form action types
+export const CHANGE_START = 'CHANGE_START';
+export const CHANGE_SUCCESS = 'CHANGE_SUCCESS';
+export const CHANGE_ERROR = 'CHANGE_ERROR';
+
+//Search action types
+export const SEARCH_START = 'SEARCH_START';
+export const SEARCH_SUCCESS = 'SEARCH_SUCCESS';
+export const SEARCH_ERROR = 'SEARCH_ERROR';

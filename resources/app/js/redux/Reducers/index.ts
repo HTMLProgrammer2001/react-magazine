@@ -11,6 +11,8 @@ import resetReducer from './reset';
 import singleReducer from './Single';
 import productListReducer from './Home/productList';
 import filterReducer from './Home/filter';
+import changeReducer from './change';
+import searchReducer from './search';
 
 
 const storeReducer = combineReducers({
@@ -24,6 +26,8 @@ const storeReducer = combineReducers({
 	single: singleReducer,
 	productList: productListReducer,
 	filter: filterReducer,
+	change: changeReducer,
+	search: searchReducer,
 	form: formReducer
 });
 
