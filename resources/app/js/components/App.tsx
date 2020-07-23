@@ -1,11 +1,9 @@
 import * as React from 'react';
-import {BrowserRouter as Router} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import {connect, ConnectedProps} from 'react-redux';
 
-import Header from './Header/';
-import Footer from './Footer';
 import Content from './Content';
-import Newsletter from './Newsletter';
+import ProfileSwitcher from './Profile';
 import {RootState} from '../redux/Reducers';
 import thunkInitialize from '../redux/ThunkActions/App/thunkInitialize';
 
@@ -29,10 +27,10 @@ const App: React.FC<ConnectedProps<typeof connected>> = (props) => {
 
 	return (
 		<Router>
-			<Header/>
-			<Content/>
-			<Newsletter/>
-			<Footer/>
+			<Switch>
+				<Route path='/profile' component={ProfileSwitcher}/>
+				<Route path='/' component={Content}/>
+			</Switch>
 		</Router>
 	);
 };

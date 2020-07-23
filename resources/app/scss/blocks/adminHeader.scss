@@ -67,7 +67,7 @@
             border-top: 1px solid #fff;
         }
 
-        &:hover, &_active{
+        &:hover, &_active>div{
             background: darken($red, 10%);
 
             border-left: 3px solid #fff;

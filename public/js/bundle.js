@@ -30959,6 +30959,53 @@ module.exports = function (module) {
 
 /***/ }),
 
+/***/ "./resources/app/es5/HOC/IsAuthenticated.js":
+/*!**************************************************!*\
+  !*** ./resources/app/es5/HOC/IsAuthenticated.js ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __assign = undefined && undefined.__assign || function () {
+    __assign = Object.assign || function (t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) {
+                if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+            }
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+var react_router_1 = __webpack_require__(/*! react-router */ "./node_modules/react-router/esm/react-router.js");
+var IsAuthenticated = function IsAuthenticated(Elem) {
+    var mapStateToProps = function mapStateToProps(state) {
+        return {
+            initialized: state.app.initialized,
+            userData: state.user
+        };
+    };
+    var connected = react_redux_1.connect(mapStateToProps, null);
+    var AuthenticatedElement = function AuthenticatedElement(props) {
+        if (!props.initialized) return React.createElement("div", null, "Loading...");
+        if (!props.userData.user) return React.createElement(react_router_1.Redirect, { to: '/login' });
+        return React.createElement(Elem, __assign({}, props));
+    };
+    return connected(AuthenticatedElement);
+};
+exports.default = IsAuthenticated;
+
+//# sourceMappingURL=IsAuthenticated.js.map
+
+/***/ }),
+
 /***/ "./resources/app/es5/Helpers/API.js":
 /*!******************************************!*\
   !*** ./resources/app/es5/Helpers/API.js ***!
@@ -31486,10 +31533,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-var Header_1 = __webpack_require__(/*! ./Header/ */ "./resources/app/es5/components/Header/index.js");
-var Footer_1 = __webpack_require__(/*! ./Footer */ "./resources/app/es5/components/Footer.js");
 var Content_1 = __webpack_require__(/*! ./Content */ "./resources/app/es5/components/Content.js");
-var Newsletter_1 = __webpack_require__(/*! ./Newsletter */ "./resources/app/es5/components/Newsletter.js");
+var Profile_1 = __webpack_require__(/*! ./Profile */ "./resources/app/es5/components/Profile/index.js");
 var thunkInitialize_1 = __webpack_require__(/*! ../redux/ThunkActions/App/thunkInitialize */ "./resources/app/es5/redux/ThunkActions/App/thunkInitialize.js");
 var mapStateToProps = function mapStateToProps(state) {
     return {
@@ -31504,7 +31549,7 @@ var App = function App(props) {
         if (!props.initialized) props.initialize();
     }, []);
     if (!props.initialized) return React.createElement("div", null, "Loading...");
-    return React.createElement(react_router_dom_1.BrowserRouter, null, React.createElement(Header_1.default, null), React.createElement(Content_1.default, null), React.createElement(Newsletter_1.default, null), React.createElement(Footer_1.default, null));
+    return React.createElement(react_router_dom_1.BrowserRouter, null, React.createElement(react_router_dom_1.Switch, null, React.createElement(react_router_dom_1.Route, { path: '/profile', component: Profile_1.default }), React.createElement(react_router_dom_1.Route, { path: '/', component: Content_1.default })));
 };
 exports.default = connected(App);
 
@@ -32061,6 +32106,9 @@ exports.default = CheckoutPage;
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+var Header_1 = __webpack_require__(/*! ./Header */ "./resources/app/es5/components/Header/index.js");
+var Footer_1 = __webpack_require__(/*! ./Footer */ "./resources/app/es5/components/Footer.js");
+var Newsletter_1 = __webpack_require__(/*! ./Newsletter */ "./resources/app/es5/components/Newsletter.js");
 var LoginPage_1 = __webpack_require__(/*! ./LoginPage/ */ "./resources/app/es5/components/LoginPage/index.js");
 var RegisterPage_1 = __webpack_require__(/*! ./RegisterPage/ */ "./resources/app/es5/components/RegisterPage/index.js");
 var NotFoundPage_1 = __webpack_require__(/*! ./NotFoundPage/ */ "./resources/app/es5/components/NotFoundPage/index.js");
@@ -32074,7 +32122,7 @@ var VerifyPage_1 = __webpack_require__(/*! ./VerifyPage */ "./resources/app/es5/
 var ChangePasswordPage_1 = __webpack_require__(/*! ./ChangePasswordPage */ "./resources/app/es5/components/ChangePasswordPage/index.js");
 var SearchPage_1 = __webpack_require__(/*! ./SearchPage */ "./resources/app/es5/components/SearchPage/index.js");
 var Content = function Content() {
-    return React.createElement(react_router_dom_1.Switch, null, React.createElement(react_router_dom_1.Route, { path: '/', exact: true, component: HomePage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/login', exact: true, component: LoginPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/register', exact: true, component: RegisterPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/verify/:id', exact: true, component: VerifyPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/reset', exact: true, component: ResetPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/reset/:id', exact: true, component: ChangePasswordPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/cart', exact: true, component: CartPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/categories', exact: true, component: CategoriesPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/checkout', exact: true, component: CheckoutPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/products/:slug', exact: true, component: SinglePage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/search', exact: true, component: SearchPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/', component: NotFoundPage_1.default }));
+    return React.createElement(React.Fragment, null, React.createElement(Header_1.default, null), React.createElement(react_router_dom_1.Switch, null, React.createElement(react_router_dom_1.Route, { path: '/', exact: true, component: HomePage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/login', exact: true, component: LoginPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/register', exact: true, component: RegisterPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/verify/:id', exact: true, component: VerifyPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/reset', exact: true, component: ResetPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/reset/:id', exact: true, component: ChangePasswordPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/cart', exact: true, component: CartPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/categories', exact: true, component: CategoriesPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/checkout', exact: true, component: CheckoutPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/products/:slug', exact: true, component: SinglePage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/search', exact: true, component: SearchPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/', component: NotFoundPage_1.default })), React.createElement(Newsletter_1.default, null), React.createElement(Footer_1.default, null));
 };
 exports.default = Content;
 
@@ -33290,6 +33338,289 @@ var Paginate = function Paginate(props) {
 exports.default = Paginate;
 
 //# sourceMappingURL=Paginate.js.map
+
+/***/ }),
+
+/***/ "./resources/app/es5/components/Profile/AdminFooter.js":
+/*!*************************************************************!*\
+  !*** ./resources/app/es5/components/Profile/AdminFooter.js ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var AdminFooter = function AdminFooter() {
+    return React.createElement(React.Fragment, null, React.createElement("div", { className: "admFooter" }), React.createElement("hr", null), React.createElement("div", { className: "footer__copy" }, "Copyright 2020"));
+};
+exports.default = AdminFooter;
+
+//# sourceMappingURL=AdminFooter.js.map
+
+/***/ }),
+
+/***/ "./resources/app/es5/components/Profile/AdminHeader/Logo.js":
+/*!******************************************************************!*\
+  !*** ./resources/app/es5/components/Profile/AdminHeader/Logo.js ***!
+  \******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var Logo = function Logo() {
+  return React.createElement("img", { className: "admHeader__logo", src: "/image/adminLogo.png" });
+};
+exports.default = Logo;
+
+//# sourceMappingURL=Logo.js.map
+
+/***/ }),
+
+/***/ "./resources/app/es5/components/Profile/AdminHeader/Menu/MenuItems.js":
+/*!****************************************************************************!*\
+  !*** ./resources/app/es5/components/Profile/AdminHeader/Menu/MenuItems.js ***!
+  \****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var classnames_1 = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+var MenuItems = function MenuItems(props) {
+    return React.createElement("div", { className: classnames_1.default('admHeader__menu', { active: props.isOpen }) }, React.createElement("div", { className: "admHeader__divider" }, "Navigation menu"), React.createElement(react_router_dom_1.NavLink, { to: '/profile/', activeClassName: 'admHeader__item_active', exact: true }, React.createElement("div", { className: "admHeader__item" }, React.createElement("i", { className: "fas fa-user admHeader__icon" }), React.createElement("span", null, "Profile"))), React.createElement(react_router_dom_1.NavLink, { to: '/profile/orders', activeClassName: 'admHeader__item_active', exact: true }, React.createElement("div", { className: "admHeader__item" }, React.createElement("i", { className: "fas fa-shopping-cart admHeader__icon" }), React.createElement("span", null, "Orders"))), React.createElement(react_router_dom_1.NavLink, { to: '/profile/favorite', activeClassName: 'admHeader__item_active', exact: true }, React.createElement("div", { className: "admHeader__item" }, React.createElement("i", { className: "fas fa-star admHeader__icon" }), React.createElement("span", null, "Favorite"))), React.createElement(react_router_dom_1.NavLink, { to: '/profile/reviews', activeClassName: 'admHeader__item_active', exact: true }, React.createElement("div", { className: "admHeader__item" }, React.createElement("i", { className: "fas fa-comments admHeader__icon" }), React.createElement("span", null, "Reviews"))), React.createElement(react_router_dom_1.NavLink, { to: '/profile/settings', activeClassName: 'admHeader__item_active', exact: true }, React.createElement("div", { className: "admHeader__item" }, React.createElement("i", { className: "fas fa-cog admHeader__icon" }), React.createElement("span", null, "Settings"))));
+};
+exports.default = MenuItems;
+
+//# sourceMappingURL=MenuItems.js.map
+
+/***/ }),
+
+/***/ "./resources/app/es5/components/Profile/AdminHeader/Menu/index.js":
+/*!************************************************************************!*\
+  !*** ./resources/app/es5/components/Profile/AdminHeader/Menu/index.js ***!
+  \************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var Burger_1 = __webpack_require__(/*! ../../../Header/Menu/Burger */ "./resources/app/es5/components/Header/Menu/Burger.js");
+var MenuItems_1 = __webpack_require__(/*! ./MenuItems */ "./resources/app/es5/components/Profile/AdminHeader/Menu/MenuItems.js");
+var Menu = function Menu() {
+    var _a = React.useState(false),
+        isOpen = _a[0],
+        changeOpen = _a[1];
+    return React.createElement(React.Fragment, null, React.createElement(Burger_1.default, { isOpen: isOpen, changeOpen: changeOpen }), React.createElement(MenuItems_1.default, { isOpen: isOpen }));
+};
+exports.default = Menu;
+
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ "./resources/app/es5/components/Profile/AdminHeader/UserDropdown.js":
+/*!**************************************************************************!*\
+  !*** ./resources/app/es5/components/Profile/AdminHeader/UserDropdown.js ***!
+  \**************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var classnames_1 = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+var UserDropdown = function UserDropdown() {
+    var _a = React.useState(false),
+        isOpen = _a[0],
+        changeOpen = _a[1];
+    return React.createElement("div", { className: classnames_1.default('row cur dropdown', {
+            active: isOpen
+        }) }, React.createElement("div", { className: "admHeader__user dropdown__elem", onClick: function onClick() {
+            return changeOpen(!isOpen);
+        } }, React.createElement("div", { className: "admHeader__name" }, React.createElement("span", null, "Yuri Prisyazhny")), React.createElement("img", { className: "admHeader__photo", src: "/image/noAva.jpg" }), React.createElement("i", { className: "fas fa-sort-down ml-1" })), React.createElement("div", { className: "dropdown__body" }, React.createElement("div", { className: "dropdown__content" }, React.createElement("ul", { className: "menu__list" }, React.createElement("li", { className: "menu__item" }, React.createElement(react_router_dom_1.Link, { to: '/profile' }, "Profile")), React.createElement("li", { className: "menu__item" }, React.createElement(react_router_dom_1.Link, { to: '/profile/settings' }, "Settings")), React.createElement("li", { className: "menu__item" }, React.createElement(react_router_dom_1.Link, { to: '/profile/orders' }, "Orders")), React.createElement("li", { className: "menu__item" }, React.createElement(react_router_dom_1.Link, { to: '/profile/favorite' }, "Favorite")), React.createElement("li", { className: "menu__item" }, "Log out")))));
+};
+exports.default = UserDropdown;
+
+//# sourceMappingURL=UserDropdown.js.map
+
+/***/ }),
+
+/***/ "./resources/app/es5/components/Profile/AdminHeader/index.js":
+/*!*******************************************************************!*\
+  !*** ./resources/app/es5/components/Profile/AdminHeader/index.js ***!
+  \*******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var Menu_1 = __webpack_require__(/*! ./Menu */ "./resources/app/es5/components/Profile/AdminHeader/Menu/index.js");
+var Logo_1 = __webpack_require__(/*! ./Logo */ "./resources/app/es5/components/Profile/AdminHeader/Logo.js");
+var UserDropdown_1 = __webpack_require__(/*! ./UserDropdown */ "./resources/app/es5/components/Profile/AdminHeader/UserDropdown.js");
+var AdminHeader = function AdminHeader() {
+    return React.createElement("div", { className: "admHeader" }, React.createElement("div", { className: "row" }, React.createElement(Menu_1.default, null), React.createElement(Logo_1.default, null)), React.createElement(UserDropdown_1.default, null));
+};
+exports.default = AdminHeader;
+
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ "./resources/app/es5/components/Profile/FavoritePage/index.js":
+/*!********************************************************************!*\
+  !*** ./resources/app/es5/components/Profile/FavoritePage/index.js ***!
+  \********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var FavoritePage = function FavoritePage() {
+    return React.createElement("div", { className: "admContent" }, React.createElement("div", { className: "container" }, React.createElement("div", { className: "myOrders py-pad" }, React.createElement("div", { className: "pull-right" }, React.createElement("span", { className: "but but_outline" }, "Continue shopping")), React.createElement("h3", null, "My favorite"), React.createElement("div", { className: "myOrders__header my-pad" }, React.createElement("span", { className: "myOrders__find" }, React.createElement("div", { className: "input" }, React.createElement("input", { className: "input__elem", type: "text", required: true }), React.createElement("label", { className: "input__label" }, "Find favorite product"), React.createElement("div", { className: "input__line" }))), React.createElement("div", null)), React.createElement("div", { className: "table__wrap" }, React.createElement("div", { className: "table" }, React.createElement("div", { className: "table__head" }, React.createElement("div", { className: "table__head-item" }, "ID"), React.createElement("div", { className: "table__head-item" }, "Product"), React.createElement("div", { className: "table__head-item" }, "Actions")), React.createElement("div", { className: "table__content" }, React.createElement("div", { className: "table__row" }, React.createElement("div", { className: "table__col" }, "#43534455"), React.createElement("div", { className: "table__col" }, React.createElement("img", { className: "mb-10", src: "/image/product.png" }), React.createElement("div", null, "TShirt")), React.createElement("div", { className: "table__col" }, React.createElement("i", { className: "fas fa-times cur" }), React.createElement("i", { className: "fas fa-eye ml-10 cur" }))), React.createElement("div", { className: "table__row" }, React.createElement("div", { className: "table__col" }, "#43534455"), React.createElement("div", { className: "table__col" }, React.createElement("img", { className: "mb-10", src: "/image/product.png" }), React.createElement("div", null, "TShirt")), React.createElement("div", { className: "table__col" }, React.createElement("i", { className: "fas fa-times cur" }), React.createElement("i", { className: "fas fa-eye ml-10 cur" }))), React.createElement("div", { className: "table__row" }, React.createElement("div", { className: "table__col" }, "#43534455"), React.createElement("div", { className: "table__col" }, React.createElement("img", { className: "mb-10", src: "/image/product.png" }), React.createElement("div", null, "TShirt")), React.createElement("div", { className: "table__col" }, React.createElement("i", { className: "fas fa-times cur" }), React.createElement("i", { className: "fas fa-eye ml-10 cur" }))))))), React.createElement("div", { className: "pagination mb-pad" }, React.createElement("div", { className: "pagination__item pagination__item_disabled" }, "Prev"), React.createElement("div", { className: "pagination__item pagination__item_active" }, "1"), React.createElement("div", { className: "pagination__item" }, "2"), React.createElement("div", { className: "pagination__item" }, "3"), React.createElement("div", { className: "pagination__item" }, "Next"))));
+};
+exports.default = FavoritePage;
+
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ "./resources/app/es5/components/Profile/OrdersPage/index.js":
+/*!******************************************************************!*\
+  !*** ./resources/app/es5/components/Profile/OrdersPage/index.js ***!
+  \******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var OrdersPage = function OrdersPage() {
+    return React.createElement("div", { className: "admContent" }, React.createElement("div", { className: "container" }, React.createElement("div", { className: "myOrders py-pad" }, React.createElement("div", { className: "pull-right" }, React.createElement("span", { className: "but but_outline" }, "Continue shopping")), React.createElement("h3", null, "My orders"), React.createElement("div", { className: "myOrders__header my-pad" }, React.createElement("span", { className: "myOrders__find" }, React.createElement("div", { className: "input" }, React.createElement("input", { className: "input__elem", type: "text", required: true }), React.createElement("label", { className: "input__label" }, "Find order"), React.createElement("div", { className: "input__line" }))), React.createElement("div", { className: "select cur" }, React.createElement("select", { className: "select__input cur" }, React.createElement("option", { selected: true }, "Latest"), React.createElement("option", null, "Newest")), React.createElement("i", { className: "fas fa-chevron-down select__icon" }), React.createElement("div", { className: "select__line" }))), React.createElement("div", { className: "myOrders__types my-pad" }, React.createElement("div", { className: "radio" }, React.createElement("label", { className: "row" }, React.createElement("input", { className: "radio__elem", type: "radio", name: "filter" }), React.createElement("span", { className: "radio__label" }, "All"))), React.createElement("div", { className: "radio" }, React.createElement("label", { className: "row" }, React.createElement("input", { className: "radio__elem", type: "radio", name: "filter" }), React.createElement("span", { className: "radio__label" }, "Finished"))), React.createElement("div", { className: "radio" }, React.createElement("label", { className: "row" }, React.createElement("input", { className: "radio__elem", type: "radio", name: "filter" }), React.createElement("span", { className: "radio__label" }, "In move"))), React.createElement("div", { className: "radio" }, React.createElement("label", { className: "row" }, React.createElement("input", { className: "radio__elem", type: "radio", name: "filter" }), React.createElement("span", { className: "radio__label" }, "Payment")))), React.createElement("div", { className: "table__wrap" }, React.createElement("div", { className: "table" }, React.createElement("div", { className: "table__head" }, React.createElement("div", { className: "table__head-item" }, "ID"), React.createElement("div", { className: "table__head-item" }, "Date"), React.createElement("div", { className: "table__head-item" }, "Price"), React.createElement("div", { className: "table__head-item" }, "Status")), React.createElement("div", { className: "table__content" }, React.createElement("div", { className: "table__row" }, React.createElement("div", { className: "table__col" }, "#43534455"), React.createElement("div", { className: "table__col" }, "20.03.2020"), React.createElement("div", { className: "table__col" }, "$90.00"), React.createElement("div", { className: "table__col" }, "TShirt")), React.createElement("div", { className: "table__row" }, React.createElement("div", { className: "table__col" }, "#43534455"), React.createElement("div", { className: "table__col" }, "20.03.2020"), React.createElement("div", { className: "table__col" }, "$90.00"), React.createElement("div", { className: "table__col" }, "TShirt")), React.createElement("div", { className: "table__row" }, React.createElement("div", { className: "table__col" }, "#43534455"), React.createElement("div", { className: "table__col" }, "20.03.2020"), React.createElement("div", { className: "table__col" }, "$90.00"), React.createElement("div", { className: "table__col" }, "TShirt")))))), React.createElement("div", { className: "pagination mb-pad" }, React.createElement("div", { className: "pagination__item pagination__item_disabled" }, "Prev"), React.createElement("div", { className: "pagination__item pagination__item_active" }, "1"), React.createElement("div", { className: "pagination__item" }, "2"), React.createElement("div", { className: "pagination__item" }, "3"), React.createElement("div", { className: "pagination__item" }, "Next"))));
+};
+exports.default = OrdersPage;
+
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ "./resources/app/es5/components/Profile/ProfilePage/index.js":
+/*!*******************************************************************!*\
+  !*** ./resources/app/es5/components/Profile/ProfilePage/index.js ***!
+  \*******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+var ProfilePage = function ProfilePage() {
+    return React.createElement("div", { className: "admContent" }, React.createElement("div", { className: "info py-pad" }, React.createElement("div", { className: "container" }, React.createElement("div", { className: "info__links" }, React.createElement(react_router_dom_1.Link, { to: '/' }, React.createElement("button", { type: "button", className: "info__home but but_outline" }, "Continue shop")), React.createElement(react_router_dom_1.Link, { to: '/profile/settings' }, React.createElement("button", { type: "button", className: "info__settings but but_outline" }, "Settings"))), React.createElement("div", { className: "info__image my-pad" }, React.createElement("img", { className: "info__photo", src: "/image/noAva.jpg" })), React.createElement("div", { className: "info__fields" }, React.createElement("div", { className: "info__field" }, "Name: Yuri Prisyazhny"), React.createElement("div", { className: "info__field" }, "Email: cssuperpy@gmail.com")), React.createElement("hr", null))), React.createElement("div", { className: "container" }, React.createElement("div", { className: "sales my-pad" }, React.createElement("h3", null, "Top sales"), React.createElement("div", { className: "sales__list goods__list" }, React.createElement("div", { className: "goods__list-product" }, React.createElement("a", { href: "#", style: { width: '100%' } }, React.createElement("img", { className: "goods__list-photo", src: "/image/product.png" })), React.createElement("div", { className: "goods__list-info" }, React.createElement("div", { className: "goods__list-name" }, "The Frog T-Shirt"), React.createElement("div", { className: "goods__list-price" }, "$30 -", React.createElement("s", null, "$50"))), React.createElement("div", { className: "goods__list-sale" }, "Sale")), React.createElement("div", { className: "goods__list-product" }, React.createElement("a", { href: "#", style: { width: '100%' } }, React.createElement("img", { className: "goods__list-photo", src: "/image/product.png" })), React.createElement("div", { className: "goods__list-info" }, React.createElement("div", { className: "goods__list-name" }, "The Frog T-Shirt"), React.createElement("div", { className: "goods__list-price" }, "$30 -", React.createElement("s", null, "$50")), React.createElement("div", { className: "goods__list-sale" }, "Sale"))), React.createElement("div", { className: "goods__list-product" }, React.createElement("a", { href: "#", style: { width: '100%' } }, React.createElement("img", { className: "goods__list-photo", src: "/image/product.png" })), React.createElement("div", { className: "goods__list-info" }, React.createElement("div", { className: "goods__list-name" }, "The Frog T-Shirt"), React.createElement("div", { className: "goods__list-price" }, "$30 -", React.createElement("s", null, "$50")), React.createElement("div", { className: "goods__list-sale" }, "Sale")))))));
+};
+exports.default = ProfilePage;
+
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ "./resources/app/es5/components/Profile/ReviewsPage/index.js":
+/*!*******************************************************************!*\
+  !*** ./resources/app/es5/components/Profile/ReviewsPage/index.js ***!
+  \*******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var Mark_1 = __webpack_require__(/*! ../../Mark */ "./resources/app/es5/components/Mark.js");
+var ReviewsPage = function ReviewsPage() {
+    return React.createElement("div", { className: "admContent" }, React.createElement("div", { className: "container" }, React.createElement("div", { className: "myOrders py-pad" }, React.createElement("div", { className: "pull-right" }, React.createElement("span", { className: "but but_outline" }, "Continue shopping")), React.createElement("h3", null, "My reviews"), React.createElement("div", { className: "myOrders__header my-pad" }, React.createElement("span", { className: "myOrders__find" }, React.createElement("div", { className: "input" }, React.createElement("input", { className: "input__elem", type: "text", required: true }), React.createElement("label", { className: "input__label" }, "Find reviews"), React.createElement("div", { className: "input__line" }))), React.createElement("div", { className: "select cur" }, React.createElement("select", { className: "select__input cur" }, React.createElement("option", { selected: true }, "Latest"), React.createElement("option", null, "Newest"), React.createElement("option", null, "Positive first"), React.createElement("option", null, "Negative first")), React.createElement("i", { className: "fas fa-chevron-down select__icon" }), React.createElement("div", { className: "select__line" }))), React.createElement("div", { className: "table__wrap" }, React.createElement("div", { className: "table" }, React.createElement("div", { className: "table__head" }, React.createElement("div", { className: "table__head-item" }, "ID"), React.createElement("div", { className: "table__head-item" }, "Date"), React.createElement("div", { className: "table__head-item" }, "Product"), React.createElement("div", { className: "table__head-item" }, "Mark")), React.createElement("div", { className: "table__content" }, React.createElement("div", { className: "table__row" }, React.createElement("div", { className: "table__col" }, "#43534455"), React.createElement("div", { className: "table__col" }, "20.03.2020"), React.createElement("div", { className: "table__col" }, React.createElement("img", { className: "mb-10", src: "/image/product.png" }), React.createElement("div", null, "TShirt")), React.createElement("div", { className: "table__col" }, React.createElement(Mark_1.default, { rating: 5, fixed: true }))), React.createElement("div", { className: "table__row" }, React.createElement("div", { className: "table__col" }, "#43534455"), React.createElement("div", { className: "table__col" }, "20.03.2020"), React.createElement("div", { className: "table__col" }, React.createElement("img", { className: "mb-10", src: "/image/product.png" }), React.createElement("div", null, "TShirt")), React.createElement("div", { className: "table__col" }, React.createElement(Mark_1.default, { rating: 5, fixed: true }))), React.createElement("div", { className: "table__row" }, React.createElement("div", { className: "table__col" }, "#43534455"), React.createElement("div", { className: "table__col" }, "20.03.2020"), React.createElement("div", { className: "table__col" }, React.createElement("img", { className: "mb-10", src: "/image/product.png" }), React.createElement("div", null, "TShirt")), React.createElement("div", { className: "table__col" }, React.createElement(Mark_1.default, { rating: 5, fixed: true }))))))), React.createElement("div", { className: "pagination mb-pad" }, React.createElement("div", { className: "pagination__item pagination__item_disabled" }, "Prev"), React.createElement("div", { className: "pagination__item pagination__item_active" }, "1"), React.createElement("div", { className: "pagination__item" }, "2"), React.createElement("div", { className: "pagination__item" }, "3"), React.createElement("div", { className: "pagination__item" }, "Next"))));
+};
+exports.default = ReviewsPage;
+
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ "./resources/app/es5/components/Profile/SettingsPage/index.js":
+/*!********************************************************************!*\
+  !*** ./resources/app/es5/components/Profile/SettingsPage/index.js ***!
+  \********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var SettingsPage = function SettingsPage() {
+    return React.createElement("div", { className: "admContent" }, React.createElement("div", { className: "billing py-pad" }, React.createElement("div", { className: "container" }, React.createElement("div", { className: "login__head" }, "Personal info"), React.createElement("div", { className: "billing__form" }, React.createElement("div", { className: "file my-pad" }, React.createElement("img", { className: "file_image", src: "/image/product.png" }), React.createElement("label", null, React.createElement("input", { className: "file__elem", type: "file" }), React.createElement("div", { className: "file__but" }, "Select file"))), React.createElement("div", { className: "input" }, React.createElement("input", { className: "input__elem", required: true }), React.createElement("label", { className: "input__label" }, React.createElement("span", null, "First Name"), React.createElement("span", { className: "red" }, "*")), React.createElement("div", { className: "input__line" })), React.createElement("div", { className: "input" }, React.createElement("input", { className: "input__elem", required: true }), React.createElement("label", { className: "input__label" }, React.createElement("span", null, "Last Name"), React.createElement("span", { className: "red" }, "*")), React.createElement("div", { className: "input__line" })), React.createElement("div", { className: "input" }, React.createElement("input", { className: "input__elem", required: true }), React.createElement("label", { className: "input__label" }, React.createElement("span", null, "Email Address"), React.createElement("span", { className: "red" }, "*")), React.createElement("div", { className: "input__line" })), React.createElement("div", { className: "row space-between my-pad w-100" }, React.createElement("div", null), React.createElement("button", { type: "button", className: "check__but" }, "Update")), React.createElement("div", { className: "login__head" }, "Security"), React.createElement("div", { className: "input" }, React.createElement("input", { className: "input__elem", required: true, type: "password" }), React.createElement("label", { className: "input__label" }, React.createElement("span", null, "Password"), React.createElement("span", { className: "red" }, "*")), React.createElement("div", { className: "input__line" })), React.createElement("div", { className: "input" }, React.createElement("input", { className: "input__elem", required: true, type: "password" }), React.createElement("label", { className: "input__label" }, React.createElement("span", null, "Password confirmation"), React.createElement("span", { className: "red" }, "*")), React.createElement("div", { className: "input__line" }))), React.createElement("div", { className: "row space-between my-pad w-100" }, React.createElement("div", null), React.createElement("button", { type: "button", className: "check__but" }, "Update")), React.createElement("div", { className: "login__head" }, "Delete account"), React.createElement("div", { className: "row space-between my-pad w-100" }, React.createElement("div", null), React.createElement("button", { type: "button", className: "check__but" }, "Delete")))));
+};
+exports.default = SettingsPage;
+
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ "./resources/app/es5/components/Profile/index.js":
+/*!*******************************************************!*\
+  !*** ./resources/app/es5/components/Profile/index.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var react_router_1 = __webpack_require__(/*! react-router */ "./node_modules/react-router/esm/react-router.js");
+var AdminHeader_1 = __webpack_require__(/*! ./AdminHeader */ "./resources/app/es5/components/Profile/AdminHeader/index.js");
+var NotFoundPage_1 = __webpack_require__(/*! ../NotFoundPage */ "./resources/app/es5/components/NotFoundPage/index.js");
+var AdminFooter_1 = __webpack_require__(/*! ./AdminFooter */ "./resources/app/es5/components/Profile/AdminFooter.js");
+var IsAuthenticated_1 = __webpack_require__(/*! ../../HOC/IsAuthenticated */ "./resources/app/es5/HOC/IsAuthenticated.js");
+var ProfilePage_1 = __webpack_require__(/*! ./ProfilePage */ "./resources/app/es5/components/Profile/ProfilePage/index.js");
+var SettingsPage_1 = __webpack_require__(/*! ./SettingsPage */ "./resources/app/es5/components/Profile/SettingsPage/index.js");
+var FavoritePage_1 = __webpack_require__(/*! ./FavoritePage */ "./resources/app/es5/components/Profile/FavoritePage/index.js");
+var OrdersPage_1 = __webpack_require__(/*! ./OrdersPage */ "./resources/app/es5/components/Profile/OrdersPage/index.js");
+var ReviewsPage_1 = __webpack_require__(/*! ./ReviewsPage */ "./resources/app/es5/components/Profile/ReviewsPage/index.js");
+var Content = function Content() {
+    return React.createElement(React.Fragment, null, React.createElement(AdminHeader_1.default, null), React.createElement(react_router_1.Switch, null, React.createElement(react_router_1.Route, { path: '/profile', exact: true, component: ProfilePage_1.default }), React.createElement(react_router_1.Route, { path: '/profile/settings', exact: true, component: SettingsPage_1.default }), React.createElement(react_router_1.Route, { path: '/profile/favorite', exact: true, component: FavoritePage_1.default }), React.createElement(react_router_1.Route, { path: '/profile/orders', exact: true, component: OrdersPage_1.default }), React.createElement(react_router_1.Route, { path: '/profile/reviews', exact: true, component: ReviewsPage_1.default }), React.createElement(react_router_1.Route, { path: '/', component: NotFoundPage_1.default })), React.createElement(AdminFooter_1.default, null));
+};
+exports.default = IsAuthenticated_1.default(Content);
+
+//# sourceMappingURL=index.js.map
 
 /***/ }),
 
