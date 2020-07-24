@@ -51,5 +51,5 @@ Route::delete('/subscribe', 'SubscribeController@unSubscribe');
 Route::post('/changePassword', 'UserActions@changePassword');
 
 Route::get('/search', 'SearchController');
-
 Route::get('/me', 'UserActions@me')->middleware('auth:api');
+Route::get('/getProductsByIds', 'ProductInfoController@getProductsByIds');

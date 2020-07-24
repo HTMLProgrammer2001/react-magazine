@@ -6,7 +6,7 @@ import {RootState} from '../../../redux/Reducers';
 
 
 const mapStateToProps = (state: RootState) => ({
-	cartPrice: state.cart.reduce((prev, item) => (
+	cartPrice: state.cart.cartItems.reduce((prev, item) => (
 		prev + item.count * item.product.price
 	), 0).toFixed(2)
 });

@@ -8,7 +8,7 @@ import {cartRemove} from '../../../../redux/Actions/App/cartActions';
 
 
 const mapStateToProps = (state: RootState) => ({
-	cartItems: state.cart
+	cartItems: state.cart.cartItems
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

@@ -86,4 +86,19 @@ class ProductInfoController extends Controller
             'message' => $result
         ]);
     }
+
+    public function getProductsByIds(Request $request){
+        $ids = $request->query('ids');
+
+        if(!$ids) {
+            return response()->json([
+                'message' => 'No ids'
+            ]);
+        }
+
+        $parsedIDs = json_decode($ids);
+        $products = Product::query()->whereIn('id', $parsedIDs)->get();
+
+        return response()->json($products);
+    }
 }

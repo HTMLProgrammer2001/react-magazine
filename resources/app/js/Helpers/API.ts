@@ -15,6 +15,7 @@ import {IFilter} from '../Interfaces/IFilter';
 import {IChangeFormData} from '../components/ChangePasswordPage/ChangeForm';
 import {ISearchResponse} from '../Interfaces/Responses/ISearchResponse';
 import {IUser} from '../Interfaces/IUser';
+import {IProduct} from '../Interfaces/IProduct';
 
 
 class API{
@@ -299,6 +300,24 @@ class API{
 			response = await this.clientAPI.get<IUser>('/me', {
 				headers: {
 					Authorization: `Bearer ${localStorage.getItem('token')}`
+				}
+			});
+		}
+		catch (err) {
+			console.log(err.response.data);
+			return err as AxiosError;
+		}
+
+		return response.data;
+	}
+
+	static async getProductsByIds(ids: number[]): Promise<IProduct[] | AxiosError>{
+		let response: AxiosResponse;
+
+		try{
+			response = await this.clientAPI.get<IProduct[]>('/getProductsByIds', {
+				params: {
+					ids: JSON.stringify(ids)
 				}
 			});
 		}

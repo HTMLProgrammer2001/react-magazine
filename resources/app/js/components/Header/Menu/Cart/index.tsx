@@ -8,7 +8,7 @@ import CartDropdown from './CartDropdown';
 
 
 const mapStateToProps = (state: RootState) => ({
-	count: state.cart.length
+	count: state.cart.cartItems.length
 });
 
 const connected = connect(mapStateToProps);

@@ -8,6 +8,9 @@ export const CART_ADD = 'CART_ADD';
 export const CART_REMOVE = 'CART_REMOVE';
 export const CART_RESET = 'CART_RESET';
 export const CART_UPDATE = 'CART_UPDATE';
+export const CART_LOAD_START = 'CART_LOAD_START';
+export const CART_LOAD_ERROR = 'CART_LOAD_ERROR';
+export const CART_LOAD_SUCCESS = 'CART_LOAD_SUCCESS';
 
 //User actions types
 export const USER_LOAD_START = 'USER_LOAD_START';

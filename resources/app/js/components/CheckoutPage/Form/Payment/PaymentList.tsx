@@ -5,8 +5,8 @@ import {RootState} from '../../../../redux/Reducers';
 
 
 const connected = connect((state: RootState) => ({
-	cartItems: state.cart,
-	totalPrice: state.cart.reduce((prev, item) => (
+	cartItems: state.cart.cartItems,
+	totalPrice: state.cart.cartItems.reduce((prev, item) => (
 		prev + item.count * item.product.price
 	), 0)
 }));

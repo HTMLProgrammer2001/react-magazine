@@ -9,7 +9,7 @@ import Content from './Content/';
 
 //Redux data to props
 const mapStateToProps = (state: RootState) => ({
-	isEmpty: !state.cart.length
+	isEmpty: !state.cart.cartItems.length
 });
 
 const cartConnected = connect(mapStateToProps);
