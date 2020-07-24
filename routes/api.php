@@ -53,3 +53,5 @@ Route::post('/changePassword', 'UserActions@changePassword');
 Route::get('/search', 'SearchController');
 Route::get('/me', 'UserActions@me')->middleware('auth:api');
 Route::get('/getProductsByIds', 'ProductInfoController@getProductsByIds');
+
+Route::post('/orders', 'OrdersController@create');

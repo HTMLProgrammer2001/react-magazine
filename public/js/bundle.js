@@ -32008,15 +32008,23 @@ exports.default = connected(react_router_1.withRouter(ChangePage));
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
+var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 var InputElement_1 = __webpack_require__(/*! ../../FormElements/InputElement */ "./resources/app/es5/components/FormElements/InputElement.js");
 var CreateAccountForm_1 = __webpack_require__(/*! ./CreateAccountForm */ "./resources/app/es5/components/CheckoutPage/Form/CreateAccountForm.js");
 var Payment_1 = __webpack_require__(/*! ./Payment/ */ "./resources/app/es5/components/CheckoutPage/Form/Payment/index.js");
-var BillingForm = function BillingForm(props) {
-    return React.createElement("div", { className: "container" }, React.createElement("div", { className: "billing my-pad" }, React.createElement("div", { className: "billing__head" }, "Billing Details"), React.createElement("form", { className: "billing__form", onSubmit: props.handleSubmit, noValidate: true }, React.createElement(redux_form_1.Field, { component: InputElement_1.default, placeholder: "Full name", name: "fullName", type: "text", required: true }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, placeholder: "Country", name: "country", type: "text", required: true }), React.createElement("div", { className: "row" }, React.createElement(redux_form_1.Field, { component: InputElement_1.default, placeholder: "Town / City", name: "city", type: "text", className: "mr-1", required: true }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, placeholder: "Postcode / Zip", name: "postcode", type: "text", className: "ml-1", required: true })), React.createElement(redux_form_1.Field, { component: InputElement_1.default, placeholder: "Street Address", name: "address", type: "text", required: true }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, placeholder: "Phone", name: "phone", type: "text", required: true }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, placeholder: "Email address", name: "email", type: "email", required: true }), React.createElement(CreateAccountForm_1.default, null), React.createElement("div", null, "Order Notes"), React.createElement("div", { className: "text-muted" }, "Notes about your order like delivery species e.g."), React.createElement("div", { className: "input" }, React.createElement(redux_form_1.Field, { component: "textarea", className: "input__elem", rows: 1, name: "notes" }), React.createElement("div", { className: "input__line", style: { bottom: '4px' } })), React.createElement(Payment_1.default, null))));
+var mapStateToProps = function mapStateToProps(state) {
+    return {
+        user: state.user.user
+    };
 };
+var connected = react_redux_1.connect(mapStateToProps, null);
+var BillingForm = function BillingForm(props) {
+    return React.createElement("div", { className: "container" }, React.createElement("div", { className: "billing my-pad" }, React.createElement("div", { className: "billing__head" }, "Billing Details"), React.createElement("form", { className: "billing__form", onSubmit: props.handleSubmit, noValidate: true }, !props.user && React.createElement(redux_form_1.Field, { component: InputElement_1.default, placeholder: "Full name", name: "fullName", type: "text", required: true }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, placeholder: "Country", name: "country", type: "text", required: true }), React.createElement("div", { className: "row" }, React.createElement(redux_form_1.Field, { component: InputElement_1.default, placeholder: "Town / City", name: "city", type: "text", className: "mr-1", required: true }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, placeholder: "Postcode / Zip", name: "postcode", type: "text", className: "ml-1", required: true })), React.createElement(redux_form_1.Field, { component: InputElement_1.default, placeholder: "Street Address", name: "address", type: "text", required: true }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, placeholder: "Phone", name: "phone", type: "text", required: true }), !props.user && React.createElement(redux_form_1.Field, { component: InputElement_1.default, placeholder: "Email address", name: "email", type: "email", required: true }), !props.user && React.createElement(CreateAccountForm_1.default, null), React.createElement("div", null, "Order Notes"), React.createElement("div", { className: "text-muted" }, "Notes about your order like delivery species e.g."), React.createElement("div", { className: "input" }, React.createElement(redux_form_1.Field, { component: "textarea", className: "input__elem", rows: 1, name: "notes" }), React.createElement("div", { className: "input__line", style: { bottom: '4px' } })), React.createElement(Payment_1.default, null))));
+};
+var BillingFormRedux = connected(BillingForm);
 exports.default = redux_form_1.reduxForm({
     form: 'billing'
-})(BillingForm);
+})(BillingFormRedux);
 
 //# sourceMappingURL=BillingForm.js.map
 
@@ -32151,7 +32159,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 var Questions = function Questions() {
-    return React.createElement("div", { className: "container" }, React.createElement("div", { className: "questions my-pad" }, React.createElement("div", { className: "question" }, React.createElement("div", { className: "question__text" }, "Returning customer ?", React.createElement(react_router_dom_1.Link, { to: "/login" }, "Click here to login."))), React.createElement("div", { className: "question" }, React.createElement("div", { className: "question__text" }, "Have a coupon ?", React.createElement("a", { href: "#" }, "Click here to enter.")))));
+    return React.createElement("div", { className: "container" }, React.createElement("div", { className: "questions my-pad" }, React.createElement("div", { className: "question" }, React.createElement("div", { className: "question__text" }, "Returning customer ?", React.createElement(react_router_dom_1.Link, { to: "/login" }, "Click here to login.")))));
 };
 exports.default = Questions;
 

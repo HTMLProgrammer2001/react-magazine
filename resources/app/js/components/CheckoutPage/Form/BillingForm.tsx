@@ -1,35 +1,47 @@
 import * as React from 'react';
 import {reduxForm, Field, InjectedFormProps} from 'redux-form';
+import {connect, ConnectedProps} from 'react-redux';
 
 import InputElement from '../../FormElements/InputElement';
 import AccountForm, {IAccountFormData} from './CreateAccountForm';
 import Payment from './Payment/';
+import {RootState} from '../../../redux/Reducers';
 
+
+const mapStateToProps = (state: RootState) => ({
+	user: state.user.user
+});
+
+const connected = connect(mapStateToProps, null);
 
 export type IBillingFormData = {
-	fullName: string,
+	fullName?: string,
 	country: string,
 	city: string,
 	postcode: string,
 	address: string,
-	email: string,
+	email?: string,
 	notes: string,
 	payment: string
 } & IAccountFormData;
 
-type IBillingProps = InjectedFormProps<IBillingFormData, {}>;
+type IOwnProps = ConnectedProps<typeof connected>;
+type IBillingProps = InjectedFormProps<IBillingFormData, {}> & IOwnProps;
 
-const BillingForm: React.FC<IBillingProps> = (props) => (
+const BillingForm: React.FC<IBillingProps> = (props: any) => (
 	<div className="container">
 		<div className="billing my-pad">
 			<div className="billing__head">Billing Details</div>
 
 			<form className="billing__form" onSubmit={props.handleSubmit} noValidate>
-				<Field component={InputElement}
-					   placeholder="Full name"
-					   name="fullName"
-					   type="text"
-					   required/>
+				{
+					!props.user &&
+						<Field component={InputElement}
+						   placeholder="Full name"
+						   name="fullName"
+						   type="text"
+						   required/>
+				}
 
 				<Field component={InputElement}
 					   placeholder="Country"
@@ -65,13 +77,19 @@ const BillingForm: React.FC<IBillingProps> = (props) => (
 					   type="text"
 					   required/>
 
-				<Field component={InputElement}
-					   placeholder="Email address"
-					   name="email"
-					   type="email"
-					   required/>
+				{
+					!props.user &&
+						<Field component={InputElement}
+						   placeholder="Email address"
+						   name="email"
+						   type="email"
+						   required/>
+				}
 
-				<AccountForm/>
+				{
+					!props.user &&
+						<AccountForm/>
+				}
 
 				<div>Order Notes</div>
 				<div className="text-muted">Notes about your order like delivery species e.g.</div>
@@ -91,6 +109,8 @@ const BillingForm: React.FC<IBillingProps> = (props) => (
 	</div>
 );
 
-export default reduxForm<IBillingFormData>({
+const BillingFormRedux = connected(BillingForm);
+
+export default reduxForm<IBillingFormData, {}>({
 	form: 'billing'
-})(BillingForm);
+})(BillingFormRedux);

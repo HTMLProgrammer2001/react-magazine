@@ -8,6 +8,7 @@ import InputElement from '../../FormElements/InputElement';
 
 
 export type IAccountFormData = {
+	create?: boolean,
 	password?: string,
 	passwordConfirm?: string
 }

@@ -13,9 +13,7 @@
 </head>
 <body>
 	<div id="root"></div>
-    <script>
-        var myStore;
-    </script>
+
 	<script src="/js/bundle.js"></script>
 </body>
 </html>

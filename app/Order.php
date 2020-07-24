@@ -10,7 +10,12 @@ class Order extends Model
         'date' => 'datetime'
     ];
 
+    protected $fillable = ['country', 'city', 'address', 'postcode', 'notes'];
+
     public $timestamps = false;
+
+    //Payment
+    const PAYMENT_TYPES = ['bank', 'paypal', 'deliver'];
 
     //relations
     public function user(){
@@ -31,5 +36,15 @@ class Order extends Model
     public function setUser(int $user_id){
         $this->user_id = $user_id;
         $this->save();
+    }
+
+    public function setPayment(string $payment){
+        if(in_array($payment, self::PAYMENT_TYPES))
+            $this->payment= $payment;
+    }
+
+    public function setAnonymusUser(string $email, string $fullName){
+        $this->email = $email;
+        $this->fullName = $fullName;
     }
 }

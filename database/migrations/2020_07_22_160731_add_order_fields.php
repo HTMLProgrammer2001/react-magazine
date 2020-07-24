@@ -14,7 +14,14 @@ class AddOrderFields extends Migration
     public function up()
     {
         Schema::table('orders', function (Blueprint $table) {
-            //$table->
+            $table->string('country');
+            $table->string('city');
+            $table->string('postcode');
+            $table->string('address');
+            $table->string('notes')->nullable();
+            $table->enum('payment', ['paypal', 'bank', 'deliver']);
+
+            $table->bigInteger('user_id')->unsigned()->nullable()->change();
         });
     }
 
@@ -26,7 +33,14 @@ class AddOrderFields extends Migration
     public function down()
     {
         Schema::table('orders', function (Blueprint $table) {
-            //
+            $table->dropColumn('country');
+            $table->dropColumn('city');
+            $table->dropColumn('postcode');
+            $table->dropColumn('address');
+            $table->dropColumn('notes');
+            $table->dropColumn('payment');
+
+            $table->bigInteger('user_id')->unsigned()->change();
         });
     }
 }

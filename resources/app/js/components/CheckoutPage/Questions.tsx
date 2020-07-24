@@ -15,14 +15,14 @@ const Questions: React.FC<{}> = () => (
 				</div>
 			</div>
 
-			<div className="question">
-				<div className="question__text">
-					Have a coupon ?
-					<a href="#">
-						Click here to enter.
-					</a>
-				</div>
-			</div>
+			{/*<div className="question">*/}
+			{/*	<div className="question__text">*/}
+			{/*		Have a coupon ?*/}
+			{/*		<a href="#">*/}
+			{/*			Click here to enter.*/}
+			{/*		</a>*/}
+			{/*	</div>*/}
+			{/*</div>*/}
 		</div>
 	</div>
 );
