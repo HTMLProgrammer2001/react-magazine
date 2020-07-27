@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
+    const CREATED_AT = 'date';
+
     protected $casts = [
         'date' => 'datetime'
     ];
@@ -43,7 +45,7 @@ class Order extends Model
             $this->payment= $payment;
     }
 
-    public function setAnonymusUser(string $email, string $fullName){
+    public function setAnonymousUser(string $email, string $fullName){
         $this->email = $email;
         $this->fullName = $fullName;
     }

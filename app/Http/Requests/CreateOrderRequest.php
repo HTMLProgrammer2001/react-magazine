@@ -31,7 +31,7 @@ class CreateOrderRequest extends FormRequest
             'postcode' => 'required|string',
             'address' => 'required|string',
             'notes' => 'nullable|string',
-            'payment' => ['required|string', Rule::in('paypal', 'bank', 'deliver')],
+            'payment' => ['required', 'string', Rule::in('paypal', 'bank', 'deliver')],
             'cartItems' => 'required'
         ];
 
@@ -40,8 +40,8 @@ class CreateOrderRequest extends FormRequest
             $rules = array_merge($rules, [
                'fullName' => 'required|string',
                'email' => 'required|email',
-               'create' => 'required|boolean',
-               'password' => 'required_if:create|confirmed'
+               'create' => 'nullable|boolean',
+               'password' => 'required_if:create,true|confirmed'
             ]);
         }
 

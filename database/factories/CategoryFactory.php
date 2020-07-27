@@ -7,6 +7,7 @@ use App\Category;
 
 $factory->define(Category::class, function (Faker $faker) {
     return [
-        'name' => $faker->word()
+        'name' => $faker->word(),
+        'slug' => $faker->slug
     ];
 });

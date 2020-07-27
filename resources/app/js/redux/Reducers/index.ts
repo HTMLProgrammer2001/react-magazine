@@ -14,6 +14,7 @@ import filterReducer from './App/filter';
 import changeReducer from './change';
 import searchReducer from './search';
 import appReducer from './App/app';
+import checkoutReducer from './checkout';
 
 
 const storeReducer = combineReducers({
@@ -30,6 +31,7 @@ const storeReducer = combineReducers({
 	change: changeReducer,
 	search: searchReducer,
 	app: appReducer,
+	checkout: checkoutReducer,
 	form: formReducer
 });
 

@@ -81,3 +81,8 @@ export const SEARCH_ERROR = 'SEARCH_ERROR';
 
 //Initialization action types
 export const APP_INITIALIZED = 'APP_INITIALIZED';
+
+//Checkout action types
+export const CHECKOUT_START = 'CHECKOUT_START';
+export const CHECKOUT_SUCCESS = 'CHECKOUT_SUCCESS';
+export const CHECKOUT_ERROR = 'CHECKOUT_ERROR';

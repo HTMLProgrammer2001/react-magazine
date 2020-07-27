@@ -16,6 +16,8 @@ import {IChangeFormData} from '../components/ChangePasswordPage/ChangeForm';
 import {ISearchResponse} from '../Interfaces/Responses/ISearchResponse';
 import {IUser} from '../Interfaces/IUser';
 import {IProduct} from '../Interfaces/IProduct';
+import {IBillingFormData} from '../components/CheckoutPage/Form/BillingForm';
+import {ICartItem} from '../Interfaces/ICartItem';
 
 
 class API{
@@ -318,6 +320,25 @@ class API{
 			response = await this.clientAPI.get<IProduct[]>('/getProductsByIds', {
 				params: {
 					ids: JSON.stringify(ids)
+				}
+			});
+		}
+		catch (err) {
+			console.log(err.response.data);
+			return err as AxiosError;
+		}
+
+		return response.data;
+	}
+
+	static async createOrder(data: IBillingFormData & {cartItems: any[]}):
+		Promise<{success: string} | AxiosError>{
+		let response: AxiosResponse;
+
+		try{
+			response = await this.clientAPI.post<{success: string}>('/orders', data, {
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem('token')}`
 				}
 			});
 		}

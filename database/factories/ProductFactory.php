@@ -14,6 +14,7 @@ $factory->define(Product::class, function (Faker $faker) {
         'colors' => json_encode($faker->randomElements(['red', 'green', 'blue', 'black', 'gray'], 3, false)),
         'sizes' => json_encode(['XL', 'L', 'M', 'S', 'XS']),
         'category_id' => $faker->randomElement(Category::all('id')),
-        'description' => $faker->text(200)
+        'description' => $faker->text(200),
+        'images' => json_encode(['product.png', 'product.png', 'product.png'])
     ];
 });
