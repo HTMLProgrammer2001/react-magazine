@@ -20,7 +20,7 @@ const thunkCheckout = (vals: IBillingFormData, formName: string): LoginThunkActi
 		const mappedCartItems = cartItems.map((item) => {
 			return {
 				...item,
-				product: item.product.id
+				product: item.thunks.id
 			};
 		});
 

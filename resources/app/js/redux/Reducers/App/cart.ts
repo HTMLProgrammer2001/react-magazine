@@ -38,7 +38,7 @@ const cartReducer = (state: CartState = initialState, action: CartActions): Cart
 			 * If same product, color and size 
 			 * then just increase count
 			 */
-			if(item.product.id == action.payload.product.id && item.color == action.payload.color
+			if(item.product.id == action.payload.thunks.id && item.color == action.payload.color
 				&& item.size == action.payload.size){
 				wasChanged = true;
 				

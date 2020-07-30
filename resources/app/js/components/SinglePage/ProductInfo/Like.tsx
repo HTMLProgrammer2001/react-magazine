@@ -7,8 +7,8 @@ import {RootState} from '../../../redux/Reducers';
 
 
 const mapStateToProps = (state: RootState) => ({
-	isLiked: state.single.product.data!.liked,
-	productID: state.single.product.data!.id
+	isLiked: state.single.thunks.data!.liked,
+	productID: state.single.thunks.data!.id
 });
 
 const connected = connect(mapStateToProps, {

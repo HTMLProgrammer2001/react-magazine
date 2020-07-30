@@ -10,7 +10,7 @@ import thunkProduct from '../../redux/ThunkActions/Single/thunkProduct';
 
 
 const mapStateToProps = (state: RootState) => ({
-	...state.single.product
+	...state.single.thunks
 });
 
 const mapDispatchToProps = (dispatch: any) => ({

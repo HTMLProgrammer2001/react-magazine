@@ -23,7 +23,7 @@ type ICartListProps = ConnectedProps<typeof connected>;
 
 const CartList: React.FC<ICartListProps> = (props) => {
 	const cartPrice: number = props.cartItems.reduce((prev, data) => (
-		prev + data.product.price * data.count
+		prev + data.thunks.price * data.count
 	), 0);
 
 	return (

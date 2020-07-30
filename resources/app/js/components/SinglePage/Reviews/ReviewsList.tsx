@@ -10,7 +10,7 @@ import {commentReset} from '../../../redux/Actions/Single/commentsActions';
 
 const mapStateToProps = (state: RootState) => ({
 	...state.single.comments,
-	curProductID: state.single.product.data!.id
+	curProductID: state.single.thunks.data!.id
 });
 
 const mapDispatchToProps = (dispatch: any) => ({

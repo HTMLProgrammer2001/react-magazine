@@ -16,7 +16,7 @@ const connected = connect(null, mapDispatchToProps);
 
 type IOwnProps = {
 	size: string,
-	viewType?: 'product' | 'goods',
+	viewType?: 'thunks.ts' | 'goods',
 	formName: string
 }
 
@@ -26,7 +26,7 @@ type IElementProps = WrappedFieldProps & React.InputHTMLAttributes<HTMLLIElement
 const SizeElement: React.FC<IElementProps> = (props) => {
 	const {className, viewType, size, checked, input: {name}} = props;
 
-	const mainClass = viewType == 'product' ? 'product__size' : 'goods__size';
+	const mainClass = viewType == 'thunks.ts' ? 'product__size' : 'goods__size';
 
 	const classes = c(`${mainClass}-item ${className ? className : ''}`, {
 		[`${mainClass}-item_active`]: checked

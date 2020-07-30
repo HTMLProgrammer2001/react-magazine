@@ -8,7 +8,7 @@ const Footer: React.FC<{}> = () => (
 			<div className="footer__content">
           			<div className="footer__info">
           				<img className="footer__logo" 
-							 src="./image/logo.png" 
+							 src="/image/logo.png"
 							 alt="Logo"/>
 						
             			<div className="footer__info-content">

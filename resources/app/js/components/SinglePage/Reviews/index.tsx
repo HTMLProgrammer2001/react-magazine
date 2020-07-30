@@ -8,7 +8,7 @@ import thunkAddComment from '../../../redux/ThunkActions/Single/thunkAddComment'
 
 
 const mapStateToProps = (state: RootState) => ({
-	productID: state.single.product.data!.id
+	productID: state.single.thunks.data!.id
 });
 
 const connected = connect(mapStateToProps, {
