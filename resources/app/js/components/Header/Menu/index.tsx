@@ -7,12 +7,13 @@ import {connect, ConnectedProps} from 'react-redux';
 import Cart from './Cart';
 import Search from './Search/';
 import Burger from './Burger';
-import {RootState} from '../../../redux/Reducers';
-import thunkLogout from '../../../redux/ThunkActions/thunkLogout';
+import {RootState} from '../../../redux';
+import thunkLogout from '../../../redux/logout/thunks';
+import {selectUserState} from '../../../redux/AppState/user/selectors';
 
 
 const mapStateToProps = (state: RootState) => ({
-	userData: state.user
+	userData: selectUserState(state)
 });
 
 const mapDispatchToProps = (dispatch: any) => ({

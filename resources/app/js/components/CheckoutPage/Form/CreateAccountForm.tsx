@@ -2,9 +2,9 @@ import * as React from 'react';
 import {Field, formValueSelector} from 'redux-form';
 import {connect, ConnectedProps} from 'react-redux';
 
-import {RootState} from '../../../redux/Reducers';
 import CheckboxElement from '../../FormElements/CheckboxElement';
 import InputElement from '../../FormElements/InputElement';
+import {RootState} from '../../../redux';
 
 
 export type IAccountFormData = {

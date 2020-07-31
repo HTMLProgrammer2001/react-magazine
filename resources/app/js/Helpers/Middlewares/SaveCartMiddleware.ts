@@ -1,8 +1,8 @@
 import {AnyAction, Dispatch, Middleware, MiddlewareAPI} from 'redux';
-import {CART_ADD, CART_REMOVE, CART_RESET} from '../../redux/actionTypes';
+import {CART_ADD, CART_REMOVE, CART_RESET} from '../../redux/AppState/cart/types';
 import {ICartItem} from '../../Interfaces/ICartItem';
-import {RootState} from '../../redux/Reducers';
 import {ICartItemStorage} from '../../Interfaces/ICartItemStorage';
+import {RootState} from '../../redux';
 
 
 const actions = [CART_ADD, CART_REMOVE, CART_RESET];

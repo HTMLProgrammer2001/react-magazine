@@ -1,19 +1,15 @@
 import {ThunkAction, ThunkDispatch} from 'redux-thunk';
 
 import {
-	cartReset,
 	cartLoadSuccess,
 	cartLoadError,
-	cartLoadStart,
-	cartRemove,
-	cartAdd
+	cartLoadStart
 } from './actions';
-import API from '../../../Helpers/API';
+import {dataApi} from '../../../Helpers/API';
 
 import {RootState} from '../../index';
 import {CartActions} from './reducer';
 import {ICartItemStorage} from '../../../Interfaces/ICartItemStorage';
-import {IProduct} from '../../../Interfaces/IProduct';
 
 
 export type CartThunkAction = ThunkAction<void, RootState, unknown, CartActions>;
@@ -23,33 +19,42 @@ const thunkCart = (): CartThunkAction =>
 		let cartItems: Array<ICartItemStorage> = [];
 
 		try{
+			//Load data from local storage
 			cartItems = JSON.parse(<string>localStorage.getItem('cartItems'));
 
-			if(!cartItems || !cartItems.length)
+			if(!cartItems || !cartItems.length) {
 				return;
+			}
 		}
 		catch (e) {
+			//On error break
 			return;
 		}
 
+		//Start loading
 		dispatch(cartLoadStart());
 
+		//Parse product ids
 		let productIDs: Array<number> = cartItems.map((item) => (
 			item.product
 		));
 
-		const cartResponse = await API.getProductsByIds(productIDs);
+		try {
+			//Get data
+			const cartResponse = await dataApi.getProductsByIds(productIDs);
 
-		if(API.isError(cartResponse)){
-			dispatch(cartLoadError(cartResponse.message));
-		}
-		else{
+			//Parse cart items
 			let parsedCartItems = cartItems.map((item) => ({
 				...item,
-				product: <IProduct>cartResponse.find((i) => i.id == item.product)
+				product: cartResponse.data.find((i) => i.id == item.product)
 			}));
 
+			//Load success
 			dispatch(cartLoadSuccess(parsedCartItems));
+		}
+		catch (e) {
+			//Error
+			dispatch(cartLoadError(e.data.message));
 		}
 	};
 

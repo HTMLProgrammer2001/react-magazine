@@ -2,13 +2,14 @@ import * as React from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 import c from 'classnames';
 
-import thunkToggleLike from '../../../redux/ThunkActions/thunkToggleLike';
-import {RootState} from '../../../redux/Reducers';
+import thunkToggleLike from '../../../redux/SingleState/product/thunks/thunkToggleLike';
+import {RootState} from '../../../redux';
+import {selectIsLiked, selectSingleID} from '../../../redux/SingleState/selectors';
 
 
 const mapStateToProps = (state: RootState) => ({
-	isLiked: state.single.thunks.data!.liked,
-	productID: state.single.thunks.data!.id
+	isLiked: selectIsLiked(state),
+	productID: selectSingleID(state)
 });
 
 const connected = connect(mapStateToProps, {

@@ -5,11 +5,12 @@ import {connect, ConnectedProps} from 'react-redux';
 import InputElement from '../../FormElements/InputElement';
 import AccountForm, {IAccountFormData} from './CreateAccountForm';
 import Payment from './Payment/';
-import {RootState} from '../../../redux/Reducers';
+import {RootState} from '../../../redux';
+import {selectUser} from '../../../redux/AppState/user/selectors';
 
 
 const mapStateToProps = (state: RootState) => ({
-	user: state.user.user
+	user: selectUser(state)
 });
 
 const connected = connect(mapStateToProps, null);

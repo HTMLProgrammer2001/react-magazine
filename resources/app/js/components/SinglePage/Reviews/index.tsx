@@ -3,12 +3,13 @@ import {connect, ConnectedProps} from 'react-redux';
 
 import ReviewForm, {IReviewFormData} from './ReviewForm';
 import ReviewsList from './ReviewsList';
-import {RootState} from '../../../redux/Reducers';
-import thunkAddComment from '../../../redux/ThunkActions/Single/thunkAddComment';
+import {RootState} from '../../../redux';
+import thunkAddComment from '../../../redux/SingleState/addComment/thunks';
+import {selectSingleID} from '../../../redux/SingleState/selectors';
 
 
 const mapStateToProps = (state: RootState) => ({
-	productID: state.single.thunks.data!.id
+	productID: selectSingleID(state)
 });
 
 const connected = connect(mapStateToProps, {

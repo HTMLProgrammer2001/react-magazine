@@ -1,14 +1,13 @@
 import * as React from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 
-import {RootState} from '../../../../redux/Reducers';
+import {RootState} from '../../../../redux';
+import {selectCartItems, selectCartPrice} from '../../../../redux/AppState/cart/selectors';
 
 
 const connected = connect((state: RootState) => ({
-	cartItems: state.cart.cartItems,
-	totalPrice: state.cart.cartItems.reduce((prev, item) => (
-		prev + item.count * item.thunks.price
-	), 0)
+	cartItems: selectCartItems(state),
+	totalPrice: selectCartPrice(state)
 }));
 
 const PaymentList: React.FC<ConnectedProps<typeof connected>> = (props) => (
@@ -22,8 +21,8 @@ const PaymentList: React.FC<ConnectedProps<typeof connected>> = (props) => (
 			{
 				props.cartItems.map((item, index) => (
 					<div key={index} className="payment__order-item">
-						<span>{item.thunks.name} x {item.count}</span>
-						<span>${(item.thunks.price * item.count).toFixed(2)}</span>
+						<span>{item.product.name} x {item.count}</span>
+						<span>${(item.product.price * item.count).toFixed(2)}</span>
 					</div>
 				))
 			}

@@ -7,7 +7,7 @@ import {
 	searchStart,
 	searchSuccess
 } from './actions';
-import API from '../../Helpers/API';
+import {dataApi} from '../../Helpers/API';
 
 
 export type SearchThunkAction = ThunkAction<void, RootState, unknown, SearchActions>;
@@ -16,13 +16,13 @@ const thunkSearch = (text: string, page: number = 1): SearchThunkAction =>
 	async (dispatch: ThunkDispatch<{}, {}, SearchActions>) => {
 		dispatch(searchStart(text));
 
-		const searchResponse = await API.search(text, page);
+		try{
+			const searchResponse = await dataApi.search(text, page);
 
-		if(API.isError(searchResponse)){
-			dispatch(searchError(searchResponse.message));
+			dispatch(searchSuccess(searchResponse.data));
 		}
-		else{
-			dispatch(searchSuccess(searchResponse));
+		catch (e) {
+			dispatch(searchError(e.data.message));
 		}
 	};
 

@@ -40,7 +40,7 @@ const Content: React.FC<{}> = () => (
 			<Route path='/' component={NotFoundPage}/>
 		</Switch>
 
-		<Newsletter/>
+		{/*<Newsletter/>*/}
 		<Footer/>
 	</React.Fragment>
 );

@@ -2,14 +2,15 @@ import * as React from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 import {RouteComponentProps} from 'react-router';
 
-import Paginate from '../Paginate';
-import {RootState} from '../../redux/Reducers';
-import thunkSearch from '../../redux/ThunkActions/thunkSearch';
+import Breadcrumbs from '../Breadcrumbs';
+import {RootState} from '../../redux';
+import thunkSearch from '../../redux/search/thunks';
+import {selectSearchLength, selectSearchState} from '../../redux/search/selectors';
 
 
 const mapStateToProps = (state: RootState) => ({
-	searchState: state.search,
-	productCount: state.search.products.length
+	searchState: selectSearchState(state),
+	productCount: selectSearchLength(state)
 });
 
 const connected = connect(mapStateToProps, {
@@ -26,7 +27,7 @@ const SearchPage: React.FC<ISearchProps> = (props) => {
 
 	return (
 		<React.Fragment>
-			<Paginate paths={[
+			<Breadcrumbs paths={[
 				{name: 'Home', path: '/'},
 				{name: 'Search', path: '/search'}
 			]}/>

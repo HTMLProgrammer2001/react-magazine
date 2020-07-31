@@ -1,14 +1,15 @@
 import * as React from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 
-import Paginate from '../Paginate';
+import Breadcrumbs from '../Breadcrumbs';
 import {default as ResetForm, IResetFormData} from './ResetForm';
-import {RootState} from '../../redux/Reducers';
-import thunkReset from '../../redux/ThunkActions/thunkReset';
+import {RootState} from '../../redux';
+import thunkReset from '../../redux/reset/thunks';
+import {selectResetState} from '../../redux/reset/selectors';
 
 
 const mapStateToProps = (state: RootState) => ({
-	resetState: state.reset
+	resetState: selectResetState(state)
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
@@ -31,7 +32,7 @@ const ResetPage: React.FC<ConnectedProps<typeof connected>> = (props) => {
 
 	return (
 		<React.Fragment>
-			<Paginate paths={[
+			<Breadcrumbs paths={[
 				{name: 'Home', path: '/'},
 				{name: 'Reset password', path: '/reset'}
 			]}/>

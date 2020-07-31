@@ -1,10 +1,10 @@
 import * as React from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 
-import Paginate from '../Paginate';
+import Breadcrumbs from '../Breadcrumbs';
 import Questions from './Questions';
 import BillingForm, {IBillingFormData} from './Form/BillingForm';
-import thunkCheckout from '../../redux/ThunkActions/thunkCheckout';
+import thunkCheckout from '../../redux/checkout/thunks';
 
 
 const connected = connect(null, {
@@ -23,7 +23,7 @@ const CheckoutPage: React.FC<ConnectedProps<typeof connected>> = (props) => {
 
 	return (
 		<React.Fragment>
-			<Paginate paths={[{
+			<Breadcrumbs paths={[{
 				name: 'Home',
 				path: '/'
 			},

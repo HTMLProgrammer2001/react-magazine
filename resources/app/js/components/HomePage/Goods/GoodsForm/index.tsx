@@ -3,11 +3,11 @@ import {reduxForm, InjectedFormProps, Field, formValueSelector, change, submit} 
 import {connect, ConnectedProps} from 'react-redux';
 import {withRouter, RouteComponentProps} from 'react-router';
 
-import {RootState} from '../../../../redux/Reducers';
 import CheckboxGroup from '../../../FormElements/CheckboxGroup';
 import ColorGroup from '../../../FormElements/ColorGroup';
 import SizeGroup from '../../../FormElements/SizeGroup';
 import Slider from '../../../FormElements/Slider';
+import {RootState} from '../../../../redux';
 
 
 const selector = formValueSelector('productFilter');

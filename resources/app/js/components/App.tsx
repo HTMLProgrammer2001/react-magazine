@@ -4,12 +4,13 @@ import {connect, ConnectedProps} from 'react-redux';
 
 import Content from './Content';
 import ProfileSwitcher from './Profile';
-import {RootState} from '../redux/Reducers';
-import thunkInitialize from '../redux/ThunkActions/App/thunkInitialize';
+import {RootState} from '../redux';
+import thunkInitialize from '../redux/AppState/app/thunks';
+import {selectInitialized} from '../redux/AppState/app/selectors';
 
 
 const mapStateToProps = (state: RootState) => ({
-	initialized: state.app.initialized
+	initialized: selectInitialized(state)
 });
 
 const connected = connect(mapStateToProps, {

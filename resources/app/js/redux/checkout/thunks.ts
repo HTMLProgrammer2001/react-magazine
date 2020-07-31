@@ -5,7 +5,7 @@ import {IBillingFormData} from '../../components/CheckoutPage/Form/BillingForm';
 import {RootState} from '../';
 import {CheckoutActions} from './reducer';
 import {checkoutError, checkoutSuccess, checkoutStart} from './actions';
-import API from '../../Helpers/API';
+import {dataApi} from '../../Helpers/API';
 import {cartReset} from '../AppState/cart/actions';
 
 
@@ -14,35 +14,39 @@ export type LoginThunkAction = ThunkAction<void, RootState, unknown, Actions>;
 
 const thunkCheckout = (vals: IBillingFormData, formName: string): LoginThunkAction =>
 	async (dispatch: ThunkDispatch<{}, {}, Actions>, getState) => {
+		//Start checkout
 		dispatch(checkoutStart());
 
+		//Load cart items
 		const {cartItems} = getState().cart;
 		const mappedCartItems = cartItems.map((item) => ({
 			...item,
 			product: item.product.id
 		}));
 
-		const checkoutResponse = await API.createOrder({
-			...vals,
-			cartItems: mappedCartItems
-		});
+		try{
+			//Request
+			const checkoutResponse = await dataApi.createOrder({
+				...vals,
+				cartItems: mappedCartItems
+			});
 
-		console.log(checkoutResponse);
-
-		if (API.isError(checkoutResponse)) {
-			if (checkoutResponse.response!.data.errors) {
+			//Success
+			dispatch(reset(formName));
+			dispatch(checkoutSuccess(checkoutResponse.data.success));
+			dispatch(cartReset());
+		}
+		catch (e) {
+			if(e.data.response!.data.errors){
+				//Update form error
 				dispatch(updateSyncErrors(
 					formName,
-					checkoutResponse.response!.data.errors,
-					checkoutResponse.response!.data.message
+					e.data.response!.data.errors,
+					e.data.response!.data.message
 				));
-			} else {
-				dispatch(checkoutError(checkoutResponse.response!.data.message));
 			}
-		} else {
-			dispatch(reset(formName));
-			dispatch(checkoutSuccess(checkoutResponse.success));
-			dispatch(cartReset());
+
+			dispatch(checkoutError(e.data.message));
 		}
 	};
 

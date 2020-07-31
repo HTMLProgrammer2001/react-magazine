@@ -2,15 +2,16 @@ import * as React from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 
 import Review from './Review';
-import ReviewSortForm, {IReviewSortFormData} from './ReviewSortForm';
-import {RootState} from '../../../redux/Reducers';
-import thunkComment from '../../../redux/ThunkActions/Single/thunkComment';
-import {commentReset} from '../../../redux/Actions/Single/commentsActions';
+import ReviewSortForm from './ReviewSortForm';
+import {RootState} from '../../../redux';
+import {selectSingleComments, selectSingleID} from '../../../redux/SingleState/selectors';
+import thunkComment from '../../../redux/SingleState/comments/thunks/thunkComment';
+import {commentReset} from '../../../redux/SingleState/comments/actions';
 
 
 const mapStateToProps = (state: RootState) => ({
-	...state.single.comments,
-	curProductID: state.single.thunks.data!.id
+	...selectSingleComments(state),
+	curProductID: selectSingleID(state)
 });
 
 const mapDispatchToProps = (dispatch: any) => ({

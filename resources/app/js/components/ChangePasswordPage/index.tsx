@@ -1,16 +1,16 @@
 import * as React from 'react';
 import {connect, ConnectedProps} from 'react-redux';
-import {compose} from 'redux';
 import {withRouter, RouteComponentProps} from 'react-router';
 
-import Paginate from '../Paginate';
+import Breadcrumbs from '../Breadcrumbs';
 import {default as ChangeForm, IChangeFormData} from './ChangeForm';
-import {RootState} from '../../redux/Reducers';
-import thunkChange from '../../redux/ThunkActions/thunkChange';
+import {RootState} from '../../redux';
+import thunkChange from '../../redux/change/thunks';
+import {selectChangeState} from '../../redux/change/selectors';
 
 
 const mapStateToProps = (state: RootState) => ({
-	changeFormState: state.change
+	changeFormState: selectChangeState(state)
 });
 
 const connected = connect(mapStateToProps, {
@@ -36,7 +36,7 @@ const ChangePage: React.FC<IChangePasswordProps> = (props) => {
 
 	return (
 		<React.Fragment>
-			<Paginate paths={
+			<Breadcrumbs paths={
 				[{name: 'Home', path: '/'}, {name: 'Change password', path: '/change'}]
 			}/>
 

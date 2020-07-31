@@ -4,11 +4,11 @@ import {connect, ConnectedProps} from 'react-redux';
 import {Dispatch} from 'redux';
 
 import {IFullProduct} from '../../../Interfaces/IFullProduct';
-import {RootState} from '../../../redux/Reducers';
 import {IProduct, Size} from '../../../Interfaces/IProduct';
 import AddCartForm, {IAddCartData} from './AddCartForm';
 import Mark from '../../Mark';
-import {cartAdd} from '../../../redux/Actions/App/cartActions';
+import {cartAdd} from '../../../redux/AppState/cart/actions';
+import {RootState} from '../../../redux';
 
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

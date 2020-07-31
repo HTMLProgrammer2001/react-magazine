@@ -1,6 +1,6 @@
 //My components
-import * as actionCreators from '../Actions/resetActions';
-import {RESET_ERROR, RESET_SUCCESS, RESET_START} from '../actionTypes';
+import * as actionCreators from './actions';
+import {RESET_ERROR, RESET_SUCCESS, RESET_START} from './types';
 import {InferActionTypes} from '../';
 
 

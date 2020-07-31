@@ -1,15 +1,15 @@
 import {ThunkAction, ThunkDispatch} from 'redux-thunk';
 import {getFormValues} from 'redux-form';
 
-import {RootState} from '../Reducers';
 import {ProductListActions} from './reducer';
 import {
 	productListError,
 	productListStart,
 	productListSuccess
 } from './actions';
-import API from '../../Helpers/API';
+import {dataApi} from '../../Helpers/API';
 import {IGoodsFormData} from '../../components/HomePage/Goods/GoodsForm';
+import {RootState} from '../index';
 
 
 export type ProductListThunkAction = ThunkAction<void, RootState, unknown, ProductListActions>;
@@ -21,15 +21,13 @@ const thunkProductList = (offset: number = 1): ProductListThunkAction =>
 		const selector = getFormValues('productFilter');
 		const filters = selector(getState());
 
-		console.log(filters);
+		try{
+			const productListResponse = await dataApi.getProducts(<IGoodsFormData>filters, offset);
 
-		const productListResponse = await API.getProducts(<IGoodsFormData>filters, offset);
-
-		if(API.isError(productListResponse)){
-			dispatch(productListError(productListResponse.message));
+			dispatch(productListSuccess(productListResponse.data));
 		}
-		else{
-			dispatch(productListSuccess(productListResponse));
+		catch (e) {
+			dispatch(productListError(e.data.message));
 		}
 	};
 

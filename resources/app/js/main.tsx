@@ -6,7 +6,7 @@ import thunk from 'redux-thunk';
 import {composeWithDevTools} from 'redux-devtools-extension';
 
 import App from './components/App';
-import reducer from './redux/Reducers/';
+import reducer from './redux/';
 import SaveCartMiddleware from './Helpers/Middlewares/SaveCartMiddleware';
 
 

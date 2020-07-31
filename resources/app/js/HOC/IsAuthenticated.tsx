@@ -2,7 +2,7 @@ import * as React from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 import {Redirect} from 'react-router';
 
-import {RootState} from '../redux/Reducers';
+import {RootState} from '../redux';
 
 
 const IsAuthenticated = <T extends object>(Elem: React.ComponentType<T>) => {
@@ -27,3 +27,4 @@ const IsAuthenticated = <T extends object>(Elem: React.ComponentType<T>) => {
 };
 
 export default IsAuthenticated;
+

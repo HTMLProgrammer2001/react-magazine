@@ -2,13 +2,14 @@ import * as React from 'react';
 import c from 'classnames';
 import {connect, ConnectedProps} from 'react-redux';
 
-import {RootState} from '../../../../redux/Reducers/';
 import {IMenuProps} from '../Search';
 import CartDropdown from './CartDropdown';
+import {RootState} from '../../../../redux';
+import {selectCartCount} from '../../../../redux/AppState/cart/selectors';
 
 
 const mapStateToProps = (state: RootState) => ({
-	count: state.cart.cartItems.length
+	count: selectCartCount(state)
 });
 
 const connected = connect(mapStateToProps);

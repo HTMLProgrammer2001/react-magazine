@@ -4,7 +4,7 @@ import {connect, ConnectedProps} from 'react-redux';
 
 import Mark from '../../Mark';
 import {IComment} from '../../../Interfaces/IComment';
-import thunkReactionChange from '../../../redux/ThunkActions/Single/thunkReactionChange';
+import thunkReactionChange from '../../../redux/SingleState/comments/thunks/reactionChange';
 
 
 const connected = connect(null, {

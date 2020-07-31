@@ -1,11 +1,11 @@
 import {ThunkAction, ThunkDispatch} from 'redux-thunk';
 import {formValueSelector} from 'redux-form';
 
-import {RootState} from '../../../Reducers';
 import {CommentActions} from '../reducer';
 
 import {commentSuccess, commentError, commentStart} from '../actions';
-import API from '../../../../Helpers/API';
+import {dataApi} from '../../../../Helpers/API';
+import {RootState} from '../../../index';
 
 
 export type CommentThunkAction = ThunkAction<void, RootState, unknown, CommentActions>;
@@ -17,13 +17,13 @@ const thunkComment = (productID: number, offset: number = 1): CommentThunkAction
 		const selector = formValueSelector('sortReviewsForm');
 		const sortType = selector(getState(), 'type');
 
-		const commentResponse = await API.getComments(productID, offset, sortType);
-
-		if(API.isError(commentResponse)){
-			dispatch(commentError(commentResponse.message));
+		try{
+			const commentResponse = await dataApi.getComments(productID, offset, sortType);
+			
+			dispatch(commentSuccess(commentResponse.data));
 		}
-		else{
-			dispatch(commentSuccess(commentResponse));
+		catch (e) {
+			dispatch(commentError(e.data.response!.data.message));
 		}
 	};
 

@@ -1,14 +1,13 @@
 import * as React from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 import {NavLink} from 'react-router-dom';
+import {RootState} from '../../../redux';
+import {selectCartPrice} from '../../../redux/AppState/cart/selectors';
 
-import {RootState} from '../../../redux/Reducers';
 
 
 const mapStateToProps = (state: RootState) => ({
-	cartPrice: state.cart.cartItems.reduce((prev, item) => (
-		prev + item.count * item.thunks.price
-	), 0).toFixed(2)
+	cartPrice: selectCartPrice(state)
 });
 
 const connected = connect(mapStateToProps);

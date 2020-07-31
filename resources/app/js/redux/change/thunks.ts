@@ -6,31 +6,35 @@ import {RootState} from '../';
 import {ChangeActions} from './reducer';
 
 import {changeError, changeSuccess, changeStart} from './actions';
-import API from '../../Helpers/API';
+import {userApi} from '../../Helpers/API';
 
 
 export type ChangeThunkAction = ThunkAction<void, RootState, unknown, ChangeActions>;
 
 const thunkChange = (id: string, vals: IChangeFormData, formName: string): ChangeThunkAction =>
 	async (dispatch: ThunkDispatch<{}, {}, ChangeActions>) => {
+		//Start changing
 		dispatch(changeStart());
 
-		const changeResponse = await API.changePassword(id, vals);
+		try{
+			//Request
+			await userApi.changePassword(id, vals);
 
-		if(API.isError(changeResponse)){
-			if(changeResponse.response!.data.errors){
+			//Reset form and success message
+			dispatch(reset(formName));
+			dispatch(changeSuccess());
+		}
+		catch (e) {
+			if(e.data.response!.data.errors){
+				//Has errors
 				dispatch(updateSyncErrors(
 					formName,
-					changeResponse.response!.data.errors,
-					changeResponse.response!.data.message
+					e.data.response!.data.errors,
+					e.data.response!.data.message
 				));
 			}
 
-			dispatch(changeError(changeResponse.response!.data.message));
-		}
-		else{
-			dispatch(reset(formName));
-			dispatch(changeSuccess());
+			dispatch(changeError(e.data.message));
 		}
 	};
 

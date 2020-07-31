@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Field, formValueSelector} from 'redux-form';
 import {connect, ConnectedProps} from 'react-redux';
 
-import {RootState} from '../../../../redux/Reducers';
+import {RootState} from '../../../../redux';
 
 
 const selector = formValueSelector('billing');

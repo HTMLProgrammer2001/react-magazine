@@ -7,27 +7,37 @@ import {
 	loadUserSuccessfull,
 	loadUserError
 } from './actions';
-import API from '../../../Helpers/API';
+import {userApi} from '../../../Helpers/API';
 
 
 export type FilterThunkAction = ThunkAction<void, RootState, unknown, UserActions>;
 
 const thunkUser = (): FilterThunkAction =>
 	async (dispatch: ThunkDispatch<{}, {}, UserActions>) => {
+		//Get token
 		let token = localStorage.getItem('token');
 
-		if(!token)
+		//Break
+		if(!token) {
 			return;
+		}
 
+		//Start loading
 		dispatch(loadUserStart());
 
-		const userResponse = await API.getUser();
+		try {
+			//Request
+			const userResponse = await userApi.getUser();
 
-		if(API.isError(userResponse)){
-			dispatch(loadUserError(userResponse.message));
+			//User loaded
+			dispatch(loadUserSuccessfull({
+				user: userResponse.data,
+				token
+			}));
 		}
-		else{
-			dispatch(loadUserSuccessfull({user: userResponse, token}));
+		catch (e) {
+			//Error
+			dispatch(loadUserError(e.data.message));
 		}
 	};
 

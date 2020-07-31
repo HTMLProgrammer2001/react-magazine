@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import Paginate from '../Paginate';
+import Breadcrumbs from '../Breadcrumbs';
 import Goods from './Goods/';
 
 
@@ -11,7 +11,7 @@ const HomePage: React.FC<{}> = () => {
 
 	return (
 		<React.Fragment>
-			<Paginate paths={[{name: 'Home', path: '/'}]}/>
+			<Breadcrumbs paths={[{name: 'Home', path: '/'}]}/>
 			<Goods/>
 		</React.Fragment>
 	);

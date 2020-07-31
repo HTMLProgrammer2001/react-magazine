@@ -3,7 +3,7 @@ import {ThunkAction, ThunkDispatch} from 'redux-thunk';
 import {RootState} from '../';
 import {VerifyActions} from './reducer';
 import {verifyStart, verifyError, verifySuccess} from './actions';
-import API from '../../Helpers/API';
+import {userApi} from '../../Helpers/API';
 
 
 export type RegisterThunkAction = ThunkAction<void, RootState, unknown, VerifyActions>;
@@ -12,15 +12,13 @@ const thunkVerify = (id: string): RegisterThunkAction =>
 	async (dispatch: ThunkDispatch<{}, {}, VerifyActions>) => {
 		dispatch(verifyStart());
 
-		const verifyResponse = await API.verifyUser(id);
+		try{
+			const verifyResponse = await userApi.verifyUser(id);
 
-		console.log(verifyResponse);
-
-		if(API.isError(verifyResponse)){
-			dispatch(verifyError(verifyResponse.response!.data.message));
+			dispatch(verifySuccess(verifyResponse.data.success));
 		}
-		else{
-			dispatch(verifySuccess(verifyResponse.success));
+		catch (e) {
+			dispatch(verifyError(e.data.message || e.data.response!.data.message));
 		}
 	};
 

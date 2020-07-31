@@ -1,15 +1,16 @@
 import * as React from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 
-import {RootState} from '../../redux/Reducers/';
-import Paginate from '../Paginate';
+import Breadcrumbs from '../Breadcrumbs';
 import Empty from './Empty';
 import Content from './Content/';
+import {RootState} from '../../redux';
+import {selectCartCount} from '../../redux/AppState/cart/selectors';
 
 
 //Redux data to props
 const mapStateToProps = (state: RootState) => ({
-	isEmpty: !state.cart.cartItems.length
+	isEmpty: !selectCartCount(state)
 });
 
 const cartConnected = connect(mapStateToProps);
@@ -23,7 +24,7 @@ const CartPage: React.FC<ICartProps> = (props: ICartProps) => {
 
 	return (
 		<React.Fragment>
-			<Paginate paths={[{name: 'Home', path: '/'}, {name: 'Cart', path: '/cart'}]}/>
+			<Breadcrumbs paths={[{name: 'Home', path: '/'}, {name: 'Cart', path: '/cart'}]}/>
 
 			{props.isEmpty ? <Empty/> : <Content/>}
 		</React.Fragment>

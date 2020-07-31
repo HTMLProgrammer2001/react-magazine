@@ -4,22 +4,26 @@ import {RootState} from '../../index';
 import {FilterActions} from './reducer';
 import {filterStart, filterError, filterSuccess} from './actions';
 
-import API from '../../../Helpers/API';
+import {dataApi} from '../../../Helpers/API';
 
 
 export type FilterThunkAction = ThunkAction<void, RootState, unknown, FilterActions>;
 
 const thunkFilter = (): FilterThunkAction =>
 	async (dispatch: ThunkDispatch<{}, {}, FilterActions>) => {
+		//Start loading
 		dispatch(filterStart());
 
-		const filterResponse = await API.getFilters();
+		try{
+			//Send request
+			const filterResponse = await dataApi.getFilters();
 
-		if(API.isError(filterResponse)){
-			dispatch(filterError(filterResponse.message));
+			//Success load
+			dispatch(filterSuccess(filterResponse.data));
 		}
-		else{
-			dispatch(filterSuccess(filterResponse));
+		catch (e) {
+			//Error
+			dispatch(filterError(e.data.message));
 		}
 	};
 

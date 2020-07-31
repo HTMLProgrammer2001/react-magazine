@@ -5,7 +5,7 @@ import {IResetFormData} from '../../components/ResetPage/ResetForm';
 import {RootState} from '../';
 import {ResetActions} from './reducer';
 import {resetError, resetStart, resetSuccess} from './actions';
-import API from '../../Helpers/API';
+import {userApi} from '../../Helpers/API';
 
 
 export type ResetThunkAction = ThunkAction<void, RootState, unknown, ResetActions>;
@@ -14,25 +14,22 @@ const thunkReset = (vals: IResetFormData, formName: string): ResetThunkAction =>
 	async (dispatch: ThunkDispatch<{}, {}, ResetActions>) => {
 		dispatch(resetStart());
 
-		const regResponse = await API.resetUser(vals);
+		try{
+			const resetResponse = await userApi.resetUser(vals);
 
-		console.log(regResponse);
-
-		if(API.isError(regResponse)){
-			if(regResponse.response!.data.errors){
+			dispatch(reset(formName));
+			dispatch(resetSuccess(resetResponse.data.success));
+		}
+		catch (e) {
+			if(e.data.response!.data.errors){
 				dispatch(updateSyncErrors(
 					formName,
-					regResponse.response!.data.errors,
-					regResponse.response!.data.message
+					e.data.response!.data.errors,
+					e.data.response!.data.message
 				));
 			}
-			else{
-				dispatch(resetError(regResponse.response!.data.message));
-			}
-		}
-		else{
-			dispatch(reset(formName));
-			dispatch(resetSuccess(regResponse.success));
+
+			dispatch(resetError(e.data.message));
 		}
 	};
 

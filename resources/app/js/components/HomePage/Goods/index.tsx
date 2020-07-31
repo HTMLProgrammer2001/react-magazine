@@ -3,13 +3,14 @@ import {connect, ConnectedProps} from 'react-redux';
 
 import GoodsItems from './GoodsList/';
 import GoodsForm, {IGoodsFormData} from './GoodsForm/';
-import {productListReset} from '../../../redux/Actions/productListActions';
-import thunkProductList from '../../../redux/ThunkActions/thunkProductList';
-import {RootState} from '../../../redux/Reducers';
+import {RootState} from '../../../redux';
+import {productListReset} from '../../../redux/productList/actions';
+import thunkProductList from '../../../redux/productList/thunks';
+import {selectFilterState} from '../../../redux/AppState/filter/selectors';
 
 
 const mapStateToProps = (state: RootState) => ({
-	filterState: state.filter
+	filterState: selectFilterState(state)
 });
 
 const mapDispatchToProps = (dispatch: any) => ({

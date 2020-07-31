@@ -10,7 +10,13 @@ import categoryReducer from './category/reducer';
 import changeReducer from './change/reducer';
 import checkoutReducer from './checkout/reducer';
 import loginReducer from './login/reducer';
+import logoutReducer from './logout/reducer';
 import userReducer from './AppState/user/reducer';
+import productListReducer from './productList/reducer';
+import registerReducer from './register/reducer';
+import resetReducer from './reset/reducer';
+import searchReducer from './search/reducer';
+import verifyReducer from './verify/reducer';
 
 
 const storeReducer = combineReducers({
@@ -22,7 +28,13 @@ const storeReducer = combineReducers({
 	change: changeReducer,
 	checkout: checkoutReducer,
 	login: loginReducer,
+	logout: logoutReducer,
 	user: userReducer,
+	productList: productListReducer,
+	register: registerReducer,
+	reset: resetReducer,
+	search: searchReducer,
+	verify: verifyReducer,
 	form: formReducer
 });
 

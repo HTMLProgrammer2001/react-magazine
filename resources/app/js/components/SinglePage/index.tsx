@@ -2,15 +2,16 @@ import * as React from 'react';
 import {RouteComponentProps} from 'react-router-dom';
 import {connect, ConnectedProps} from 'react-redux';
 
-import Paginate from '../Paginate';
+import Breadcrumbs from '../Breadcrumbs';
 import Reviews from './Reviews/';
 import ProductInfo from './ProductInfo/';
-import {RootState} from '../../redux/Reducers';
-import thunkProduct from '../../redux/ThunkActions/Single/thunkProduct';
+import {RootState} from '../../redux';
+import thunkProduct from '../../redux/SingleState/product/thunks/thunkProduct';
+import {selectSingleProduct} from '../../redux/SingleState/selectors';
 
 
 const mapStateToProps = (state: RootState) => ({
-	...state.single.thunks
+	...selectSingleProduct(state)
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
@@ -35,7 +36,7 @@ const SinglePage: React.FC<ISingleProductProps> = (props) => {
 
 	return (
 		<React.Fragment>
-			<Paginate paths={[
+			<Breadcrumbs paths={[
 				{name: 'Home', path: '/'},
 				{name: 'Product', path: '/'}
 			]}/>

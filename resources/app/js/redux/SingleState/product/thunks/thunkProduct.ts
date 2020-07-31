@@ -1,10 +1,10 @@
 import {ThunkAction, ThunkDispatch} from 'redux-thunk';
 
-import {RootState} from '../../';
-import {ProductActions} from './reducer';
-import {productStart, productSuccess, productError} from './actions';
-import API from '../../../Helpers/API';
-import {commentReset} from '../comments/actions';
+import {dataApi} from '../../../../Helpers/API';
+import {RootState} from '../../../index';
+import {ProductActions} from '../reducer';
+import {commentReset} from '../../comments/actions';
+import {productError, productStart, productSuccess} from '../actions';
 
 
 export type ProductThunkAction = ThunkAction<void, RootState, unknown, ProductActions>;
@@ -14,13 +14,13 @@ const thunkProduct = (slug: string): ProductThunkAction =>
 		dispatch(productStart());
 		dispatch(commentReset());
 
-		const productResponse = await API.getProductInfo(slug);
+		try{
+			const productResponse = await dataApi.getProductInfo(slug);
 
-		if(API.isError(productResponse)){
-			dispatch(productError(productResponse.message));
+			dispatch(productSuccess(productResponse.data));
 		}
-		else{
-			dispatch(productSuccess(productResponse));
+		catch (e) {
+			dispatch(productError(e.data.message));
 		}
 	};
 

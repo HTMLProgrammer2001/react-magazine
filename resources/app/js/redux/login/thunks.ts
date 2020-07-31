@@ -5,7 +5,7 @@ import {ILoginFormData} from '../../components/LoginPage/LoginForm';
 import {RootState} from '../';
 import {LoginActions} from './reducer';
 import {loginSuccess, loginStart, loginError} from './actions';
-import API from '../../Helpers/API';
+import {userApi} from '../../Helpers/API';
 import {loadUserSuccessfull} from '../AppState/user/actions';
 
 
@@ -14,28 +14,29 @@ export type LoginThunkAction = ThunkAction<void, RootState, unknown, LoginAction
 const thunkLogin = (vals: ILoginFormData, formName: string): LoginThunkAction =>
 	async (dispatch: ThunkDispatch<{}, {}, LoginActions |
 		ReturnType<typeof loadUserSuccessfull>>) => {
+		//Login start
 		dispatch(loginStart());
 
-		const loginResponse = await API.loginUser(vals);
+		try {
+			//Request
+			const loginResponse = await userApi.loginUser(vals);
 
-		console.log(loginResponse);
-
-		if(API.isError(loginResponse)){
-			if(loginResponse.response!.data.errors){
+			//Update data
+			dispatch(reset(formName));
+			dispatch(loadUserSuccessfull(loginResponse.data));
+			dispatch(loginSuccess());
+		}
+		catch (e) {
+			//Error
+			if(e.data.response!.data.errors){
 				dispatch(updateSyncErrors(
 					formName,
-					loginResponse.response!.data.errors,
-					loginResponse.response!.data.message
+					e.data.response!.data.errors,
+					e.data.response!.data.message
 				));
 			}
-			else{
-				dispatch(loginError(loginResponse.response!.data.message));
-			}
-		}
-		else{
-			dispatch(reset(formName));
-			dispatch(loadUserSuccessfull(loginResponse));
-			dispatch(loginSuccess());
+
+			dispatch(loginError(e.data.message));
 		}
 	};
 

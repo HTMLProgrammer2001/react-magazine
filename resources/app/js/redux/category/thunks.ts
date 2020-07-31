@@ -1,7 +1,7 @@
 import {ThunkAction, ThunkDispatch} from 'redux-thunk';
 
 import {categoryLoadStart, categoryLoadFailure, categoryLoadSuccess} from './actions';
-import API from '../../Helpers/API';
+import {dataApi} from '../../Helpers/API';
 
 import {RootState} from '../';
 import {CategoryActions} from './reducer';
@@ -11,15 +11,19 @@ export type CategoryThunkAction = ThunkAction<void, RootState, unknown, Category
 
 const thunkCategory = (): CategoryThunkAction =>
 	async (dispatch: ThunkDispatch<{}, {}, CategoryActions>) => {
+		//Start loading
 		dispatch(categoryLoadStart());
 
-		const categoryResponse = await API.getCategories();
+		try {
+			//Request
+			const categoryResponse = await dataApi.getCategories();
 
-		if(API.isError(categoryResponse)){
-			dispatch(categoryLoadFailure(categoryResponse.message));
+			//Load categories
+			dispatch(categoryLoadSuccess(categoryResponse.data));
 		}
-		else{
-			dispatch(categoryLoadSuccess(categoryResponse));
+		catch (e) {
+			//Error
+			dispatch(categoryLoadFailure(e.data.message));
 		}
 	};
 

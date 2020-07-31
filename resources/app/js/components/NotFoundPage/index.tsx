@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import Paginate from '../Paginate';
+import Breadcrumbs from '../Breadcrumbs';
 
 
 const NotFoundPage: React.FC<{}> = () => {
@@ -10,7 +10,7 @@ const NotFoundPage: React.FC<{}> = () => {
 
 	return (
 		<React.Fragment>
-			<Paginate paths={[{name: 'Home', path: '/'}, {name: 'Not found', path: '/404'}]}/>
+			<Breadcrumbs paths={[{name: 'Home', path: '/'}, {name: 'Not found', path: '/404'}]}/>
 
 			<div className="error">
 				<img className="error__img" src="/image/not-found.png" alt="Not found"/>

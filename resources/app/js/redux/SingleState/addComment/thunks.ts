@@ -6,7 +6,7 @@ import {RootState} from '../../';
 import {AddCommentActions} from './reducer';
 
 import {commentAddSuccess, commentAddStart, commentAddError} from './actions';
-import API from '../../../Helpers/API';
+import {dataApi} from '../../../Helpers/API';
 
 
 export type AddCommentThunkAction = ThunkAction<void, RootState, unknown, AddCommentActions>;
@@ -16,25 +16,22 @@ const thunkAddComment = (productID: number, vals: IReviewFormData, formName: str
 	async (dispatch: ThunkDispatch<{}, {}, AddCommentActions>) => {
 		dispatch(commentAddStart());
 
-		const addCommentResponse = await API.addComment(productID, vals);
+		try{
+			await dataApi.addComment(productID, vals);
 
-		console.log(addCommentResponse);
-
-		if(API.isError(addCommentResponse)){
-			if(addCommentResponse.response!.data.errors){
-				dispatch(updateSyncErrors(
-					formName,
-					addCommentResponse.response!.data.errors,
-					addCommentResponse.response!.data.message
-				));
-			}
-			else{
-				dispatch(commentAddError(addCommentResponse.response!.data.message));
-			}
-		}
-		else{
 			dispatch(reset(formName));
 			dispatch(commentAddSuccess());
+		}
+		catch (e) {
+			if(e.data.response!.data.errors){
+				dispatch(updateSyncErrors(
+					formName,
+					e.data.response!.data.errors,
+					e.data.response!.data.message
+				));
+			}
+
+			dispatch(commentAddError(e.data.response!.data.message));
 		}
 	};
 

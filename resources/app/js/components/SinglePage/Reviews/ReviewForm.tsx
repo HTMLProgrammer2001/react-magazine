@@ -3,8 +3,8 @@ import {reduxForm, InjectedFormProps, Field} from 'redux-form';
 import {connect, ConnectedProps} from 'react-redux';
 
 import MarkElement from '../../FormElements/MarkElement';
-import {RootState} from '../../../redux/Reducers';
 import UserData from './UserData';
+import {RootState} from '../../../redux';
 
 
 export type IReviewFormData = {

@@ -11,7 +11,7 @@ interface IPaginateProps {
 	paths: Array<IPath>
 }
 
-const Paginate: React.FC<IPaginateProps> = (props) => (
+const Breadcrumbs: React.FC<IPaginateProps> = (props) => (
 	<div className="paginate">
 		<div className="container">
 			<div className="paginate__content">
@@ -30,4 +30,4 @@ const Paginate: React.FC<IPaginateProps> = (props) => (
 	</div>
 );
 
-export default Paginate;
+export default Breadcrumbs;

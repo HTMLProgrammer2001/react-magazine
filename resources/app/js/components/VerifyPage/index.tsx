@@ -2,9 +2,9 @@ import * as React from 'react';
 import {RouteComponentProps} from 'react-router-dom';
 import {connect, ConnectedProps} from 'react-redux';
 
-import {RootState} from '../../redux/Reducers';
-import Paginate from '../Paginate';
-import thunkVerify from '../../redux/ThunkActions/thunkVerify';
+import Breadcrumbs from '../Breadcrumbs';
+import {RootState} from '../../redux';
+import thunkVerify from '../../redux/verify/thunks';
 
 
 const mapStateToProps = (state: RootState) => ({
@@ -33,7 +33,7 @@ const VerifyPage: React.FC<IVerifyPageProps> = (props) => {
 
 	return (
 		<React.Fragment>
-			<Paginate paths={[
+			<Breadcrumbs paths={[
 				{name: 'Home', path: '/'},
 				{name: 'Verify email', path: '/verify'}
 			]}/>

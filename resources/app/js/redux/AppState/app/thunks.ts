@@ -2,9 +2,9 @@ import {ThunkAction} from 'redux-thunk';
 
 import {RootState} from '../../index';
 import {initialize} from './actions';
-import thunkFilters from '../../ThunkActions/App/thunkFilters';
-import thunkUser from '../../ThunkActions/App/thunkUser';
-import thunkCart from '../../ThunkActions/App/thunkCart';
+import thunkUser from '../user/thunks';
+import thunkCart from '../cart/thunks';
+import thunkFilters from '../filter/thunks';
 
 
 export type InitializeThunkAction = ThunkAction<void, RootState, unknown, any>;

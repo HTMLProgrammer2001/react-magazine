@@ -2,7 +2,7 @@ import * as React from 'react';
 import {reduxForm, Field, InjectedFormProps} from 'redux-form';
 
 import InputElement from '../FormElements/InputElement';
-import {ResetState} from '../../redux/Reducers/reset';
+import {ResetState} from '../../redux/reset/reducer';
 
 
 export type IResetFormData = {

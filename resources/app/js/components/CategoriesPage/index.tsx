@@ -1,14 +1,15 @@
 import * as React from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 
-import Paginate from '../Paginate';
+import Breadcrumbs from '../Breadcrumbs';
 import CategoriesList from './CategoriesList';
-import {RootState} from '../../redux/Reducers';
-import thunkCategory from '../../redux/ThunkActions/thunkCategory';
+import {RootState} from '../../redux';
+import thunkCategory from '../../redux/category/thunks';
+import {selectCategoriesState} from '../../redux/category/selectors';
 
 
 const mapStateToProps = (state: RootState) => ({
-	categoriesState: state.category
+	categoriesState: selectCategoriesState(state)
 });
 
 const connected = connect(mapStateToProps, {
@@ -26,7 +27,7 @@ const CategoriesPage: React.FC<ConnectedProps<typeof connected>> = (props) => {
 
 	return (
 		<React.Fragment>
-			<Paginate paths={[
+			<Breadcrumbs paths={[
 				{name: 'Home', path: '/'},
 				{name: 'Categories', path: '/categories'}
 			]}/>

@@ -3,13 +3,14 @@ import {connect, ConnectedProps} from 'react-redux';
 
 import {ICartItem} from '../../../Interfaces/ICartItem';
 import CartItem from './CartItem';
-import {RootState} from '../../../redux/Reducers';
 import {Action, Dispatch} from 'redux';
-import {cartRemove, cartReset} from '../../../redux/Actions/App/cartActions';
+import {RootState} from '../../../redux';
+import {selectCartItems} from '../../../redux/AppState/cart/selectors';
+import {cartRemove, cartReset} from '../../../redux/AppState/cart/actions';
 
 
 const mapStateToProps = (state: RootState) => ({
-	cartItems: state.cart.cartItems
+	cartItems: selectCartItems(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Action<any>>) => ({

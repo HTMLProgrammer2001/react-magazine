@@ -1,19 +1,20 @@
 import * as React from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 
-import Paginate from '../Paginate';
-import {RootState} from '../../redux/Reducers';
+import Breadcrumbs from '../Breadcrumbs';
 import {default as RegisterForm, IRegisterFormData} from './RegisterForm';
-import thunkRegisterCreator, {RegisterThunkAction} from '../../redux/ThunkActions/thunkRegister';
+import {RootState} from '../../redux';
+import thunkRegister from '../../redux/register/thunks';
+import {selectRegisterState} from '../../redux/register/selectors';
 
 
 const mapStateToProps = (state: RootState) => ({
-	registration: state.register
+	registration: selectRegisterState(state)
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
 	register: (vals: IRegisterFormData) => {
-		dispatch(thunkRegisterCreator(vals, 'register'));
+		dispatch(thunkRegister(vals, 'register'));
 	}
 });
 
@@ -32,7 +33,9 @@ const RegisterPage: React.FC<ConnectedProps<typeof connected>> = (props) => {
 
 	return (
 		<React.Fragment>
-			<Paginate paths={[{name: 'Home', path: '/'}, {name: 'Register', path: '/register'}]}/>
+			<Breadcrumbs
+				paths={[{name: 'Home', path: '/'}, {name: 'Register', path: '/register'}]}
+			/>
 
 			{
 				props.registration.message ?
