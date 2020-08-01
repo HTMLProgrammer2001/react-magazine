@@ -17,6 +17,7 @@ import SinglePage from './SinglePage/';
 import VerifyPage from './VerifyPage';
 import ChangePage from './ChangePasswordPage';
 import SearchPage from './SearchPage';
+import ResendPage from './ResendPage';
 
 
 const Content: React.FC<{}> = () => (
@@ -30,6 +31,7 @@ const Content: React.FC<{}> = () => (
 			<Route path='/verify/:id' exact component={VerifyPage}/>
 			<Route path='/reset' exact component={ResetPage}/>
 			<Route path='/reset/:id' exact component={ChangePage}/>
+			<Route path='/resend' exact component={ResendPage}/>
 
 			<Route path='/cart' exact component={CartPage}/>
 			<Route path='/categories' exact component={CategoriesPage}/>

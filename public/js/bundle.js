@@ -116,6 +116,30 @@ module.exports = _createClass;
 
 /***/ }),
 
+/***/ "./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js":
+/*!**************************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js ***!
+  \**************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = _assertThisInitialized;
+function _assertThisInitialized(self) {
+  if (self === void 0) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+
+  return self;
+}
+
+/***/ }),
+
 /***/ "./node_modules/@babel/runtime/helpers/esm/extends.js":
 /*!************************************************************!*\
   !*** ./node_modules/@babel/runtime/helpers/esm/extends.js ***!
@@ -2081,6 +2105,85 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		window.classNames = classNames;
 	}
 })();
+
+/***/ }),
+
+/***/ "./node_modules/dom-helpers/esm/addClass.js":
+/*!**************************************************!*\
+  !*** ./node_modules/dom-helpers/esm/addClass.js ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = addClass;
+
+var _hasClass = __webpack_require__(/*! ./hasClass */ "./node_modules/dom-helpers/esm/hasClass.js");
+
+var _hasClass2 = _interopRequireDefault(_hasClass);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function addClass(element, className) {
+  if (element.classList) element.classList.add(className);else if (!(0, _hasClass2.default)(element, className)) if (typeof element.className === 'string') element.className = element.className + " " + className;else element.setAttribute('class', (element.className && element.className.baseVal || '') + " " + className);
+}
+
+/***/ }),
+
+/***/ "./node_modules/dom-helpers/esm/hasClass.js":
+/*!**************************************************!*\
+  !*** ./node_modules/dom-helpers/esm/hasClass.js ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = hasClass;
+function hasClass(element, className) {
+  if (element.classList) return !!className && element.classList.contains(className);
+  return (" " + (element.className.baseVal || element.className) + " ").indexOf(" " + className + " ") !== -1;
+}
+
+/***/ }),
+
+/***/ "./node_modules/dom-helpers/esm/removeClass.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/dom-helpers/esm/removeClass.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = removeClass;
+function replaceClassName(origClass, classToRemove) {
+  return origClass.replace(new RegExp("(^|\\s)" + classToRemove + "(?:\\s|$)", 'g'), '$1').replace(/\s+/g, ' ').replace(/^\s*|\s*$/g, '');
+}
+
+function removeClass(element, className) {
+  if (element.classList) {
+    element.classList.remove(className);
+  } else if (typeof element.className === 'string') {
+    ;
+    element.className = replaceClassName(element.className, className);
+  } else {
+    element.setAttribute('class', replaceClassName(element.className && element.className.baseVal || '', className));
+  }
+}
 
 /***/ }),
 
@@ -18719,6 +18822,3446 @@ exports.withRouter = withRouter;
 
 /***/ }),
 
+/***/ "./node_modules/react-toastify/dist/react-toastify.esm.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/react-toastify/dist/react-toastify.esm.js ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.useToastContainer = exports.useToast = exports.toast = exports.cssTransition = exports.collapseToast = exports.Zoom = exports.ToastContainer = exports.Slide = exports.Flip = exports.Bounce = undefined;
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _reactDom = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+
+var _reactTransitionGroup = __webpack_require__(/*! react-transition-group */ "./node_modules/react-transition-group/esm/index.js");
+
+var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _extends() {
+  _extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  return _extends.apply(this, arguments);
+}
+
+function _objectWithoutPropertiesLoose(source, excluded) {
+  if (source == null) return {};
+  var target = {};
+  var sourceKeys = Object.keys(source);
+  var key, i;
+
+  for (i = 0; i < sourceKeys.length; i++) {
+    key = sourceKeys[i];
+    if (excluded.indexOf(key) >= 0) continue;
+    target[key] = source[key];
+  }
+
+  return target;
+}
+
+var eventManager = {
+  list: /*#__PURE__*/new Map(),
+  emitQueue: /*#__PURE__*/new Map(),
+  on: function on(event, callback) {
+    this.list.has(event) || this.list.set(event, []);
+    this.list.get(event).push(callback);
+    return this;
+  },
+  off: function off(event, callback) {
+    if (callback) {
+      var cb = this.list.get(event).filter(function (cb) {
+        return cb !== callback;
+      });
+      this.list.set(event, cb);
+      return this;
+    }
+
+    this.list["delete"](event);
+    return this;
+  },
+  cancelEmit: function cancelEmit(event) {
+    var timers = this.emitQueue.get(event);
+
+    if (timers) {
+      timers.forEach(function (timer) {
+        return clearTimeout(timer);
+      });
+      this.emitQueue["delete"](event);
+    }
+
+    return this;
+  },
+
+  /**
+   * Enqueue the event at the end of the call stack
+   * Doing so let the user call toast as follow:
+   * toast('1')
+   * toast('2')
+   * toast('3')
+   * Without setTimemout the code above will not work
+   */
+  emit: function emit(event) {
+    var _this = this;
+
+    for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+      args[_key - 1] = arguments[_key];
+    }
+
+    this.list.has(event) && this.list.get(event).forEach(function (callback) {
+      var timer = setTimeout(function () {
+        // @ts-ignore
+        callback.apply(void 0, args);
+      }, 0);
+      _this.emitQueue.has(event) || _this.emitQueue.set(event, []);
+
+      _this.emitQueue.get(event).push(timer);
+    });
+  }
+};
+
+function isNum(v) {
+  return typeof v === 'number' && !isNaN(v);
+}
+function isBool(v) {
+  return typeof v === 'boolean';
+}
+function isStr(v) {
+  return typeof v === 'string';
+}
+function isFn(v) {
+  return typeof v === 'function';
+}
+function parseClassName(v) {
+  return typeof v === 'string' ? v : null;
+}
+function objectValues(obj) {
+  return Object.keys(obj).map(function (key) {
+    return obj[key];
+  });
+}
+function hasToastId(toastId) {
+  return toastId === 0 || toastId;
+}
+function getAutoCloseDelay(toastAutoClose, containerAutoClose) {
+  return toastAutoClose === false || isNum(toastAutoClose) && toastAutoClose > 0 ? toastAutoClose : containerAutoClose;
+}
+var canUseDom = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
+function canBeRendered(content) {
+  return (0, _react.isValidElement)(content) || isStr(content) || isFn(content) || isNum(content);
+}
+
+var POSITION = {
+  TOP_LEFT: 'top-left',
+  TOP_RIGHT: 'top-right',
+  TOP_CENTER: 'top-center',
+  BOTTOM_LEFT: 'bottom-left',
+  BOTTOM_RIGHT: 'bottom-right',
+  BOTTOM_CENTER: 'bottom-center'
+};
+var TYPE = {
+  INFO: 'info',
+  SUCCESS: 'success',
+  WARNING: 'warning',
+  ERROR: 'error',
+  DEFAULT: 'default',
+  DARK: 'dark'
+};
+
+/**
+ * Used to collapse toast after exit animation
+ */
+function collapseToast(node, done, duration
+/* COLLAPSE_DURATION */
+) {
+  if (duration === void 0) {
+    duration = 300;
+  }
+
+  var height = node.scrollHeight;
+  var style = node.style;
+  requestAnimationFrame(function () {
+    style.minHeight = 'initial';
+    style.height = height + 'px';
+    style.transition = "all " + duration + "ms";
+    requestAnimationFrame(function () {
+      style.height = '0';
+      style.padding = '0';
+      style.margin = '0';
+      setTimeout(function () {
+        return done();
+      }, duration);
+    });
+  });
+}
+
+function cssTransition(_ref) {
+  var enter = _ref.enter,
+      exit = _ref.exit,
+      _ref$duration = _ref.duration,
+      duration = _ref$duration === void 0 ? 750 : _ref$duration,
+      _ref$appendPosition = _ref.appendPosition,
+      appendPosition = _ref$appendPosition === void 0 ? false : _ref$appendPosition,
+      _ref$collapse = _ref.collapse,
+      collapse = _ref$collapse === void 0 ? true : _ref$collapse,
+      _ref$collapseDuration = _ref.collapseDuration,
+      collapseDuration = _ref$collapseDuration === void 0 ? 300 : _ref$collapseDuration;
+  var enterDuration, exitDuration;
+
+  if (Array.isArray(duration) && duration.length === 2) {
+    enterDuration = duration[0];
+    exitDuration = duration[1];
+  } else {
+    enterDuration = exitDuration = duration;
+  }
+
+  return function ToastTransition(_ref2) {
+    var children = _ref2.children,
+        position = _ref2.position,
+        preventExitTransition = _ref2.preventExitTransition,
+        done = _ref2.done,
+        props = _objectWithoutPropertiesLoose(_ref2, ["children", "position", "preventExitTransition", "done"]);
+
+    var enterClassName = appendPosition ? enter + "--" + position : enter;
+    var exitClassName = appendPosition ? exit + "--" + position : exit;
+
+    var onEnter = function onEnter() {
+      var node = props.nodeRef.current;
+
+      if (node) {
+        node.classList.add(enterClassName);
+        node.style.animationFillMode = 'forwards';
+        node.style.animationDuration = enterDuration + "ms";
+      }
+    };
+
+    var onEntered = function onEntered() {
+      var node = props.nodeRef.current;
+
+      if (node) {
+        node.classList.remove(enterClassName);
+        node.style.cssText = '';
+      }
+    };
+
+    var onExited = function onExited() {
+      var node = props.nodeRef.current;
+
+      if (node) {
+        node.removeEventListener('animationend', onExited);
+        collapse ? collapseToast(node, done, collapseDuration) : done();
+      }
+    };
+
+    var onExit = function onExit() {
+      var node = props.nodeRef.current;
+
+      if (node) {
+        node.classList.add(exitClassName);
+        node.style.animationFillMode = 'forwards';
+        node.style.animationDuration = exitDuration + "ms";
+        node.addEventListener('animationend', onExited);
+      }
+    };
+
+    return (0, _react.createElement)(_reactTransitionGroup.Transition, Object.assign({}, props, {
+      timeout: preventExitTransition ? collapse ? collapseDuration : 50
+      /* DEBOUNCE_DURATION */
+      : {
+        enter: enterDuration,
+        exit: collapse ? exitDuration + collapseDuration : exitDuration + 50
+        /* DEBOUNCE_DURATION */
+
+      },
+      onEnter: onEnter,
+      onEntered: onEntered,
+      onExit: preventExitTransition ? onExited : onExit,
+      unmountOnExit: true
+    }), children);
+  };
+}
+
+function CloseButton(_ref) {
+  var closeToast = _ref.closeToast,
+      type = _ref.type,
+      _ref$ariaLabel = _ref.ariaLabel,
+      ariaLabel = _ref$ariaLabel === void 0 ? 'close' : _ref$ariaLabel;
+  return (0, _react.createElement)("button", {
+    className: "Toastify"
+    /* CSS_NAMESPACE */
+    + "__close-button " + "Toastify"
+    /* CSS_NAMESPACE */
+    + "__close-button--" + type,
+    type: "button",
+    onClick: function onClick(e) {
+      e.stopPropagation();
+      closeToast(e);
+    },
+    "aria-label": ariaLabel
+  }, (0, _react.createElement)("svg", {
+    "aria-hidden": "true",
+    viewBox: "0 0 14 16"
+  }, (0, _react.createElement)("path", {
+    fillRule: "evenodd",
+    d: "M7.71 8.23l3.75 3.75-1.48 1.48-3.75-3.75-3.75 3.75L1 11.98l3.75-3.75L1 4.48 2.48 3l3.75 3.75L9.98 3l1.48 1.48-3.75 3.75z"
+  })));
+}
+
+function ProgressBar(_ref) {
+  var _cx, _animationEvent;
+
+  var delay = _ref.delay,
+      isRunning = _ref.isRunning,
+      closeToast = _ref.closeToast,
+      type = _ref.type,
+      hide = _ref.hide,
+      className = _ref.className,
+      userStyle = _ref.style,
+      controlledProgress = _ref.controlledProgress,
+      progress = _ref.progress,
+      rtl = _ref.rtl,
+      isIn = _ref.isIn;
+
+  var style = _extends(_extends({}, userStyle), {}, {
+    animationDuration: delay + "ms",
+    animationPlayState: isRunning ? 'running' : 'paused',
+    opacity: hide ? 0 : 1
+  });
+
+  if (controlledProgress) style.transform = "scaleX(" + progress + ")";
+  var classNames = (0, _classnames2.default)("Toastify"
+  /* CSS_NAMESPACE */
+  + "__progress-bar", controlledProgress ? "Toastify"
+  /* CSS_NAMESPACE */
+  + "__progress-bar--controlled" : "Toastify"
+  /* CSS_NAMESPACE */
+  + "__progress-bar--animated", "Toastify"
+  /* CSS_NAMESPACE */
+  + "__progress-bar--" + type, (_cx = {}, _cx["Toastify"
+  /* CSS_NAMESPACE */
+  + "__progress-bar--rtl"] = rtl, _cx), className); // 🧐 controlledProgress is derived from progress
+  // so if controlledProgress is set
+  // it means that this is also the case for progress
+
+  var animationEvent = (_animationEvent = {}, _animationEvent[controlledProgress && progress >= 1 ? 'onTransitionEnd' : 'onAnimationEnd'] = controlledProgress && progress < 1 ? null : function () {
+    isIn && closeToast();
+  }, _animationEvent);
+  return (0, _react.createElement)("div", Object.assign({
+    className: classNames,
+    style: style
+  }, animationEvent));
+}
+ProgressBar.defaultProps = {
+  type: TYPE.DEFAULT,
+  hide: false
+};
+
+var Toast = function Toast(props) {
+  var _cx;
+
+  var _useToast = useToast(props),
+      isRunning = _useToast.isRunning,
+      preventExitTransition = _useToast.preventExitTransition,
+      toastRef = _useToast.toastRef,
+      eventHandlers = _useToast.eventHandlers;
+
+  var closeButton = props.closeButton,
+      children = props.children,
+      autoClose = props.autoClose,
+      onClick = props.onClick,
+      type = props.type,
+      hideProgressBar = props.hideProgressBar,
+      closeToast = props.closeToast,
+      Transition = props.transition,
+      position = props.position,
+      className = props.className,
+      style = props.style,
+      bodyClassName = props.bodyClassName,
+      bodyStyle = props.bodyStyle,
+      progressClassName = props.progressClassName,
+      progressStyle = props.progressStyle,
+      updateId = props.updateId,
+      role = props.role,
+      progress = props.progress,
+      rtl = props.rtl,
+      toastId = props.toastId,
+      deleteToast = props.deleteToast;
+  var cssClasses = (0, _classnames2.default)("Toastify"
+  /* CSS_NAMESPACE */
+  + "__toast", "Toastify"
+  /* CSS_NAMESPACE */
+  + "__toast--" + type, (_cx = {}, _cx["Toastify"
+  /* CSS_NAMESPACE */
+  + "__toast--rtl"] = rtl, _cx), className);
+  var controlledProgress = !!progress;
+
+  function renderCloseButton(closeButton) {
+    if (!closeButton) return null;
+    var props = {
+      closeToast: closeToast,
+      type: type
+    };
+    if (isFn(closeButton)) return closeButton(props);
+    if ((0, _react.isValidElement)(closeButton)) return (0, _react.cloneElement)(closeButton, props);
+  }
+
+  return (0, _react.createElement)(Transition, {
+    "in": props["in"],
+    appear: true,
+    done: deleteToast,
+    position: position,
+    preventExitTransition: preventExitTransition,
+    nodeRef: toastRef
+  }, (0, _react.createElement)("div", Object.assign({
+    id: toastId,
+    onClick: onClick,
+    className: cssClasses
+  }, eventHandlers, {
+    style: style,
+    ref: toastRef
+  }), (0, _react.createElement)("div", Object.assign({}, props["in"] && {
+    role: role
+  }, {
+    className: (0, _classnames2.default)("Toastify"
+    /* CSS_NAMESPACE */
+    + "__toast-body", bodyClassName),
+    style: bodyStyle
+  }), children), renderCloseButton(closeButton), (autoClose || controlledProgress) && (0, _react.createElement)(ProgressBar, Object.assign({}, updateId && !controlledProgress ? {
+    key: "pb-" + updateId
+  } : {}, {
+    rtl: rtl,
+    delay: autoClose,
+    isRunning: isRunning,
+    isIn: props["in"],
+    closeToast: closeToast,
+    hide: hideProgressBar,
+    type: type,
+    style: progressStyle,
+    className: progressClassName,
+    controlledProgress: controlledProgress,
+    progress: progress
+  }))));
+};
+
+var Bounce = /*#__PURE__*/cssTransition({
+  enter: "Toastify"
+  /* CSS_NAMESPACE */
+  + "__bounce-enter",
+  exit: "Toastify"
+  /* CSS_NAMESPACE */
+  + "__bounce-exit",
+  appendPosition: true
+});
+var Slide = /*#__PURE__*/cssTransition({
+  enter: "Toastify"
+  /* CSS_NAMESPACE */
+  + "__slide-enter",
+  exit: "Toastify"
+  /* CSS_NAMESPACE */
+  + "__slide-exit",
+  duration: [450, 750],
+  appendPosition: true
+});
+var Zoom = /*#__PURE__*/cssTransition({
+  enter: "Toastify"
+  /* CSS_NAMESPACE */
+  + "__zoom-enter",
+  exit: "Toastify"
+  /* CSS_NAMESPACE */
+  + "__zoom-exit"
+});
+var Flip = /*#__PURE__*/cssTransition({
+  enter: "Toastify"
+  /* CSS_NAMESPACE */
+  + "__flip-enter",
+  exit: "Toastify"
+  /* CSS_NAMESPACE */
+  + "__flip-exit"
+});
+
+var ToastPositioner = function ToastPositioner(_ref) {
+  var children = _ref.children,
+      className = _ref.className,
+      style = _ref.style,
+      rest = _objectWithoutPropertiesLoose(_ref, ["children", "className", "style"]);
+
+  // Monkey patch react-transition-group
+  // As exit transition is broken with strict mode
+  delete rest["in"];
+  return (0, _react.createElement)("div", {
+    className: className,
+    style: style
+  }, _react.Children.map(children, function (child) {
+    return (0, _react.cloneElement)(child, rest);
+  }));
+};
+
+var ToastContainer = function ToastContainer(props) {
+  var _useToastContainer = useToastContainer(props),
+      getToastToRender = _useToastContainer.getToastToRender,
+      containerRef = _useToastContainer.containerRef,
+      isToastActive = _useToastContainer.isToastActive;
+
+  var className = props.className,
+      style = props.style,
+      rtl = props.rtl,
+      containerId = props.containerId;
+  return (0, _react.createElement)("div", {
+    ref: containerRef,
+    className: "Toastify"
+    /* CSS_NAMESPACE */
+
+    , id: containerId
+  }, getToastToRender(function (position, toastList) {
+    var _cx;
+
+    var swag = {
+      className: (0, _classnames2.default)("Toastify"
+      /* CSS_NAMESPACE */
+      + "__toast-container", "Toastify"
+      /* CSS_NAMESPACE */
+      + "__toast-container--" + position, (_cx = {}, _cx["Toastify"
+      /* CSS_NAMESPACE */
+      + "__toast-container--rtl"] = rtl, _cx), parseClassName(className)),
+      style: toastList.length === 0 ? _extends(_extends({}, style), {}, {
+        pointerEvents: 'none'
+      }) : _extends({}, style)
+    };
+    return (0, _react.createElement)(ToastPositioner, Object.assign({}, swag, {
+      key: "container-" + position
+    }), toastList.map(function (_ref) {
+      var content = _ref.content,
+          toastProps = _ref.props;
+      return (0, _react.createElement)(Toast, Object.assign({}, toastProps, {
+        "in": isToastActive(toastProps.toastId),
+        key: "toast-" + toastProps.key,
+        closeButton: toastProps.closeButton === true ? CloseButton : toastProps.closeButton
+      }), content);
+    }));
+  }));
+};
+
+if (true) {
+  // @ts-ignore
+  ToastContainer.propTypes = {
+    // @ts-ignore
+    position: /*#__PURE__*/_propTypes2.default.oneOf( /*#__PURE__*/objectValues(POSITION)),
+    // @ts-ignore
+    autoClose: /*#__PURE__*/_propTypes2.default.oneOfType([_propTypes2.default.bool, _propTypes2.default.number]),
+    // @ts-ignore
+    closeButton: /*#__PURE__*/_propTypes2.default.oneOfType([_propTypes2.default.node, _propTypes2.default.bool, _propTypes2.default.func]),
+    hideProgressBar: _propTypes2.default.bool,
+    pauseOnHover: _propTypes2.default.bool,
+    closeOnClick: _propTypes2.default.bool,
+    newestOnTop: _propTypes2.default.bool,
+    className: _propTypes2.default.string,
+    style: _propTypes2.default.object,
+    toastClassName: _propTypes2.default.string,
+    bodyClassName: _propTypes2.default.string,
+    progressClassName: _propTypes2.default.string,
+    progressStyle: _propTypes2.default.object,
+    transition: _propTypes2.default.func,
+    rtl: _propTypes2.default.bool,
+    draggable: _propTypes2.default.bool,
+    draggablePercent: _propTypes2.default.number,
+    pauseOnFocusLoss: _propTypes2.default.bool,
+    enableMultiContainer: _propTypes2.default.bool,
+    containerId: /*#__PURE__*/_propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.number]),
+    role: _propTypes2.default.string,
+    onClick: _propTypes2.default.func
+  };
+}
+
+ToastContainer.defaultProps = {
+  position: POSITION.TOP_RIGHT,
+  transition: Bounce,
+  rtl: false,
+  autoClose: 5000,
+  hideProgressBar: false,
+  closeButton: CloseButton,
+  pauseOnHover: true,
+  pauseOnFocusLoss: true,
+  closeOnClick: true,
+  newestOnTop: false,
+  draggable: true,
+  draggablePercent: 80,
+  role: 'alert'
+};
+
+var containers = /*#__PURE__*/new Map();
+var latestInstance;
+var containerDomNode;
+var containerConfig;
+var queue = [];
+var lazy = false;
+/**
+ * Check whether any container is currently mounted in the DOM
+ */
+
+function isAnyContainerMounted() {
+  return containers.size > 0;
+}
+/**
+ * Get the container by id. Returns the last container declared when no id is given.
+ */
+
+function getContainer(containerId) {
+  if (!isAnyContainerMounted()) return null;
+  return containers.get(!containerId ? latestInstance : containerId);
+}
+/**
+ * Get the toast by id, given it's in the DOM, otherwise returns null
+ */
+
+function getToast(toastId, _ref) {
+  var containerId = _ref.containerId;
+  var container = getContainer(containerId);
+  if (!container) return null;
+  return container.getToast(toastId);
+}
+/**
+ * Generate a random toastId
+ */
+
+function generateToastId() {
+  return (Math.random().toString(36) + Date.now().toString(36)).substr(2, 10);
+}
+/**
+ * Generate a toastId or use the one provided
+ */
+
+function getToastId(options) {
+  if (options && (isStr(options.toastId) || isNum(options.toastId))) {
+    return options.toastId;
+  }
+
+  return generateToastId();
+}
+/**
+ * If the container is not mounted, the toast is enqueued and
+ * the container lazy mounted
+ */
+
+function dispatchToast(content, options) {
+  if (isAnyContainerMounted()) {
+    eventManager.emit(0
+    /* Show */
+    , content, options);
+  } else {
+    queue.push({
+      content: content,
+      options: options
+    });
+
+    if (lazy && canUseDom) {
+      lazy = false;
+      containerDomNode = document.createElement('div');
+      document.body.appendChild(containerDomNode);
+      (0, _reactDom.render)((0, _react.createElement)(ToastContainer, Object.assign({}, containerConfig)), containerDomNode);
+    }
+  }
+
+  return options.toastId;
+}
+/**
+ * Merge provided options with the defaults settings and generate the toastId
+ */
+
+function mergeOptions(type, options) {
+  return _extends(_extends({}, options), {}, {
+    type: options && options.type || type,
+    toastId: getToastId(options)
+  });
+}
+
+var toast = function toast(content, options) {
+  return dispatchToast(content, mergeOptions(TYPE.DEFAULT, options));
+};
+
+toast.success = function (content, options) {
+  return dispatchToast(content, mergeOptions(TYPE.SUCCESS, options));
+};
+
+toast.info = function (content, options) {
+  return dispatchToast(content, mergeOptions(TYPE.INFO, options));
+};
+
+toast.error = function (content, options) {
+  return dispatchToast(content, mergeOptions(TYPE.ERROR, options));
+};
+
+toast.warning = function (content, options) {
+  return dispatchToast(content, mergeOptions(TYPE.WARNING, options));
+};
+
+toast.dark = function (content, options) {
+  return dispatchToast(content, mergeOptions(TYPE.DARK, options));
+};
+/**
+ * Maybe I should remove warning in favor of warn, I don't know
+ */
+
+toast.warn = toast.warning;
+/**
+ * Remove toast programmaticaly
+ */
+
+toast.dismiss = function (id) {
+  return isAnyContainerMounted() && eventManager.emit(1
+  /* Clear */
+  , id);
+};
+/**
+ * Clear waiting queue when limit is used
+ */
+
+toast.clearWaitingQueue = function (params) {
+  if (params === void 0) {
+    params = {};
+  }
+
+  return isAnyContainerMounted() && eventManager.emit(5
+  /* ClearWaitingQueue */
+  , params);
+};
+/**
+ * return true if one container is displaying the toast
+ */
+
+toast.isActive = function (id) {
+  var isToastActive = false;
+  containers.forEach(function (container) {
+    if (container.isToastActive && container.isToastActive(id)) {
+      isToastActive = true;
+    }
+  });
+  return isToastActive;
+};
+
+toast.update = function (toastId, options) {
+  if (options === void 0) {
+    options = {};
+  }
+
+  // if you call toast and toast.update directly nothing will be displayed
+  // this is why I defered the update
+  setTimeout(function () {
+    var toast = getToast(toastId, options);
+
+    if (toast) {
+      var oldOptions = toast.props,
+          oldContent = toast.content;
+
+      var nextOptions = _extends(_extends(_extends({}, oldOptions), options), {}, {
+        toastId: options.toastId || toastId,
+        updateId: generateToastId()
+      });
+
+      if (nextOptions.toastId !== toastId) nextOptions.staleId = toastId;
+      var content = typeof nextOptions.render !== 'undefined' ? nextOptions.render : oldContent;
+      delete nextOptions.render;
+      dispatchToast(content, nextOptions);
+    }
+  }, 0);
+};
+/**
+ * Used for controlled progress bar.
+ */
+
+toast.done = function (id) {
+  toast.update(id, {
+    progress: 1
+  });
+};
+/**
+ * Track changes. The callback get the number of toast displayed
+ *
+ */
+
+toast.onChange = function (callback) {
+  if (isFn(callback)) {
+    eventManager.on(4
+    /* Change */
+    , callback);
+  }
+
+  return function () {
+    isFn(callback) && eventManager.off(4
+    /* Change */
+    , callback);
+  };
+};
+/**
+ * Configure the ToastContainer when lazy mounted
+ */
+
+toast.configure = function (config) {
+  if (config === void 0) {
+    config = {};
+  }
+
+  lazy = true;
+  containerConfig = config;
+};
+
+toast.POSITION = POSITION;
+toast.TYPE = TYPE;
+/**
+ * Wait until the ToastContainer is mounted to dispatch the toast
+ * and attach isActive method
+ */
+
+eventManager.on(2
+/* DidMount */
+, function (containerInstance) {
+  latestInstance = containerInstance.containerId || containerInstance;
+  containers.set(latestInstance, containerInstance);
+  queue.forEach(function (item) {
+    eventManager.emit(0
+    /* Show */
+    , item.content, item.options);
+  });
+  queue = [];
+}).on(3
+/* WillUnmount */
+, function (containerInstance) {
+  containers["delete"](containerInstance.containerId || containerInstance);
+
+  if (containers.size === 0) {
+    eventManager.off(0
+    /* Show */
+    ).off(1
+    /* Clear */
+    ).off(5
+    /* ClearWaitingQueue */
+    );
+  }
+
+  if (canUseDom && containerDomNode) {
+    document.body.removeChild(containerDomNode);
+  }
+});
+
+/**
+ * `useKeeper` is a helper around `useRef`.
+ *
+ * You don't need to access the `.current`property to get the value
+ * If refresh is set to true. The ref will be updated every render
+ */
+
+function useKeeper(arg, refresh) {
+  if (refresh === void 0) {
+    refresh = false;
+  }
+
+  var ref = (0, _react.useRef)(arg);
+  (0, _react.useEffect)(function () {
+    if (refresh) ref.current = arg;
+  });
+  return ref.current;
+}
+
+function reducer(state, action) {
+  switch (action.type) {
+    case 'ADD':
+      return [].concat(state, [action.toastId]).filter(function (id) {
+        return id !== action.staleId;
+      });
+
+    case 'REMOVE':
+      return hasToastId(action.toastId) ? state.filter(function (id) {
+        return id !== action.toastId;
+      }) : [];
+  }
+}
+
+function useToastContainer(props) {
+  var _useReducer = (0, _react.useReducer)(function (x) {
+    return x + 1;
+  }, 0),
+      forceUpdate = _useReducer[1];
+
+  var _useReducer2 = (0, _react.useReducer)(reducer, []),
+      toast = _useReducer2[0],
+      dispatch = _useReducer2[1];
+
+  var containerRef = (0, _react.useRef)(null);
+  var toastCount = useKeeper(0);
+  var queue = useKeeper([]);
+  var collection = useKeeper({});
+  var instance = useKeeper({
+    toastKey: 1,
+    displayedToast: 0,
+    props: props,
+    containerId: null,
+    isToastActive: isToastActive,
+    getToast: function getToast(id) {
+      return collection[id] || null;
+    }
+  });
+  (0, _react.useEffect)(function () {
+    instance.containerId = props.containerId;
+    eventManager.cancelEmit(3
+    /* WillUnmount */
+    ).on(0
+    /* Show */
+    , buildToast).on(1
+    /* Clear */
+    , function (toastId) {
+      return containerRef.current && removeToast(toastId);
+    }).on(5
+    /* ClearWaitingQueue */
+    , clearWaitingQueue).emit(2
+    /* DidMount */
+    , instance);
+    return function () {
+      return eventManager.emit(3
+      /* WillUnmount */
+      , instance);
+    };
+  }, []);
+  (0, _react.useEffect)(function () {
+    instance.isToastActive = isToastActive;
+    instance.displayedToast = toast.length;
+    eventManager.emit(4
+    /* Change */
+    , toast.length, props.containerId);
+  }, [toast]);
+  (0, _react.useEffect)(function () {
+    instance.props = props;
+  });
+
+  function isToastActive(id) {
+    return toast.indexOf(id) !== -1;
+  }
+
+  function clearWaitingQueue(_ref) {
+    var containerId = _ref.containerId;
+    var _instance$props = instance.props,
+        limit = _instance$props.limit,
+        enableMultiContainer = _instance$props.enableMultiContainer;
+
+    if (limit && (!containerId || instance.containerId === containerId && enableMultiContainer)) {
+      toastCount -= queue.length;
+      queue = [];
+    }
+  }
+
+  function removeToast(toastId) {
+    var queueLen = queue.length;
+    toastCount = hasToastId(toastId) ? toastCount - 1 : toastCount - instance.displayedToast;
+    if (toastCount < 0) toastCount = 0;
+
+    if (queueLen > 0) {
+      var freeSlot = hasToastId(toastId) ? 1 : instance.props.limit;
+
+      if (queueLen === 1 || freeSlot === 1) {
+        instance.displayedToast++;
+        dequeueToast();
+      } else {
+        var toDequeue = freeSlot > queueLen ? queueLen : freeSlot;
+        instance.displayedToast = toDequeue;
+
+        for (var i = 0; i < toDequeue; i++) {
+          dequeueToast();
+        }
+      }
+    }
+
+    dispatch({
+      type: 'REMOVE',
+      toastId: toastId
+    });
+  }
+
+  function dequeueToast() {
+    var _queue$shift = queue.shift(),
+        toastContent = _queue$shift.toastContent,
+        toastProps = _queue$shift.toastProps,
+        staleId = _queue$shift.staleId; // ensure that exit transition has been completed, hence the timeout
+
+
+    setTimeout(function () {
+      appendToast(toastContent, toastProps, staleId);
+    }, 500);
+  }
+  /**
+   * check if a container is attached to the dom
+   * check for multi-container, build only if associated
+   * check for duplicate toastId if no update
+   */
+
+  function isNotValid(_ref2) {
+    var containerId = _ref2.containerId,
+        toastId = _ref2.toastId,
+        updateId = _ref2.updateId;
+    return !containerRef.current || instance.props.enableMultiContainer && containerId !== instance.props.containerId || instance.isToastActive(toastId) && updateId == null ? true : false;
+  } // this function and all the function called inside needs to rely on ref(`useKeeper`)
+
+
+  function buildToast(content, _ref3) {
+    var delay = _ref3.delay,
+        staleId = _ref3.staleId,
+        options = _objectWithoutPropertiesLoose(_ref3, ["delay", "staleId"]);
+
+    if (!canBeRendered(content) || isNotValid(options)) return;
+    var toastId = options.toastId,
+        updateId = options.updateId;
+    var props = instance.props,
+        isToastActive = instance.isToastActive;
+
+    var closeToast = function closeToast() {
+      return removeToast(toastId);
+    };
+
+    var isNotAnUpdate = !isToastActive(toastId);
+    if (isNotAnUpdate) toastCount++;
+    var toastProps = {
+      toastId: toastId,
+      updateId: updateId,
+      key: options.key || instance.toastKey++,
+      type: options.type,
+      closeToast: closeToast,
+      closeButton: options.closeButton,
+      rtl: props.rtl,
+      position: options.position || props.position,
+      transition: options.transition || props.transition,
+      className: parseClassName(options.className || props.toastClassName),
+      bodyClassName: parseClassName(options.bodyClassName || props.bodyClassName),
+      style: options.style || props.toastStyle,
+      bodyStyle: options.bodyStyle || props.bodyStyle,
+      onClick: options.onClick || props.onClick,
+      pauseOnHover: isBool(options.pauseOnHover) ? options.pauseOnHover : props.pauseOnHover,
+      pauseOnFocusLoss: isBool(options.pauseOnFocusLoss) ? options.pauseOnFocusLoss : props.pauseOnFocusLoss,
+      draggable: isBool(options.draggable) ? options.draggable : props.draggable,
+      draggablePercent: isNum(options.draggablePercent) ? options.draggablePercent : props.draggablePercent,
+      closeOnClick: isBool(options.closeOnClick) ? options.closeOnClick : props.closeOnClick,
+      progressClassName: parseClassName(options.progressClassName || props.progressClassName),
+      progressStyle: options.progressStyle || props.progressStyle,
+      autoClose: getAutoCloseDelay(options.autoClose, props.autoClose),
+      hideProgressBar: isBool(options.hideProgressBar) ? options.hideProgressBar : props.hideProgressBar,
+      progress: options.progress,
+      role: isStr(options.role) ? options.role : props.role,
+      deleteToast: function deleteToast() {
+        removeFromCollection(toastId);
+      }
+    };
+    if (isFn(options.onOpen)) toastProps.onOpen = options.onOpen;
+    if (isFn(options.onClose)) toastProps.onClose = options.onClose;
+    var closeButton = props.closeButton;
+
+    if (options.closeButton === false || canBeRendered(options.closeButton)) {
+      closeButton = options.closeButton;
+    } else if (options.closeButton === true) {
+      closeButton = canBeRendered(props.closeButton) ? props.closeButton : true;
+    }
+
+    toastProps.closeButton = closeButton;
+    var toastContent = content;
+
+    if ((0, _react.isValidElement)(content) && !isStr(content.type)) {
+      toastContent = (0, _react.cloneElement)(content, {
+        closeToast: closeToast
+      });
+    } else if (isFn(content)) {
+      toastContent = content({
+        closeToast: closeToast
+      });
+    } // not handling limit + delay by design. Waiting for user feedback first
+
+
+    if (props.limit && props.limit > 0 && toastCount > props.limit && isNotAnUpdate) {
+      queue.push({
+        toastContent: toastContent,
+        toastProps: toastProps,
+        staleId: staleId
+      });
+    } else if (isNum(delay) && delay > 0) {
+      setTimeout(function () {
+        appendToast(toastContent, toastProps, staleId);
+      }, delay);
+    } else {
+      appendToast(toastContent, toastProps, staleId);
+    }
+  }
+
+  function appendToast(content, toastProps, staleId) {
+    var toastId = toastProps.toastId;
+    collection[toastId] = {
+      content: content,
+      props: toastProps
+    };
+    dispatch({
+      type: 'ADD',
+      toastId: toastId,
+      staleId: staleId
+    });
+  }
+
+  function removeFromCollection(toastId) {
+    delete collection[toastId];
+    forceUpdate();
+  }
+
+  function getToastToRender(cb) {
+    var toastToRender = {};
+    var toastList = props.newestOnTop ? Object.keys(collection).reverse() : Object.keys(collection);
+
+    for (var i = 0; i < toastList.length; i++) {
+      var _toast = collection[toastList[i]];
+      var position = _toast.props.position;
+      toastToRender[position] || (toastToRender[position] = []);
+      toastToRender[position].push(_toast);
+    }
+
+    return Object.keys(toastToRender).map(function (p) {
+      return cb(p, toastToRender[p]);
+    });
+  }
+
+  return {
+    getToastToRender: getToastToRender,
+    collection: collection,
+    containerRef: containerRef,
+    isToastActive: isToastActive
+  };
+}
+
+function getX(e) {
+  return e.targetTouches && e.targetTouches.length >= 1 ? e.targetTouches[0].clientX : e.clientX;
+}
+
+function getY(e) {
+  return e.targetTouches && e.targetTouches.length >= 1 ? e.targetTouches[0].clientY : e.clientY;
+}
+
+function useToast(props) {
+  var _useState = (0, _react.useState)(true),
+      isRunning = _useState[0],
+      setIsRunning = _useState[1];
+
+  var _useState2 = (0, _react.useState)(false),
+      preventExitTransition = _useState2[0],
+      setPreventExitTransition = _useState2[1];
+
+  var toastRef = (0, _react.useRef)(null);
+  var drag = useKeeper({
+    start: 0,
+    x: 0,
+    y: 0,
+    deltaX: 0,
+    removalDistance: 0,
+    canCloseOnClick: true,
+    canDrag: false,
+    boundingRect: null
+  });
+  var syncProps = useKeeper(props, true);
+  var autoClose = props.autoClose,
+      pauseOnHover = props.pauseOnHover,
+      closeToast = props.closeToast,
+      onClick = props.onClick,
+      closeOnClick = props.closeOnClick;
+  (0, _react.useEffect)(function () {
+    if (isFn(props.onOpen)) props.onOpen((0, _react.isValidElement)(props.children) && props.children.props);
+    return function () {
+      if (isFn(syncProps.onClose)) syncProps.onClose((0, _react.isValidElement)(syncProps.children) && syncProps.children.props);
+    };
+  }, []);
+  (0, _react.useEffect)(function () {
+    props.draggable && bindDragEvents();
+    return function () {
+      props.draggable && unbindDragEvents();
+    };
+  }, [props.draggable]);
+  (0, _react.useEffect)(function () {
+    props.pauseOnFocusLoss && bindFocusEvents();
+    return function () {
+      props.pauseOnFocusLoss && unbindFocusEvents();
+    };
+  }, [props.pauseOnFocusLoss]);
+
+  function onDragStart(e) {
+    var toast = toastRef.current;
+    drag.canCloseOnClick = true;
+    drag.canDrag = true;
+    drag.boundingRect = toast.getBoundingClientRect();
+    toast.style.transition = '';
+    drag.start = drag.x = getX(e.nativeEvent);
+    drag.removalDistance = toast.offsetWidth * (props.draggablePercent / 100);
+  }
+
+  function onDragTransitionEnd() {
+    if (drag.boundingRect) {
+      var _drag$boundingRect = drag.boundingRect,
+          top = _drag$boundingRect.top,
+          bottom = _drag$boundingRect.bottom,
+          left = _drag$boundingRect.left,
+          right = _drag$boundingRect.right;
+
+      if (props.pauseOnHover && drag.x >= left && drag.x <= right && drag.y >= top && drag.y <= bottom) {
+        pauseToast();
+      } else {
+        playToast();
+      }
+    }
+  }
+
+  function playToast() {
+    setIsRunning(true);
+  }
+
+  function pauseToast() {
+    setIsRunning(false);
+  }
+
+  function bindFocusEvents() {
+    window.addEventListener('focus', playToast);
+    window.addEventListener('blur', pauseToast);
+  }
+
+  function unbindFocusEvents() {
+    window.removeEventListener('focus', playToast);
+    window.removeEventListener('blur', pauseToast);
+  }
+
+  function bindDragEvents() {
+    document.addEventListener('mousemove', onDragMove);
+    document.addEventListener('mouseup', onDragEnd);
+    document.addEventListener('touchmove', onDragMove);
+    document.addEventListener('touchend', onDragEnd);
+  }
+
+  function unbindDragEvents() {
+    document.removeEventListener('mousemove', onDragMove);
+    document.removeEventListener('mouseup', onDragEnd);
+    document.removeEventListener('touchmove', onDragMove);
+    document.removeEventListener('touchend', onDragEnd);
+  }
+
+  function onDragMove(e) {
+    var toast = toastRef.current;
+
+    if (drag.canDrag) {
+      if (isRunning) pauseToast();
+      drag.x = getX(e);
+      drag.deltaX = drag.x - drag.start;
+      drag.y = getY(e); // prevent false positif during a toast click
+
+      if (drag.start !== drag.x) drag.canCloseOnClick = false;
+      toast.style.transform = "translateX(" + drag.deltaX + "px)";
+      toast.style.opacity = "" + (1 - Math.abs(drag.deltaX / drag.removalDistance));
+    }
+  }
+
+  function onDragEnd() {
+    var toast = toastRef.current;
+
+    if (drag.canDrag) {
+      drag.canDrag = false;
+
+      if (Math.abs(drag.deltaX) > drag.removalDistance) {
+        setPreventExitTransition(true);
+        props.closeToast();
+        return;
+      }
+
+      toast.style.transition = 'transform 0.2s, opacity 0.2s';
+      toast.style.transform = 'translateX(0)';
+      toast.style.opacity = '1';
+    }
+  }
+
+  var eventHandlers = {
+    onMouseDown: onDragStart,
+    onTouchStart: onDragStart,
+    onMouseUp: onDragTransitionEnd,
+    onTouchEnd: onDragTransitionEnd
+  };
+
+  if (autoClose && pauseOnHover) {
+    eventHandlers.onMouseEnter = pauseToast;
+    eventHandlers.onMouseLeave = playToast;
+  } // prevent toast from closing when user drags the toast
+
+
+  if (closeOnClick) {
+    eventHandlers.onClick = function (e) {
+      onClick && onClick(e);
+      drag.canCloseOnClick && closeToast();
+    };
+  }
+
+  return {
+    playToast: playToast,
+    pauseToast: pauseToast,
+    isRunning: isRunning,
+    preventExitTransition: preventExitTransition,
+    toastRef: toastRef,
+    eventHandlers: eventHandlers
+  };
+}
+
+exports.Bounce = Bounce;
+exports.Flip = Flip;
+exports.Slide = Slide;
+exports.ToastContainer = ToastContainer;
+exports.Zoom = Zoom;
+exports.collapseToast = collapseToast;
+exports.cssTransition = cssTransition;
+exports.toast = toast;
+exports.useToast = useToast;
+exports.useToastContainer = useToastContainer;
+//# sourceMappingURL=react-toastify.esm.js.map
+
+/***/ }),
+
+/***/ "./node_modules/react-transition-group/esm/CSSTransition.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/react-transition-group/esm/CSSTransition.js ***!
+  \******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends2 = __webpack_require__(/*! @babel/runtime/helpers/esm/extends */ "./node_modules/@babel/runtime/helpers/esm/extends.js");
+
+var _extends3 = _interopRequireDefault(_extends2);
+
+var _objectWithoutPropertiesLoose2 = __webpack_require__(/*! @babel/runtime/helpers/esm/objectWithoutPropertiesLoose */ "./node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js");
+
+var _objectWithoutPropertiesLoose3 = _interopRequireDefault(_objectWithoutPropertiesLoose2);
+
+var _inheritsLoose2 = __webpack_require__(/*! @babel/runtime/helpers/esm/inheritsLoose */ "./node_modules/@babel/runtime/helpers/esm/inheritsLoose.js");
+
+var _inheritsLoose3 = _interopRequireDefault(_inheritsLoose2);
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _addClass2 = __webpack_require__(/*! dom-helpers/addClass */ "./node_modules/dom-helpers/esm/addClass.js");
+
+var _addClass3 = _interopRequireDefault(_addClass2);
+
+var _removeClass = __webpack_require__(/*! dom-helpers/removeClass */ "./node_modules/dom-helpers/esm/removeClass.js");
+
+var _removeClass2 = _interopRequireDefault(_removeClass);
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _Transition = __webpack_require__(/*! ./Transition */ "./node_modules/react-transition-group/esm/Transition.js");
+
+var _Transition2 = _interopRequireDefault(_Transition);
+
+var _PropTypes = __webpack_require__(/*! ./utils/PropTypes */ "./node_modules/react-transition-group/esm/utils/PropTypes.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _addClass = function addClass(node, classes) {
+  return node && classes && classes.split(' ').forEach(function (c) {
+    return (0, _addClass3.default)(node, c);
+  });
+};
+
+var removeClass = function removeClass(node, classes) {
+  return node && classes && classes.split(' ').forEach(function (c) {
+    return (0, _removeClass2.default)(node, c);
+  });
+};
+/**
+ * A transition component inspired by the excellent
+ * [ng-animate](https://docs.angularjs.org/api/ngAnimate) library, you should
+ * use it if you're using CSS transitions or animations. It's built upon the
+ * [`Transition`](https://reactcommunity.org/react-transition-group/transition)
+ * component, so it inherits all of its props.
+ *
+ * `CSSTransition` applies a pair of class names during the `appear`, `enter`,
+ * and `exit` states of the transition. The first class is applied and then a
+ * second `*-active` class in order to activate the CSS transition. After the
+ * transition, matching `*-done` class names are applied to persist the
+ * transition state.
+ *
+ * ```jsx
+ * function App() {
+ *   const [inProp, setInProp] = useState(false);
+ *   return (
+ *     <div>
+ *       <CSSTransition in={inProp} timeout={200} classNames="my-node">
+ *         <div>
+ *           {"I'll receive my-node-* classes"}
+ *         </div>
+ *       </CSSTransition>
+ *       <button type="button" onClick={() => setInProp(true)}>
+ *         Click to Enter
+ *       </button>
+ *     </div>
+ *   );
+ * }
+ * ```
+ *
+ * When the `in` prop is set to `true`, the child component will first receive
+ * the class `example-enter`, then the `example-enter-active` will be added in
+ * the next tick. `CSSTransition` [forces a
+ * reflow](https://github.com/reactjs/react-transition-group/blob/5007303e729a74be66a21c3e2205e4916821524b/src/CSSTransition.js#L208-L215)
+ * between before adding the `example-enter-active`. This is an important trick
+ * because it allows us to transition between `example-enter` and
+ * `example-enter-active` even though they were added immediately one after
+ * another. Most notably, this is what makes it possible for us to animate
+ * _appearance_.
+ *
+ * ```css
+ * .my-node-enter {
+ *   opacity: 0;
+ * }
+ * .my-node-enter-active {
+ *   opacity: 1;
+ *   transition: opacity 200ms;
+ * }
+ * .my-node-exit {
+ *   opacity: 1;
+ * }
+ * .my-node-exit-active {
+ *   opacity: 0;
+ *   transition: opacity 200ms;
+ * }
+ * ```
+ *
+ * `*-active` classes represent which styles you want to animate **to**, so it's
+ * important to add `transition` declaration only to them, otherwise transitions
+ * might not behave as intended! This might not be obvious when the transitions
+ * are symmetrical, i.e. when `*-enter-active` is the same as `*-exit`, like in
+ * the example above (minus `transition`), but it becomes apparent in more
+ * complex transitions.
+ *
+ * **Note**: If you're using the
+ * [`appear`](http://reactcommunity.org/react-transition-group/transition#Transition-prop-appear)
+ * prop, make sure to define styles for `.appear-*` classes as well.
+ */
+
+var CSSTransition = /*#__PURE__*/function (_React$Component) {
+  (0, _inheritsLoose3.default)(CSSTransition, _React$Component);
+
+  function CSSTransition() {
+    var _this;
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _React$Component.call.apply(_React$Component, [this].concat(args)) || this;
+    _this.appliedClasses = {
+      appear: {},
+      enter: {},
+      exit: {}
+    };
+
+    _this.onEnter = function (maybeNode, maybeAppearing) {
+      var _this$resolveArgument = _this.resolveArguments(maybeNode, maybeAppearing),
+          node = _this$resolveArgument[0],
+          appearing = _this$resolveArgument[1];
+
+      _this.removeClasses(node, 'exit');
+
+      _this.addClass(node, appearing ? 'appear' : 'enter', 'base');
+
+      if (_this.props.onEnter) {
+        _this.props.onEnter(maybeNode, maybeAppearing);
+      }
+    };
+
+    _this.onEntering = function (maybeNode, maybeAppearing) {
+      var _this$resolveArgument2 = _this.resolveArguments(maybeNode, maybeAppearing),
+          node = _this$resolveArgument2[0],
+          appearing = _this$resolveArgument2[1];
+
+      var type = appearing ? 'appear' : 'enter';
+
+      _this.addClass(node, type, 'active');
+
+      if (_this.props.onEntering) {
+        _this.props.onEntering(maybeNode, maybeAppearing);
+      }
+    };
+
+    _this.onEntered = function (maybeNode, maybeAppearing) {
+      var _this$resolveArgument3 = _this.resolveArguments(maybeNode, maybeAppearing),
+          node = _this$resolveArgument3[0],
+          appearing = _this$resolveArgument3[1];
+
+      var type = appearing ? 'appear' : 'enter';
+
+      _this.removeClasses(node, type);
+
+      _this.addClass(node, type, 'done');
+
+      if (_this.props.onEntered) {
+        _this.props.onEntered(maybeNode, maybeAppearing);
+      }
+    };
+
+    _this.onExit = function (maybeNode) {
+      var _this$resolveArgument4 = _this.resolveArguments(maybeNode),
+          node = _this$resolveArgument4[0];
+
+      _this.removeClasses(node, 'appear');
+
+      _this.removeClasses(node, 'enter');
+
+      _this.addClass(node, 'exit', 'base');
+
+      if (_this.props.onExit) {
+        _this.props.onExit(maybeNode);
+      }
+    };
+
+    _this.onExiting = function (maybeNode) {
+      var _this$resolveArgument5 = _this.resolveArguments(maybeNode),
+          node = _this$resolveArgument5[0];
+
+      _this.addClass(node, 'exit', 'active');
+
+      if (_this.props.onExiting) {
+        _this.props.onExiting(maybeNode);
+      }
+    };
+
+    _this.onExited = function (maybeNode) {
+      var _this$resolveArgument6 = _this.resolveArguments(maybeNode),
+          node = _this$resolveArgument6[0];
+
+      _this.removeClasses(node, 'exit');
+
+      _this.addClass(node, 'exit', 'done');
+
+      if (_this.props.onExited) {
+        _this.props.onExited(maybeNode);
+      }
+    };
+
+    _this.resolveArguments = function (maybeNode, maybeAppearing) {
+      return _this.props.nodeRef ? [_this.props.nodeRef.current, maybeNode] // here `maybeNode` is actually `appearing`
+      : [maybeNode, maybeAppearing];
+    };
+
+    _this.getClassNames = function (type) {
+      var classNames = _this.props.classNames;
+      var isStringClassNames = typeof classNames === 'string';
+      var prefix = isStringClassNames && classNames ? classNames + "-" : '';
+      var baseClassName = isStringClassNames ? "" + prefix + type : classNames[type];
+      var activeClassName = isStringClassNames ? baseClassName + "-active" : classNames[type + "Active"];
+      var doneClassName = isStringClassNames ? baseClassName + "-done" : classNames[type + "Done"];
+      return {
+        baseClassName: baseClassName,
+        activeClassName: activeClassName,
+        doneClassName: doneClassName
+      };
+    };
+
+    return _this;
+  }
+
+  var _proto = CSSTransition.prototype;
+
+  _proto.addClass = function addClass(node, type, phase) {
+    var className = this.getClassNames(type)[phase + "ClassName"];
+
+    var _this$getClassNames = this.getClassNames('enter'),
+        doneClassName = _this$getClassNames.doneClassName;
+
+    if (type === 'appear' && phase === 'done' && doneClassName) {
+      className += " " + doneClassName;
+    } // This is for to force a repaint,
+    // which is necessary in order to transition styles when adding a class name.
+
+
+    if (phase === 'active') {
+      /* eslint-disable no-unused-expressions */
+      node && node.scrollTop;
+    }
+
+    if (className) {
+      this.appliedClasses[type][phase] = className;
+
+      _addClass(node, className);
+    }
+  };
+
+  _proto.removeClasses = function removeClasses(node, type) {
+    var _this$appliedClasses$ = this.appliedClasses[type],
+        baseClassName = _this$appliedClasses$.base,
+        activeClassName = _this$appliedClasses$.active,
+        doneClassName = _this$appliedClasses$.done;
+    this.appliedClasses[type] = {};
+
+    if (baseClassName) {
+      removeClass(node, baseClassName);
+    }
+
+    if (activeClassName) {
+      removeClass(node, activeClassName);
+    }
+
+    if (doneClassName) {
+      removeClass(node, doneClassName);
+    }
+  };
+
+  _proto.render = function render() {
+    var _this$props = this.props,
+        _ = _this$props.classNames,
+        props = (0, _objectWithoutPropertiesLoose3.default)(_this$props, ["classNames"]);
+
+    return (/*#__PURE__*/_react2.default.createElement(_Transition2.default, (0, _extends3.default)({}, props, {
+        onEnter: this.onEnter,
+        onEntered: this.onEntered,
+        onEntering: this.onEntering,
+        onExit: this.onExit,
+        onExiting: this.onExiting,
+        onExited: this.onExited
+      }))
+    );
+  };
+
+  return CSSTransition;
+}(_react2.default.Component);
+
+CSSTransition.defaultProps = {
+  classNames: ''
+};
+CSSTransition.propTypes =  true ? (0, _extends3.default)({}, _Transition2.default.propTypes, {
+  /**
+   * The animation classNames applied to the component as it appears, enters,
+   * exits or has finished the transition. A single name can be provided, which
+   * will be suffixed for each stage, e.g. `classNames="fade"` applies:
+   *
+   * - `fade-appear`, `fade-appear-active`, `fade-appear-done`
+   * - `fade-enter`, `fade-enter-active`, `fade-enter-done`
+   * - `fade-exit`, `fade-exit-active`, `fade-exit-done`
+   *
+   * A few details to note about how these classes are applied:
+   *
+   * 1. They are _joined_ with the ones that are already defined on the child
+   *    component, so if you want to add some base styles, you can use
+   *    `className` without worrying that it will be overridden.
+   *
+   * 2. If the transition component mounts with `in={false}`, no classes are
+   *    applied yet. You might be expecting `*-exit-done`, but if you think
+   *    about it, a component cannot finish exiting if it hasn't entered yet.
+   *
+   * 2. `fade-appear-done` and `fade-enter-done` will _both_ be applied. This
+   *    allows you to define different behavior for when appearing is done and
+   *    when regular entering is done, using selectors like
+   *    `.fade-enter-done:not(.fade-appear-done)`. For example, you could apply
+   *    an epic entrance animation when element first appears in the DOM using
+   *    [Animate.css](https://daneden.github.io/animate.css/). Otherwise you can
+   *    simply use `fade-enter-done` for defining both cases.
+   *
+   * Each individual classNames can also be specified independently like:
+   *
+   * ```js
+   * classNames={{
+   *  appear: 'my-appear',
+   *  appearActive: 'my-active-appear',
+   *  appearDone: 'my-done-appear',
+   *  enter: 'my-enter',
+   *  enterActive: 'my-active-enter',
+   *  enterDone: 'my-done-enter',
+   *  exit: 'my-exit',
+   *  exitActive: 'my-active-exit',
+   *  exitDone: 'my-done-exit',
+   * }}
+   * ```
+   *
+   * If you want to set these classes using CSS Modules:
+   *
+   * ```js
+   * import styles from './styles.css';
+   * ```
+   *
+   * you might want to use camelCase in your CSS file, that way could simply
+   * spread them instead of listing them one by one:
+   *
+   * ```js
+   * classNames={{ ...styles }}
+   * ```
+   *
+   * @type {string | {
+   *  appear?: string,
+   *  appearActive?: string,
+   *  appearDone?: string,
+   *  enter?: string,
+   *  enterActive?: string,
+   *  enterDone?: string,
+   *  exit?: string,
+   *  exitActive?: string,
+   *  exitDone?: string,
+   * }}
+   */
+  classNames: _PropTypes.classNamesShape,
+
+  /**
+   * A `<Transition>` callback fired immediately after the 'enter' or 'appear' class is
+   * applied.
+   *
+   * **Note**: when `nodeRef` prop is passed, `node` is not passed.
+   *
+   * @type Function(node: HtmlElement, isAppearing: bool)
+   */
+  onEnter: _propTypes2.default.func,
+
+  /**
+   * A `<Transition>` callback fired immediately after the 'enter-active' or
+   * 'appear-active' class is applied.
+   *
+   * **Note**: when `nodeRef` prop is passed, `node` is not passed.
+   *
+   * @type Function(node: HtmlElement, isAppearing: bool)
+   */
+  onEntering: _propTypes2.default.func,
+
+  /**
+   * A `<Transition>` callback fired immediately after the 'enter' or
+   * 'appear' classes are **removed** and the `done` class is added to the DOM node.
+   *
+   * **Note**: when `nodeRef` prop is passed, `node` is not passed.
+   *
+   * @type Function(node: HtmlElement, isAppearing: bool)
+   */
+  onEntered: _propTypes2.default.func,
+
+  /**
+   * A `<Transition>` callback fired immediately after the 'exit' class is
+   * applied.
+   *
+   * **Note**: when `nodeRef` prop is passed, `node` is not passed
+   *
+   * @type Function(node: HtmlElement)
+   */
+  onExit: _propTypes2.default.func,
+
+  /**
+   * A `<Transition>` callback fired immediately after the 'exit-active' is applied.
+   *
+   * **Note**: when `nodeRef` prop is passed, `node` is not passed
+   *
+   * @type Function(node: HtmlElement)
+   */
+  onExiting: _propTypes2.default.func,
+
+  /**
+   * A `<Transition>` callback fired immediately after the 'exit' classes
+   * are **removed** and the `exit-done` class is added to the DOM node.
+   *
+   * **Note**: when `nodeRef` prop is passed, `node` is not passed
+   *
+   * @type Function(node: HtmlElement)
+   */
+  onExited: _propTypes2.default.func
+}) : undefined;
+exports.default = CSSTransition;
+
+/***/ }),
+
+/***/ "./node_modules/react-transition-group/esm/ReplaceTransition.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/react-transition-group/esm/ReplaceTransition.js ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _objectWithoutPropertiesLoose2 = __webpack_require__(/*! @babel/runtime/helpers/esm/objectWithoutPropertiesLoose */ "./node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js");
+
+var _objectWithoutPropertiesLoose3 = _interopRequireDefault(_objectWithoutPropertiesLoose2);
+
+var _inheritsLoose2 = __webpack_require__(/*! @babel/runtime/helpers/esm/inheritsLoose */ "./node_modules/@babel/runtime/helpers/esm/inheritsLoose.js");
+
+var _inheritsLoose3 = _interopRequireDefault(_inheritsLoose2);
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _TransitionGroup = __webpack_require__(/*! ./TransitionGroup */ "./node_modules/react-transition-group/esm/TransitionGroup.js");
+
+var _TransitionGroup2 = _interopRequireDefault(_TransitionGroup);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * The `<ReplaceTransition>` component is a specialized `Transition` component
+ * that animates between two children.
+ *
+ * ```jsx
+ * <ReplaceTransition in>
+ *   <Fade><div>I appear first</div></Fade>
+ *   <Fade><div>I replace the above</div></Fade>
+ * </ReplaceTransition>
+ * ```
+ */
+
+var ReplaceTransition = /*#__PURE__*/function (_React$Component) {
+  (0, _inheritsLoose3.default)(ReplaceTransition, _React$Component);
+
+  function ReplaceTransition() {
+    var _this;
+
+    for (var _len = arguments.length, _args = new Array(_len), _key = 0; _key < _len; _key++) {
+      _args[_key] = arguments[_key];
+    }
+
+    _this = _React$Component.call.apply(_React$Component, [this].concat(_args)) || this;
+
+    _this.handleEnter = function () {
+      for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+        args[_key2] = arguments[_key2];
+      }
+
+      return _this.handleLifecycle('onEnter', 0, args);
+    };
+
+    _this.handleEntering = function () {
+      for (var _len3 = arguments.length, args = new Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+        args[_key3] = arguments[_key3];
+      }
+
+      return _this.handleLifecycle('onEntering', 0, args);
+    };
+
+    _this.handleEntered = function () {
+      for (var _len4 = arguments.length, args = new Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
+        args[_key4] = arguments[_key4];
+      }
+
+      return _this.handleLifecycle('onEntered', 0, args);
+    };
+
+    _this.handleExit = function () {
+      for (var _len5 = arguments.length, args = new Array(_len5), _key5 = 0; _key5 < _len5; _key5++) {
+        args[_key5] = arguments[_key5];
+      }
+
+      return _this.handleLifecycle('onExit', 1, args);
+    };
+
+    _this.handleExiting = function () {
+      for (var _len6 = arguments.length, args = new Array(_len6), _key6 = 0; _key6 < _len6; _key6++) {
+        args[_key6] = arguments[_key6];
+      }
+
+      return _this.handleLifecycle('onExiting', 1, args);
+    };
+
+    _this.handleExited = function () {
+      for (var _len7 = arguments.length, args = new Array(_len7), _key7 = 0; _key7 < _len7; _key7++) {
+        args[_key7] = arguments[_key7];
+      }
+
+      return _this.handleLifecycle('onExited', 1, args);
+    };
+
+    return _this;
+  }
+
+  var _proto = ReplaceTransition.prototype;
+
+  _proto.handleLifecycle = function handleLifecycle(handler, idx, originalArgs) {
+    var _child$props;
+
+    var children = this.props.children;
+    var child = _react2.default.Children.toArray(children)[idx];
+    if (child.props[handler]) (_child$props = child.props)[handler].apply(_child$props, originalArgs);
+
+    if (this.props[handler]) {
+      var maybeNode = child.props.nodeRef ? undefined : _reactDom2.default.findDOMNode(this);
+      this.props[handler](maybeNode);
+    }
+  };
+
+  _proto.render = function render() {
+    var _this$props = this.props,
+        children = _this$props.children,
+        inProp = _this$props.in,
+        props = (0, _objectWithoutPropertiesLoose3.default)(_this$props, ["children", "in"]);
+
+    var _React$Children$toArr = _react2.default.Children.toArray(children),
+        first = _React$Children$toArr[0],
+        second = _React$Children$toArr[1];
+
+    delete props.onEnter;
+    delete props.onEntering;
+    delete props.onEntered;
+    delete props.onExit;
+    delete props.onExiting;
+    delete props.onExited;
+    return (/*#__PURE__*/_react2.default.createElement(_TransitionGroup2.default, props, inProp ? _react2.default.cloneElement(first, {
+        key: 'first',
+        onEnter: this.handleEnter,
+        onEntering: this.handleEntering,
+        onEntered: this.handleEntered
+      }) : _react2.default.cloneElement(second, {
+        key: 'second',
+        onEnter: this.handleExit,
+        onEntering: this.handleExiting,
+        onEntered: this.handleExited
+      }))
+    );
+  };
+
+  return ReplaceTransition;
+}(_react2.default.Component);
+
+ReplaceTransition.propTypes =  true ? {
+  in: _propTypes2.default.bool.isRequired,
+  children: function children(props, propName) {
+    if (_react2.default.Children.count(props[propName]) !== 2) return new Error("\"" + propName + "\" must be exactly two transition components.");
+    return null;
+  }
+} : undefined;
+exports.default = ReplaceTransition;
+
+/***/ }),
+
+/***/ "./node_modules/react-transition-group/esm/SwitchTransition.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/react-transition-group/esm/SwitchTransition.js ***!
+  \*********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.modes = undefined;
+
+var _inheritsLoose2 = __webpack_require__(/*! @babel/runtime/helpers/esm/inheritsLoose */ "./node_modules/@babel/runtime/helpers/esm/inheritsLoose.js");
+
+var _inheritsLoose3 = _interopRequireDefault(_inheritsLoose2);
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _Transition = __webpack_require__(/*! ./Transition */ "./node_modules/react-transition-group/esm/Transition.js");
+
+var _TransitionGroupContext = __webpack_require__(/*! ./TransitionGroupContext */ "./node_modules/react-transition-group/esm/TransitionGroupContext.js");
+
+var _TransitionGroupContext2 = _interopRequireDefault(_TransitionGroupContext);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _leaveRenders, _enterRenders;
+
+function areChildrenDifferent(oldChildren, newChildren) {
+  if (oldChildren === newChildren) return false;
+
+  if (_react2.default.isValidElement(oldChildren) && _react2.default.isValidElement(newChildren) && oldChildren.key != null && oldChildren.key === newChildren.key) {
+    return false;
+  }
+
+  return true;
+}
+/**
+ * Enum of modes for SwitchTransition component
+ * @enum { string }
+ */
+
+var modes = exports.modes = {
+  out: 'out-in',
+  in: 'in-out'
+};
+
+var callHook = function callHook(element, name, cb) {
+  return function () {
+    var _element$props;
+
+    element.props[name] && (_element$props = element.props)[name].apply(_element$props, arguments);
+    cb();
+  };
+};
+
+var leaveRenders = (_leaveRenders = {}, _leaveRenders[modes.out] = function (_ref) {
+  var current = _ref.current,
+      changeState = _ref.changeState;
+  return _react2.default.cloneElement(current, {
+    in: false,
+    onExited: callHook(current, 'onExited', function () {
+      changeState(_Transition.ENTERING, null);
+    })
+  });
+}, _leaveRenders[modes.in] = function (_ref2) {
+  var current = _ref2.current,
+      changeState = _ref2.changeState,
+      children = _ref2.children;
+  return [current, _react2.default.cloneElement(children, {
+    in: true,
+    onEntered: callHook(children, 'onEntered', function () {
+      changeState(_Transition.ENTERING);
+    })
+  })];
+}, _leaveRenders);
+var enterRenders = (_enterRenders = {}, _enterRenders[modes.out] = function (_ref3) {
+  var children = _ref3.children,
+      changeState = _ref3.changeState;
+  return _react2.default.cloneElement(children, {
+    in: true,
+    onEntered: callHook(children, 'onEntered', function () {
+      changeState(_Transition.ENTERED, _react2.default.cloneElement(children, {
+        in: true
+      }));
+    })
+  });
+}, _enterRenders[modes.in] = function (_ref4) {
+  var current = _ref4.current,
+      children = _ref4.children,
+      changeState = _ref4.changeState;
+  return [_react2.default.cloneElement(current, {
+    in: false,
+    onExited: callHook(current, 'onExited', function () {
+      changeState(_Transition.ENTERED, _react2.default.cloneElement(children, {
+        in: true
+      }));
+    })
+  }), _react2.default.cloneElement(children, {
+    in: true
+  })];
+}, _enterRenders);
+/**
+ * A transition component inspired by the [vue transition modes](https://vuejs.org/v2/guide/transitions.html#Transition-Modes).
+ * You can use it when you want to control the render between state transitions.
+ * Based on the selected mode and the child's key which is the `Transition` or `CSSTransition` component, the `SwitchTransition` makes a consistent transition between them.
+ *
+ * If the `out-in` mode is selected, the `SwitchTransition` waits until the old child leaves and then inserts a new child.
+ * If the `in-out` mode is selected, the `SwitchTransition` inserts a new child first, waits for the new child to enter and then removes the old child.
+ *
+ * **Note**: If you want the animation to happen simultaneously
+ * (that is, to have the old child removed and a new child inserted **at the same time**),
+ * you should use
+ * [`TransitionGroup`](https://reactcommunity.org/react-transition-group/transition-group)
+ * instead.
+ *
+ * ```jsx
+ * function App() {
+ *  const [state, setState] = useState(false);
+ *  return (
+ *    <SwitchTransition>
+ *      <CSSTransition
+ *        key={state ? "Goodbye, world!" : "Hello, world!"}
+ *        addEndListener={(node, done) => node.addEventListener("transitionend", done, false)}
+ *        classNames='fade'
+ *      >
+ *        <button onClick={() => setState(state => !state)}>
+ *          {state ? "Goodbye, world!" : "Hello, world!"}
+ *        </button>
+ *      </CSSTransition>
+ *    </SwitchTransition>
+ *  );
+ * }
+ * ```
+ *
+ * ```css
+ * .fade-enter{
+ *    opacity: 0;
+ * }
+ * .fade-exit{
+ *    opacity: 1;
+ * }
+ * .fade-enter-active{
+ *    opacity: 1;
+ * }
+ * .fade-exit-active{
+ *    opacity: 0;
+ * }
+ * .fade-enter-active,
+ * .fade-exit-active{
+ *    transition: opacity 500ms;
+ * }
+ * ```
+ */
+
+var SwitchTransition = /*#__PURE__*/function (_React$Component) {
+  (0, _inheritsLoose3.default)(SwitchTransition, _React$Component);
+
+  function SwitchTransition() {
+    var _this;
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _React$Component.call.apply(_React$Component, [this].concat(args)) || this;
+    _this.state = {
+      status: _Transition.ENTERED,
+      current: null
+    };
+    _this.appeared = false;
+
+    _this.changeState = function (status, current) {
+      if (current === void 0) {
+        current = _this.state.current;
+      }
+
+      _this.setState({
+        status: status,
+        current: current
+      });
+    };
+
+    return _this;
+  }
+
+  var _proto = SwitchTransition.prototype;
+
+  _proto.componentDidMount = function componentDidMount() {
+    this.appeared = true;
+  };
+
+  SwitchTransition.getDerivedStateFromProps = function getDerivedStateFromProps(props, state) {
+    if (props.children == null) {
+      return {
+        current: null
+      };
+    }
+
+    if (state.status === _Transition.ENTERING && props.mode === modes.in) {
+      return {
+        status: _Transition.ENTERING
+      };
+    }
+
+    if (state.current && areChildrenDifferent(state.current, props.children)) {
+      return {
+        status: _Transition.EXITING
+      };
+    }
+
+    return {
+      current: _react2.default.cloneElement(props.children, {
+        in: true
+      })
+    };
+  };
+
+  _proto.render = function render() {
+    var _this$props = this.props,
+        children = _this$props.children,
+        mode = _this$props.mode,
+        _this$state = this.state,
+        status = _this$state.status,
+        current = _this$state.current;
+    var data = {
+      children: children,
+      current: current,
+      changeState: this.changeState,
+      status: status
+    };
+    var component;
+
+    switch (status) {
+      case _Transition.ENTERING:
+        component = enterRenders[mode](data);
+        break;
+
+      case _Transition.EXITING:
+        component = leaveRenders[mode](data);
+        break;
+
+      case _Transition.ENTERED:
+        component = current;
+    }
+
+    return (/*#__PURE__*/_react2.default.createElement(_TransitionGroupContext2.default.Provider, {
+        value: {
+          isMounting: !this.appeared
+        }
+      }, component)
+    );
+  };
+
+  return SwitchTransition;
+}(_react2.default.Component);
+
+SwitchTransition.propTypes =  true ? {
+  /**
+   * Transition modes.
+   * `out-in`: Current element transitions out first, then when complete, the new element transitions in.
+   * `in-out`: New element transitions in first, then when complete, the current element transitions out.
+   *
+   * @type {'out-in'|'in-out'}
+   */
+  mode: _propTypes2.default.oneOf([modes.in, modes.out]),
+
+  /**
+   * Any `Transition` or `CSSTransition` component.
+   */
+  children: _propTypes2.default.oneOfType([_propTypes2.default.element.isRequired])
+} : undefined;
+SwitchTransition.defaultProps = {
+  mode: modes.out
+};
+exports.default = SwitchTransition;
+
+/***/ }),
+
+/***/ "./node_modules/react-transition-group/esm/Transition.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/react-transition-group/esm/Transition.js ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.EXITING = exports.ENTERED = exports.ENTERING = exports.EXITED = exports.UNMOUNTED = undefined;
+
+var _objectWithoutPropertiesLoose2 = __webpack_require__(/*! @babel/runtime/helpers/esm/objectWithoutPropertiesLoose */ "./node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js");
+
+var _objectWithoutPropertiesLoose3 = _interopRequireDefault(_objectWithoutPropertiesLoose2);
+
+var _inheritsLoose2 = __webpack_require__(/*! @babel/runtime/helpers/esm/inheritsLoose */ "./node_modules/@babel/runtime/helpers/esm/inheritsLoose.js");
+
+var _inheritsLoose3 = _interopRequireDefault(_inheritsLoose2);
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _config = __webpack_require__(/*! ./config */ "./node_modules/react-transition-group/esm/config.js");
+
+var _config2 = _interopRequireDefault(_config);
+
+var _PropTypes = __webpack_require__(/*! ./utils/PropTypes */ "./node_modules/react-transition-group/esm/utils/PropTypes.js");
+
+var _TransitionGroupContext = __webpack_require__(/*! ./TransitionGroupContext */ "./node_modules/react-transition-group/esm/TransitionGroupContext.js");
+
+var _TransitionGroupContext2 = _interopRequireDefault(_TransitionGroupContext);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var UNMOUNTED = exports.UNMOUNTED = 'unmounted';
+var EXITED = exports.EXITED = 'exited';
+var ENTERING = exports.ENTERING = 'entering';
+var ENTERED = exports.ENTERED = 'entered';
+var EXITING = exports.EXITING = 'exiting';
+/**
+ * The Transition component lets you describe a transition from one component
+ * state to another _over time_ with a simple declarative API. Most commonly
+ * it's used to animate the mounting and unmounting of a component, but can also
+ * be used to describe in-place transition states as well.
+ *
+ * ---
+ *
+ * **Note**: `Transition` is a platform-agnostic base component. If you're using
+ * transitions in CSS, you'll probably want to use
+ * [`CSSTransition`](https://reactcommunity.org/react-transition-group/css-transition)
+ * instead. It inherits all the features of `Transition`, but contains
+ * additional features necessary to play nice with CSS transitions (hence the
+ * name of the component).
+ *
+ * ---
+ *
+ * By default the `Transition` component does not alter the behavior of the
+ * component it renders, it only tracks "enter" and "exit" states for the
+ * components. It's up to you to give meaning and effect to those states. For
+ * example we can add styles to a component when it enters or exits:
+ *
+ * ```jsx
+ * import { Transition } from 'react-transition-group';
+ *
+ * const duration = 300;
+ *
+ * const defaultStyle = {
+ *   transition: `opacity ${duration}ms ease-in-out`,
+ *   opacity: 0,
+ * }
+ *
+ * const transitionStyles = {
+ *   entering: { opacity: 1 },
+ *   entered:  { opacity: 1 },
+ *   exiting:  { opacity: 0 },
+ *   exited:  { opacity: 0 },
+ * };
+ *
+ * const Fade = ({ in: inProp }) => (
+ *   <Transition in={inProp} timeout={duration}>
+ *     {state => (
+ *       <div style={{
+ *         ...defaultStyle,
+ *         ...transitionStyles[state]
+ *       }}>
+ *         I'm a fade Transition!
+ *       </div>
+ *     )}
+ *   </Transition>
+ * );
+ * ```
+ *
+ * There are 4 main states a Transition can be in:
+ *  - `'entering'`
+ *  - `'entered'`
+ *  - `'exiting'`
+ *  - `'exited'`
+ *
+ * Transition state is toggled via the `in` prop. When `true` the component
+ * begins the "Enter" stage. During this stage, the component will shift from
+ * its current transition state, to `'entering'` for the duration of the
+ * transition and then to the `'entered'` stage once it's complete. Let's take
+ * the following example (we'll use the
+ * [useState](https://reactjs.org/docs/hooks-reference.html#usestate) hook):
+ *
+ * ```jsx
+ * function App() {
+ *   const [inProp, setInProp] = useState(false);
+ *   return (
+ *     <div>
+ *       <Transition in={inProp} timeout={500}>
+ *         {state => (
+ *           // ...
+ *         )}
+ *       </Transition>
+ *       <button onClick={() => setInProp(true)}>
+ *         Click to Enter
+ *       </button>
+ *     </div>
+ *   );
+ * }
+ * ```
+ *
+ * When the button is clicked the component will shift to the `'entering'` state
+ * and stay there for 500ms (the value of `timeout`) before it finally switches
+ * to `'entered'`.
+ *
+ * When `in` is `false` the same thing happens except the state moves from
+ * `'exiting'` to `'exited'`.
+ */
+
+var Transition = /*#__PURE__*/function (_React$Component) {
+  (0, _inheritsLoose3.default)(Transition, _React$Component);
+
+  function Transition(props, context) {
+    var _this;
+
+    _this = _React$Component.call(this, props, context) || this;
+    var parentGroup = context; // In the context of a TransitionGroup all enters are really appears
+
+    var appear = parentGroup && !parentGroup.isMounting ? props.enter : props.appear;
+    var initialStatus;
+    _this.appearStatus = null;
+
+    if (props.in) {
+      if (appear) {
+        initialStatus = EXITED;
+        _this.appearStatus = ENTERING;
+      } else {
+        initialStatus = ENTERED;
+      }
+    } else {
+      if (props.unmountOnExit || props.mountOnEnter) {
+        initialStatus = UNMOUNTED;
+      } else {
+        initialStatus = EXITED;
+      }
+    }
+
+    _this.state = {
+      status: initialStatus
+    };
+    _this.nextCallback = null;
+    return _this;
+  }
+
+  Transition.getDerivedStateFromProps = function getDerivedStateFromProps(_ref, prevState) {
+    var nextIn = _ref.in;
+
+    if (nextIn && prevState.status === UNMOUNTED) {
+      return {
+        status: EXITED
+      };
+    }
+
+    return null;
+  } // getSnapshotBeforeUpdate(prevProps) {
+  //   let nextStatus = null
+  //   if (prevProps !== this.props) {
+  //     const { status } = this.state
+  //     if (this.props.in) {
+  //       if (status !== ENTERING && status !== ENTERED) {
+  //         nextStatus = ENTERING
+  //       }
+  //     } else {
+  //       if (status === ENTERING || status === ENTERED) {
+  //         nextStatus = EXITING
+  //       }
+  //     }
+  //   }
+  //   return { nextStatus }
+  // }
+  ;
+
+  var _proto = Transition.prototype;
+
+  _proto.componentDidMount = function componentDidMount() {
+    this.updateStatus(true, this.appearStatus);
+  };
+
+  _proto.componentDidUpdate = function componentDidUpdate(prevProps) {
+    var nextStatus = null;
+
+    if (prevProps !== this.props) {
+      var status = this.state.status;
+
+      if (this.props.in) {
+        if (status !== ENTERING && status !== ENTERED) {
+          nextStatus = ENTERING;
+        }
+      } else {
+        if (status === ENTERING || status === ENTERED) {
+          nextStatus = EXITING;
+        }
+      }
+    }
+
+    this.updateStatus(false, nextStatus);
+  };
+
+  _proto.componentWillUnmount = function componentWillUnmount() {
+    this.cancelNextCallback();
+  };
+
+  _proto.getTimeouts = function getTimeouts() {
+    var timeout = this.props.timeout;
+    var exit, enter, appear;
+    exit = enter = appear = timeout;
+
+    if (timeout != null && typeof timeout !== 'number') {
+      exit = timeout.exit;
+      enter = timeout.enter; // TODO: remove fallback for next major
+
+      appear = timeout.appear !== undefined ? timeout.appear : enter;
+    }
+
+    return {
+      exit: exit,
+      enter: enter,
+      appear: appear
+    };
+  };
+
+  _proto.updateStatus = function updateStatus(mounting, nextStatus) {
+    if (mounting === void 0) {
+      mounting = false;
+    }
+
+    if (nextStatus !== null) {
+      // nextStatus will always be ENTERING or EXITING.
+      this.cancelNextCallback();
+
+      if (nextStatus === ENTERING) {
+        this.performEnter(mounting);
+      } else {
+        this.performExit();
+      }
+    } else if (this.props.unmountOnExit && this.state.status === EXITED) {
+      this.setState({
+        status: UNMOUNTED
+      });
+    }
+  };
+
+  _proto.performEnter = function performEnter(mounting) {
+    var _this2 = this;
+
+    var enter = this.props.enter;
+    var appearing = this.context ? this.context.isMounting : mounting;
+
+    var _ref2 = this.props.nodeRef ? [appearing] : [_reactDom2.default.findDOMNode(this), appearing],
+        maybeNode = _ref2[0],
+        maybeAppearing = _ref2[1];
+
+    var timeouts = this.getTimeouts();
+    var enterTimeout = appearing ? timeouts.appear : timeouts.enter; // no enter animation skip right to ENTERED
+    // if we are mounting and running this it means appear _must_ be set
+
+    if (!mounting && !enter || _config2.default.disabled) {
+      this.safeSetState({
+        status: ENTERED
+      }, function () {
+        _this2.props.onEntered(maybeNode);
+      });
+      return;
+    }
+
+    this.props.onEnter(maybeNode, maybeAppearing);
+    this.safeSetState({
+      status: ENTERING
+    }, function () {
+      _this2.props.onEntering(maybeNode, maybeAppearing);
+
+      _this2.onTransitionEnd(enterTimeout, function () {
+        _this2.safeSetState({
+          status: ENTERED
+        }, function () {
+          _this2.props.onEntered(maybeNode, maybeAppearing);
+        });
+      });
+    });
+  };
+
+  _proto.performExit = function performExit() {
+    var _this3 = this;
+
+    var exit = this.props.exit;
+    var timeouts = this.getTimeouts();
+    var maybeNode = this.props.nodeRef ? undefined : _reactDom2.default.findDOMNode(this); // no exit animation skip right to EXITED
+
+    if (!exit || _config2.default.disabled) {
+      this.safeSetState({
+        status: EXITED
+      }, function () {
+        _this3.props.onExited(maybeNode);
+      });
+      return;
+    }
+
+    this.props.onExit(maybeNode);
+    this.safeSetState({
+      status: EXITING
+    }, function () {
+      _this3.props.onExiting(maybeNode);
+
+      _this3.onTransitionEnd(timeouts.exit, function () {
+        _this3.safeSetState({
+          status: EXITED
+        }, function () {
+          _this3.props.onExited(maybeNode);
+        });
+      });
+    });
+  };
+
+  _proto.cancelNextCallback = function cancelNextCallback() {
+    if (this.nextCallback !== null) {
+      this.nextCallback.cancel();
+      this.nextCallback = null;
+    }
+  };
+
+  _proto.safeSetState = function safeSetState(nextState, callback) {
+    // This shouldn't be necessary, but there are weird race conditions with
+    // setState callbacks and unmounting in testing, so always make sure that
+    // we can cancel any pending setState callbacks after we unmount.
+    callback = this.setNextCallback(callback);
+    this.setState(nextState, callback);
+  };
+
+  _proto.setNextCallback = function setNextCallback(callback) {
+    var _this4 = this;
+
+    var active = true;
+
+    this.nextCallback = function (event) {
+      if (active) {
+        active = false;
+        _this4.nextCallback = null;
+        callback(event);
+      }
+    };
+
+    this.nextCallback.cancel = function () {
+      active = false;
+    };
+
+    return this.nextCallback;
+  };
+
+  _proto.onTransitionEnd = function onTransitionEnd(timeout, handler) {
+    this.setNextCallback(handler);
+    var node = this.props.nodeRef ? this.props.nodeRef.current : _reactDom2.default.findDOMNode(this);
+    var doesNotHaveTimeoutOrListener = timeout == null && !this.props.addEndListener;
+
+    if (!node || doesNotHaveTimeoutOrListener) {
+      setTimeout(this.nextCallback, 0);
+      return;
+    }
+
+    if (this.props.addEndListener) {
+      var _ref3 = this.props.nodeRef ? [this.nextCallback] : [node, this.nextCallback],
+          maybeNode = _ref3[0],
+          maybeNextCallback = _ref3[1];
+
+      this.props.addEndListener(maybeNode, maybeNextCallback);
+    }
+
+    if (timeout != null) {
+      setTimeout(this.nextCallback, timeout);
+    }
+  };
+
+  _proto.render = function render() {
+    var status = this.state.status;
+
+    if (status === UNMOUNTED) {
+      return null;
+    }
+
+    var _this$props = this.props,
+        children = _this$props.children,
+        _in = _this$props.in,
+        _mountOnEnter = _this$props.mountOnEnter,
+        _unmountOnExit = _this$props.unmountOnExit,
+        _appear = _this$props.appear,
+        _enter = _this$props.enter,
+        _exit = _this$props.exit,
+        _timeout = _this$props.timeout,
+        _addEndListener = _this$props.addEndListener,
+        _onEnter = _this$props.onEnter,
+        _onEntering = _this$props.onEntering,
+        _onEntered = _this$props.onEntered,
+        _onExit = _this$props.onExit,
+        _onExiting = _this$props.onExiting,
+        _onExited = _this$props.onExited,
+        _nodeRef = _this$props.nodeRef,
+        childProps = (0, _objectWithoutPropertiesLoose3.default)(_this$props, ["children", "in", "mountOnEnter", "unmountOnExit", "appear", "enter", "exit", "timeout", "addEndListener", "onEnter", "onEntering", "onEntered", "onExit", "onExiting", "onExited", "nodeRef"]);
+
+    return (
+      /*#__PURE__*/
+      // allows for nested Transitions
+      _react2.default.createElement(_TransitionGroupContext2.default.Provider, {
+        value: null
+      }, typeof children === 'function' ? children(status, childProps) : _react2.default.cloneElement(_react2.default.Children.only(children), childProps))
+    );
+  };
+
+  return Transition;
+}(_react2.default.Component);
+
+Transition.contextType = _TransitionGroupContext2.default;
+Transition.propTypes =  true ? {
+  /**
+   * A React reference to DOM element that need to transition:
+   * https://stackoverflow.com/a/51127130/4671932
+   *
+   *   - When `nodeRef` prop is used, `node` is not passed to callback functions
+   *      (e.g. `onEnter`) because user already has direct access to the node.
+   *   - When changing `key` prop of `Transition` in a `TransitionGroup` a new
+   *     `nodeRef` need to be provided to `Transition` with changed `key` prop
+   *     (see
+   *     [test/CSSTransition-test.js](https://github.com/reactjs/react-transition-group/blob/13435f897b3ab71f6e19d724f145596f5910581c/test/CSSTransition-test.js#L362-L437)).
+   */
+  nodeRef: _propTypes2.default.shape({
+    current: typeof Element === 'undefined' ? _propTypes2.default.any : _propTypes2.default.instanceOf(Element)
+  }),
+
+  /**
+   * A `function` child can be used instead of a React element. This function is
+   * called with the current transition status (`'entering'`, `'entered'`,
+   * `'exiting'`, `'exited'`), which can be used to apply context
+   * specific props to a component.
+   *
+   * ```jsx
+   * <Transition in={this.state.in} timeout={150}>
+   *   {state => (
+   *     <MyComponent className={`fade fade-${state}`} />
+   *   )}
+   * </Transition>
+   * ```
+   */
+  children: _propTypes2.default.oneOfType([_propTypes2.default.func.isRequired, _propTypes2.default.element.isRequired]).isRequired,
+
+  /**
+   * Show the component; triggers the enter or exit states
+   */
+  in: _propTypes2.default.bool,
+
+  /**
+   * By default the child component is mounted immediately along with
+   * the parent `Transition` component. If you want to "lazy mount" the component on the
+   * first `in={true}` you can set `mountOnEnter`. After the first enter transition the component will stay
+   * mounted, even on "exited", unless you also specify `unmountOnExit`.
+   */
+  mountOnEnter: _propTypes2.default.bool,
+
+  /**
+   * By default the child component stays mounted after it reaches the `'exited'` state.
+   * Set `unmountOnExit` if you'd prefer to unmount the component after it finishes exiting.
+   */
+  unmountOnExit: _propTypes2.default.bool,
+
+  /**
+   * By default the child component does not perform the enter transition when
+   * it first mounts, regardless of the value of `in`. If you want this
+   * behavior, set both `appear` and `in` to `true`.
+   *
+   * > **Note**: there are no special appear states like `appearing`/`appeared`, this prop
+   * > only adds an additional enter transition. However, in the
+   * > `<CSSTransition>` component that first enter transition does result in
+   * > additional `.appear-*` classes, that way you can choose to style it
+   * > differently.
+   */
+  appear: _propTypes2.default.bool,
+
+  /**
+   * Enable or disable enter transitions.
+   */
+  enter: _propTypes2.default.bool,
+
+  /**
+   * Enable or disable exit transitions.
+   */
+  exit: _propTypes2.default.bool,
+
+  /**
+   * The duration of the transition, in milliseconds.
+   * Required unless `addEndListener` is provided.
+   *
+   * You may specify a single timeout for all transitions:
+   *
+   * ```jsx
+   * timeout={500}
+   * ```
+   *
+   * or individually:
+   *
+   * ```jsx
+   * timeout={{
+   *  appear: 500,
+   *  enter: 300,
+   *  exit: 500,
+   * }}
+   * ```
+   *
+   * - `appear` defaults to the value of `enter`
+   * - `enter` defaults to `0`
+   * - `exit` defaults to `0`
+   *
+   * @type {number | { enter?: number, exit?: number, appear?: number }}
+   */
+  timeout: function timeout(props) {
+    var pt = _PropTypes.timeoutsShape;
+    if (!props.addEndListener) pt = pt.isRequired;
+
+    for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+      args[_key - 1] = arguments[_key];
+    }
+
+    return pt.apply(void 0, [props].concat(args));
+  },
+
+  /**
+   * Add a custom transition end trigger. Called with the transitioning
+   * DOM node and a `done` callback. Allows for more fine grained transition end
+   * logic. Timeouts are still used as a fallback if provided.
+   *
+   * **Note**: when `nodeRef` prop is passed, `node` is not passed.
+   *
+   * ```jsx
+   * addEndListener={(node, done) => {
+   *   // use the css transitionend event to mark the finish of a transition
+   *   node.addEventListener('transitionend', done, false);
+   * }}
+   * ```
+   */
+  addEndListener: _propTypes2.default.func,
+
+  /**
+   * Callback fired before the "entering" status is applied. An extra parameter
+   * `isAppearing` is supplied to indicate if the enter stage is occurring on the initial mount
+   *
+   * **Note**: when `nodeRef` prop is passed, `node` is not passed.
+   *
+   * @type Function(node: HtmlElement, isAppearing: bool) -> void
+   */
+  onEnter: _propTypes2.default.func,
+
+  /**
+   * Callback fired after the "entering" status is applied. An extra parameter
+   * `isAppearing` is supplied to indicate if the enter stage is occurring on the initial mount
+   *
+   * **Note**: when `nodeRef` prop is passed, `node` is not passed.
+   *
+   * @type Function(node: HtmlElement, isAppearing: bool)
+   */
+  onEntering: _propTypes2.default.func,
+
+  /**
+   * Callback fired after the "entered" status is applied. An extra parameter
+   * `isAppearing` is supplied to indicate if the enter stage is occurring on the initial mount
+   *
+   * **Note**: when `nodeRef` prop is passed, `node` is not passed.
+   *
+   * @type Function(node: HtmlElement, isAppearing: bool) -> void
+   */
+  onEntered: _propTypes2.default.func,
+
+  /**
+   * Callback fired before the "exiting" status is applied.
+   *
+   * **Note**: when `nodeRef` prop is passed, `node` is not passed.
+   *
+   * @type Function(node: HtmlElement) -> void
+   */
+  onExit: _propTypes2.default.func,
+
+  /**
+   * Callback fired after the "exiting" status is applied.
+   *
+   * **Note**: when `nodeRef` prop is passed, `node` is not passed.
+   *
+   * @type Function(node: HtmlElement) -> void
+   */
+  onExiting: _propTypes2.default.func,
+
+  /**
+   * Callback fired after the "exited" status is applied.
+   *
+   * **Note**: when `nodeRef` prop is passed, `node` is not passed
+   *
+   * @type Function(node: HtmlElement) -> void
+   */
+  onExited: _propTypes2.default.func
+} : undefined; // Name the function so it is clearer in the documentation
+
+function noop() {}
+
+Transition.defaultProps = {
+  in: false,
+  mountOnEnter: false,
+  unmountOnExit: false,
+  appear: false,
+  enter: true,
+  exit: true,
+  onEnter: noop,
+  onEntering: noop,
+  onEntered: noop,
+  onExit: noop,
+  onExiting: noop,
+  onExited: noop
+};
+Transition.UNMOUNTED = UNMOUNTED;
+Transition.EXITED = EXITED;
+Transition.ENTERING = ENTERING;
+Transition.ENTERED = ENTERED;
+Transition.EXITING = EXITING;
+exports.default = Transition;
+
+/***/ }),
+
+/***/ "./node_modules/react-transition-group/esm/TransitionGroup.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/react-transition-group/esm/TransitionGroup.js ***!
+  \********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _objectWithoutPropertiesLoose2 = __webpack_require__(/*! @babel/runtime/helpers/esm/objectWithoutPropertiesLoose */ "./node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js");
+
+var _objectWithoutPropertiesLoose3 = _interopRequireDefault(_objectWithoutPropertiesLoose2);
+
+var _extends2 = __webpack_require__(/*! @babel/runtime/helpers/esm/extends */ "./node_modules/@babel/runtime/helpers/esm/extends.js");
+
+var _extends3 = _interopRequireDefault(_extends2);
+
+var _assertThisInitialized2 = __webpack_require__(/*! @babel/runtime/helpers/esm/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js");
+
+var _assertThisInitialized3 = _interopRequireDefault(_assertThisInitialized2);
+
+var _inheritsLoose2 = __webpack_require__(/*! @babel/runtime/helpers/esm/inheritsLoose */ "./node_modules/@babel/runtime/helpers/esm/inheritsLoose.js");
+
+var _inheritsLoose3 = _interopRequireDefault(_inheritsLoose2);
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _TransitionGroupContext = __webpack_require__(/*! ./TransitionGroupContext */ "./node_modules/react-transition-group/esm/TransitionGroupContext.js");
+
+var _TransitionGroupContext2 = _interopRequireDefault(_TransitionGroupContext);
+
+var _ChildMapping = __webpack_require__(/*! ./utils/ChildMapping */ "./node_modules/react-transition-group/esm/utils/ChildMapping.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var values = Object.values || function (obj) {
+  return Object.keys(obj).map(function (k) {
+    return obj[k];
+  });
+};
+
+var defaultProps = {
+  component: 'div',
+  childFactory: function childFactory(child) {
+    return child;
+  }
+};
+/**
+ * The `<TransitionGroup>` component manages a set of transition components
+ * (`<Transition>` and `<CSSTransition>`) in a list. Like with the transition
+ * components, `<TransitionGroup>` is a state machine for managing the mounting
+ * and unmounting of components over time.
+ *
+ * Consider the example below. As items are removed or added to the TodoList the
+ * `in` prop is toggled automatically by the `<TransitionGroup>`.
+ *
+ * Note that `<TransitionGroup>`  does not define any animation behavior!
+ * Exactly _how_ a list item animates is up to the individual transition
+ * component. This means you can mix and match animations across different list
+ * items.
+ */
+
+var TransitionGroup = /*#__PURE__*/function (_React$Component) {
+  (0, _inheritsLoose3.default)(TransitionGroup, _React$Component);
+
+  function TransitionGroup(props, context) {
+    var _this;
+
+    _this = _React$Component.call(this, props, context) || this;
+
+    var handleExited = _this.handleExited.bind((0, _assertThisInitialized3.default)(_this)); // Initial children should all be entering, dependent on appear
+
+
+    _this.state = {
+      contextValue: {
+        isMounting: true
+      },
+      handleExited: handleExited,
+      firstRender: true
+    };
+    return _this;
+  }
+
+  var _proto = TransitionGroup.prototype;
+
+  _proto.componentDidMount = function componentDidMount() {
+    this.mounted = true;
+    this.setState({
+      contextValue: {
+        isMounting: false
+      }
+    });
+  };
+
+  _proto.componentWillUnmount = function componentWillUnmount() {
+    this.mounted = false;
+  };
+
+  TransitionGroup.getDerivedStateFromProps = function getDerivedStateFromProps(nextProps, _ref) {
+    var prevChildMapping = _ref.children,
+        handleExited = _ref.handleExited,
+        firstRender = _ref.firstRender;
+    return {
+      children: firstRender ? (0, _ChildMapping.getInitialChildMapping)(nextProps, handleExited) : (0, _ChildMapping.getNextChildMapping)(nextProps, prevChildMapping, handleExited),
+      firstRender: false
+    };
+  } // node is `undefined` when user provided `nodeRef` prop
+  ;
+
+  _proto.handleExited = function handleExited(child, node) {
+    var currentChildMapping = (0, _ChildMapping.getChildMapping)(this.props.children);
+    if (child.key in currentChildMapping) return;
+
+    if (child.props.onExited) {
+      child.props.onExited(node);
+    }
+
+    if (this.mounted) {
+      this.setState(function (state) {
+        var children = (0, _extends3.default)({}, state.children);
+
+        delete children[child.key];
+        return {
+          children: children
+        };
+      });
+    }
+  };
+
+  _proto.render = function render() {
+    var _this$props = this.props,
+        Component = _this$props.component,
+        childFactory = _this$props.childFactory,
+        props = (0, _objectWithoutPropertiesLoose3.default)(_this$props, ["component", "childFactory"]);
+
+    var contextValue = this.state.contextValue;
+    var children = values(this.state.children).map(childFactory);
+    delete props.appear;
+    delete props.enter;
+    delete props.exit;
+
+    if (Component === null) {
+      return (/*#__PURE__*/_react2.default.createElement(_TransitionGroupContext2.default.Provider, {
+          value: contextValue
+        }, children)
+      );
+    }
+
+    return (/*#__PURE__*/_react2.default.createElement(_TransitionGroupContext2.default.Provider, {
+        value: contextValue
+      }, /*#__PURE__*/_react2.default.createElement(Component, props, children))
+    );
+  };
+
+  return TransitionGroup;
+}(_react2.default.Component);
+
+TransitionGroup.propTypes =  true ? {
+  /**
+   * `<TransitionGroup>` renders a `<div>` by default. You can change this
+   * behavior by providing a `component` prop.
+   * If you use React v16+ and would like to avoid a wrapping `<div>` element
+   * you can pass in `component={null}`. This is useful if the wrapping div
+   * borks your css styles.
+   */
+  component: _propTypes2.default.any,
+
+  /**
+   * A set of `<Transition>` components, that are toggled `in` and out as they
+   * leave. the `<TransitionGroup>` will inject specific transition props, so
+   * remember to spread them through if you are wrapping the `<Transition>` as
+   * with our `<Fade>` example.
+   *
+   * While this component is meant for multiple `Transition` or `CSSTransition`
+   * children, sometimes you may want to have a single transition child with
+   * content that you want to be transitioned out and in when you change it
+   * (e.g. routes, images etc.) In that case you can change the `key` prop of
+   * the transition child as you change its content, this will cause
+   * `TransitionGroup` to transition the child out and back in.
+   */
+  children: _propTypes2.default.node,
+
+  /**
+   * A convenience prop that enables or disables appear animations
+   * for all children. Note that specifying this will override any defaults set
+   * on individual children Transitions.
+   */
+  appear: _propTypes2.default.bool,
+
+  /**
+   * A convenience prop that enables or disables enter animations
+   * for all children. Note that specifying this will override any defaults set
+   * on individual children Transitions.
+   */
+  enter: _propTypes2.default.bool,
+
+  /**
+   * A convenience prop that enables or disables exit animations
+   * for all children. Note that specifying this will override any defaults set
+   * on individual children Transitions.
+   */
+  exit: _propTypes2.default.bool,
+
+  /**
+   * You may need to apply reactive updates to a child as it is exiting.
+   * This is generally done by using `cloneElement` however in the case of an exiting
+   * child the element has already been removed and not accessible to the consumer.
+   *
+   * If you do need to update a child as it leaves you can provide a `childFactory`
+   * to wrap every child, even the ones that are leaving.
+   *
+   * @type Function(child: ReactElement) -> ReactElement
+   */
+  childFactory: _propTypes2.default.func
+} : undefined;
+TransitionGroup.defaultProps = defaultProps;
+exports.default = TransitionGroup;
+
+/***/ }),
+
+/***/ "./node_modules/react-transition-group/esm/TransitionGroupContext.js":
+/*!***************************************************************************!*\
+  !*** ./node_modules/react-transition-group/esm/TransitionGroupContext.js ***!
+  \***************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = _react2.default.createContext(null);
+
+/***/ }),
+
+/***/ "./node_modules/react-transition-group/esm/config.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/react-transition-group/esm/config.js ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {
+  disabled: false
+};
+
+/***/ }),
+
+/***/ "./node_modules/react-transition-group/esm/index.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/react-transition-group/esm/index.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _CSSTransition = __webpack_require__(/*! ./CSSTransition */ "./node_modules/react-transition-group/esm/CSSTransition.js");
+
+Object.defineProperty(exports, 'CSSTransition', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_CSSTransition).default;
+  }
+});
+
+var _ReplaceTransition = __webpack_require__(/*! ./ReplaceTransition */ "./node_modules/react-transition-group/esm/ReplaceTransition.js");
+
+Object.defineProperty(exports, 'ReplaceTransition', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_ReplaceTransition).default;
+  }
+});
+
+var _SwitchTransition = __webpack_require__(/*! ./SwitchTransition */ "./node_modules/react-transition-group/esm/SwitchTransition.js");
+
+Object.defineProperty(exports, 'SwitchTransition', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_SwitchTransition).default;
+  }
+});
+
+var _TransitionGroup = __webpack_require__(/*! ./TransitionGroup */ "./node_modules/react-transition-group/esm/TransitionGroup.js");
+
+Object.defineProperty(exports, 'TransitionGroup', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_TransitionGroup).default;
+  }
+});
+
+var _Transition = __webpack_require__(/*! ./Transition */ "./node_modules/react-transition-group/esm/Transition.js");
+
+Object.defineProperty(exports, 'Transition', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_Transition).default;
+  }
+});
+
+var _config = __webpack_require__(/*! ./config */ "./node_modules/react-transition-group/esm/config.js");
+
+Object.defineProperty(exports, 'config', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_config).default;
+  }
+});
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/***/ }),
+
+/***/ "./node_modules/react-transition-group/esm/utils/ChildMapping.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/react-transition-group/esm/utils/ChildMapping.js ***!
+  \***********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.getChildMapping = getChildMapping;
+exports.mergeChildMappings = mergeChildMappings;
+exports.getInitialChildMapping = getInitialChildMapping;
+exports.getNextChildMapping = getNextChildMapping;
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+/**
+ * Given `this.props.children`, return an object mapping key to child.
+ *
+ * @param {*} children `this.props.children`
+ * @return {object} Mapping of key to child
+ */
+
+function getChildMapping(children, mapFn) {
+  var mapper = function mapper(child) {
+    return mapFn && (0, _react.isValidElement)(child) ? mapFn(child) : child;
+  };
+
+  var result = Object.create(null);
+  if (children) _react.Children.map(children, function (c) {
+    return c;
+  }).forEach(function (child) {
+    // run the map function here instead so that the key is the computed one
+    result[child.key] = mapper(child);
+  });
+  return result;
+}
+/**
+ * When you're adding or removing children some may be added or removed in the
+ * same render pass. We want to show *both* since we want to simultaneously
+ * animate elements in and out. This function takes a previous set of keys
+ * and a new set of keys and merges them with its best guess of the correct
+ * ordering. In the future we may expose some of the utilities in
+ * ReactMultiChild to make this easy, but for now React itself does not
+ * directly have this concept of the union of prevChildren and nextChildren
+ * so we implement it here.
+ *
+ * @param {object} prev prev children as returned from
+ * `ReactTransitionChildMapping.getChildMapping()`.
+ * @param {object} next next children as returned from
+ * `ReactTransitionChildMapping.getChildMapping()`.
+ * @return {object} a key set that contains all keys in `prev` and all keys
+ * in `next` in a reasonable order.
+ */
+
+function mergeChildMappings(prev, next) {
+  prev = prev || {};
+  next = next || {};
+
+  function getValueForKey(key) {
+    return key in next ? next[key] : prev[key];
+  } // For each key of `next`, the list of keys to insert before that key in
+  // the combined list
+
+
+  var nextKeysPending = Object.create(null);
+  var pendingKeys = [];
+
+  for (var prevKey in prev) {
+    if (prevKey in next) {
+      if (pendingKeys.length) {
+        nextKeysPending[prevKey] = pendingKeys;
+        pendingKeys = [];
+      }
+    } else {
+      pendingKeys.push(prevKey);
+    }
+  }
+
+  var i;
+  var childMapping = {};
+
+  for (var nextKey in next) {
+    if (nextKeysPending[nextKey]) {
+      for (i = 0; i < nextKeysPending[nextKey].length; i++) {
+        var pendingNextKey = nextKeysPending[nextKey][i];
+        childMapping[nextKeysPending[nextKey][i]] = getValueForKey(pendingNextKey);
+      }
+    }
+
+    childMapping[nextKey] = getValueForKey(nextKey);
+  } // Finally, add the keys which didn't appear before any key in `next`
+
+
+  for (i = 0; i < pendingKeys.length; i++) {
+    childMapping[pendingKeys[i]] = getValueForKey(pendingKeys[i]);
+  }
+
+  return childMapping;
+}
+
+function getProp(child, prop, props) {
+  return props[prop] != null ? props[prop] : child.props[prop];
+}
+
+function getInitialChildMapping(props, onExited) {
+  return getChildMapping(props.children, function (child) {
+    return (0, _react.cloneElement)(child, {
+      onExited: onExited.bind(null, child),
+      in: true,
+      appear: getProp(child, 'appear', props),
+      enter: getProp(child, 'enter', props),
+      exit: getProp(child, 'exit', props)
+    });
+  });
+}
+function getNextChildMapping(nextProps, prevChildMapping, onExited) {
+  var nextChildMapping = getChildMapping(nextProps.children);
+  var children = mergeChildMappings(prevChildMapping, nextChildMapping);
+  Object.keys(children).forEach(function (key) {
+    var child = children[key];
+    if (!(0, _react.isValidElement)(child)) return;
+    var hasPrev = key in prevChildMapping;
+    var hasNext = key in nextChildMapping;
+    var prevChild = prevChildMapping[key];
+    var isLeaving = (0, _react.isValidElement)(prevChild) && !prevChild.props.in; // item is new (entering)
+
+    if (hasNext && (!hasPrev || isLeaving)) {
+      // console.log('entering', key)
+      children[key] = (0, _react.cloneElement)(child, {
+        onExited: onExited.bind(null, child),
+        in: true,
+        exit: getProp(child, 'exit', nextProps),
+        enter: getProp(child, 'enter', nextProps)
+      });
+    } else if (!hasNext && hasPrev && !isLeaving) {
+      // item is old (exiting)
+      // console.log('leaving', key)
+      children[key] = (0, _react.cloneElement)(child, {
+        in: false
+      });
+    } else if (hasNext && hasPrev && (0, _react.isValidElement)(prevChild)) {
+      // item hasn't changed transition states
+      // copy over the last transition props;
+      // console.log('unchanged', key)
+      children[key] = (0, _react.cloneElement)(child, {
+        onExited: onExited.bind(null, child),
+        in: prevChild.props.in,
+        exit: getProp(child, 'exit', nextProps),
+        enter: getProp(child, 'enter', nextProps)
+      });
+    }
+  });
+  return children;
+}
+
+/***/ }),
+
+/***/ "./node_modules/react-transition-group/esm/utils/PropTypes.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/react-transition-group/esm/utils/PropTypes.js ***!
+  \********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.classNamesShape = exports.timeoutsShape = undefined;
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var timeoutsShape = exports.timeoutsShape =  true ? _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.shape({
+  enter: _propTypes2.default.number,
+  exit: _propTypes2.default.number,
+  appear: _propTypes2.default.number
+}).isRequired]) : undefined;
+var classNamesShape = exports.classNamesShape =  true ? _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.shape({
+  enter: _propTypes2.default.string,
+  exit: _propTypes2.default.string,
+  active: _propTypes2.default.string
+}), _propTypes2.default.shape({
+  enter: _propTypes2.default.string,
+  enterDone: _propTypes2.default.string,
+  enterActive: _propTypes2.default.string,
+  exit: _propTypes2.default.string,
+  exitDone: _propTypes2.default.string,
+  exitActive: _propTypes2.default.string
+})]) : undefined;
+
+/***/ }),
+
 /***/ "./node_modules/react/cjs/react.development.js":
 /*!*****************************************************!*\
   !*** ./node_modules/react/cjs/react.development.js ***!
@@ -31156,24 +34699,27 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 var react_router_1 = __webpack_require__(/*! react-router */ "./node_modules/react-router/esm/react-router.js");
-var IsAuthenticated = function IsAuthenticated(Elem) {
-    var mapStateToProps = function mapStateToProps(state) {
-        return {
-            initialized: state.app.initialized,
-            userData: state.user
+var IsAuthenticated = function IsAuthenticated(isAuth) {
+    if (isAuth === void 0) {
+        isAuth = true;
+    }
+    return function (Elem) {
+        var mapStateToProps = function mapStateToProps(state) {
+            return {
+                initialized: state.app.initialized,
+                userData: state.user
+            };
         };
+        var connected = react_redux_1.connect(mapStateToProps, null);
+        var AuthenticatedElement = function AuthenticatedElement(props) {
+            if (!props.initialized) return React.createElement("div", null, "Loading...");
+            if (!props.userData.user && isAuth) return React.createElement(react_router_1.Redirect, { to: '/login' });else if (props.userData.user && !isAuth) return React.createElement(react_router_1.Redirect, { to: '/profile' });
+            return React.createElement(Elem, __assign({}, props));
+        };
+        return connected(AuthenticatedElement);
     };
-    var connected = react_redux_1.connect(mapStateToProps, null);
-    var AuthenticatedElement = function AuthenticatedElement(props) {
-        if (!props.initialized) return React.createElement("div", null, "Loading...");
-        if (!props.userData.user) return React.createElement(react_router_1.Redirect, { to: '/login' });
-        return React.createElement(Elem, __assign({}, props));
-    };
-    return connected(AuthenticatedElement);
 };
 exports.default = IsAuthenticated;
-
-//# sourceMappingURL=IsAuthenticated.js.map
 
 /***/ }),
 
@@ -31187,556 +34733,130 @@ exports.default = IsAuthenticated;
 "use strict";
 
 
-var __assign = undefined && undefined.__assign || function () {
-    __assign = Object.assign || function (t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) {
-                if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-            }
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
-var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
-    function adopt(value) {
-        return value instanceof P ? value : new P(function (resolve) {
-            resolve(value);
-        });
-    }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) {
-            try {
-                step(generator.next(value));
-            } catch (e) {
-                reject(e);
-            }
-        }
-        function rejected(value) {
-            try {
-                step(generator["throw"](value));
-            } catch (e) {
-                reject(e);
-            }
-        }
-        function step(result) {
-            result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
-        }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = undefined && undefined.__generator || function (thisArg, body) {
-    var _ = { label: 0, sent: function sent() {
-            if (t[0] & 1) throw t[1];return t[1];
-        }, trys: [], ops: [] },
-        f,
-        y,
-        t,
-        g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
-        return this;
-    }), g;
-    function verb(n) {
-        return function (v) {
-            return step([n, v]);
-        };
-    }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) {
-            try {
-                if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-                if (y = 0, t) op = [op[0] & 2, t.value];
-                switch (op[0]) {
-                    case 0:case 1:
-                        t = op;break;
-                    case 4:
-                        _.label++;return { value: op[1], done: false };
-                    case 5:
-                        _.label++;y = op[1];op = [0];continue;
-                    case 7:
-                        op = _.ops.pop();_.trys.pop();continue;
-                    default:
-                        if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
-                            _ = 0;continue;
-                        }
-                        if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
-                            _.label = op[1];break;
-                        }
-                        if (op[0] === 6 && _.label < t[1]) {
-                            _.label = t[1];t = op;break;
-                        }
-                        if (t && _.label < t[2]) {
-                            _.label = t[2];_.ops.push(op);break;
-                        }
-                        if (t[2]) _.ops.pop();
-                        _.trys.pop();continue;
-                }
-                op = body.call(thisArg, _);
-            } catch (e) {
-                op = [6, e];y = 0;
-            } finally {
-                f = t = 0;
-            }
-        }if (op[0] & 5) throw op[1];return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 var axios_1 = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-var API = function () {
-    function API() {}
-    API.getProducts = function (filters, offset) {
-        return __awaiter(this, void 0, void 0, function () {
-            var body, response, err_1;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        body = {
-                            page: offset
-                        };
-                        _a.label = 1;
-                    case 1:
-                        _a.trys.push([1, 3,, 4]);
-                        return [4, this.clientAPI.post('/getProducts', filters, {
-                            params: body
-                        })];
-                    case 2:
-                        response = _a.sent();
-                        return [3, 4];
-                    case 3:
-                        err_1 = _a.sent();
-                        return [2, err_1];
-                    case 4:
-                        return [2, response.data];
-                }
-            });
-        });
-    };
-    API.getProductInfo = function (slug) {
-        return __awaiter(this, void 0, void 0, function () {
-            var response, err_2;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 2,, 3]);
-                        return [4, this.clientAPI.get("/products/" + slug, {
-                            headers: {
-                                Authorization: "Bearer " + localStorage.getItem('token')
-                            }
-                        })];
-                    case 1:
-                        response = _a.sent();
-                        return [3, 3];
-                    case 2:
-                        err_2 = _a.sent();
-                        return [2, err_2];
-                    case 3:
-                        return [2, response.data];
-                }
-            });
-        });
-    };
-    API.getComments = function (productID, offset, sortType) {
+var apiClient = axios_1.default.create({
+    baseURL: 'http://localhost:8000/api',
+    headers: {
+        'Content-Type': 'application/json'
+    }
+});
+exports.dataApi = {
+    getProducts: function getProducts(filters, offset) {
         if (offset === void 0) {
             offset = 1;
         }
-        return __awaiter(this, void 0, void 0, function () {
-            var response, err_3;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 2,, 3]);
-                        return [4, this.clientAPI.get("/products/" + productID + "/getComments", {
-                            params: {
-                                page: offset,
-                                sortType: sortType
-                            }, headers: {
-                                'Authorization': "Bearer " + localStorage.getItem('token')
-                            }
-                        })];
-                    case 1:
-                        response = _a.sent();
-                        return [3, 3];
-                    case 2:
-                        err_3 = _a.sent();
-                        return [2, err_3];
-                    case 3:
-                        return [2, response.data];
-                }
-            });
+        return apiClient.post('/getProducts', filters, {
+            params: { page: offset }
         });
-    };
-    API.changeLike = function (productID) {
-        return __awaiter(this, void 0, void 0, function () {
-            var response, err_4;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 2,, 3]);
-                        return [4, this.clientAPI.post("/products/" + productID + "/changeLike", {}, {
-                            headers: {
-                                Authorization: "Bearer " + localStorage.getItem('token')
-                            }
-                        })];
-                    case 1:
-                        response = _a.sent();
-                        return [3, 3];
-                    case 2:
-                        err_4 = _a.sent();
-                        return [2, err_4];
-                    case 3:
-                        return [2, response.data];
-                }
-            });
+    },
+    getProductInfo: function getProductInfo(slug) {
+        return apiClient.get("/products/" + slug, {
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem('token')
+            }
         });
-    };
-    API.registerUser = function (vals) {
-        return __awaiter(this, void 0, void 0, function () {
-            var response, err_5;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 2,, 3]);
-                        return [4, this.clientAPI.post('/register', vals)];
-                    case 1:
-                        response = _a.sent();
-                        return [3, 3];
-                    case 2:
-                        err_5 = _a.sent();
-                        console.log(err_5.response.data);
-                        return [2, err_5];
-                    case 3:
-                        return [2, response.data];
-                }
-            });
+    },
+    getComments: function getComments(productID, offset, sortType) {
+        if (offset === void 0) {
+            offset = 1;
+        }
+        return apiClient.get("/products/" + productID + "/getComments", {
+            params: {
+                page: offset,
+                sortType: sortType
+            }, headers: {
+                'Authorization': "Bearer " + localStorage.getItem('token')
+            }
         });
-    };
-    API.verifyUser = function (id) {
-        return __awaiter(this, void 0, void 0, function () {
-            var response, err_6;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 2,, 3]);
-                        return [4, this.clientAPI.get("/verify/" + id)];
-                    case 1:
-                        response = _a.sent();
-                        return [3, 3];
-                    case 2:
-                        err_6 = _a.sent();
-                        console.log(err_6.response.data);
-                        return [2, err_6];
-                    case 3:
-                        return [2, response.data];
-                }
-            });
+    },
+    changeLike: function changeLike(productID) {
+        return apiClient.post("/products/" + productID + "/changeLike", {}, {
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem('token')
+            }
         });
-    };
-    API.loginUser = function (vals) {
-        return __awaiter(this, void 0, void 0, function () {
-            var response, err_7;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 2,, 3]);
-                        return [4, this.clientAPI.post('/login', vals)];
-                    case 1:
-                        response = _a.sent();
-                        return [3, 3];
-                    case 2:
-                        err_7 = _a.sent();
-                        console.log(err_7.response.data);
-                        return [2, err_7];
-                    case 3:
-                        return [2, response.data];
-                }
-            });
+    },
+    changeReaction: function changeReaction(commentID, reaction) {
+        return apiClient.post("/comments/" + commentID + "/addReaction", { reaction: reaction }, {
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem('token')
+            }
         });
-    };
-    API.logoutUser = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var response, err_8;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 2,, 3]);
-                        return [4, this.clientAPI.post('/logout', {}, {
-                            headers: {
-                                'Authorization': "Bearer " + localStorage.getItem('token')
-                            }
-                        })];
-                    case 1:
-                        response = _a.sent();
-                        return [3, 3];
-                    case 2:
-                        err_8 = _a.sent();
-                        console.log(err_8.response.data);
-                        return [2, err_8];
-                    case 3:
-                        return [2, response.data];
-                }
-            });
+    },
+    addComment: function addComment(productID, vals) {
+        return apiClient.post("/products/" + productID + "/addComment", vals, {
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem('token')
+            }
         });
-    };
-    API.resetUser = function (vals) {
-        return __awaiter(this, void 0, void 0, function () {
-            var response, err_9;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 2,, 3]);
-                        return [4, this.clientAPI.post('/reset', vals)];
-                    case 1:
-                        response = _a.sent();
-                        return [3, 3];
-                    case 2:
-                        err_9 = _a.sent();
-                        console.log(err_9.response.data);
-                        return [2, err_9];
-                    case 3:
-                        return [2, response.data];
-                }
-            });
-        });
-    };
-    API.changeReaction = function (commentID, reaction) {
-        return __awaiter(this, void 0, void 0, function () {
-            var response, err_10;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 2,, 3]);
-                        return [4, this.clientAPI.post("/comments/" + commentID + "/addReaction", {
-                            reaction: reaction
-                        }, {
-                            headers: {
-                                Authorization: "Bearer " + localStorage.getItem('token')
-                            }
-                        })];
-                    case 1:
-                        response = _a.sent();
-                        return [3, 3];
-                    case 2:
-                        err_10 = _a.sent();
-                        console.log(err_10.response.data);
-                        return [2, err_10];
-                    case 3:
-                        return [2, response.data];
-                }
-            });
-        });
-    };
-    API.addComment = function (productID, vals) {
-        return __awaiter(this, void 0, void 0, function () {
-            var response, err_11;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 2,, 3]);
-                        return [4, this.clientAPI.post("/products/" + productID + "/addComment", vals, {
-                            headers: {
-                                Authorization: "Bearer " + localStorage.getItem('token')
-                            }
-                        })];
-                    case 1:
-                        response = _a.sent();
-                        return [3, 3];
-                    case 2:
-                        err_11 = _a.sent();
-                        console.log(err_11.response.data);
-                        return [2, err_11];
-                    case 3:
-                        return [2, response.data];
-                }
-            });
-        });
-    };
-    API.getCategories = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var response, err_12;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 2,, 3]);
-                        return [4, this.clientAPI.get('/categories')];
-                    case 1:
-                        response = _a.sent();
-                        return [3, 3];
-                    case 2:
-                        err_12 = _a.sent();
-                        console.log(err_12.response.data);
-                        return [2, err_12];
-                    case 3:
-                        return [2, response.data];
-                }
-            });
-        });
-    };
-    API.getFilters = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var response, err_13;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 2,, 3]);
-                        return [4, this.clientAPI.get('/productFilters')];
-                    case 1:
-                        response = _a.sent();
-                        return [3, 3];
-                    case 2:
-                        err_13 = _a.sent();
-                        console.log(err_13.response.data);
-                        return [2, err_13];
-                    case 3:
-                        return [2, response.data];
-                }
-            });
-        });
-    };
-    API.changePassword = function (id, vals) {
-        return __awaiter(this, void 0, void 0, function () {
-            var response, err_14;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 2,, 3]);
-                        return [4, this.clientAPI.post('/changePassword', __assign({}, vals), {
-                            params: {
-                                id: id
-                            }
-                        })];
-                    case 1:
-                        response = _a.sent();
-                        return [3, 3];
-                    case 2:
-                        err_14 = _a.sent();
-                        console.log(err_14.response.data);
-                        return [2, err_14];
-                    case 3:
-                        return [2, response.data];
-                }
-            });
-        });
-    };
-    API.search = function (text, page) {
+    },
+    getCategories: function getCategories() {
+        return apiClient.get('/categories');
+    },
+    getFilters: function getFilters() {
+        return apiClient.get('/productFilters');
+    },
+    search: function search(text, page) {
         if (page === void 0) {
             page = 1;
         }
-        return __awaiter(this, void 0, void 0, function () {
-            var response, err_15;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 2,, 3]);
-                        return [4, this.clientAPI.get('/search', {
-                            params: {
-                                search: text,
-                                page: page
-                            }
-                        })];
-                    case 1:
-                        response = _a.sent();
-                        return [3, 3];
-                    case 2:
-                        err_15 = _a.sent();
-                        console.log(err_15.response.data);
-                        return [2, err_15];
-                    case 3:
-                        return [2, response.data];
-                }
-            });
+        return apiClient.get('/search', {
+            params: { search: text, page: page }
         });
-    };
-    API.getUser = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var response, err_16;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 2,, 3]);
-                        return [4, this.clientAPI.get('/me', {
-                            headers: {
-                                Authorization: "Bearer " + localStorage.getItem('token')
-                            }
-                        })];
-                    case 1:
-                        response = _a.sent();
-                        return [3, 3];
-                    case 2:
-                        err_16 = _a.sent();
-                        console.log(err_16.response.data);
-                        return [2, err_16];
-                    case 3:
-                        return [2, response.data];
-                }
-            });
+    },
+    getProductsByIds: function getProductsByIds(ids) {
+        return apiClient.get('/getProductsByIds', {
+            params: { ids: JSON.stringify(ids) }
         });
-    };
-    API.getProductsByIds = function (ids) {
-        return __awaiter(this, void 0, void 0, function () {
-            var response, err_17;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 2,, 3]);
-                        return [4, this.clientAPI.get('/getProductsByIds', {
-                            params: {
-                                ids: JSON.stringify(ids)
-                            }
-                        })];
-                    case 1:
-                        response = _a.sent();
-                        return [3, 3];
-                    case 2:
-                        err_17 = _a.sent();
-                        console.log(err_17.response.data);
-                        return [2, err_17];
-                    case 3:
-                        return [2, response.data];
-                }
-            });
+    },
+    createOrder: function createOrder(data) {
+        return apiClient.post('/orders', data, {
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem('token')
+            }
         });
-    };
-    API.createOrder = function (data) {
-        return __awaiter(this, void 0, void 0, function () {
-            var response, err_18;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 2,, 3]);
-                        return [4, this.clientAPI.post('/orders', data, {
-                            headers: {
-                                Authorization: "Bearer " + localStorage.getItem('token')
-                            }
-                        })];
-                    case 1:
-                        response = _a.sent();
-                        return [3, 3];
-                    case 2:
-                        err_18 = _a.sent();
-                        console.log(err_18.response.data);
-                        return [2, err_18];
-                    case 3:
-                        return [2, response.data];
-                }
-            });
+    }
+};
+exports.userApi = {
+    registerUser: function registerUser(vals) {
+        return apiClient.post('/register', vals);
+    },
+    verifyUser: function verifyUser(id) {
+        return apiClient.get("/verify/" + id);
+    },
+    resendEmail: function resendEmail(vals) {
+        return apiClient.post('/resend', vals);
+    },
+    loginUser: function loginUser(vals) {
+        return apiClient.post('/login', vals);
+    },
+    logoutUser: function logoutUser() {
+        return apiClient.post('/logout', {}, {
+            headers: {
+                'Authorization': "Bearer " + localStorage.getItem('token')
+            }
         });
-    };
-    API.isError = function (arg) {
-        return 'response' in arg;
-    };
-    API.clientAPI = axios_1.default.create({
-        baseURL: 'http://localhost:8000/api',
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    });
-    return API;
-}();
-exports.default = API;
-
-//# sourceMappingURL=API.js.map
+    },
+    resetUser: function resetUser(vals) {
+        return apiClient.post('/reset', vals);
+    },
+    changePassword: function changePassword(id, vals) {
+        return apiClient.post('/changePassword', vals, {
+            params: { id: id }
+        });
+    },
+    getUser: function getUser() {
+        return apiClient.get('/me', {
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem('token')
+            }
+        });
+    }
+};
+exports.isError = function (resp) {
+    return 'message' in resp;
+};
 
 /***/ }),
 
@@ -31763,8 +34883,6 @@ var __assign = undefined && undefined.__assign || function () {
     return __assign.apply(this, arguments);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var types_1 = __webpack_require__(/*! ../../redux/AppState/cart/types */ "./resources/app/es5/redux/AppState/cart/types.js");
-var actions = [types_1.CART_ADD, types_1.CART_REMOVE, types_1.CART_RESET];
 var cartToStorage = function cartToStorage(products) {
     return products.map(function (prod) {
         return __assign(__assign({}, prod), { product: prod.product.id });
@@ -31773,8 +34891,9 @@ var cartToStorage = function cartToStorage(products) {
 var saveCartMiddleware = function saveCartMiddleware(store) {
     return function (next) {
         return function (action) {
-            var nextCall = next(action);
-            if (~actions.indexOf(action.type)) {
+            var cartBefore = store.getState().cart.cartItems,
+                nextCall = next(action);
+            if (cartBefore != store.getState().cart.cartItems) {
                 var cartItems = store.getState().cart.cartItems;
                 localStorage.setItem('cartItems', JSON.stringify(cartToStorage(cartItems)));
             }
@@ -31784,7 +34903,62 @@ var saveCartMiddleware = function saveCartMiddleware(store) {
 };
 exports.default = saveCartMiddleware;
 
-//# sourceMappingURL=SaveCartMiddleware.js.map
+/***/ }),
+
+/***/ "./resources/app/es5/Helpers/Validators/email.js":
+/*!*******************************************************!*\
+  !*** ./resources/app/es5/Helpers/Validators/email.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = function (value) {
+    if (value == undefined) return undefined;
+    return (/.+@.+\..{3,5}/.test(value) ? undefined : 'Value must be email'
+    );
+};
+
+/***/ }),
+
+/***/ "./resources/app/es5/Helpers/Validators/required.js":
+/*!**********************************************************!*\
+  !*** ./resources/app/es5/Helpers/Validators/required.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = function (value) {
+    if (value == undefined) return undefined;
+    return value.length ? undefined : 'Required';
+};
+
+/***/ }),
+
+/***/ "./resources/app/es5/Helpers/Validators/sizeBetween.js":
+/*!*************************************************************!*\
+  !*** ./resources/app/es5/Helpers/Validators/sizeBetween.js ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = function (min, max) {
+    return function (value) {
+        if (value == undefined) return undefined;
+        return value.length >= min && value.length <= max ? undefined : "Value must be between " + min + " - " + max + " chars";
+    };
+};
 
 /***/ }),
 
@@ -31823,8 +34997,6 @@ var App = function App(props) {
 };
 exports.default = connected(App);
 
-//# sourceMappingURL=App.js.map
-
 /***/ }),
 
 /***/ "./resources/app/es5/components/Breadcrumbs.js":
@@ -31847,8 +35019,6 @@ var Breadcrumbs = function Breadcrumbs(props) {
 };
 exports.default = Breadcrumbs;
 
-//# sourceMappingURL=Breadcrumbs.js.map
-
 /***/ }),
 
 /***/ "./resources/app/es5/components/CartPage/Content/CartItem.js":
@@ -31867,8 +35037,6 @@ var CartItem = function CartItem(props) {
     return React.createElement("div", { className: "table__row" }, React.createElement("div", { className: "table__col orders__product" }, React.createElement("img", { className: "orders__img", src: "/image/" + props.product.photo, alt: "Product picture" }), React.createElement("div", null, React.createElement("div", { className: "orders__name" }, props.product.name), React.createElement("div", { className: "orders__color" }, React.createElement("div", { className: "goods__color-item", style: { background: props.color } }), React.createElement("div", { className: "orders__size" }, props.size)))), React.createElement("div", { className: "table__col orders__price" }, props.product.price), React.createElement("div", { className: "table__col orders__quantity" }, React.createElement("div", { className: "order__quantity" }, React.createElement("span", null, props.count))), React.createElement("div", { className: "table__col orders__total" }, props.count * props.product.price), React.createElement("div", { className: "table__col orders__remove" }, React.createElement("i", { className: "fas fa-times cur", onClick: props.removeItem })));
 };
 exports.default = CartItem;
-
-//# sourceMappingURL=CartItem.js.map
 
 /***/ }),
 
@@ -31925,8 +35093,6 @@ var CartTable = function CartTable(props) {
 };
 exports.default = connected(CartTable);
 
-//# sourceMappingURL=CartTable.js.map
-
 /***/ }),
 
 /***/ "./resources/app/es5/components/CartPage/Content/Checkout.js":
@@ -31955,8 +35121,6 @@ var Checkout = function Checkout(props) {
 };
 exports.default = connected(Checkout);
 
-//# sourceMappingURL=Checkout.js.map
-
 /***/ }),
 
 /***/ "./resources/app/es5/components/CartPage/Content/index.js":
@@ -31978,8 +35142,6 @@ var Content = function Content() {
 };
 exports.default = Content;
 
-//# sourceMappingURL=index.js.map
-
 /***/ }),
 
 /***/ "./resources/app/es5/components/CartPage/Empty.js":
@@ -31999,8 +35161,6 @@ var EmptyCart = function EmptyCart() {
     return React.createElement("div", { className: "empty my-pad" }, React.createElement("div", { className: "container" }, React.createElement("div", { className: "empty__text" }, "Your cart is current empty"), React.createElement(react_router_dom_1.Link, { to: "/" }, React.createElement("button", { type: "button", className: "empty__back" }, "Return to shop"))));
 };
 exports.default = EmptyCart;
-
-//# sourceMappingURL=Empty.js.map
 
 /***/ }),
 
@@ -32035,8 +35195,6 @@ var CartPage = function CartPage(props) {
 };
 exports.default = cartConnected(CartPage);
 
-//# sourceMappingURL=index.js.map
-
 /***/ }),
 
 /***/ "./resources/app/es5/components/CategoriesPage/CategoriesList.js":
@@ -32059,8 +35217,6 @@ var CategoriesList = function CategoriesList(props) {
 };
 exports.default = CategoriesList;
 
-//# sourceMappingURL=CategoriesList.js.map
-
 /***/ }),
 
 /***/ "./resources/app/es5/components/CategoriesPage/CategoryItem.js":
@@ -32080,8 +35236,6 @@ var CategoryItem = function CategoryItem(props) {
     return React.createElement(react_router_dom_1.Link, { to: "/?category=" + props.category.slug, className: "categories__item" }, React.createElement("img", { className: "categories__img", src: "/image/" + props.category.image, alt: "Category" }), React.createElement("div", { className: "categories__products center w-100", style: { flexDirection: 'column' } }, React.createElement("div", null, props.category.name), React.createElement("div", null, props.category.productCount, " products")));
 };
 exports.default = CategoryItem;
-
-//# sourceMappingURL=CategoryItem.js.map
 
 /***/ }),
 
@@ -32119,8 +35273,6 @@ var CategoriesPage = function CategoriesPage(props) {
 };
 exports.default = connected(CategoriesPage);
 
-//# sourceMappingURL=index.js.map
-
 /***/ }),
 
 /***/ "./resources/app/es5/components/ChangePasswordPage/ChangeForm.js":
@@ -32143,8 +35295,6 @@ var ChangeForm = function ChangeForm(props) {
 exports.default = redux_form_1.reduxForm({
     form: 'change'
 })(ChangeForm);
-
-//# sourceMappingURL=ChangeForm.js.map
 
 /***/ }),
 
@@ -32186,8 +35336,6 @@ var ChangePage = function ChangePage(props) {
 };
 exports.default = connected(react_router_1.withRouter(ChangePage));
 
-//# sourceMappingURL=index.js.map
-
 /***/ }),
 
 /***/ "./resources/app/es5/components/CheckoutPage/Form/BillingForm.js":
@@ -32222,8 +35370,6 @@ exports.default = redux_form_1.reduxForm({
     form: 'billing'
 })(BillingFormRedux);
 
-//# sourceMappingURL=BillingForm.js.map
-
 /***/ }),
 
 /***/ "./resources/app/es5/components/CheckoutPage/Form/CreateAccountForm.js":
@@ -32252,8 +35398,6 @@ var AccountForm = function AccountForm(props) {
     return React.createElement(React.Fragment, null, React.createElement(redux_form_1.Field, { component: CheckboxElement_1.default, name: "create", placeholder: "Create account?" }), props.isCreate && React.createElement("div", { className: "row my-pad" }, React.createElement(redux_form_1.Field, { component: InputElement_1.default, name: "password", placeholder: "Password", className: "mr-1", required: true }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, name: "passwordConfirm", placeholder: "Password confirmation", className: "ml-1", required: true })));
 };
 exports.default = connected(AccountForm);
-
-//# sourceMappingURL=CreateAccountForm.js.map
 
 /***/ }),
 
@@ -32284,8 +35428,6 @@ var PaymentList = function PaymentList(props) {
 };
 exports.default = connected(PaymentList);
 
-//# sourceMappingURL=PaymentList.js.map
-
 /***/ }),
 
 /***/ "./resources/app/es5/components/CheckoutPage/Form/Payment/PaymentTypes.js":
@@ -32313,8 +35455,6 @@ var PaymentTypes = function PaymentTypes(props) {
 };
 exports.default = connected(PaymentTypes);
 
-//# sourceMappingURL=PaymentTypes.js.map
-
 /***/ }),
 
 /***/ "./resources/app/es5/components/CheckoutPage/Form/Payment/index.js":
@@ -32336,8 +35476,6 @@ var Payment = function Payment() {
 };
 exports.default = Payment;
 
-//# sourceMappingURL=index.js.map
-
 /***/ }),
 
 /***/ "./resources/app/es5/components/CheckoutPage/Questions.js":
@@ -32357,8 +35495,6 @@ var Questions = function Questions() {
     return React.createElement("div", { className: "container" }, React.createElement("div", { className: "questions my-pad" }, React.createElement("div", { className: "question" }, React.createElement("div", { className: "question__text" }, "Returning customer ?", React.createElement(react_router_dom_1.Link, { to: "/login" }, "Click here to login.")))));
 };
 exports.default = Questions;
-
-//# sourceMappingURL=Questions.js.map
 
 /***/ }),
 
@@ -32400,8 +35536,6 @@ var CheckoutPage = function CheckoutPage(props) {
 };
 exports.default = connected(CheckoutPage);
 
-//# sourceMappingURL=index.js.map
-
 /***/ }),
 
 /***/ "./resources/app/es5/components/Content.js":
@@ -32431,12 +35565,11 @@ var SinglePage_1 = __webpack_require__(/*! ./SinglePage/ */ "./resources/app/es5
 var VerifyPage_1 = __webpack_require__(/*! ./VerifyPage */ "./resources/app/es5/components/VerifyPage/index.js");
 var ChangePasswordPage_1 = __webpack_require__(/*! ./ChangePasswordPage */ "./resources/app/es5/components/ChangePasswordPage/index.js");
 var SearchPage_1 = __webpack_require__(/*! ./SearchPage */ "./resources/app/es5/components/SearchPage/index.js");
+var ResendPage_1 = __webpack_require__(/*! ./ResendPage */ "./resources/app/es5/components/ResendPage/index.js");
 var Content = function Content() {
-    return React.createElement(React.Fragment, null, React.createElement(Header_1.default, null), React.createElement(react_router_dom_1.Switch, null, React.createElement(react_router_dom_1.Route, { path: '/', exact: true, component: HomePage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/login', exact: true, component: LoginPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/register', exact: true, component: RegisterPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/verify/:id', exact: true, component: VerifyPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/reset', exact: true, component: ResetPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/reset/:id', exact: true, component: ChangePasswordPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/cart', exact: true, component: CartPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/categories', exact: true, component: CategoriesPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/checkout', exact: true, component: CheckoutPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/products/:slug', exact: true, component: SinglePage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/search', exact: true, component: SearchPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/', component: NotFoundPage_1.default })), React.createElement(Footer_1.default, null));
+    return React.createElement(React.Fragment, null, React.createElement(Header_1.default, null), React.createElement(react_router_dom_1.Switch, null, React.createElement(react_router_dom_1.Route, { path: '/', exact: true, component: HomePage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/login', exact: true, component: LoginPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/register', exact: true, component: RegisterPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/verify/:id', exact: true, component: VerifyPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/reset', exact: true, component: ResetPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/reset/:id', exact: true, component: ChangePasswordPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/resend', exact: true, component: ResendPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/cart', exact: true, component: CartPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/categories', exact: true, component: CategoriesPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/checkout', exact: true, component: CheckoutPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/products/:slug', exact: true, component: SinglePage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/search', exact: true, component: SearchPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/', component: NotFoundPage_1.default })), React.createElement(Footer_1.default, null));
 };
 exports.default = Content;
-
-//# sourceMappingURL=Content.js.map
 
 /***/ }),
 
@@ -32457,8 +35590,6 @@ var Footer = function Footer() {
     return React.createElement("footer", { className: "footer" }, React.createElement("div", { className: "container" }, React.createElement("div", { className: "footer__content" }, React.createElement("div", { className: "footer__info" }, React.createElement("img", { className: "footer__logo", src: "/image/logo.png", alt: "Logo" }), React.createElement("div", { className: "footer__info-content" }, "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab aliquam cumque debitis deleniti doloribus earum error id iure, laborum neque nisi odit, possimus quaerat temporibus totam. Aspernatur atque corporis ut!")), React.createElement("div", { className: "footer__links" }, React.createElement("div", { className: "footer__links-head" }, "Useful links"), React.createElement("ul", { className: "footer__links-list" }, React.createElement(react_router_dom_1.Link, { to: "/", className: "footer__links-item" }, React.createElement("li", null, "Home")), React.createElement(react_router_dom_1.Link, { to: "/checkout", className: "footer__links-item" }, React.createElement("li", null, "Checkout")), React.createElement(react_router_dom_1.Link, { to: "/profile", className: "footer__links-item" }, React.createElement("li", null, "My account")), React.createElement("a", { className: "footer__links-item", href: "#" }, React.createElement("li", null, "Man fashion")), React.createElement("a", { className: "footer__links-item", href: "#" }, React.createElement("li", null, "Women fashion")), React.createElement(react_router_dom_1.Link, { to: "/cart", className: "footer__links-item" }, React.createElement("li", null, "Cart")))), React.createElement("div", { className: "footer__contacts" }, React.createElement("div", { className: "footer__links-head" }, "Contact us"), React.createElement("div", { className: "footer__contacts-list" }, React.createElement("div", { className: "footer__contacts-item" }, React.createElement("i", { className: "fas fa-envelope" }), React.createElement("a", { className: "footer__contacts-link", href: "mailto:cssuperpy@gmail.com" }, "cssuperpy@gmail.com")), React.createElement("div", { className: "footer__contacts-item" }, React.createElement("i", { className: "fas fa-phone-alt" }), React.createElement("a", { className: "footer__contacts-link", href: "tel:+7043345544" }, "+7043345435543")), React.createElement("div", { className: "footer__contacts-item" }, React.createElement("i", { className: "fas fa-link" }), React.createElement("a", { className: "footer__contacts-link", href: "https://htmlprogrammer.ru" }, "htmlprogrammer.ru")))))), React.createElement("hr", null), React.createElement("div", { className: "footer__copy" }, "Copyright ", new Date().getFullYear()));
 };
 exports.default = Footer;
-
-//# sourceMappingURL=Footer.js.map
 
 /***/ }),
 
@@ -32485,8 +35616,6 @@ var CheckboxElement = function CheckboxElement(props) {
     return React.createElement("div", { className: "checkbox", style: style }, React.createElement("input", { className: "checkbox__elem  " + className, type: "checkbox", checked: value, name: name, onChange: onChange }), React.createElement("label", { className: "checkbox__label" }, React.createElement("span", null, placeholder)));
 };
 exports.default = CheckboxElement;
-
-//# sourceMappingURL=CheckboxElement.js.map
 
 /***/ }),
 
@@ -32515,8 +35644,6 @@ var CheckboxGroup = function CheckboxGroup(props) {
     }));
 };
 exports.default = CheckboxGroup;
-
-//# sourceMappingURL=CheckboxGroup.js.map
 
 /***/ }),
 
@@ -32558,8 +35685,6 @@ var ColorElement = function ColorElement(props) {
 };
 exports.default = connected(ColorElement);
 
-//# sourceMappingURL=ColorElement.js.map
-
 /***/ }),
 
 /***/ "./resources/app/es5/components/FormElements/ColorGroup.js":
@@ -32587,8 +35712,6 @@ var ColorGroup = function ColorGroup(props) {
     }));
 };
 exports.default = ColorGroup;
-
-//# sourceMappingURL=ColorGroup.js.map
 
 /***/ }),
 
@@ -32619,8 +35742,6 @@ var InputElement = function InputElement(props) {
     return React.createElement(React.Fragment, null, React.createElement("div", { className: "input  " + className }, React.createElement("input", { className: "input__elem", required: required, type: type, value: value, name: name, onChange: onChange }), React.createElement("label", { className: "input__label" }, React.createElement("span", null, placeholder), required && React.createElement("span", { className: "red" }, "*")), React.createElement("div", { className: "input__line" })), touched && error && React.createElement("small", { className: "red", style: { margin: '5px' } }, error));
 };
 exports.default = InputElement;
-
-//# sourceMappingURL=InputElement.js.map
 
 /***/ }),
 
@@ -32656,8 +35777,6 @@ var MarkElement = function MarkElement(props) {
         } });
 };
 exports.default = connected(MarkElement);
-
-//# sourceMappingURL=MarkElement.js.map
 
 /***/ }),
 
@@ -32699,8 +35818,6 @@ var NumericElement = function NumericElement(props) {
 };
 exports.default = connected(NumericElement);
 
-//# sourceMappingURL=Numeric.js.map
-
 /***/ }),
 
 /***/ "./resources/app/es5/components/FormElements/SelectElement.js":
@@ -32727,8 +35844,6 @@ var SelectElement = function SelectElement(props) {
     })), React.createElement("i", { className: "fas fa-chevron-down select__icon" }), React.createElement("div", { className: "select__line" }));
 };
 exports.default = SelectElement;
-
-//# sourceMappingURL=SelectElement.js.map
 
 /***/ }),
 
@@ -32771,8 +35886,6 @@ var SizeElement = function SizeElement(props) {
 };
 exports.default = connected(SizeElement);
 
-//# sourceMappingURL=SizeElement.js.map
-
 /***/ }),
 
 /***/ "./resources/app/es5/components/FormElements/SizeGroup.js":
@@ -32802,8 +35915,6 @@ var SizeGroup = function SizeGroup(props) {
     }));
 };
 exports.default = SizeGroup;
-
-//# sourceMappingURL=SizeGroup.js.map
 
 /***/ }),
 
@@ -32866,12 +35977,8 @@ var SliderElement = function (_super) {
         return _this;
     }
     SliderElement.prototype.componentDidMount = function () {
-        var _a = this.props,
-            min = _a.min,
-            max = _a.max,
-            value = _a.input.value;
-        this.leftPosition = (value.from - min) / (max - min) * 100;
-        this.rightPosition = 100 - (value.to - min) / (max - min) * 100;
+        this.leftPosition = 0;
+        this.rightPosition = 0;
         this.positeSlider();
         document.addEventListener('mousemove', this.onMouseMove);
         document.addEventListener('mouseup', this.onMouseUp);
@@ -32881,8 +35988,8 @@ var SliderElement = function (_super) {
             min = _a.min,
             max = _a.max,
             value = _a.input.value;
-        this.leftPosition = (value.from - min) / (max - min) * 100;
-        this.rightPosition = 100 - (value.to - min) / (max - min) * 100;
+        this.leftPosition = value.from / max * 100;
+        this.rightPosition = 100 - value.to / max * 100;
         this.positeSlider();
     };
     SliderElement.prototype.render = function () {
@@ -32914,14 +36021,14 @@ var SliderElement = function (_super) {
         if (this.state.which == 'left' && newPos < 95 - this.rightPosition) {
             newPos = newPos < 0 ? 0 : newPos;
             this.props.changeValue(this.props.input.name || 'priceRange', {
-                from: newPos / 100 * (max - min),
+                from: newPos / 100 * max,
                 to: value.to
             });
         } else if (this.state.which == 'right' && newPos > this.leftPosition + 5) {
-            newPos = newPos > 100 ? 100 : newPos;
+            newPos = newPos >= 100 ? 100 : newPos;
             this.props.changeValue(this.props.name || 'priceRange', {
                 from: value.from,
-                to: newPos / 100 * (max - min)
+                to: newPos / 100 * max
             });
         }
     };
@@ -32939,8 +36046,6 @@ var SliderElement = function (_super) {
     return SliderElement;
 }(React.Component);
 exports.default = connected(SliderElement);
-
-//# sourceMappingURL=Slider.js.map
 
 /***/ }),
 
@@ -32960,8 +36065,6 @@ var Logo = function Logo() {
     return React.createElement("a", { href: "/" }, React.createElement("img", { className: "header__logo", src: "/image/logo.png", alt: "Logo" }));
 };
 exports.default = Logo;
-
-//# sourceMappingURL=Logo.js.map
 
 /***/ }),
 
@@ -32990,8 +36093,6 @@ var Burger = function Burger(props) {
 };
 exports.default = Burger;
 
-//# sourceMappingURL=Burger.js.map
-
 /***/ }),
 
 /***/ "./resources/app/es5/components/Header/Menu/Cart/CartDropdown.js":
@@ -33012,8 +36113,6 @@ var CartDropdown = function CartDropdown() {
     return React.createElement("div", { className: "dropdown__body" }, React.createElement("div", { className: "dropdown__content" }, React.createElement(CartList_1.default, null), React.createElement("div", { className: "row space-between w-100" }, React.createElement(react_router_dom_1.Link, { to: "/cart" }, React.createElement("button", { type: "button", className: "check__but sm" }, "View Cart")), React.createElement(react_router_dom_1.Link, { to: "/checkout" }, React.createElement("button", { type: "button", className: "check__but sm" }, "Checkout")))));
 };
 exports.default = CartDropdown;
-
-//# sourceMappingURL=CartDropdown.js.map
 
 /***/ }),
 
@@ -33055,8 +36154,6 @@ var CartList = function CartList(props) {
 };
 exports.default = connected(CartList);
 
-//# sourceMappingURL=CartList.js.map
-
 /***/ }),
 
 /***/ "./resources/app/es5/components/Header/Menu/Cart/index.js":
@@ -33093,8 +36190,6 @@ var Cart = function Cart(props) {
 };
 exports.default = connected(Cart);
 
-//# sourceMappingURL=index.js.map
-
 /***/ }),
 
 /***/ "./resources/app/es5/components/Header/Menu/Search/SearchForm.js":
@@ -33111,14 +36206,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
 var InputElement_1 = __webpack_require__(/*! ../../../FormElements/InputElement */ "./resources/app/es5/components/FormElements/InputElement.js");
+var required_1 = __webpack_require__(/*! ../../../../Helpers/Validators/required */ "./resources/app/es5/Helpers/Validators/required.js");
 var SearchForm = function SearchForm(props) {
-    return React.createElement("form", { onSubmit: props.handleSubmit, noValidate: true }, React.createElement(redux_form_1.Field, { component: InputElement_1.default, name: "search", type: "text", placeholder: "Search", required: true }));
+    return React.createElement("form", { onSubmit: props.handleSubmit }, React.createElement(redux_form_1.Field, { component: InputElement_1.default, name: "search", type: "text", placeholder: "Search", required: true, validate: [required_1.default] }));
 };
 exports.default = redux_form_1.reduxForm({
     form: 'search'
 })(SearchForm);
-
-//# sourceMappingURL=SearchForm.js.map
 
 /***/ }),
 
@@ -33142,7 +36236,6 @@ var Search = function Search(props) {
         active: props.openMenu == 'search'
     });
     var onSubmit = function onSubmit(values) {
-        console.log(values);
         props.history.push("/search?search=" + values.search);
     };
     return React.createElement("span", { className: searchClasses }, React.createElement("i", { className: "fas fa-search dropdown__elem", onClick: function onClick() {
@@ -33152,8 +36245,6 @@ var Search = function Search(props) {
         } }), React.createElement("div", { className: "dropdown__body" }, React.createElement("div", { className: "dropdown__content" }, React.createElement(SearchForm_1.default, { onSubmit: onSubmit }))));
 };
 exports.default = react_router_dom_1.withRouter(Search);
-
-//# sourceMappingURL=index.js.map
 
 /***/ }),
 
@@ -33204,8 +36295,6 @@ var Menu = function Menu(props) {
 };
 exports.default = connected(Menu);
 
-//# sourceMappingURL=index.js.map
-
 /***/ }),
 
 /***/ "./resources/app/es5/components/Header/index.js":
@@ -33226,8 +36315,6 @@ var Header = function Header() {
     return React.createElement("header", { className: "header" }, React.createElement("div", { className: "container" }, React.createElement(Logo_1.default, null), React.createElement(Menu_1.default, null)));
 };
 exports.default = Header;
-
-//# sourceMappingURL=index.js.map
 
 /***/ }),
 
@@ -33292,8 +36379,6 @@ var GoodsFormRedux = redux_form_1.reduxForm({
 })(GoodsForm);
 exports.default = react_router_1.withRouter(connected(GoodsFormRedux));
 
-//# sourceMappingURL=index.js.map
-
 /***/ }),
 
 /***/ "./resources/app/es5/components/HomePage/Goods/GoodsList/GoodItem.js":
@@ -33314,8 +36399,6 @@ var GoodItem = function GoodItem(props) {
 };
 exports.default = GoodItem;
 
-//# sourceMappingURL=GoodItem.js.map
-
 /***/ }),
 
 /***/ "./resources/app/es5/components/HomePage/Goods/GoodsList/GoodsHeader.js":
@@ -33330,46 +36413,10 @@ exports.default = GoodItem;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-var GoodsHeaderForm_1 = __webpack_require__(/*! ./GoodsHeaderForm */ "./resources/app/es5/components/HomePage/Goods/GoodsList/GoodsHeaderForm.js");
 var GoodsHeader = function GoodsHeader(props) {
-    return React.createElement("div", { className: "goods__head" }, React.createElement("div", { className: "goods__head-count" }, "Showing ", props.loaded, " of ", props.total, " products"), React.createElement(GoodsHeaderForm_1.default, { onSubmit: function onSubmit(vals) {
-            console.log('HeaderForm:', vals);
-        } }));
+    return React.createElement("div", { className: "goods__head" }, React.createElement("div", { className: "goods__head-count" }, "Showing ", props.loaded, " of ", props.total, " products"), React.createElement("div", null));
 };
 exports.default = GoodsHeader;
-
-//# sourceMappingURL=GoodsHeader.js.map
-
-/***/ }),
-
-/***/ "./resources/app/es5/components/HomePage/Goods/GoodsList/GoodsHeaderForm.js":
-/*!**********************************************************************************!*\
-  !*** ./resources/app/es5/components/HomePage/Goods/GoodsList/GoodsHeaderForm.js ***!
-  \**********************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
-var SelectElement_1 = __webpack_require__(/*! ../../../FormElements/SelectElement */ "./resources/app/es5/components/FormElements/SelectElement.js");
-var GoodsHeaderForm = function GoodsHeaderForm(props) {
-    return React.createElement("form", { onSubmit: props.handleSubmit }, React.createElement(redux_form_1.Field, { component: SelectElement_1.default, name: "type", options: ['All', 'Featured products'] }));
-};
-exports.default = redux_form_1.reduxForm({
-    form: 'headerForm',
-    initialValues: {
-        type: 'All'
-    },
-    onChange: function onChange(values, dispatch, props) {
-        dispatch(redux_form_1.submit('headerForm'));
-    }
-})(GoodsHeaderForm);
-
-//# sourceMappingURL=GoodsHeaderForm.js.map
 
 /***/ }),
 
@@ -33406,8 +36453,6 @@ var GoodsList = function GoodsList(props) {
         } }, props.goodsListState.isLoading ? 'Loading...' : 'Load More')));
 };
 exports.default = connected(GoodsList);
-
-//# sourceMappingURL=index.js.map
 
 /***/ }),
 
@@ -33451,8 +36496,6 @@ var Goods = function Goods(props) {
 };
 exports.default = connected(Goods);
 
-//# sourceMappingURL=index.js.map
-
 /***/ }),
 
 /***/ "./resources/app/es5/components/HomePage/index.js":
@@ -33477,8 +36520,6 @@ var HomePage = function HomePage() {
 };
 exports.default = HomePage;
 
-//# sourceMappingURL=index.js.map
-
 /***/ }),
 
 /***/ "./resources/app/es5/components/LoginPage/LoginForm.js":
@@ -33495,14 +36536,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
 var InputElement_1 = __webpack_require__(/*! ../FormElements/InputElement */ "./resources/app/es5/components/FormElements/InputElement.js");
+var required_1 = __webpack_require__(/*! ../../Helpers/Validators/required */ "./resources/app/es5/Helpers/Validators/required.js");
+var email_1 = __webpack_require__(/*! ../../Helpers/Validators/email */ "./resources/app/es5/Helpers/Validators/email.js");
+var sizeBetween_1 = __webpack_require__(/*! ../../Helpers/Validators/sizeBetween */ "./resources/app/es5/Helpers/Validators/sizeBetween.js");
+var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+var between = sizeBetween_1.default(6, 20);
 var LoginForm = function LoginForm(props) {
-    return React.createElement("div", { className: "container" }, React.createElement("form", { onSubmit: props.handleSubmit, className: "login my-pad" }, React.createElement("div", { className: "login__head" }, "Login"), props.loginData.error && React.createElement("div", { className: "red" }, props.loginData.error), React.createElement(redux_form_1.Field, { component: InputElement_1.default, type: "text", name: "email", placeholder: "Email", required: true }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, type: "password", name: "password", placeholder: "Password", required: true }), React.createElement("div", { className: "row space-between my-pad w-100" }, React.createElement("div", null), React.createElement("button", { type: "submit", className: "check__but" }, props.loginData.isLoading ? 'Loading...' : 'Login'))));
+    return React.createElement("div", { className: "container" }, React.createElement("form", { onSubmit: props.handleSubmit, className: "login my-pad" }, React.createElement("div", { className: "login__head" }, "Login"), props.error && React.createElement("div", { className: "red" }, props.error), props.loginState.needReset && React.createElement("div", { className: "red" }, React.createElement(react_router_dom_1.Link, { to: "/reset" }, "Reset")), props.loginState.needResend && React.createElement("div", { className: "red" }, React.createElement(react_router_dom_1.Link, { to: "/resend" }, "Resend")), React.createElement(redux_form_1.Field, { component: InputElement_1.default, type: "text", name: "email", placeholder: "Email", required: true, validate: [required_1.default, email_1.default] }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, type: "password", name: "password", placeholder: "Password", required: true, validate: [required_1.default, between] }), React.createElement("div", { className: "row space-between my-pad w-100" }, React.createElement("div", null), React.createElement("button", { type: "submit", className: "check__but" }, props.submitting ? 'Loading...' : 'Login'))));
 };
 exports.default = redux_form_1.reduxForm({
     form: 'login'
 })(LoginForm);
-
-//# sourceMappingURL=LoginForm.js.map
 
 /***/ }),
 
@@ -33522,10 +36566,10 @@ var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react
 var Breadcrumbs_1 = __webpack_require__(/*! ../Breadcrumbs */ "./resources/app/es5/components/Breadcrumbs.js");
 var LoginForm_1 = __webpack_require__(/*! ./LoginForm */ "./resources/app/es5/components/LoginPage/LoginForm.js");
 var thunks_1 = __webpack_require__(/*! ../../redux/login/thunks */ "./resources/app/es5/redux/login/thunks.js");
-var selectors_1 = __webpack_require__(/*! ../../redux/login/selectors */ "./resources/app/es5/redux/login/selectors.js");
+var IsAuthenticated_1 = __webpack_require__(/*! ../../HOC/IsAuthenticated */ "./resources/app/es5/HOC/IsAuthenticated.js");
 var mapStateToProps = function mapStateToProps(state) {
     return {
-        loginData: selectors_1.selectLoginState(state)
+        loginState: state.login
     };
 };
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
@@ -33538,17 +36582,14 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 var connected = react_redux_1.connect(mapStateToProps, mapDispatchToProps);
 var LoginPage = function LoginPage(props) {
     var submit = function submit(values) {
-        console.log(values);
         props.login(values);
     };
     React.useEffect(function () {
         document.title = 'Login';
     }, []);
-    return React.createElement(React.Fragment, null, React.createElement(Breadcrumbs_1.default, { paths: [{ name: 'Home', path: '/' }, { name: 'Login', path: '/login' }] }), React.createElement(LoginForm_1.default, { onSubmit: submit, loginData: props.loginData }));
+    return React.createElement(React.Fragment, null, React.createElement(Breadcrumbs_1.default, { paths: [{ name: 'Home', path: '/' }, { name: 'Login', path: '/login' }] }), React.createElement(LoginForm_1.default, { onSubmit: submit, loginState: props.loginState }));
 };
-exports.default = connected(LoginPage);
-
-//# sourceMappingURL=index.js.map
+exports.default = IsAuthenticated_1.default(false)(connected(LoginPage));
 
 /***/ }),
 
@@ -33575,7 +36616,24 @@ var Mark = function Mark(props) {
 };
 exports.default = Mark;
 
-//# sourceMappingURL=Mark.js.map
+/***/ }),
+
+/***/ "./resources/app/es5/components/NotFoundPage/NotFoundImg.js":
+/*!******************************************************************!*\
+  !*** ./resources/app/es5/components/NotFoundPage/NotFoundImg.js ***!
+  \******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var NotFoundImg = function NotFoundImg() {
+    return React.createElement("div", { className: "error" }, React.createElement("img", { className: "error__img", src: "/image/not-found.png", alt: "Not found" }));
+};
+exports.default = NotFoundImg;
 
 /***/ }),
 
@@ -33592,15 +36650,14 @@ exports.default = Mark;
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var Breadcrumbs_1 = __webpack_require__(/*! ../Breadcrumbs */ "./resources/app/es5/components/Breadcrumbs.js");
+var NotFoundImg_1 = __webpack_require__(/*! ./NotFoundImg */ "./resources/app/es5/components/NotFoundPage/NotFoundImg.js");
 var NotFoundPage = function NotFoundPage() {
     React.useEffect(function () {
         document.title = '404 | Not found';
     }, []);
-    return React.createElement(React.Fragment, null, React.createElement(Breadcrumbs_1.default, { paths: [{ name: 'Home', path: '/' }, { name: 'Not found', path: '/404' }] }), React.createElement("div", { className: "error" }, React.createElement("img", { className: "error__img", src: "/image/not-found.png", alt: "Not found" })));
+    return React.createElement(React.Fragment, null, React.createElement(Breadcrumbs_1.default, { paths: [{ name: 'Home', path: '/' }, { name: 'Not found', path: '/404' }] }), React.createElement(NotFoundImg_1.default, null));
 };
 exports.default = NotFoundPage;
-
-//# sourceMappingURL=index.js.map
 
 /***/ }),
 
@@ -33621,8 +36678,6 @@ var AdminFooter = function AdminFooter() {
 };
 exports.default = AdminFooter;
 
-//# sourceMappingURL=AdminFooter.js.map
-
 /***/ }),
 
 /***/ "./resources/app/es5/components/Profile/AdminHeader/Logo.js":
@@ -33641,8 +36696,6 @@ var Logo = function Logo() {
   return React.createElement("img", { className: "admHeader__logo", src: "/image/adminLogo.png" });
 };
 exports.default = Logo;
-
-//# sourceMappingURL=Logo.js.map
 
 /***/ }),
 
@@ -33664,8 +36717,6 @@ var MenuItems = function MenuItems(props) {
     return React.createElement("div", { className: classnames_1.default('admHeader__menu', { active: props.isOpen }) }, React.createElement("div", { className: "admHeader__divider" }, "Navigation menu"), React.createElement(react_router_dom_1.NavLink, { to: '/profile/', activeClassName: 'admHeader__item_active', exact: true }, React.createElement("div", { className: "admHeader__item" }, React.createElement("i", { className: "fas fa-user admHeader__icon" }), React.createElement("span", null, "Profile"))), React.createElement(react_router_dom_1.NavLink, { to: '/profile/orders', activeClassName: 'admHeader__item_active', exact: true }, React.createElement("div", { className: "admHeader__item" }, React.createElement("i", { className: "fas fa-shopping-cart admHeader__icon" }), React.createElement("span", null, "Orders"))), React.createElement(react_router_dom_1.NavLink, { to: '/profile/favorite', activeClassName: 'admHeader__item_active', exact: true }, React.createElement("div", { className: "admHeader__item" }, React.createElement("i", { className: "fas fa-star admHeader__icon" }), React.createElement("span", null, "Favorite"))), React.createElement(react_router_dom_1.NavLink, { to: '/profile/reviews', activeClassName: 'admHeader__item_active', exact: true }, React.createElement("div", { className: "admHeader__item" }, React.createElement("i", { className: "fas fa-comments admHeader__icon" }), React.createElement("span", null, "Reviews"))), React.createElement(react_router_dom_1.NavLink, { to: '/profile/settings', activeClassName: 'admHeader__item_active', exact: true }, React.createElement("div", { className: "admHeader__item" }, React.createElement("i", { className: "fas fa-cog admHeader__icon" }), React.createElement("span", null, "Settings"))));
 };
 exports.default = MenuItems;
-
-//# sourceMappingURL=MenuItems.js.map
 
 /***/ }),
 
@@ -33690,8 +36741,6 @@ var Menu = function Menu() {
     return React.createElement(React.Fragment, null, React.createElement(Burger_1.default, { isOpen: isOpen, changeOpen: changeOpen }), React.createElement(MenuItems_1.default, { isOpen: isOpen }));
 };
 exports.default = Menu;
-
-//# sourceMappingURL=index.js.map
 
 /***/ }),
 
@@ -33721,8 +36770,6 @@ var UserDropdown = function UserDropdown() {
 };
 exports.default = UserDropdown;
 
-//# sourceMappingURL=UserDropdown.js.map
-
 /***/ }),
 
 /***/ "./resources/app/es5/components/Profile/AdminHeader/index.js":
@@ -33745,8 +36792,6 @@ var AdminHeader = function AdminHeader() {
 };
 exports.default = AdminHeader;
 
-//# sourceMappingURL=index.js.map
-
 /***/ }),
 
 /***/ "./resources/app/es5/components/Profile/FavoritePage/index.js":
@@ -33766,8 +36811,6 @@ var FavoritePage = function FavoritePage() {
 };
 exports.default = FavoritePage;
 
-//# sourceMappingURL=index.js.map
-
 /***/ }),
 
 /***/ "./resources/app/es5/components/Profile/OrdersPage/index.js":
@@ -33786,8 +36829,6 @@ var OrdersPage = function OrdersPage() {
     return React.createElement("div", { className: "admContent" }, React.createElement("div", { className: "container" }, React.createElement("div", { className: "myOrders py-pad" }, React.createElement("div", { className: "pull-right" }, React.createElement("span", { className: "but but_outline" }, "Continue shopping")), React.createElement("h3", null, "My orders"), React.createElement("div", { className: "myOrders__header my-pad" }, React.createElement("span", { className: "myOrders__find" }, React.createElement("div", { className: "input" }, React.createElement("input", { className: "input__elem", type: "text", required: true }), React.createElement("label", { className: "input__label" }, "Find order"), React.createElement("div", { className: "input__line" }))), React.createElement("div", { className: "select cur" }, React.createElement("select", { className: "select__input cur" }, React.createElement("option", { selected: true }, "Latest"), React.createElement("option", null, "Newest")), React.createElement("i", { className: "fas fa-chevron-down select__icon" }), React.createElement("div", { className: "select__line" }))), React.createElement("div", { className: "myOrders__types my-pad" }, React.createElement("div", { className: "radio" }, React.createElement("label", { className: "row" }, React.createElement("input", { className: "radio__elem", type: "radio", name: "filter" }), React.createElement("span", { className: "radio__label" }, "All"))), React.createElement("div", { className: "radio" }, React.createElement("label", { className: "row" }, React.createElement("input", { className: "radio__elem", type: "radio", name: "filter" }), React.createElement("span", { className: "radio__label" }, "Finished"))), React.createElement("div", { className: "radio" }, React.createElement("label", { className: "row" }, React.createElement("input", { className: "radio__elem", type: "radio", name: "filter" }), React.createElement("span", { className: "radio__label" }, "In move"))), React.createElement("div", { className: "radio" }, React.createElement("label", { className: "row" }, React.createElement("input", { className: "radio__elem", type: "radio", name: "filter" }), React.createElement("span", { className: "radio__label" }, "Payment")))), React.createElement("div", { className: "table__wrap" }, React.createElement("div", { className: "table" }, React.createElement("div", { className: "table__head" }, React.createElement("div", { className: "table__head-item" }, "ID"), React.createElement("div", { className: "table__head-item" }, "Date"), React.createElement("div", { className: "table__head-item" }, "Price"), React.createElement("div", { className: "table__head-item" }, "Status")), React.createElement("div", { className: "table__content" }, React.createElement("div", { className: "table__row" }, React.createElement("div", { className: "table__col" }, "#43534455"), React.createElement("div", { className: "table__col" }, "20.03.2020"), React.createElement("div", { className: "table__col" }, "$90.00"), React.createElement("div", { className: "table__col" }, "TShirt")), React.createElement("div", { className: "table__row" }, React.createElement("div", { className: "table__col" }, "#43534455"), React.createElement("div", { className: "table__col" }, "20.03.2020"), React.createElement("div", { className: "table__col" }, "$90.00"), React.createElement("div", { className: "table__col" }, "TShirt")), React.createElement("div", { className: "table__row" }, React.createElement("div", { className: "table__col" }, "#43534455"), React.createElement("div", { className: "table__col" }, "20.03.2020"), React.createElement("div", { className: "table__col" }, "$90.00"), React.createElement("div", { className: "table__col" }, "TShirt")))))), React.createElement("div", { className: "pagination mb-pad" }, React.createElement("div", { className: "pagination__item pagination__item_disabled" }, "Prev"), React.createElement("div", { className: "pagination__item pagination__item_active" }, "1"), React.createElement("div", { className: "pagination__item" }, "2"), React.createElement("div", { className: "pagination__item" }, "3"), React.createElement("div", { className: "pagination__item" }, "Next"))));
 };
 exports.default = OrdersPage;
-
-//# sourceMappingURL=index.js.map
 
 /***/ }),
 
@@ -33809,8 +36850,6 @@ var ProfilePage = function ProfilePage() {
 };
 exports.default = ProfilePage;
 
-//# sourceMappingURL=index.js.map
-
 /***/ }),
 
 /***/ "./resources/app/es5/components/Profile/ReviewsPage/index.js":
@@ -33831,8 +36870,6 @@ var ReviewsPage = function ReviewsPage() {
 };
 exports.default = ReviewsPage;
 
-//# sourceMappingURL=index.js.map
-
 /***/ }),
 
 /***/ "./resources/app/es5/components/Profile/SettingsPage/index.js":
@@ -33851,8 +36888,6 @@ var SettingsPage = function SettingsPage() {
     return React.createElement("div", { className: "admContent" }, React.createElement("div", { className: "billing py-pad" }, React.createElement("div", { className: "container" }, React.createElement("div", { className: "login__head" }, "Personal info"), React.createElement("div", { className: "billing__form" }, React.createElement("div", { className: "file my-pad" }, React.createElement("img", { className: "file_image", src: "/image/product.png" }), React.createElement("label", null, React.createElement("input", { className: "file__elem", type: "file" }), React.createElement("div", { className: "file__but" }, "Select file"))), React.createElement("div", { className: "input" }, React.createElement("input", { className: "input__elem", required: true }), React.createElement("label", { className: "input__label" }, React.createElement("span", null, "First Name"), React.createElement("span", { className: "red" }, "*")), React.createElement("div", { className: "input__line" })), React.createElement("div", { className: "input" }, React.createElement("input", { className: "input__elem", required: true }), React.createElement("label", { className: "input__label" }, React.createElement("span", null, "Last Name"), React.createElement("span", { className: "red" }, "*")), React.createElement("div", { className: "input__line" })), React.createElement("div", { className: "input" }, React.createElement("input", { className: "input__elem", required: true }), React.createElement("label", { className: "input__label" }, React.createElement("span", null, "Email Address"), React.createElement("span", { className: "red" }, "*")), React.createElement("div", { className: "input__line" })), React.createElement("div", { className: "row space-between my-pad w-100" }, React.createElement("div", null), React.createElement("button", { type: "button", className: "check__but" }, "Update")), React.createElement("div", { className: "login__head" }, "Security"), React.createElement("div", { className: "input" }, React.createElement("input", { className: "input__elem", required: true, type: "password" }), React.createElement("label", { className: "input__label" }, React.createElement("span", null, "Password"), React.createElement("span", { className: "red" }, "*")), React.createElement("div", { className: "input__line" })), React.createElement("div", { className: "input" }, React.createElement("input", { className: "input__elem", required: true, type: "password" }), React.createElement("label", { className: "input__label" }, React.createElement("span", null, "Password confirmation"), React.createElement("span", { className: "red" }, "*")), React.createElement("div", { className: "input__line" }))), React.createElement("div", { className: "row space-between my-pad w-100" }, React.createElement("div", null), React.createElement("button", { type: "button", className: "check__but" }, "Update")), React.createElement("div", { className: "login__head" }, "Delete account"), React.createElement("div", { className: "row space-between my-pad w-100" }, React.createElement("div", null), React.createElement("button", { type: "button", className: "check__but" }, "Delete")))));
 };
 exports.default = SettingsPage;
-
-//# sourceMappingURL=index.js.map
 
 /***/ }),
 
@@ -33881,9 +36916,7 @@ var ReviewsPage_1 = __webpack_require__(/*! ./ReviewsPage */ "./resources/app/es
 var Content = function Content() {
     return React.createElement(React.Fragment, null, React.createElement(AdminHeader_1.default, null), React.createElement(react_router_1.Switch, null, React.createElement(react_router_1.Route, { path: '/profile', exact: true, component: ProfilePage_1.default }), React.createElement(react_router_1.Route, { path: '/profile/settings', exact: true, component: SettingsPage_1.default }), React.createElement(react_router_1.Route, { path: '/profile/favorite', exact: true, component: FavoritePage_1.default }), React.createElement(react_router_1.Route, { path: '/profile/orders', exact: true, component: OrdersPage_1.default }), React.createElement(react_router_1.Route, { path: '/profile/reviews', exact: true, component: ReviewsPage_1.default }), React.createElement(react_router_1.Route, { path: '/', component: NotFoundPage_1.default })), React.createElement(AdminFooter_1.default, null));
 };
-exports.default = IsAuthenticated_1.default(Content);
-
-//# sourceMappingURL=index.js.map
+exports.default = IsAuthenticated_1.default(true)(Content);
 
 /***/ }),
 
@@ -33901,20 +36934,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
 var InputElement_1 = __webpack_require__(/*! ../FormElements/InputElement */ "./resources/app/es5/components/FormElements/InputElement.js");
+var required_1 = __webpack_require__(/*! ../../Helpers/Validators/required */ "./resources/app/es5/Helpers/Validators/required.js");
+var email_1 = __webpack_require__(/*! ../../Helpers/Validators/email */ "./resources/app/es5/Helpers/Validators/email.js");
+var sizeBetween_1 = __webpack_require__(/*! ../../Helpers/Validators/sizeBetween */ "./resources/app/es5/Helpers/Validators/sizeBetween.js");
+var between = sizeBetween_1.default(6, 20);
 var RegisterForm = function RegisterForm(props) {
-    return React.createElement("div", { className: "container" }, React.createElement("form", { onSubmit: props.handleSubmit, className: "login my-pad", noValidate: true }, React.createElement("div", { className: "login__head" }, "Sign in"), props.registration.error && React.createElement("div", { className: "red" }, props.registration.error), React.createElement(redux_form_1.Field, { component: InputElement_1.default, type: "text", name: "fullName", placeholder: "Full name", required: true }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, type: "text", name: "email", placeholder: "Email", required: true }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, type: "password", name: "password", placeholder: "Password", required: true }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, type: "password", name: "password_confirmation", placeholder: "Confirm password", required: true }), React.createElement("div", { className: "row space-between my-pad w-100" }, React.createElement("div", null), React.createElement("button", { type: "submit", className: "check__but" }, props.registration.isLoading ? 'Loading...' : 'Sign in'))));
+    return React.createElement("div", { className: "container" }, React.createElement("form", { onSubmit: props.handleSubmit, className: "login my-pad", noValidate: true }, React.createElement("div", { className: "login__head" }, "Sign in"), props.error && React.createElement("div", { className: "red" }, props.error), React.createElement(redux_form_1.Field, { component: InputElement_1.default, type: "text", name: "fullName", placeholder: "Full name", required: true }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, type: "text", name: "email", placeholder: "Email", required: true, validate: [required_1.default, email_1.default] }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, type: "password", name: "password", placeholder: "Password", required: true, validate: [required_1.default, between] }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, type: "password", name: "password_confirmation", placeholder: "Confirm password", required: true }), React.createElement("div", { className: "row space-between my-pad w-100" }, React.createElement("div", null), React.createElement("button", { type: "submit", className: "check__but" }, props.submitting ? 'Loading...' : 'Sign in'))));
 };
 var validate = function validate(values) {
-    var _a, _b;
+    var _a;
     var errors = {};
     if (((_a = values.fullName) === null || _a === void 0 ? void 0 : _a.trim().split(' ').length) != 2) {
         errors.fullName = 'Enter name and surname';
-    }
-    if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-        errors.email = 'Incorrect email';
-    }
-    if (((_b = values.password) === null || _b === void 0 ? void 0 : _b.length) < 8) {
-        errors.password = 'Password must be at least 8 chars';
     }
     if (values.password_confirmation != values.password) {
         errors.password_confirmation = 'Passwords are not equals';
@@ -33922,11 +36953,9 @@ var validate = function validate(values) {
     return errors;
 };
 exports.default = redux_form_1.reduxForm({
-    form: 'thunkRegister.ts',
+    form: 'register',
     validate: validate
 })(RegisterForm);
-
-//# sourceMappingURL=RegisterForm.js.map
 
 /***/ }),
 
@@ -33946,12 +36975,7 @@ var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react
 var Breadcrumbs_1 = __webpack_require__(/*! ../Breadcrumbs */ "./resources/app/es5/components/Breadcrumbs.js");
 var RegisterForm_1 = __webpack_require__(/*! ./RegisterForm */ "./resources/app/es5/components/RegisterPage/RegisterForm.js");
 var thunks_1 = __webpack_require__(/*! ../../redux/register/thunks */ "./resources/app/es5/redux/register/thunks.js");
-var selectors_1 = __webpack_require__(/*! ../../redux/register/selectors */ "./resources/app/es5/redux/register/selectors.js");
-var mapStateToProps = function mapStateToProps(state) {
-    return {
-        registration: selectors_1.selectRegisterState(state)
-    };
-};
+var IsAuthenticated_1 = __webpack_require__(/*! ../../HOC/IsAuthenticated */ "./resources/app/es5/HOC/IsAuthenticated.js");
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     return {
         register: function register(vals) {
@@ -33959,20 +36983,80 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
         }
     };
 };
-var connected = react_redux_1.connect(mapStateToProps, mapDispatchToProps);
+var connected = react_redux_1.connect(null, mapDispatchToProps);
 var RegisterPage = function RegisterPage(props) {
     var submit = function submit(values) {
-        console.log(values);
         props.register(values);
     };
     React.useEffect(function () {
         document.title = 'Sign in';
     }, []);
-    return React.createElement(React.Fragment, null, React.createElement(Breadcrumbs_1.default, { paths: [{ name: 'Home', path: '/' }, { name: 'Register', path: '/register' }] }), props.registration.message ? React.createElement("div", null, props.registration.message) : null, React.createElement(RegisterForm_1.default, { onSubmit: submit, registration: props.registration }));
+    return React.createElement(React.Fragment, null, React.createElement(Breadcrumbs_1.default, { paths: [{ name: 'Home', path: '/' }, { name: 'Register', path: '/register' }] }), React.createElement(RegisterForm_1.default, { onSubmit: submit }));
 };
-exports.default = connected(RegisterPage);
+exports.default = IsAuthenticated_1.default(false)(connected(RegisterPage));
 
-//# sourceMappingURL=index.js.map
+/***/ }),
+
+/***/ "./resources/app/es5/components/ResendPage/ResendForm.js":
+/*!***************************************************************!*\
+  !*** ./resources/app/es5/components/ResendPage/ResendForm.js ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
+var InputElement_1 = __webpack_require__(/*! ../FormElements/InputElement */ "./resources/app/es5/components/FormElements/InputElement.js");
+var required_1 = __webpack_require__(/*! ../../Helpers/Validators/required */ "./resources/app/es5/Helpers/Validators/required.js");
+var email_1 = __webpack_require__(/*! ../../Helpers/Validators/email */ "./resources/app/es5/Helpers/Validators/email.js");
+var ResendForm = function ResendForm(props) {
+    return React.createElement("form", { className: "reset", onSubmit: props.handleSubmit }, React.createElement("div", { className: "container my-pad" }, React.createElement("div", { className: "login__head" }, "Resend verification email"), props.error && React.createElement("div", { className: "red" }, props.error), React.createElement(redux_form_1.Field, { component: InputElement_1.default, type: "email", name: "email", placeholder: "Email", required: true, validate: [required_1.default, email_1.default] }), React.createElement("div", { className: "row space-between my-pad w-100" }, React.createElement("div", null), React.createElement("button", { type: "submit", className: "check__but" }, props.submitting ? 'Loading...' : 'Reset'))));
+};
+exports.default = redux_form_1.reduxForm({
+    form: 'resend'
+})(ResendForm);
+
+/***/ }),
+
+/***/ "./resources/app/es5/components/ResendPage/index.js":
+/*!**********************************************************!*\
+  !*** ./resources/app/es5/components/ResendPage/index.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+var Breadcrumbs_1 = __webpack_require__(/*! ../Breadcrumbs */ "./resources/app/es5/components/Breadcrumbs.js");
+var ResendForm_1 = __webpack_require__(/*! ./ResendForm */ "./resources/app/es5/components/ResendPage/ResendForm.js");
+var IsAuthenticated_1 = __webpack_require__(/*! ../../HOC/IsAuthenticated */ "./resources/app/es5/HOC/IsAuthenticated.js");
+var thunks_1 = __webpack_require__(/*! ../../redux/resend/thunks */ "./resources/app/es5/redux/resend/thunks.js");
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+    return {
+        resend: function resend(vals) {
+            dispatch(thunks_1.default(vals, 'resend'));
+        }
+    };
+};
+var connected = react_redux_1.connect(null, mapDispatchToProps);
+var ResendPage = function ResendPage(props) {
+    React.useEffect(function () {
+        document.title = 'Resend password';
+    }, []);
+    var onSubmit = function onSubmit(vals) {
+        props.resend(vals);
+    };
+    return React.createElement(React.Fragment, null, React.createElement(Breadcrumbs_1.default, { paths: [{ name: 'Home', path: '/' }, { name: 'Resend', path: '/resend' }] }), React.createElement(ResendForm_1.default, { onSubmit: onSubmit }));
+};
+exports.default = IsAuthenticated_1.default(false)(connected(ResendPage));
 
 /***/ }),
 
@@ -33990,14 +37074,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
 var InputElement_1 = __webpack_require__(/*! ../FormElements/InputElement */ "./resources/app/es5/components/FormElements/InputElement.js");
+var required_1 = __webpack_require__(/*! ../../Helpers/Validators/required */ "./resources/app/es5/Helpers/Validators/required.js");
+var email_1 = __webpack_require__(/*! ../../Helpers/Validators/email */ "./resources/app/es5/Helpers/Validators/email.js");
 var ResetForm = function ResetForm(props) {
-    return React.createElement("form", { className: "reset", onSubmit: props.handleSubmit }, React.createElement("div", { className: "container my-pad" }, React.createElement("div", { className: "login__head" }, "Reset password"), props.resetState.error && React.createElement("div", { className: "red" }, props.error), props.resetState.message && React.createElement("div", null, props.resetState.message), React.createElement(redux_form_1.Field, { component: InputElement_1.default, type: "email", name: "email", placeholder: "Email", required: true }), React.createElement("div", { className: "row space-between my-pad w-100" }, React.createElement("div", null), React.createElement("button", { type: "submit", className: "check__but" }, props.resetState.isLoading ? 'Loading...' : 'Reset'))));
+    return React.createElement("form", { className: "reset", onSubmit: props.handleSubmit }, React.createElement("div", { className: "container my-pad" }, React.createElement("div", { className: "login__head" }, "Reset password"), props.error && React.createElement("div", { className: "red" }, props.error), React.createElement(redux_form_1.Field, { component: InputElement_1.default, type: "email", name: "email", placeholder: "Email", required: true, validate: [required_1.default, email_1.default] }), React.createElement("div", { className: "row space-between my-pad w-100" }, React.createElement("div", null), React.createElement("button", { type: "submit", className: "check__but" }, props.submitting ? 'Loading...' : 'Reset'))));
 };
 exports.default = redux_form_1.reduxForm({
     form: 'reset'
 })(ResetForm);
-
-//# sourceMappingURL=ResetForm.js.map
 
 /***/ }),
 
@@ -34017,12 +37101,7 @@ var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react
 var Breadcrumbs_1 = __webpack_require__(/*! ../Breadcrumbs */ "./resources/app/es5/components/Breadcrumbs.js");
 var ResetForm_1 = __webpack_require__(/*! ./ResetForm */ "./resources/app/es5/components/ResetPage/ResetForm.js");
 var thunks_1 = __webpack_require__(/*! ../../redux/reset/thunks */ "./resources/app/es5/redux/reset/thunks.js");
-var selectors_1 = __webpack_require__(/*! ../../redux/reset/selectors */ "./resources/app/es5/redux/reset/selectors.js");
-var mapStateToProps = function mapStateToProps(state) {
-    return {
-        resetState: selectors_1.selectResetState(state)
-    };
-};
+var IsAuthenticated_1 = __webpack_require__(/*! ../../HOC/IsAuthenticated */ "./resources/app/es5/HOC/IsAuthenticated.js");
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     return {
         reset: function reset(vals) {
@@ -34030,7 +37109,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
         }
     };
 };
-var connected = react_redux_1.connect(mapStateToProps, mapDispatchToProps);
+var connected = react_redux_1.connect(null, mapDispatchToProps);
 var ResetPage = function ResetPage(props) {
     React.useEffect(function () {
         document.title = 'Reset password';
@@ -34038,11 +37117,9 @@ var ResetPage = function ResetPage(props) {
     var onSubmit = function onSubmit(vals) {
         props.reset(vals);
     };
-    return React.createElement(React.Fragment, null, React.createElement(Breadcrumbs_1.default, { paths: [{ name: 'Home', path: '/' }, { name: 'Reset password', path: '/reset' }] }), React.createElement(ResetForm_1.default, { onSubmit: onSubmit, resetState: props.resetState }));
+    return React.createElement(React.Fragment, null, React.createElement(Breadcrumbs_1.default, { paths: [{ name: 'Home', path: '/' }, { name: 'Reset password', path: '/reset' }] }), React.createElement(ResetForm_1.default, { onSubmit: onSubmit }));
 };
-exports.default = connected(ResetPage);
-
-//# sourceMappingURL=index.js.map
+exports.default = IsAuthenticated_1.default(false)(connected(ResetPage));
 
 /***/ }),
 
@@ -34062,6 +37139,7 @@ var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react
 var Breadcrumbs_1 = __webpack_require__(/*! ../Breadcrumbs */ "./resources/app/es5/components/Breadcrumbs.js");
 var thunks_1 = __webpack_require__(/*! ../../redux/search/thunks */ "./resources/app/es5/redux/search/thunks.js");
 var selectors_1 = __webpack_require__(/*! ../../redux/search/selectors */ "./resources/app/es5/redux/search/selectors.js");
+var actions_1 = __webpack_require__(/*! ../../redux/search/actions */ "./resources/app/es5/redux/search/actions.js");
 var mapStateToProps = function mapStateToProps(state) {
     return {
         searchState: selectors_1.selectSearchState(state),
@@ -34069,12 +37147,14 @@ var mapStateToProps = function mapStateToProps(state) {
     };
 };
 var connected = react_redux_1.connect(mapStateToProps, {
-    loadSearch: thunks_1.default
+    loadSearch: thunks_1.default,
+    searchReset: actions_1.searchReset
 });
 var SearchPage = function SearchPage(props) {
     React.useEffect(function () {
+        props.searchReset();
         props.loadSearch(props.location.search.split('=')[1]);
-    }, []);
+    }, [props.location.search.split('=')[1]]);
     return React.createElement(React.Fragment, null, React.createElement(Breadcrumbs_1.default, { paths: [{ name: 'Home', path: '/' }, { name: 'Search', path: '/search' }] }), React.createElement("div", null, React.createElement("div", null, "Loaded ", props.productCount, " of ", props.searchState.totalCount), props.productCount ? props.searchState.products.map(function (item) {
         return React.createElement("div", { key: item.id }, item.name);
     }) : React.createElement("div", null, "No products was found for ", props.searchState.search)), props.searchState.error && React.createElement("div", null, props.searchState.error), props.productCount == props.searchState.totalCount && !props.searchState.isLoading ? false : React.createElement("div", { className: "goods__list-load" }, React.createElement("button", { type: "button", className: "goods__list-more", onClick: function onClick() {
@@ -34082,8 +37162,6 @@ var SearchPage = function SearchPage(props) {
         } }, props.searchState.isLoading ? 'Loading...' : 'Load More')));
 };
 exports.default = connected(SearchPage);
-
-//# sourceMappingURL=index.js.map
 
 /***/ }),
 
@@ -34110,8 +37188,6 @@ var AddCartForm = function AddCartForm(props) {
 exports.default = redux_form_1.reduxForm({
     form: 'addCart'
 })(AddCartForm);
-
-//# sourceMappingURL=AddCartForm.js.map
 
 /***/ }),
 
@@ -34142,8 +37218,6 @@ exports.Gallery = function (props) {
     })));
 };
 exports.default = exports.Gallery;
-
-//# sourceMappingURL=Galery.js.map
 
 /***/ }),
 
@@ -34176,9 +37250,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
         }
     };
 };
-var connected = react_redux_1.connect(function (state) {
-    return {};
-}, mapDispatchToProps);
+var connected = react_redux_1.connect(null, mapDispatchToProps);
 var Info = function Info(props) {
     return React.createElement("div", { className: "product__info" }, React.createElement("div", { className: "row space-between product__info-head" }, React.createElement("div", { className: "product__name" }, props.product.name), React.createElement("div", { className: "product__price" }, "$", props.product.price.toFixed(2))), React.createElement("div", { className: "product__description" }, props.product.description), React.createElement(AddCartForm_1.default, { colors: props.product.colors, sizes: props.product.sizes, liked: props.product.liked, initialValues: {
             count: 1,
@@ -34189,8 +37261,6 @@ var Info = function Info(props) {
         } }), React.createElement("div", { className: "product__share" }, React.createElement("b", null, "Share in:"), React.createElement("i", { className: "fab fa-facebook-f product__share-soc" }), React.createElement("i", { className: "fab fa-twitter product__share-soc" }), React.createElement("i", { className: "fab fa-pinterest-p product__share-soc" })), React.createElement("div", { className: "product__categories" }, React.createElement("b", null, "Category:"), React.createElement("span", { className: "ml-1" }, React.createElement(react_router_dom_1.Link, { to: "/categories/" + props.product.category }, props.product.category))), React.createElement("div", { className: "product__mark my-pad" }, React.createElement("b", { className: "product__mark-head" }, "Average mark:"), React.createElement("span", null, React.createElement(Mark_1.default, { rating: props.product.mark, fixed: true }))));
 };
 exports.default = connected(Info);
-
-//# sourceMappingURL=Info.js.map
 
 /***/ }),
 
@@ -34226,8 +37296,6 @@ var Like = function Like(props) {
 };
 exports.default = connected(Like);
 
-//# sourceMappingURL=Like.js.map
-
 /***/ }),
 
 /***/ "./resources/app/es5/components/SinglePage/ProductInfo/index.js":
@@ -34248,8 +37316,6 @@ var ProductInfo = function ProductInfo(props) {
     return React.createElement("div", { className: "product" }, React.createElement("div", { className: "container" }, React.createElement("div", { className: "row space-between product__content" }, React.createElement(Galery_1.default, { images: props.product.images }), React.createElement(Info_1.default, { product: props.product }))));
 };
 exports.default = ProductInfo;
-
-//# sourceMappingURL=index.js.map
 
 /***/ }),
 
@@ -34282,8 +37348,6 @@ var Review = function Review(_a) {
         } }, React.createElement("i", { className: "fas fa-angle-down" }), React.createElement("span", { className: classnames_1.default({ active: comment.curReaction == 'down' }) }, "\xA0", comment.dislikes))), React.createElement("div", { className: "reviews-list__item-date" }, comment.date)))));
 };
 exports.default = connected(Review);
-
-//# sourceMappingURL=Review.js.map
 
 /***/ }),
 
@@ -34324,8 +37388,6 @@ var ReviewFormRedux = redux_form_1.reduxForm({
 })(ReviewForm);
 exports.default = connected(ReviewFormRedux);
 
-//# sourceMappingURL=ReviewForm.js.map
-
 /***/ }),
 
 /***/ "./resources/app/es5/components/SinglePage/Reviews/ReviewSortForm.js":
@@ -34354,8 +37416,6 @@ exports.default = redux_form_1.reduxForm({
         dispatch(redux_form_1.submit('sortReviewsForm'));
     }
 })(GoodsHeaderForm);
-
-//# sourceMappingURL=ReviewSortForm.js.map
 
 /***/ }),
 
@@ -34415,8 +37475,6 @@ var ReviewsList = function ReviewsList(props) {
 };
 exports.default = connected(ReviewsList);
 
-//# sourceMappingURL=ReviewsList.js.map
-
 /***/ }),
 
 /***/ "./resources/app/es5/components/SinglePage/Reviews/UserData.js":
@@ -34437,8 +37495,6 @@ var UserData = function UserData() {
     return React.createElement(React.Fragment, null, React.createElement(redux_form_1.Field, { component: InputElement_1.default, name: "email", placeholder: "Email", required: true }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, name: "name", placeholder: "Name", required: true }));
 };
 exports.default = UserData;
-
-//# sourceMappingURL=UserData.js.map
 
 /***/ }),
 
@@ -34475,8 +37531,6 @@ var Reviews = function Reviews(props) {
     return React.createElement("div", { className: "reviews my-pad" }, React.createElement("div", { className: "container" }, React.createElement("div", { className: "reviews__head" }, "Reviews"), React.createElement(ReviewForm_1.default, { onSubmit: onSubmit }), React.createElement(ReviewsList_1.default, null)));
 };
 exports.default = connected(Reviews);
-
-//# sourceMappingURL=index.js.map
 
 /***/ }),
 
@@ -34529,8 +37583,6 @@ var SinglePage = function SinglePage(props) {
 };
 exports.default = connected(SinglePage);
 
-//# sourceMappingURL=index.js.map
-
 /***/ }),
 
 /***/ "./resources/app/es5/components/VerifyPage/index.js":
@@ -34548,6 +37600,8 @@ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 var Breadcrumbs_1 = __webpack_require__(/*! ../Breadcrumbs */ "./resources/app/es5/components/Breadcrumbs.js");
 var thunks_1 = __webpack_require__(/*! ../../redux/verify/thunks */ "./resources/app/es5/redux/verify/thunks.js");
+var IsAuthenticated_1 = __webpack_require__(/*! ../../HOC/IsAuthenticated */ "./resources/app/es5/HOC/IsAuthenticated.js");
+var NotFoundImg_1 = __webpack_require__(/*! ../NotFoundPage/NotFoundImg */ "./resources/app/es5/components/NotFoundPage/NotFoundImg.js");
 var mapStateToProps = function mapStateToProps(state) {
     return {
         verifyState: state.verify
@@ -34565,11 +37619,9 @@ var VerifyPage = function VerifyPage(props) {
     React.useEffect(function () {
         props.verify(props.match.params.id);
     }, []);
-    return React.createElement(React.Fragment, null, React.createElement(Breadcrumbs_1.default, { paths: [{ name: 'Home', path: '/' }, { name: 'Verify email', path: '/verify' }] }), props.verifyState.isLoading && React.createElement("div", null, "Loading..."), React.createElement("div", null, props.verifyState.message ? props.verifyState.message : props.verifyState.error));
+    return React.createElement(React.Fragment, null, React.createElement(Breadcrumbs_1.default, { paths: [{ name: 'Home', path: '/' }, { name: 'Verify email', path: '/verify' }] }), props.verifyState.isLoading && React.createElement("div", null, "Loading..."), props.verifyState.notFound && React.createElement(NotFoundImg_1.default, null), React.createElement("div", { className: "verify__text" }, props.verifyState.message ? props.verifyState.message : props.verifyState.error));
 };
-exports.default = connected(VerifyPage);
-
-//# sourceMappingURL=index.js.map
+exports.default = IsAuthenticated_1.default(false)(connected(VerifyPage));
 
 /***/ }),
 
@@ -34590,13 +37642,12 @@ var redux_1 = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js
 var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 var redux_thunk_1 = __webpack_require__(/*! redux-thunk */ "./node_modules/redux-thunk/es/index.js");
 var redux_devtools_extension_1 = __webpack_require__(/*! redux-devtools-extension */ "./node_modules/redux-devtools-extension/index.js");
+var react_toastify_1 = __webpack_require__(/*! react-toastify */ "./node_modules/react-toastify/dist/react-toastify.esm.js");
 var App_1 = __webpack_require__(/*! ./components/App */ "./resources/app/es5/components/App.js");
 var redux_2 = __webpack_require__(/*! ./redux/ */ "./resources/app/es5/redux/index.js");
 var SaveCartMiddleware_1 = __webpack_require__(/*! ./Helpers/Middlewares/SaveCartMiddleware */ "./resources/app/es5/Helpers/Middlewares/SaveCartMiddleware.js");
 var store = redux_1.createStore(redux_2.default, redux_devtools_extension_1.composeWithDevTools(redux_1.applyMiddleware(redux_thunk_1.default, SaveCartMiddleware_1.default)));
-ReactDOM.render(React.createElement(react_redux_1.Provider, { store: store }, React.createElement(App_1.default, null)), document.querySelector('#root'));
-
-//# sourceMappingURL=main.js.map
+ReactDOM.render(React.createElement(react_redux_1.Provider, { store: store }, React.createElement(App_1.default, null), React.createElement(react_toastify_1.ToastContainer, { position: "bottom-right", autoClose: 5000, hideProgressBar: false, draggable: true, pauseOnHover: true })), document.querySelector('#root'));
 
 /***/ }),
 
@@ -34617,8 +37668,6 @@ exports.initialize = function () {
         type: types_1.APP_INITIALIZED
     };
 };
-
-//# sourceMappingURL=actions.js.map
 
 /***/ }),
 
@@ -34649,8 +37698,6 @@ var appReducer = function appReducer(state, action) {
 };
 exports.default = appReducer;
 
-//# sourceMappingURL=reducer.js.map
-
 /***/ }),
 
 /***/ "./resources/app/es5/redux/AppState/app/selectors.js":
@@ -34667,8 +37714,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.selectInitialized = function (state) {
   return state.app.initialized;
 };
-
-//# sourceMappingURL=selectors.js.map
 
 /***/ }),
 
@@ -34786,8 +37831,6 @@ var thunkInitialize = function thunkInitialize() {
 };
 exports.default = thunkInitialize;
 
-//# sourceMappingURL=thunks.js.map
-
 /***/ }),
 
 /***/ "./resources/app/es5/redux/AppState/app/types.js":
@@ -34802,8 +37845,6 @@ exports.default = thunkInitialize;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.APP_INITIALIZED = 'app/INITIALIZED';
-
-//# sourceMappingURL=types.js.map
 
 /***/ }),
 
@@ -34853,8 +37894,6 @@ exports.cartLoadSuccess = function (products) {
         payload: products
     };
 };
-
-//# sourceMappingURL=actions.js.map
 
 /***/ }),
 
@@ -34925,8 +37964,6 @@ var cartReducer = function cartReducer(state, action) {
 };
 exports.default = cartReducer;
 
-//# sourceMappingURL=reducer.js.map
-
 /***/ }),
 
 /***/ "./resources/app/es5/redux/AppState/cart/selectors.js":
@@ -34955,8 +37992,6 @@ exports.selectCartPrice = reselect_1.createSelector([exports.selectCartItems], f
     return sum + item.count * item.product.price;
   }, 0);
 });
-
-//# sourceMappingURL=selectors.js.map
 
 /***/ }),
 
@@ -35071,14 +38106,16 @@ var API_1 = __webpack_require__(/*! ../../../Helpers/API */ "./resources/app/es5
 var thunkCart = function thunkCart() {
     return function (dispatch) {
         return __awaiter(void 0, void 0, void 0, function () {
-            var cartItems, productIDs, cartResponse, parsedCartItems;
+            var cartItems, productIDs, cartResponse_1, parsedCartItems, e_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         cartItems = [];
                         try {
                             cartItems = JSON.parse(localStorage.getItem('cartItems'));
-                            if (!cartItems || !cartItems.length) return [2];
+                            if (!cartItems || !cartItems.length) {
+                                return [2];
+                            }
                         } catch (e) {
                             return [2];
                         }
@@ -35086,19 +38123,24 @@ var thunkCart = function thunkCart() {
                         productIDs = cartItems.map(function (item) {
                             return item.product;
                         });
-                        return [4, API_1.default.getProductsByIds(productIDs)];
+                        _a.label = 1;
                     case 1:
-                        cartResponse = _a.sent();
-                        if (API_1.default.isError(cartResponse)) {
-                            dispatch(actions_1.cartLoadError(cartResponse.message));
-                        } else {
-                            parsedCartItems = cartItems.map(function (item) {
-                                return __assign(__assign({}, item), { product: cartResponse.find(function (i) {
-                                        return i.id == item.product;
-                                    }) });
-                            });
-                            dispatch(actions_1.cartLoadSuccess(parsedCartItems));
-                        }
+                        _a.trys.push([1, 3,, 4]);
+                        return [4, API_1.dataApi.getProductsByIds(productIDs)];
+                    case 2:
+                        cartResponse_1 = _a.sent();
+                        parsedCartItems = cartItems.map(function (item) {
+                            return __assign(__assign({}, item), { product: cartResponse_1.data.find(function (i) {
+                                    return i.id == item.product;
+                                }) });
+                        });
+                        dispatch(actions_1.cartLoadSuccess(parsedCartItems));
+                        return [3, 4];
+                    case 3:
+                        e_1 = _a.sent();
+                        dispatch(actions_1.cartLoadError(e_1.message));
+                        return [3, 4];
+                    case 4:
                         return [2];
                 }
             });
@@ -35106,8 +38148,6 @@ var thunkCart = function thunkCart() {
     };
 };
 exports.default = thunkCart;
-
-//# sourceMappingURL=thunks.js.map
 
 /***/ }),
 
@@ -35129,8 +38169,6 @@ exports.CART_UPDATE = 'cart/UPDATE';
 exports.CART_LOAD_START = 'cart/LOAD_START';
 exports.CART_LOAD_ERROR = 'cart/LOAD_ERROR';
 exports.CART_LOAD_SUCCESS = 'cart/LOAD_SUCCESS';
-
-//# sourceMappingURL=types.js.map
 
 /***/ }),
 
@@ -35163,8 +38201,6 @@ exports.filterError = function (error) {
         error: error
     };
 };
-
-//# sourceMappingURL=actions.js.map
 
 /***/ }),
 
@@ -35201,8 +38237,6 @@ var filtersReducer = function filtersReducer(state, action) {
 };
 exports.default = filtersReducer;
 
-//# sourceMappingURL=reducer.js.map
-
 /***/ }),
 
 /***/ "./resources/app/es5/redux/AppState/filter/selectors.js":
@@ -35222,8 +38256,6 @@ exports.selectFilterState = function (state) {
 exports.selectFilters = function (state) {
   return state.filter.filters;
 };
-
-//# sourceMappingURL=selectors.js.map
 
 /***/ }),
 
@@ -35326,19 +38358,24 @@ var API_1 = __webpack_require__(/*! ../../../Helpers/API */ "./resources/app/es5
 var thunkFilter = function thunkFilter() {
     return function (dispatch) {
         return __awaiter(void 0, void 0, void 0, function () {
-            var filterResponse;
+            var filterResponse, e_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         dispatch(actions_1.filterStart());
-                        return [4, API_1.default.getFilters()];
+                        _a.label = 1;
                     case 1:
+                        _a.trys.push([1, 3,, 4]);
+                        return [4, API_1.dataApi.getFilters()];
+                    case 2:
                         filterResponse = _a.sent();
-                        if (API_1.default.isError(filterResponse)) {
-                            dispatch(actions_1.filterError(filterResponse.message));
-                        } else {
-                            dispatch(actions_1.filterSuccess(filterResponse));
-                        }
+                        dispatch(actions_1.filterSuccess(filterResponse.data));
+                        return [3, 4];
+                    case 3:
+                        e_1 = _a.sent();
+                        dispatch(actions_1.filterError(e_1.message));
+                        return [3, 4];
+                    case 4:
                         return [2];
                 }
             });
@@ -35346,8 +38383,6 @@ var thunkFilter = function thunkFilter() {
     };
 };
 exports.default = thunkFilter;
-
-//# sourceMappingURL=thunks.js.map
 
 /***/ }),
 
@@ -35365,8 +38400,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.FILTER_START = 'filter/START';
 exports.FILTER_SUCCESS = 'filter/SUCCESS';
 exports.FILTER_ERROR = 'filter/ERROR';
-
-//# sourceMappingURL=types.js.map
 
 /***/ }),
 
@@ -35404,8 +38437,6 @@ exports.resetUser = function () {
         type: types_1.USER_RESET
     };
 };
-
-//# sourceMappingURL=actions.js.map
 
 /***/ }),
 
@@ -35458,8 +38489,6 @@ var cartReducer = function cartReducer(state, action) {
 };
 exports.default = cartReducer;
 
-//# sourceMappingURL=reducer.js.map
-
 /***/ }),
 
 /***/ "./resources/app/es5/redux/AppState/user/selectors.js":
@@ -35482,8 +38511,6 @@ exports.selectUserIsAuthorized = function (state) {
 exports.selectUser = function (state) {
   return state.user.user;
 };
-
-//# sourceMappingURL=selectors.js.map
 
 /***/ }),
 
@@ -35586,21 +38613,31 @@ var API_1 = __webpack_require__(/*! ../../../Helpers/API */ "./resources/app/es5
 var thunkUser = function thunkUser() {
     return function (dispatch) {
         return __awaiter(void 0, void 0, void 0, function () {
-            var token, userResponse;
+            var token, userResponse, e_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         token = localStorage.getItem('token');
-                        if (!token) return [2];
-                        dispatch(actions_1.loadUserStart());
-                        return [4, API_1.default.getUser()];
-                    case 1:
-                        userResponse = _a.sent();
-                        if (API_1.default.isError(userResponse)) {
-                            dispatch(actions_1.loadUserError(userResponse.message));
-                        } else {
-                            dispatch(actions_1.loadUserSuccessfull({ user: userResponse, token: token }));
+                        if (!token) {
+                            return [2];
                         }
+                        dispatch(actions_1.loadUserStart());
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 3,, 4]);
+                        return [4, API_1.userApi.getUser()];
+                    case 2:
+                        userResponse = _a.sent();
+                        dispatch(actions_1.loadUserSuccessfull({
+                            user: userResponse.data,
+                            token: token
+                        }));
+                        return [3, 4];
+                    case 3:
+                        e_1 = _a.sent();
+                        dispatch(actions_1.loadUserError(e_1.message));
+                        return [3, 4];
+                    case 4:
                         return [2];
                 }
             });
@@ -35608,8 +38645,6 @@ var thunkUser = function thunkUser() {
     };
 };
 exports.default = thunkUser;
-
-//# sourceMappingURL=thunks.js.map
 
 /***/ }),
 
@@ -35628,8 +38663,6 @@ exports.USER_LOAD_START = 'userLoad/START';
 exports.USER_LOAD_ERROR = 'userLoad/ERROR';
 exports.USER_LOAD_SUCCESSFULL = 'userLoad/SUCCESSFULL';
 exports.USER_RESET = 'user/RESET';
-
-//# sourceMappingURL=types.js.map
 
 /***/ }),
 
@@ -35661,8 +38694,6 @@ exports.commentAddSuccess = function () {
         type: types_1.COMMENT_ADD_SUCCESS
     };
 };
-
-//# sourceMappingURL=actions.js.map
 
 /***/ }),
 
@@ -35697,8 +38728,6 @@ var addCommentReducer = function addCommentReducer(state, action) {
     return state;
 };
 exports.default = addCommentReducer;
-
-//# sourceMappingURL=reducer.js.map
 
 /***/ }),
 
@@ -35802,25 +38831,28 @@ var API_1 = __webpack_require__(/*! ../../../Helpers/API */ "./resources/app/es5
 var thunkAddComment = function thunkAddComment(productID, vals, formName) {
     return function (dispatch) {
         return __awaiter(void 0, void 0, void 0, function () {
-            var addCommentResponse;
+            var e_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         dispatch(actions_1.commentAddStart());
-                        return [4, API_1.default.addComment(productID, vals)];
+                        _a.label = 1;
                     case 1:
-                        addCommentResponse = _a.sent();
-                        console.log(addCommentResponse);
-                        if (API_1.default.isError(addCommentResponse)) {
-                            if (addCommentResponse.response.data.errors) {
-                                dispatch(redux_form_1.updateSyncErrors(formName, addCommentResponse.response.data.errors, addCommentResponse.response.data.message));
-                            } else {
-                                dispatch(actions_1.commentAddError(addCommentResponse.response.data.message));
-                            }
-                        } else {
-                            dispatch(redux_form_1.reset(formName));
-                            dispatch(actions_1.commentAddSuccess());
+                        _a.trys.push([1, 3,, 4]);
+                        return [4, API_1.dataApi.addComment(productID, vals)];
+                    case 2:
+                        _a.sent();
+                        dispatch(redux_form_1.reset(formName));
+                        dispatch(actions_1.commentAddSuccess());
+                        return [3, 4];
+                    case 3:
+                        e_1 = _a.sent();
+                        if (e_1.data.response.data.errors) {
+                            dispatch(redux_form_1.updateSyncErrors(formName, e_1.data.response.data.errors, e_1.data.response.data.message));
                         }
+                        dispatch(actions_1.commentAddError(e_1.message));
+                        return [3, 4];
+                    case 4:
                         return [2];
                 }
             });
@@ -35828,8 +38860,6 @@ var thunkAddComment = function thunkAddComment(productID, vals, formName) {
     };
 };
 exports.default = thunkAddComment;
-
-//# sourceMappingURL=thunks.js.map
 
 /***/ }),
 
@@ -35847,8 +38877,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.COMMENT_ADD_START = 'commentAdd/START';
 exports.COMMENT_ADD_SUCCESS = 'commentAdd/SUCCESS';
 exports.COMMENT_ADD_ERROR = 'commentAdd/ERROR';
-
-//# sourceMappingURL=types.js.map
 
 /***/ }),
 
@@ -35892,8 +38920,6 @@ exports.commentReactionChange = function (commentID, reaction) {
         payload: { commentID: commentID, reaction: reaction }
     };
 };
-
-//# sourceMappingURL=actions.js.map
 
 /***/ }),
 
@@ -35962,8 +38988,6 @@ var commentReducer = function commentReducer(state, action) {
     return state;
 };
 exports.default = commentReducer;
-
-//# sourceMappingURL=reducer.js.map
 
 /***/ }),
 
@@ -36066,16 +39090,23 @@ var API_1 = __webpack_require__(/*! ../../../../Helpers/API */ "./resources/app/
 var thunkReactionChange = function thunkReactionChange(commentID, reaction) {
     return function (dispatch) {
         return __awaiter(void 0, void 0, void 0, function () {
-            var reactionResponse;
+            var reactionResponse, e_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        return [4, API_1.default.changeReaction(commentID, reaction)];
+                        _a.trys.push([0, 2,, 3]);
+                        return [4, API_1.dataApi.changeReaction(commentID, reaction)];
                     case 1:
                         reactionResponse = _a.sent();
-                        if (!API_1.default.isError(reactionResponse) && reactionResponse.success) {
+                        if (reactionResponse.data.success) {
                             dispatch(actions_1.commentReactionChange(commentID, reaction));
                         }
+                        return [3, 3];
+                    case 2:
+                        e_1 = _a.sent();
+                        console.log(e_1);
+                        return [3, 3];
+                    case 3:
                         return [2];
                 }
             });
@@ -36083,8 +39114,6 @@ var thunkReactionChange = function thunkReactionChange(commentID, reaction) {
     };
 };
 exports.default = thunkReactionChange;
-
-//# sourceMappingURL=reactionChange.js.map
 
 /***/ }),
 
@@ -36191,21 +39220,26 @@ var thunkComment = function thunkComment(productID, offset) {
     }
     return function (dispatch, getState) {
         return __awaiter(void 0, void 0, void 0, function () {
-            var selector, sortType, commentResponse;
+            var selector, sortType, commentResponse, e_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         dispatch(actions_1.commentStart());
                         selector = redux_form_1.formValueSelector('sortReviewsForm');
                         sortType = selector(getState(), 'type');
-                        return [4, API_1.default.getComments(productID, offset, sortType)];
+                        _a.label = 1;
                     case 1:
+                        _a.trys.push([1, 3,, 4]);
+                        return [4, API_1.dataApi.getComments(productID, offset, sortType)];
+                    case 2:
                         commentResponse = _a.sent();
-                        if (API_1.default.isError(commentResponse)) {
-                            dispatch(actions_1.commentError(commentResponse.message));
-                        } else {
-                            dispatch(actions_1.commentSuccess(commentResponse));
-                        }
+                        dispatch(actions_1.commentSuccess(commentResponse.data));
+                        return [3, 4];
+                    case 3:
+                        e_1 = _a.sent();
+                        dispatch(actions_1.commentError(e_1.data.response.data.message));
+                        return [3, 4];
+                    case 4:
                         return [2];
                 }
             });
@@ -36213,8 +39247,6 @@ var thunkComment = function thunkComment(productID, offset) {
     };
 };
 exports.default = thunkComment;
-
-//# sourceMappingURL=thunkComment.js.map
 
 /***/ }),
 
@@ -36234,8 +39266,6 @@ exports.PRODUCT_COMMENT_START = 'productComment/START';
 exports.PRODUCT_COMMENT_SUCCESS = 'productComment/SUCCESS';
 exports.PRODUCT_COMMENT_ERROR = 'productComment/ERROR';
 exports.PRODUCT_COMMENT_REACTION_CHANGE = 'productComment/REACTION_CHANGE';
-
-//# sourceMappingURL=types.js.map
 
 /***/ }),
 
@@ -36259,8 +39289,6 @@ exports.default = redux_1.combineReducers({
     comments: reducer_2.default,
     product: reducer_3.default
 });
-
-//# sourceMappingURL=index.js.map
 
 /***/ }),
 
@@ -36299,8 +39327,6 @@ exports.productLikeChange = function (liked) {
         payload: liked
     };
 };
-
-//# sourceMappingURL=actions.js.map
 
 /***/ }),
 
@@ -36350,8 +39376,6 @@ var productReducer = function productReducer(state, action) {
     return state;
 };
 exports.default = productReducer;
-
-//# sourceMappingURL=reducer.js.map
 
 /***/ }),
 
@@ -36455,20 +39479,25 @@ var actions_2 = __webpack_require__(/*! ../actions */ "./resources/app/es5/redux
 var thunkProduct = function thunkProduct(slug) {
     return function (dispatch) {
         return __awaiter(void 0, void 0, void 0, function () {
-            var productResponse;
+            var productResponse, e_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         dispatch(actions_2.productStart());
                         dispatch(actions_1.commentReset());
-                        return [4, API_1.default.getProductInfo(slug)];
+                        _a.label = 1;
                     case 1:
+                        _a.trys.push([1, 3,, 4]);
+                        return [4, API_1.dataApi.getProductInfo(slug)];
+                    case 2:
                         productResponse = _a.sent();
-                        if (API_1.default.isError(productResponse)) {
-                            dispatch(actions_2.productError(productResponse.message));
-                        } else {
-                            dispatch(actions_2.productSuccess(productResponse));
-                        }
+                        dispatch(actions_2.productSuccess(productResponse.data));
+                        return [3, 4];
+                    case 3:
+                        e_1 = _a.sent();
+                        dispatch(actions_2.productError(e_1.message));
+                        return [3, 4];
+                    case 4:
                         return [2];
                 }
             });
@@ -36476,8 +39505,6 @@ var thunkProduct = function thunkProduct(slug) {
     };
 };
 exports.default = thunkProduct;
-
-//# sourceMappingURL=thunkProduct.js.map
 
 /***/ }),
 
@@ -36580,16 +39607,21 @@ var API_1 = __webpack_require__(/*! ../../../../Helpers/API */ "./resources/app/
 var thunkToggleLike = function thunkToggleLike(productID) {
     return function (dispatch) {
         return __awaiter(void 0, void 0, void 0, function () {
-            var likeResponse;
+            var toggleResponse, e_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        return [4, API_1.default.changeLike(productID)];
+                        _a.trys.push([0, 2,, 3]);
+                        return [4, API_1.dataApi.changeLike(productID)];
                     case 1:
-                        likeResponse = _a.sent();
-                        if (!API_1.default.isError(likeResponse)) {
-                            dispatch(actions_1.productLikeChange(likeResponse.message));
-                        }
+                        toggleResponse = _a.sent();
+                        dispatch(actions_1.productLikeChange(toggleResponse.data.message));
+                        return [3, 3];
+                    case 2:
+                        e_1 = _a.sent();
+                        console.log(e_1);
+                        return [3, 3];
+                    case 3:
                         return [2];
                 }
             });
@@ -36597,8 +39629,6 @@ var thunkToggleLike = function thunkToggleLike(productID) {
     };
 };
 exports.default = thunkToggleLike;
-
-//# sourceMappingURL=thunkToggleLike.js.map
 
 /***/ }),
 
@@ -36617,8 +39647,6 @@ exports.PRODUCT_START = 'product/START';
 exports.PRODUCT_SUCCESS = 'product/SUCCESS';
 exports.PRODUCT_ERROR = 'product/ERROR';
 exports.PRODUCT_LIKE_CHANGE = 'product/LIKE_CHANGE';
-
-//# sourceMappingURL=types.js.map
 
 /***/ }),
 
@@ -36645,8 +39673,6 @@ exports.selectSingleID = function (state) {
 exports.selectSingleComments = function (state) {
   return state.single.comments;
 };
-
-//# sourceMappingURL=selectors.js.map
 
 /***/ }),
 
@@ -36679,8 +39705,6 @@ exports.categoryLoadFailure = function (error) {
         error: error
     };
 };
-
-//# sourceMappingURL=actions.js.map
 
 /***/ }),
 
@@ -36730,8 +39754,6 @@ var categoryReducer = function categoryReducer(state, action) {
 };
 exports.default = categoryReducer;
 
-//# sourceMappingURL=reducer.js.map
-
 /***/ }),
 
 /***/ "./resources/app/es5/redux/category/selectors.js":
@@ -36751,8 +39773,6 @@ exports.selectCategories = function (state) {
 exports.selectCategoriesState = function (state) {
   return state.categories;
 };
-
-//# sourceMappingURL=selectors.js.map
 
 /***/ }),
 
@@ -36855,19 +39875,24 @@ var API_1 = __webpack_require__(/*! ../../Helpers/API */ "./resources/app/es5/He
 var thunkCategory = function thunkCategory() {
     return function (dispatch) {
         return __awaiter(void 0, void 0, void 0, function () {
-            var categoryResponse;
+            var categoryResponse, e_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         dispatch(actions_1.categoryLoadStart());
-                        return [4, API_1.default.getCategories()];
+                        _a.label = 1;
                     case 1:
+                        _a.trys.push([1, 3,, 4]);
+                        return [4, API_1.dataApi.getCategories()];
+                    case 2:
                         categoryResponse = _a.sent();
-                        if (API_1.default.isError(categoryResponse)) {
-                            dispatch(actions_1.categoryLoadFailure(categoryResponse.message));
-                        } else {
-                            dispatch(actions_1.categoryLoadSuccess(categoryResponse));
-                        }
+                        dispatch(actions_1.categoryLoadSuccess(categoryResponse.data));
+                        return [3, 4];
+                    case 3:
+                        e_1 = _a.sent();
+                        dispatch(actions_1.categoryLoadFailure(e_1.message));
+                        return [3, 4];
+                    case 4:
                         return [2];
                 }
             });
@@ -36875,8 +39900,6 @@ var thunkCategory = function thunkCategory() {
     };
 };
 exports.default = thunkCategory;
-
-//# sourceMappingURL=thunks.js.map
 
 /***/ }),
 
@@ -36894,8 +39917,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CATEGORY_LOAD_START = 'category/START';
 exports.CATEGORY_LOAD_SUCCESS = 'category/SUCCESS';
 exports.CATEGORY_LOAD_ERROR = 'category/ERROR';
-
-//# sourceMappingURL=types.js.map
 
 /***/ }),
 
@@ -36927,8 +39948,6 @@ exports.changeSuccess = function () {
         type: types_1.CHANGE_SUCCESS
     };
 };
-
-//# sourceMappingURL=actions.js.map
 
 /***/ }),
 
@@ -36964,8 +39983,6 @@ var loginReducer = function loginReducer(state, action) {
 };
 exports.default = loginReducer;
 
-//# sourceMappingURL=reducer.js.map
-
 /***/ }),
 
 /***/ "./resources/app/es5/redux/change/selectors.js":
@@ -36982,8 +39999,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.selectChangeState = function (state) {
   return state.change;
 };
-
-//# sourceMappingURL=selectors.js.map
 
 /***/ }),
 
@@ -37087,23 +40102,28 @@ var API_1 = __webpack_require__(/*! ../../Helpers/API */ "./resources/app/es5/He
 var thunkChange = function thunkChange(id, vals, formName) {
     return function (dispatch) {
         return __awaiter(void 0, void 0, void 0, function () {
-            var changeResponse;
+            var e_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         dispatch(actions_1.changeStart());
-                        return [4, API_1.default.changePassword(id, vals)];
+                        _a.label = 1;
                     case 1:
-                        changeResponse = _a.sent();
-                        if (API_1.default.isError(changeResponse)) {
-                            if (changeResponse.response.data.errors) {
-                                dispatch(redux_form_1.updateSyncErrors(formName, changeResponse.response.data.errors, changeResponse.response.data.message));
-                            }
-                            dispatch(actions_1.changeError(changeResponse.response.data.message));
-                        } else {
-                            dispatch(redux_form_1.reset(formName));
-                            dispatch(actions_1.changeSuccess());
+                        _a.trys.push([1, 3,, 4]);
+                        return [4, API_1.userApi.changePassword(id, vals)];
+                    case 2:
+                        _a.sent();
+                        dispatch(redux_form_1.reset(formName));
+                        dispatch(actions_1.changeSuccess());
+                        return [3, 4];
+                    case 3:
+                        e_1 = _a.sent();
+                        if (e_1.data.response.data.errors) {
+                            dispatch(redux_form_1.updateSyncErrors(formName, e_1.data.response.data.errors, e_1.data.response.data.message));
                         }
+                        dispatch(actions_1.changeError(e_1.message));
+                        return [3, 4];
+                    case 4:
                         return [2];
                 }
             });
@@ -37111,8 +40131,6 @@ var thunkChange = function thunkChange(id, vals, formName) {
     };
 };
 exports.default = thunkChange;
-
-//# sourceMappingURL=thunks.js.map
 
 /***/ }),
 
@@ -37130,8 +40148,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CHANGE_START = 'change/START';
 exports.CHANGE_SUCCESS = 'change/SUCCESS';
 exports.CHANGE_ERROR = 'change/ERROR';
-
-//# sourceMappingURL=types.js.map
 
 /***/ }),
 
@@ -37164,8 +40180,6 @@ exports.checkoutError = function (error) {
         error: error
     };
 };
-
-//# sourceMappingURL=actions.js.map
 
 /***/ }),
 
@@ -37213,8 +40227,6 @@ var checkoutReducer = function checkoutReducer(state, action) {
     return state;
 };
 exports.default = checkoutReducer;
-
-//# sourceMappingURL=reducer.js.map
 
 /***/ }),
 
@@ -37331,7 +40343,7 @@ var actions_2 = __webpack_require__(/*! ../AppState/cart/actions */ "./resources
 var thunkCheckout = function thunkCheckout(vals, formName) {
     return function (dispatch, getState) {
         return __awaiter(void 0, void 0, void 0, function () {
-            var cartItems, mappedCartItems, checkoutResponse;
+            var cartItems, mappedCartItems, checkoutResponse, e_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -37340,21 +40352,24 @@ var thunkCheckout = function thunkCheckout(vals, formName) {
                         mappedCartItems = cartItems.map(function (item) {
                             return __assign(__assign({}, item), { product: item.product.id });
                         });
-                        return [4, API_1.default.createOrder(__assign(__assign({}, vals), { cartItems: mappedCartItems }))];
+                        _a.label = 1;
                     case 1:
+                        _a.trys.push([1, 3,, 4]);
+                        return [4, API_1.dataApi.createOrder(__assign(__assign({}, vals), { cartItems: mappedCartItems }))];
+                    case 2:
                         checkoutResponse = _a.sent();
-                        console.log(checkoutResponse);
-                        if (API_1.default.isError(checkoutResponse)) {
-                            if (checkoutResponse.response.data.errors) {
-                                dispatch(redux_form_1.updateSyncErrors(formName, checkoutResponse.response.data.errors, checkoutResponse.response.data.message));
-                            } else {
-                                dispatch(actions_1.checkoutError(checkoutResponse.response.data.message));
-                            }
-                        } else {
-                            dispatch(redux_form_1.reset(formName));
-                            dispatch(actions_1.checkoutSuccess(checkoutResponse.success));
-                            dispatch(actions_2.cartReset());
+                        dispatch(redux_form_1.reset(formName));
+                        dispatch(actions_1.checkoutSuccess(checkoutResponse.data.success));
+                        dispatch(actions_2.cartReset());
+                        return [3, 4];
+                    case 3:
+                        e_1 = _a.sent();
+                        if (e_1.data.response.data.errors) {
+                            dispatch(redux_form_1.updateSyncErrors(formName, e_1.data.response.data.errors, e_1.data.response.data.message));
                         }
+                        dispatch(actions_1.checkoutError(e_1.message));
+                        return [3, 4];
+                    case 4:
                         return [2];
                 }
             });
@@ -37362,8 +40377,6 @@ var thunkCheckout = function thunkCheckout(vals, formName) {
     };
 };
 exports.default = thunkCheckout;
-
-//# sourceMappingURL=thunks.js.map
 
 /***/ }),
 
@@ -37381,8 +40394,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CHECKOUT_START = 'checkout/START';
 exports.CHECKOUT_SUCCESS = 'checkout/SUCCESS';
 exports.CHECKOUT_ERROR = 'checkout/ERROR';
-
-//# sourceMappingURL=types.js.map
 
 /***/ }),
 
@@ -37406,14 +40417,12 @@ var SingleState_1 = __webpack_require__(/*! ./SingleState/ */ "./resources/app/e
 var reducer_4 = __webpack_require__(/*! ./category/reducer */ "./resources/app/es5/redux/category/reducer.js");
 var reducer_5 = __webpack_require__(/*! ./change/reducer */ "./resources/app/es5/redux/change/reducer.js");
 var reducer_6 = __webpack_require__(/*! ./checkout/reducer */ "./resources/app/es5/redux/checkout/reducer.js");
-var reducer_7 = __webpack_require__(/*! ./login/reducer */ "./resources/app/es5/redux/login/reducer.js");
-var reducer_8 = __webpack_require__(/*! ./logout/reducer */ "./resources/app/es5/redux/logout/reducer.js");
-var reducer_9 = __webpack_require__(/*! ./AppState/user/reducer */ "./resources/app/es5/redux/AppState/user/reducer.js");
-var reducer_10 = __webpack_require__(/*! ./productList/reducer */ "./resources/app/es5/redux/productList/reducer.js");
-var reducer_11 = __webpack_require__(/*! ./register/reducer */ "./resources/app/es5/redux/register/reducer.js");
-var reducer_12 = __webpack_require__(/*! ./reset/reducer */ "./resources/app/es5/redux/reset/reducer.js");
-var reducer_13 = __webpack_require__(/*! ./search/reducer */ "./resources/app/es5/redux/search/reducer.js");
-var reducer_14 = __webpack_require__(/*! ./verify/reducer */ "./resources/app/es5/redux/verify/reducer.js");
+var reducer_7 = __webpack_require__(/*! ./logout/reducer */ "./resources/app/es5/redux/logout/reducer.js");
+var reducer_8 = __webpack_require__(/*! ./AppState/user/reducer */ "./resources/app/es5/redux/AppState/user/reducer.js");
+var reducer_9 = __webpack_require__(/*! ./productList/reducer */ "./resources/app/es5/redux/productList/reducer.js");
+var reducer_10 = __webpack_require__(/*! ./search/reducer */ "./resources/app/es5/redux/search/reducer.js");
+var reducer_11 = __webpack_require__(/*! ./verify/reducer */ "./resources/app/es5/redux/verify/reducer.js");
+var reducer_12 = __webpack_require__(/*! ./login/reducer */ "./resources/app/es5/redux/login/reducer.js");
 var storeReducer = redux_1.combineReducers({
     app: reducer_1.default,
     cart: reducer_2.default,
@@ -37422,19 +40431,15 @@ var storeReducer = redux_1.combineReducers({
     categories: reducer_4.default,
     change: reducer_5.default,
     checkout: reducer_6.default,
-    login: reducer_7.default,
-    logout: reducer_8.default,
-    user: reducer_9.default,
-    productList: reducer_10.default,
-    register: reducer_11.default,
-    reset: reducer_12.default,
-    search: reducer_13.default,
-    verify: reducer_14.default,
+    login: reducer_12.default,
+    logout: reducer_7.default,
+    user: reducer_8.default,
+    productList: reducer_9.default,
+    search: reducer_10.default,
+    verify: reducer_11.default,
     form: redux_form_1.reducer
 });
 exports.default = storeReducer;
-
-//# sourceMappingURL=index.js.map
 
 /***/ }),
 
@@ -37450,24 +40455,21 @@ exports.default = storeReducer;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var types_1 = __webpack_require__(/*! ./types */ "./resources/app/es5/redux/login/types.js");
-exports.loginStart = function () {
+exports.loginResend = function () {
     return {
-        type: types_1.LOGIN_START
+        type: types_1.LOGIN_RESEND
     };
 };
-exports.loginSuccess = function () {
+exports.loginReset = function () {
     return {
-        type: types_1.LOGIN_SUCCESS
+        type: types_1.LOGIN_RESET
     };
 };
-exports.loginError = function (error) {
+exports.loginClear = function () {
     return {
-        type: types_1.LOGIN_ERROR,
-        error: error
+        type: types_1.LOGIN_CLEAR
     };
 };
-
-//# sourceMappingURL=actions.js.map
 
 /***/ }),
 
@@ -37481,48 +40483,39 @@ exports.loginError = function (error) {
 "use strict";
 
 
+var __assign = undefined && undefined.__assign || function () {
+    __assign = Object.assign || function (t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) {
+                if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+            }
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var types_1 = __webpack_require__(/*! ./types */ "./resources/app/es5/redux/login/types.js");
 var initialState = {
-    error: null,
-    isLoading: false
+    needResend: false,
+    needReset: false
 };
-var loginReducer = function loginReducer(state, action) {
+var logoutReducer = function logoutReducer(state, action) {
     if (state === void 0) {
         state = initialState;
     }
     switch (action.type) {
-        case types_1.LOGIN_START:
-            return { error: null, isLoading: true };
-        case types_1.LOGIN_SUCCESS:
-            return { isLoading: false, error: null };
-        case types_1.LOGIN_ERROR:
-            return { error: action.error, isLoading: false };
+        case types_1.LOGIN_RESEND:
+            return { needReset: false, needResend: true };
+        case types_1.LOGIN_RESET:
+            return { needResend: false, needReset: true };
+        case types_1.LOGIN_CLEAR:
+            return __assign({}, initialState);
     }
     return state;
 };
-exports.default = loginReducer;
-
-//# sourceMappingURL=reducer.js.map
-
-/***/ }),
-
-/***/ "./resources/app/es5/redux/login/selectors.js":
-/*!****************************************************!*\
-  !*** ./resources/app/es5/redux/login/selectors.js ***!
-  \****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.selectLoginState = function (state) {
-  return state.login;
-};
-
-//# sourceMappingURL=selectors.js.map
+exports.default = logoutReducer;
 
 /***/ }),
 
@@ -37536,6 +40529,18 @@ exports.selectLoginState = function (state) {
 "use strict";
 
 
+var __assign = undefined && undefined.__assign || function () {
+    __assign = Object.assign || function (t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) {
+                if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+            }
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
     function adopt(value) {
         return value instanceof P ? value : new P(function (resolve) {
@@ -37621,32 +40626,42 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
-var actions_1 = __webpack_require__(/*! ./actions */ "./resources/app/es5/redux/login/actions.js");
 var API_1 = __webpack_require__(/*! ../../Helpers/API */ "./resources/app/es5/Helpers/API.js");
-var actions_2 = __webpack_require__(/*! ../AppState/user/actions */ "./resources/app/es5/redux/AppState/user/actions.js");
+var actions_1 = __webpack_require__(/*! ../AppState/user/actions */ "./resources/app/es5/redux/AppState/user/actions.js");
+var react_toastify_1 = __webpack_require__(/*! react-toastify */ "./node_modules/react-toastify/dist/react-toastify.esm.js");
+var actions_2 = __webpack_require__(/*! ./actions */ "./resources/app/es5/redux/login/actions.js");
 var thunkLogin = function thunkLogin(vals, formName) {
     return function (dispatch) {
         return __awaiter(void 0, void 0, void 0, function () {
-            var loginResponse;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
+            var loginResponse, e_1;
+            var _a, _b, _c, _d;
+            return __generator(this, function (_e) {
+                switch (_e.label) {
                     case 0:
-                        dispatch(actions_1.loginStart());
-                        return [4, API_1.default.loginUser(vals)];
+                        dispatch(redux_form_1.startSubmit(formName));
+                        _e.label = 1;
                     case 1:
-                        loginResponse = _a.sent();
-                        console.log(loginResponse);
-                        if (API_1.default.isError(loginResponse)) {
-                            if (loginResponse.response.data.errors) {
-                                dispatch(redux_form_1.updateSyncErrors(formName, loginResponse.response.data.errors, loginResponse.response.data.message));
-                            } else {
-                                dispatch(actions_1.loginError(loginResponse.response.data.message));
-                            }
+                        _e.trys.push([1, 3,, 4]);
+                        return [4, API_1.userApi.loginUser(vals)];
+                    case 2:
+                        loginResponse = _e.sent();
+                        dispatch(redux_form_1.reset(formName));
+                        dispatch(actions_1.loadUserSuccessfull(loginResponse.data));
+                        react_toastify_1.toast.success('You are successfully logged in');
+                        return [3, 4];
+                    case 3:
+                        e_1 = _e.sent();
+                        if ((_a = e_1.response) === null || _a === void 0 ? void 0 : _a.data.resend) {
+                            dispatch(actions_2.loginResend());
+                        } else if ((_b = e_1.response) === null || _b === void 0 ? void 0 : _b.data.reset) {
+                            dispatch(actions_2.loginReset());
                         } else {
-                            dispatch(redux_form_1.reset(formName));
-                            dispatch(actions_2.loadUserSuccessfull(loginResponse));
-                            dispatch(actions_1.loginSuccess());
+                            dispatch(actions_2.loginClear());
                         }
+                        dispatch(redux_form_1.stopSubmit(formName, __assign({ _error: ((_c = e_1.response) === null || _c === void 0 ? void 0 : _c.data.message) || e_1.message }, (_d = e_1.response) === null || _d === void 0 ? void 0 : _d.data.errors)));
+                        react_toastify_1.toast.error('Error in login');
+                        return [3, 4];
+                    case 4:
                         return [2];
                 }
             });
@@ -37654,8 +40669,6 @@ var thunkLogin = function thunkLogin(vals, formName) {
     };
 };
 exports.default = thunkLogin;
-
-//# sourceMappingURL=thunks.js.map
 
 /***/ }),
 
@@ -37670,11 +40683,9 @@ exports.default = thunkLogin;
 
 
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.LOGIN_START = 'login/START';
-exports.LOGIN_SUCCESS = 'login/SUCCESS';
-exports.LOGIN_ERROR = 'login/ERROR';
-
-//# sourceMappingURL=types.js.map
+exports.LOGIN_RESET = 'login/RESET';
+exports.LOGIN_RESEND = 'login/RESEND';
+exports.LOGIN_CLEAR = 'login/CLEAR';
 
 /***/ }),
 
@@ -37706,8 +40717,6 @@ exports.logoutError = function (error) {
         error: error
     };
 };
-
-//# sourceMappingURL=actions.js.map
 
 /***/ }),
 
@@ -37754,8 +40763,6 @@ var logoutReducer = function logoutReducer(state, action) {
     return state;
 };
 exports.default = logoutReducer;
-
-//# sourceMappingURL=reducer.js.map
 
 /***/ }),
 
@@ -37859,21 +40866,25 @@ var actions_2 = __webpack_require__(/*! ../AppState/user/actions */ "./resources
 var thunkLogout = function thunkLogout() {
     return function (dispatch) {
         return __awaiter(void 0, void 0, void 0, function () {
-            var logoutResponse;
+            var e_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         dispatch(actions_1.logoutStart());
-                        return [4, API_1.default.logoutUser()];
+                        _a.label = 1;
                     case 1:
-                        logoutResponse = _a.sent();
-                        console.log(logoutResponse);
-                        if (API_1.default.isError(logoutResponse)) {
-                            dispatch(actions_1.logoutError(logoutResponse.response.data.message));
-                        } else {
-                            dispatch(actions_2.resetUser());
-                            dispatch(actions_1.logoutSuccess());
-                        }
+                        _a.trys.push([1, 3,, 4]);
+                        return [4, API_1.userApi.logoutUser()];
+                    case 2:
+                        _a.sent();
+                        dispatch(actions_2.resetUser());
+                        dispatch(actions_1.logoutSuccess());
+                        return [3, 4];
+                    case 3:
+                        e_1 = _a.sent();
+                        dispatch(actions_1.logoutError(e_1.message));
+                        return [3, 4];
+                    case 4:
                         return [2];
                 }
             });
@@ -37881,8 +40892,6 @@ var thunkLogout = function thunkLogout() {
     };
 };
 exports.default = thunkLogout;
-
-//# sourceMappingURL=thunks.js.map
 
 /***/ }),
 
@@ -37900,8 +40909,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.LOGOUT_START = 'logout/START';
 exports.LOGOUT_ERROR = 'logout/ERROR';
 exports.LOGOUT_SUCCESS = 'logout/SUCCESS';
-
-//# sourceMappingURL=types.js.map
 
 /***/ }),
 
@@ -37939,8 +40946,6 @@ exports.productListReset = function () {
         type: types_1.PRODUCT_LIST_RESET
     };
 };
-
-//# sourceMappingURL=actions.js.map
 
 /***/ }),
 
@@ -37992,7 +40997,7 @@ var productListReducer = function productListReducer(state, action) {
         case types_1.PRODUCT_LIST_RESET:
             return __assign({}, initialState);
         case types_1.PRODUCT_LIST_START:
-            return __assign(__assign({}, state), { error: null, isLoading: false });
+            return __assign(__assign({}, state), { error: null, isLoading: true });
         case types_1.PRODUCT_LIST_ERROR:
             return __assign(__assign({}, state), { isLoading: false, error: action.error });
         case types_1.PRODUCT_LIST_SUCCESS:
@@ -38001,8 +41006,6 @@ var productListReducer = function productListReducer(state, action) {
     return state;
 };
 exports.default = productListReducer;
-
-//# sourceMappingURL=reducer.js.map
 
 /***/ }),
 
@@ -38109,22 +41112,26 @@ var thunkProductList = function thunkProductList(offset) {
     }
     return function (dispatch, getState) {
         return __awaiter(void 0, void 0, void 0, function () {
-            var selector, filters, productListResponse;
+            var selector, filters, productListResponse, e_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         dispatch(actions_1.productListStart());
                         selector = redux_form_1.getFormValues('productFilter');
                         filters = selector(getState());
-                        console.log(filters);
-                        return [4, API_1.default.getProducts(filters, offset)];
+                        _a.label = 1;
                     case 1:
+                        _a.trys.push([1, 3,, 4]);
+                        return [4, API_1.dataApi.getProducts(filters, offset)];
+                    case 2:
                         productListResponse = _a.sent();
-                        if (API_1.default.isError(productListResponse)) {
-                            dispatch(actions_1.productListError(productListResponse.message));
-                        } else {
-                            dispatch(actions_1.productListSuccess(productListResponse));
-                        }
+                        dispatch(actions_1.productListSuccess(productListResponse.data));
+                        return [3, 4];
+                    case 3:
+                        e_1 = _a.sent();
+                        dispatch(actions_1.productListError(e_1.message));
+                        return [3, 4];
+                    case 4:
                         return [2];
                 }
             });
@@ -38132,8 +41139,6 @@ var thunkProductList = function thunkProductList(offset) {
     };
 };
 exports.default = thunkProductList;
-
-//# sourceMappingURL=thunks.js.map
 
 /***/ }),
 
@@ -38153,98 +41158,6 @@ exports.PRODUCT_LIST_SUCCESS = 'productList/SUCCESS';
 exports.PRODUCT_LIST_ERROR = 'productList/ERROR';
 exports.PRODUCT_LIST_RESET = 'productList/RESET';
 
-//# sourceMappingURL=types.js.map
-
-/***/ }),
-
-/***/ "./resources/app/es5/redux/register/actions.js":
-/*!*****************************************************!*\
-  !*** ./resources/app/es5/redux/register/actions.js ***!
-  \*****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var types_1 = __webpack_require__(/*! ./types */ "./resources/app/es5/redux/register/types.js");
-exports.registerStart = function () {
-    return {
-        type: types_1.REGISTER_START
-    };
-};
-exports.registerSuccess = function (message) {
-    return {
-        type: types_1.REGISTER_SUCCESSFULL,
-        payload: message
-    };
-};
-exports.registerError = function (error) {
-    return {
-        type: types_1.REGISTER_ERROR,
-        error: error
-    };
-};
-
-//# sourceMappingURL=actions.js.map
-
-/***/ }),
-
-/***/ "./resources/app/es5/redux/register/reducer.js":
-/*!*****************************************************!*\
-  !*** ./resources/app/es5/redux/register/reducer.js ***!
-  \*****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var types_1 = __webpack_require__(/*! ./types */ "./resources/app/es5/redux/register/types.js");
-var initialState = {
-    error: null,
-    message: '',
-    isLoading: false
-};
-var registerReducer = function registerReducer(state, action) {
-    if (state === void 0) {
-        state = initialState;
-    }
-    switch (action.type) {
-        case types_1.REGISTER_START:
-            return { error: null, isLoading: true, message: '' };
-        case types_1.REGISTER_SUCCESSFULL:
-            return { isLoading: false, error: null, message: action.payload };
-        case types_1.REGISTER_ERROR:
-            return { error: action.error, isLoading: false, message: '' };
-    }
-    return state;
-};
-exports.default = registerReducer;
-
-//# sourceMappingURL=reducer.js.map
-
-/***/ }),
-
-/***/ "./resources/app/es5/redux/register/selectors.js":
-/*!*******************************************************!*\
-  !*** ./resources/app/es5/redux/register/selectors.js ***!
-  \*******************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.selectRegisterState = function (state) {
-  return state.register;
-};
-
-//# sourceMappingURL=selectors.js.map
-
 /***/ }),
 
 /***/ "./resources/app/es5/redux/register/thunks.js":
@@ -38257,6 +41170,18 @@ exports.selectRegisterState = function (state) {
 "use strict";
 
 
+var __assign = undefined && undefined.__assign || function () {
+    __assign = Object.assign || function (t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) {
+                if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+            }
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
     function adopt(value) {
         return value instanceof P ? value : new P(function (resolve) {
@@ -38342,30 +41267,38 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
-var actions_1 = __webpack_require__(/*! ./actions */ "./resources/app/es5/redux/register/actions.js");
 var API_1 = __webpack_require__(/*! ../../Helpers/API */ "./resources/app/es5/Helpers/API.js");
+var react_toastify_1 = __webpack_require__(/*! react-toastify */ "./node_modules/react-toastify/dist/react-toastify.esm.js");
 var thunkRegister = function thunkRegister(vals, formName) {
     return function (dispatch) {
         return __awaiter(void 0, void 0, void 0, function () {
-            var regResponse;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
+            var regResponse, e_1;
+            var _a, _b;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
                     case 0:
-                        dispatch(actions_1.registerStart());
-                        return [4, API_1.default.registerUser(vals)];
+                        dispatch(redux_form_1.startSubmit(formName));
+                        _c.label = 1;
                     case 1:
-                        regResponse = _a.sent();
-                        console.log(regResponse);
-                        if (API_1.default.isError(regResponse)) {
-                            if (regResponse.response.data.errors) {
-                                dispatch(redux_form_1.updateSyncErrors(formName, regResponse.response.data.errors, regResponse.response.data.message));
-                            } else {
-                                dispatch(actions_1.registerError(regResponse.response.data.message));
-                            }
+                        _c.trys.push([1, 3,, 4]);
+                        return [4, API_1.userApi.registerUser(vals)];
+                    case 2:
+                        regResponse = _c.sent();
+                        if (API_1.isError(regResponse.data)) {
+                            dispatch(redux_form_1.stopSubmit(formName, { _error: regResponse.data.message }));
+                            react_toastify_1.toast.error('Error in registration');
                         } else {
                             dispatch(redux_form_1.reset(formName));
-                            dispatch(actions_1.registerSuccess(regResponse.message));
+                            react_toastify_1.toast.success('You are registered!!! Check your email to verify account');
                         }
+                        return [3, 4];
+                    case 3:
+                        e_1 = _c.sent();
+                        console.dir(e_1);
+                        dispatch(redux_form_1.stopSubmit(formName, __assign({ _error: ((_a = e_1.response) === null || _a === void 0 ? void 0 : _a.data.message) || e_1.message }, (_b = e_1.response) === null || _b === void 0 ? void 0 : _b.data.errors)));
+                        react_toastify_1.toast.error('Error in register');
+                        return [3, 4];
+                    case 4:
                         return [2];
                 }
             });
@@ -38374,32 +41307,11 @@ var thunkRegister = function thunkRegister(vals, formName) {
 };
 exports.default = thunkRegister;
 
-//# sourceMappingURL=thunks.js.map
-
 /***/ }),
 
-/***/ "./resources/app/es5/redux/register/types.js":
-/*!***************************************************!*\
-  !*** ./resources/app/es5/redux/register/types.js ***!
-  \***************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.REGISTER_START = 'register/START';
-exports.REGISTER_ERROR = 'register/ERROR';
-exports.REGISTER_SUCCESSFULL = 'register/SUCCESSFULL';
-
-//# sourceMappingURL=types.js.map
-
-/***/ }),
-
-/***/ "./resources/app/es5/redux/reset/actions.js":
+/***/ "./resources/app/es5/redux/resend/thunks.js":
 /*!**************************************************!*\
-  !*** ./resources/app/es5/redux/reset/actions.js ***!
+  !*** ./resources/app/es5/redux/resend/thunks.js ***!
   \**************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -38407,83 +41319,142 @@ exports.REGISTER_SUCCESSFULL = 'register/SUCCESSFULL';
 "use strict";
 
 
-Object.defineProperty(exports, "__esModule", { value: true });
-var types_1 = __webpack_require__(/*! ./types */ "./resources/app/es5/redux/reset/types.js");
-exports.resetStart = function () {
-    return {
-        type: types_1.RESET_START
+var __assign = undefined && undefined.__assign || function () {
+    __assign = Object.assign || function (t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) {
+                if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+            }
+        }
+        return t;
     };
+    return __assign.apply(this, arguments);
 };
-exports.resetSuccess = function (message) {
-    return {
-        type: types_1.RESET_SUCCESS,
-        payload: message
-    };
-};
-exports.resetError = function (error) {
-    return {
-        type: types_1.RESET_ERROR,
-        error: error
-    };
-};
-
-//# sourceMappingURL=actions.js.map
-
-/***/ }),
-
-/***/ "./resources/app/es5/redux/reset/reducer.js":
-/*!**************************************************!*\
-  !*** ./resources/app/es5/redux/reset/reducer.js ***!
-  \**************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var types_1 = __webpack_require__(/*! ./types */ "./resources/app/es5/redux/reset/types.js");
-var initialState = {
-    error: null,
-    message: '',
-    isLoading: false
-};
-var registerReducer = function registerReducer(state, action) {
-    if (state === void 0) {
-        state = initialState;
+var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
+    function adopt(value) {
+        return value instanceof P ? value : new P(function (resolve) {
+            resolve(value);
+        });
     }
-    switch (action.type) {
-        case types_1.RESET_START:
-            return { isLoading: true, message: '', error: null };
-        case types_1.RESET_SUCCESS:
-            return { isLoading: false, message: action.payload, error: null };
-        case types_1.RESET_ERROR:
-            return { isLoading: false, message: '', error: action.error };
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) {
+            try {
+                step(generator.next(value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function rejected(value) {
+            try {
+                step(generator["throw"](value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function step(result) {
+            result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+        }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = undefined && undefined.__generator || function (thisArg, body) {
+    var _ = { label: 0, sent: function sent() {
+            if (t[0] & 1) throw t[1];return t[1];
+        }, trys: [], ops: [] },
+        f,
+        y,
+        t,
+        g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
+        return this;
+    }), g;
+    function verb(n) {
+        return function (v) {
+            return step([n, v]);
+        };
     }
-    return state;
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) {
+            try {
+                if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+                if (y = 0, t) op = [op[0] & 2, t.value];
+                switch (op[0]) {
+                    case 0:case 1:
+                        t = op;break;
+                    case 4:
+                        _.label++;return { value: op[1], done: false };
+                    case 5:
+                        _.label++;y = op[1];op = [0];continue;
+                    case 7:
+                        op = _.ops.pop();_.trys.pop();continue;
+                    default:
+                        if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+                            _ = 0;continue;
+                        }
+                        if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+                            _.label = op[1];break;
+                        }
+                        if (op[0] === 6 && _.label < t[1]) {
+                            _.label = t[1];t = op;break;
+                        }
+                        if (t && _.label < t[2]) {
+                            _.label = t[2];_.ops.push(op);break;
+                        }
+                        if (t[2]) _.ops.pop();
+                        _.trys.pop();continue;
+                }
+                op = body.call(thisArg, _);
+            } catch (e) {
+                op = [6, e];y = 0;
+            } finally {
+                f = t = 0;
+            }
+        }if (op[0] & 5) throw op[1];return { value: op[0] ? op[1] : void 0, done: true };
+    }
 };
-exports.default = registerReducer;
-
-//# sourceMappingURL=reducer.js.map
-
-/***/ }),
-
-/***/ "./resources/app/es5/redux/reset/selectors.js":
-/*!****************************************************!*\
-  !*** ./resources/app/es5/redux/reset/selectors.js ***!
-  \****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.selectResetState = function (state) {
-  return state.reset;
+var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
+var API_1 = __webpack_require__(/*! ../../Helpers/API */ "./resources/app/es5/Helpers/API.js");
+var react_toastify_1 = __webpack_require__(/*! react-toastify */ "./node_modules/react-toastify/dist/react-toastify.esm.js");
+var thunkResend = function thunkResend(vals, formName) {
+    return function (dispatch) {
+        return __awaiter(void 0, void 0, void 0, function () {
+            var resendResponse, e_1;
+            var _a, _b;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
+                    case 0:
+                        dispatch(redux_form_1.startSubmit(formName));
+                        _c.label = 1;
+                    case 1:
+                        _c.trys.push([1, 3,, 4]);
+                        return [4, API_1.userApi.resendEmail(vals)];
+                    case 2:
+                        resendResponse = _c.sent();
+                        if (API_1.isError(resendResponse.data)) {
+                            dispatch(redux_form_1.stopSubmit(formName, { _error: resendResponse.data.message }));
+                            react_toastify_1.toast.error('Error in resend');
+                        } else {
+                            dispatch(redux_form_1.reset(formName));
+                            react_toastify_1.toast.success(resendResponse.data.success);
+                        }
+                        return [3, 4];
+                    case 3:
+                        e_1 = _c.sent();
+                        console.dir(e_1);
+                        dispatch(redux_form_1.stopSubmit(formName, __assign({ _error: ((_a = e_1.response) === null || _a === void 0 ? void 0 : _a.data.message) || e_1.message }, (_b = e_1.response) === null || _b === void 0 ? void 0 : _b.data.errors)));
+                        react_toastify_1.toast.error('Error in resend');
+                        return [3, 4];
+                    case 4:
+                        return [2];
+                }
+            });
+        });
+    };
 };
-
-//# sourceMappingURL=selectors.js.map
+exports.default = thunkResend;
 
 /***/ }),
 
@@ -38497,6 +41468,18 @@ exports.selectResetState = function (state) {
 "use strict";
 
 
+var __assign = undefined && undefined.__assign || function () {
+    __assign = Object.assign || function (t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) {
+                if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+            }
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
     function adopt(value) {
         return value instanceof P ? value : new P(function (resolve) {
@@ -38582,30 +41565,33 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
-var actions_1 = __webpack_require__(/*! ./actions */ "./resources/app/es5/redux/reset/actions.js");
 var API_1 = __webpack_require__(/*! ../../Helpers/API */ "./resources/app/es5/Helpers/API.js");
+var react_toastify_1 = __webpack_require__(/*! react-toastify */ "./node_modules/react-toastify/dist/react-toastify.esm.js");
 var thunkReset = function thunkReset(vals, formName) {
     return function (dispatch) {
         return __awaiter(void 0, void 0, void 0, function () {
-            var regResponse;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
+            var resetResponse, e_1;
+            var _a, _b;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
                     case 0:
-                        dispatch(actions_1.resetStart());
-                        return [4, API_1.default.resetUser(vals)];
+                        dispatch(redux_form_1.startSubmit(formName));
+                        _c.label = 1;
                     case 1:
-                        regResponse = _a.sent();
-                        console.log(regResponse);
-                        if (API_1.default.isError(regResponse)) {
-                            if (regResponse.response.data.errors) {
-                                dispatch(redux_form_1.updateSyncErrors(formName, regResponse.response.data.errors, regResponse.response.data.message));
-                            } else {
-                                dispatch(actions_1.resetError(regResponse.response.data.message));
-                            }
-                        } else {
-                            dispatch(redux_form_1.reset(formName));
-                            dispatch(actions_1.resetSuccess(regResponse.success));
-                        }
+                        _c.trys.push([1, 3,, 4]);
+                        return [4, API_1.userApi.resetUser(vals)];
+                    case 2:
+                        resetResponse = _c.sent();
+                        dispatch(redux_form_1.reset(formName));
+                        react_toastify_1.toast.success(resetResponse.data.success);
+                        return [3, 4];
+                    case 3:
+                        e_1 = _c.sent();
+                        console.dir(e_1);
+                        dispatch(redux_form_1.stopSubmit(formName, __assign({ _error: ((_a = e_1.response) === null || _a === void 0 ? void 0 : _a.data.message) || e_1.message }, (_b = e_1.response) === null || _b === void 0 ? void 0 : _b.data.errors)));
+                        react_toastify_1.toast.error('Error in reset');
+                        return [3, 4];
+                    case 4:
                         return [2];
                 }
             });
@@ -38613,27 +41599,6 @@ var thunkReset = function thunkReset(vals, formName) {
     };
 };
 exports.default = thunkReset;
-
-//# sourceMappingURL=thunks.js.map
-
-/***/ }),
-
-/***/ "./resources/app/es5/redux/reset/types.js":
-/*!************************************************!*\
-  !*** ./resources/app/es5/redux/reset/types.js ***!
-  \************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.RESET_START = 'reset/START';
-exports.RESET_SUCCESS = 'reset/SUCCESS';
-exports.RESET_ERROR = 'reset/ERROR';
-
-//# sourceMappingURL=types.js.map
 
 /***/ }),
 
@@ -38667,8 +41632,11 @@ exports.searchSuccess = function (response) {
         payload: response
     };
 };
-
-//# sourceMappingURL=actions.js.map
+exports.searchReset = function () {
+    return {
+        type: types_1.SEARCH_RESET
+    };
+};
 
 /***/ }),
 
@@ -38724,12 +41692,12 @@ var searchReducer = function searchReducer(state, action) {
             return __assign(__assign({}, state), { isLoading: false, products: __spreadArrays(state.products, action.payload.data), totalCount: action.payload.total, currentPage: action.payload.current_page, error: null });
         case types_1.SEARCH_ERROR:
             return __assign(__assign({}, state), { isLoading: false, error: action.error });
+        case types_1.SEARCH_RESET:
+            return __assign({}, initialState);
     }
     return state;
 };
 exports.default = searchReducer;
-
-//# sourceMappingURL=reducer.js.map
 
 /***/ }),
 
@@ -38753,8 +41721,6 @@ exports.selectSearchProducts = function (state) {
 exports.selectSearchLength = function (state) {
   return state.search.products.length;
 };
-
-//# sourceMappingURL=selectors.js.map
 
 /***/ }),
 
@@ -38860,19 +41826,24 @@ var thunkSearch = function thunkSearch(text, page) {
     }
     return function (dispatch) {
         return __awaiter(void 0, void 0, void 0, function () {
-            var searchResponse;
+            var searchResponse, e_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         dispatch(actions_1.searchStart(text));
-                        return [4, API_1.default.search(text, page)];
+                        _a.label = 1;
                     case 1:
+                        _a.trys.push([1, 3,, 4]);
+                        return [4, API_1.dataApi.search(text, page)];
+                    case 2:
                         searchResponse = _a.sent();
-                        if (API_1.default.isError(searchResponse)) {
-                            dispatch(actions_1.searchError(searchResponse.message));
-                        } else {
-                            dispatch(actions_1.searchSuccess(searchResponse));
-                        }
+                        dispatch(actions_1.searchSuccess(searchResponse.data));
+                        return [3, 4];
+                    case 3:
+                        e_1 = _a.sent();
+                        dispatch(actions_1.searchError(e_1.message));
+                        return [3, 4];
+                    case 4:
                         return [2];
                 }
             });
@@ -38880,8 +41851,6 @@ var thunkSearch = function thunkSearch(text, page) {
     };
 };
 exports.default = thunkSearch;
-
-//# sourceMappingURL=thunks.js.map
 
 /***/ }),
 
@@ -38899,8 +41868,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.SEARCH_START = 'search/START';
 exports.SEARCH_SUCCESS = 'search/SUCCESS';
 exports.SEARCH_ERROR = 'search/ERROR';
-
-//# sourceMappingURL=types.js.map
+exports.SEARCH_RESET = 'search/RESET';
 
 /***/ }),
 
@@ -38933,8 +41901,11 @@ exports.verifySuccess = function (message) {
         payload: message
     };
 };
-
-//# sourceMappingURL=actions.js.map
+exports.verifyNotFound = function () {
+    return {
+        type: types_1.VERIFY_NOT_FOUND
+    };
+};
 
 /***/ }),
 
@@ -38948,12 +41919,25 @@ exports.verifySuccess = function (message) {
 "use strict";
 
 
+var __assign = undefined && undefined.__assign || function () {
+    __assign = Object.assign || function (t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) {
+                if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+            }
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var types_1 = __webpack_require__(/*! ./types */ "./resources/app/es5/redux/verify/types.js");
 var initialState = {
     message: null,
     error: null,
-    isLoading: false
+    isLoading: false,
+    notFound: false
 };
 var verifyReducer = function verifyReducer(state, action) {
     if (state === void 0) {
@@ -38961,17 +41945,17 @@ var verifyReducer = function verifyReducer(state, action) {
     }
     switch (action.type) {
         case types_1.VERIFY_START:
-            return { message: null, error: null, isLoading: true };
+            return { notFound: false, message: null, error: null, isLoading: true };
         case types_1.VERIFY_ERROR:
-            return { message: null, error: action.error, isLoading: false };
+            return { notFound: false, message: null, error: action.error, isLoading: false };
         case types_1.VERIFY_SUCCESS:
-            return { message: action.payload, error: null, isLoading: false };
+            return { message: action.payload, error: null, isLoading: false, notFound: false };
+        case types_1.VERIFY_NOT_FOUND:
+            return __assign(__assign({}, state), { notFound: true, isLoading: false });
     }
     return state;
 };
 exports.default = verifyReducer;
-
-//# sourceMappingURL=reducer.js.map
 
 /***/ }),
 
@@ -39071,23 +42055,35 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 Object.defineProperty(exports, "__esModule", { value: true });
 var actions_1 = __webpack_require__(/*! ./actions */ "./resources/app/es5/redux/verify/actions.js");
 var API_1 = __webpack_require__(/*! ../../Helpers/API */ "./resources/app/es5/Helpers/API.js");
+var react_toastify_1 = __webpack_require__(/*! react-toastify */ "./node_modules/react-toastify/dist/react-toastify.esm.js");
 var thunkVerify = function thunkVerify(id) {
     return function (dispatch) {
         return __awaiter(void 0, void 0, void 0, function () {
-            var verifyResponse;
+            var verifyResponse, e_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         dispatch(actions_1.verifyStart());
-                        return [4, API_1.default.verifyUser(id)];
+                        _a.label = 1;
                     case 1:
+                        _a.trys.push([1, 3,, 4]);
+                        return [4, API_1.userApi.verifyUser(id)];
+                    case 2:
                         verifyResponse = _a.sent();
-                        console.log(verifyResponse);
-                        if (API_1.default.isError(verifyResponse)) {
-                            dispatch(actions_1.verifyError(verifyResponse.response.data.message));
+                        dispatch(actions_1.verifySuccess(verifyResponse.data.success));
+                        react_toastify_1.toast.success('Account verified');
+                        return [3, 4];
+                    case 3:
+                        e_1 = _a.sent();
+                        if (e_1.response.status == 404) {
+                            dispatch(actions_1.verifyNotFound());
+                            react_toastify_1.toast.error('Not found');
                         } else {
-                            dispatch(actions_1.verifySuccess(verifyResponse.success));
+                            dispatch(actions_1.verifyError(e_1.message || e_1.data.response.data.message));
+                            react_toastify_1.toast.error('Error in verify');
                         }
+                        return [3, 4];
+                    case 4:
                         return [2];
                 }
             });
@@ -39095,8 +42091,6 @@ var thunkVerify = function thunkVerify(id) {
     };
 };
 exports.default = thunkVerify;
-
-//# sourceMappingURL=thunks.js.map
 
 /***/ }),
 
@@ -39114,8 +42108,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.VERIFY_START = 'verify/START';
 exports.VERIFY_SUCCESS = 'verify/SUCCESS';
 exports.VERIFY_ERROR = 'verify/ERROR';
-
-//# sourceMappingURL=types.js.map
+exports.VERIFY_NOT_FOUND = 'verify/NOT_FOUND';
 
 /***/ })
 

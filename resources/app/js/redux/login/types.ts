@@ -1,4 +1,3 @@
-//Login action types
-export const LOGIN_START = 'login/START';
-export const LOGIN_SUCCESS = 'login/SUCCESS';
-export const LOGIN_ERROR = 'login/ERROR';
+export const LOGIN_RESET = 'login/RESET';
+export const LOGIN_RESEND = 'login/RESEND';
+export const LOGIN_CLEAR = 'login/CLEAR';

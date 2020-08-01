@@ -41,7 +41,7 @@ Route::post('/reset', 'UserActions@reset');
 Route::get('/verify/{id}', 'VerifyController@verify')
     ->name('verificationapi.verify');
 
-Route::get('/resend', 'VerifyController@resend')
+Route::post('/resend', 'VerifyController@resend')
     ->name('verificationapi.resend');
 
 Route::post('/subscribe', 'SubscribeController@createSubscribe');

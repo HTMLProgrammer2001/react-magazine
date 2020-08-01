@@ -1,35 +1,34 @@
-//My components
 import * as actionCreators from './actions';
-import {LOGIN_ERROR, LOGIN_SUCCESS, LOGIN_START} from './types';
+import {LOGIN_RESET, LOGIN_RESEND, LOGIN_CLEAR} from './types';
 
-import {InferActionTypes} from '../';
+import {InferActionTypes} from '../index';
 
 
 export type LoginActions = InferActionTypes<typeof actionCreators>;
 
 export type LoginState = {
-	error: string | null,
-	isLoading: boolean
+	needReset: boolean,
+	needResend: boolean
 };
 
 const initialState: LoginState = {
-	error: null,
-	isLoading: false
+	needResend: false,
+	needReset: false
 };
 
-const loginReducer = (state: LoginState = initialState, action: LoginActions): LoginState => {
+const logoutReducer = (state: LoginState = initialState, action: LoginActions): LoginState => {
 	switch (action.type) {
-	case LOGIN_START:
-		return {error: null, isLoading: true};
+	case LOGIN_RESEND:
+		return {needReset: false, needResend: true};
 
-	case LOGIN_SUCCESS:
-		return {isLoading: false, error: null};
+	case LOGIN_RESET:
+		return {needResend: false, needReset: true};
 
-	case LOGIN_ERROR:
-		return {error: action.error, isLoading: false};
+	case LOGIN_CLEAR:
+		return {...initialState};
 	}
 
 	return state;
 };
 
-export default loginReducer;
+export default logoutReducer;

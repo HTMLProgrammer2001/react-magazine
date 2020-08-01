@@ -24,7 +24,7 @@ const thunkLogout = (): LogoutThunkAction =>
 		}
 		catch (e) {
 			//Error
-			dispatch(logoutError(e.data.message));
+			dispatch(logoutError(e.message));
 		}
 	};
 

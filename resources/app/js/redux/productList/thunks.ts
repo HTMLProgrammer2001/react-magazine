@@ -27,7 +27,7 @@ const thunkProductList = (offset: number = 1): ProductListThunkAction =>
 			dispatch(productListSuccess(productListResponse.data));
 		}
 		catch (e) {
-			dispatch(productListError(e.data.message));
+			dispatch(productListError(e.message));
 		}
 	};
 

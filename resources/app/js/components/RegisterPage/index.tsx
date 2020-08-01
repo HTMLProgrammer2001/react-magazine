@@ -3,14 +3,9 @@ import {connect, ConnectedProps} from 'react-redux';
 
 import Breadcrumbs from '../Breadcrumbs';
 import {default as RegisterForm, IRegisterFormData} from './RegisterForm';
-import {RootState} from '../../redux';
 import thunkRegister from '../../redux/register/thunks';
-import {selectRegisterState} from '../../redux/register/selectors';
+import IsAuthenticated from '../../HOC/IsAuthenticated';
 
-
-const mapStateToProps = (state: RootState) => ({
-	registration: selectRegisterState(state)
-});
 
 const mapDispatchToProps = (dispatch: any) => ({
 	register: (vals: IRegisterFormData) => {
@@ -18,12 +13,13 @@ const mapDispatchToProps = (dispatch: any) => ({
 	}
 });
 
-const connected = connect(mapStateToProps, mapDispatchToProps);
+const connected = connect(null, mapDispatchToProps);
 
 
-const RegisterPage: React.FC<ConnectedProps<typeof connected>> = (props) => {
+type IRegisterProps = ConnectedProps<typeof connected>;
+
+const RegisterPage: React.FC<IRegisterProps> = (props) => {
 	const submit = (values: IRegisterFormData) => {
-		console.log(values);
 		props.register(values);
 	};
 
@@ -37,15 +33,9 @@ const RegisterPage: React.FC<ConnectedProps<typeof connected>> = (props) => {
 				paths={[{name: 'Home', path: '/'}, {name: 'Register', path: '/register'}]}
 			/>
 
-			{
-				props.registration.message ?
-					<div>{props.registration.message}</div> :
-					null
-			}
-
-			<RegisterForm onSubmit={submit} registration={props.registration}/>
+			<RegisterForm onSubmit={submit}/>
 		</React.Fragment>
 	);
 };
 
-export default connected(RegisterPage);
+export default IsAuthenticated(false)<IRegisterProps>(connected(RegisterPage));

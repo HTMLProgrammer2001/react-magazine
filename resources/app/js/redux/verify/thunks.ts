@@ -2,8 +2,9 @@ import {ThunkAction, ThunkDispatch} from 'redux-thunk';
 
 import {RootState} from '../';
 import {VerifyActions} from './reducer';
-import {verifyStart, verifyError, verifySuccess} from './actions';
+import {verifyStart, verifyError, verifySuccess, verifyNotFound} from './actions';
 import {userApi} from '../../Helpers/API';
+import {toast} from 'react-toastify';
 
 
 export type RegisterThunkAction = ThunkAction<void, RootState, unknown, VerifyActions>;
@@ -16,9 +17,17 @@ const thunkVerify = (id: string): RegisterThunkAction =>
 			const verifyResponse = await userApi.verifyUser(id);
 
 			dispatch(verifySuccess(verifyResponse.data.success));
+			toast.success('Account verified');
 		}
 		catch (e) {
-			dispatch(verifyError(e.data.message || e.data.response!.data.message));
+			if(e.response.status == 404) {
+				dispatch(verifyNotFound());
+				toast.error('Not found');
+			}
+			else {
+				dispatch(verifyError(e.message || e.data.response!.data.message));
+				toast.error('Error in verify');
+			}
 		}
 	};
 

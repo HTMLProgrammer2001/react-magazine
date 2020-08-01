@@ -22,7 +22,7 @@ const thunkSearch = (text: string, page: number = 1): SearchThunkAction =>
 			dispatch(searchSuccess(searchResponse.data));
 		}
 		catch (e) {
-			dispatch(searchError(e.data.message));
+			dispatch(searchError(e.message));
 		}
 	};
 

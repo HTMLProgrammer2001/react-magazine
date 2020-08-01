@@ -6,6 +6,7 @@ import Breadcrumbs from '../Breadcrumbs';
 import {RootState} from '../../redux';
 import thunkSearch from '../../redux/search/thunks';
 import {selectSearchLength, selectSearchState} from '../../redux/search/selectors';
+import {searchReset} from '../../redux/search/actions';
 
 
 const mapStateToProps = (state: RootState) => ({
@@ -14,7 +15,8 @@ const mapStateToProps = (state: RootState) => ({
 });
 
 const connected = connect(mapStateToProps, {
-	loadSearch: thunkSearch
+	loadSearch: thunkSearch,
+	searchReset
 });
 
 type ISearchProps = ConnectedProps<typeof connected> & RouteComponentProps<{}>;
@@ -22,8 +24,9 @@ type ISearchProps = ConnectedProps<typeof connected> & RouteComponentProps<{}>;
 
 const SearchPage: React.FC<ISearchProps> = (props) => {
 	React.useEffect(() => {
+		props.searchReset();
 		props.loadSearch(props.location.search.split('=')[1]);
-	}, []);
+	}, [props.location.search.split('=')[1]]);
 
 	return (
 		<React.Fragment>

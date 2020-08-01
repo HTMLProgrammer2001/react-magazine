@@ -3,13 +3,13 @@ import {connect, ConnectedProps} from 'react-redux';
 
 import Breadcrumbs from '../Breadcrumbs';
 import {default as LoginForm, ILoginFormData} from './LoginForm';
-import {RootState} from '../../redux';
 import thunkLogin from '../../redux/login/thunks';
-import {selectLoginState} from '../../redux/login/selectors';
+import IsAuthenticated from '../../HOC/IsAuthenticated';
+import {RootState} from '../../redux';
 
 
 const mapStateToProps = (state: RootState) => ({
-	loginData: selectLoginState(state)
+	loginState: state.login
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
@@ -21,9 +21,10 @@ const mapDispatchToProps = (dispatch: any) => ({
 const connected = connect(mapStateToProps, mapDispatchToProps);
 
 
+type ILooginProps = ConnectedProps<typeof connected>;
+
 const LoginPage: React.FC<ConnectedProps<typeof connected>> = (props) => {
 	const submit = (values: ILoginFormData) => {
-		console.log(values);
 		props.login(values);
 	};
 
@@ -34,9 +35,9 @@ const LoginPage: React.FC<ConnectedProps<typeof connected>> = (props) => {
 	return (
 		<React.Fragment>
 			<Breadcrumbs paths={[{name: 'Home', path: '/'}, {name: 'Login', path: '/login'}]}/>
-			<LoginForm onSubmit={submit} loginData={props.loginData}/>
+			<LoginForm onSubmit={submit} loginState={props.loginState}/>
 		</React.Fragment>
 	);
 };
 
-export default connected(LoginPage);
+export default IsAuthenticated(false)<ILooginProps>(connected(LoginPage));

@@ -20,7 +20,7 @@ const thunkProduct = (slug: string): ProductThunkAction =>
 			dispatch(productSuccess(productResponse.data));
 		}
 		catch (e) {
-			dispatch(productError(e.data.message));
+			dispatch(productError(e.message));
 		}
 	};
 

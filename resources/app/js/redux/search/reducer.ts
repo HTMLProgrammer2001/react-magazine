@@ -1,6 +1,6 @@
 //My components
 import * as actionCreators from './actions';
-import {SEARCH_SUCCESS, SEARCH_ERROR, SEARCH_START} from './types';
+import {SEARCH_SUCCESS, SEARCH_ERROR, SEARCH_START, SEARCH_RESET} from './types';
 import {InferActionTypes} from '../';
 import {IProduct} from '../../Interfaces/IProduct';
 
@@ -43,6 +43,9 @@ const searchReducer = (state: SearchState = initialState, action: SearchActions)
 
 	case SEARCH_ERROR:
 		return {...state, isLoading: false, error: action.error};
+
+	case SEARCH_RESET:
+		return {...initialState};
 	}
 
 	return state;

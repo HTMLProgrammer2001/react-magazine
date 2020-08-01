@@ -1,5 +1,5 @@
 import {
-	VERIFY_ERROR,
+	VERIFY_ERROR, VERIFY_NOT_FOUND,
 	VERIFY_START,
 	VERIFY_SUCCESS
 } from './types';
@@ -17,4 +17,8 @@ export const verifyError = (error: string) => (<const>{
 export const verifySuccess = (message: string) => (<const>{
 	type: VERIFY_SUCCESS,
 	payload: message
+});
+
+export const verifyNotFound = () => (<const>{
+	type: VERIFY_NOT_FOUND
 });

@@ -37,7 +37,7 @@ const thunkUser = (): FilterThunkAction =>
 		}
 		catch (e) {
 			//Error
-			dispatch(loadUserError(e.data.message));
+			dispatch(loadUserError(e.message));
 		}
 	};
 

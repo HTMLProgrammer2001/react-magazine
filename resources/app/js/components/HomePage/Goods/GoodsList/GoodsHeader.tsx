@@ -1,7 +1,5 @@
 import * as React from 'react';
 
-import GoodsHeaderForm, {IHeaderFormData} from './GoodsHeaderForm';
-
 
 type IGoodsHeaderProps = {
 	loaded: number,
@@ -14,9 +12,7 @@ const GoodsHeader: React.FC<IGoodsHeaderProps> = (props) => (
 			Showing {props.loaded} of {props.total} products
 		</div>
 
-		<GoodsHeaderForm onSubmit={(vals: IHeaderFormData) => {
-			console.log('HeaderForm:', vals);
-		}}/>
+		<div/>
 	</div>
 );
 

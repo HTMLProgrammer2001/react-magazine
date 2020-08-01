@@ -32,7 +32,10 @@ const SRC_PATH = 'resources/app',
 function scss(){
 	//SCSS styles
 
-	return gulp.src(`${SRC_PATH}/scss/pages/**/*.page.scss`, {
+	return gulp.src([
+		`${SRC_PATH}/scss/pages/**/*.page.scss`,
+		'node_modules/react-toastify/scss/main.scss'
+	], {
 		allowEmpty: true
 	})
 		//Create source map
@@ -66,8 +69,8 @@ function javascript(){
 		// .pipe(eslint())
 		// .pipe(eslint.formatEach('compact', process.stderr))
 
-		//Create source maps
-		.pipe(sourceMap.init())
+		// //Create source maps
+		// .pipe(sourceMap.init())
 
 		//Typescript
 		.pipe(tsProject()).js
@@ -75,7 +78,7 @@ function javascript(){
 			console.log('Typescript error', err);
 			this.emit('end');
 		})
-		.pipe(sourceMap.write('.'))
+		// .pipe(sourceMap.write('.'))
 
 		//Save
 		.pipe(gulp.dest(`${SRC_PATH}/es5`));
@@ -86,7 +89,7 @@ function webpackTask(){
 		.src(`${SRC_PATH}/es5/main.js`)
 		.pipe(webpackStream({
 			...webpackConfig,
-			devtool: 'soure-map'
+			devtool: 'none'
 		}, webpack))
 		.on('error', function (err) {
 			console.error('WEBPACK ERROR', err);

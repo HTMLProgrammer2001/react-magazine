@@ -6,16 +6,16 @@ import required from '../../Helpers/Validators/required';
 import email from '../../Helpers/Validators/email';
 
 
-export type IResetFormData = {
+export type IResendFormData = {
 	email: string
 }
 
-type IResetProps = InjectedFormProps<IResetFormData>;
+type IResendProps = InjectedFormProps<IResendFormData>;
 
-const ResetForm: React.FC<IResetProps> = (props) => (
+const ResendForm: React.FC<IResendProps> = (props) => (
 	<form className="reset" onSubmit={props.handleSubmit}>
 		<div className="container my-pad">
-			<div className="login__head">Reset password</div>
+			<div className="login__head">Resend verification email</div>
 
 			{
 				props.error &&
@@ -35,6 +35,6 @@ const ResetForm: React.FC<IResetProps> = (props) => (
 	</form>
 );
 
-export default reduxForm<IResetFormData>({
-	form: 'reset'
-})(ResetForm);
+export default reduxForm<IResendFormData>({
+	form: 'resend'
+})(ResendForm);

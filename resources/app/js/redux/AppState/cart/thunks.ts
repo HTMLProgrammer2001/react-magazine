@@ -10,6 +10,7 @@ import {dataApi} from '../../../Helpers/API';
 import {RootState} from '../../index';
 import {CartActions} from './reducer';
 import {ICartItemStorage} from '../../../Interfaces/ICartItemStorage';
+import {ICartItem} from '../../../Interfaces/ICartItem';
 
 
 export type CartThunkAction = ThunkAction<void, RootState, unknown, CartActions>;
@@ -50,11 +51,11 @@ const thunkCart = (): CartThunkAction =>
 			}));
 
 			//Load success
-			dispatch(cartLoadSuccess(parsedCartItems));
+			dispatch(cartLoadSuccess(<ICartItem[]>parsedCartItems));
 		}
 		catch (e) {
 			//Error
-			dispatch(cartLoadError(e.data.message));
+			dispatch(cartLoadError(e.message));
 		}
 	};
 

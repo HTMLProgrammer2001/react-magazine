@@ -17,7 +17,11 @@ import {ISearchResponse} from '../Interfaces/Responses/ISearchResponse';
 import {IUser} from '../Interfaces/IUser';
 import {IProduct} from '../Interfaces/IProduct';
 import {IBillingFormData} from '../components/CheckoutPage/Form/BillingForm';
-import {ICartItem} from '../Interfaces/ICartItem';
+import {IResendFormData} from '../components/ResendPage/ResendForm';
+
+type ISuccess = {success: string};
+type IError = {message: string, errors?: string[]};
+type ILoginError = IError & {reset?: boolean, resend?: boolean}
 
 
 const apiClient = axios.create({
@@ -112,11 +116,15 @@ export const dataApi = {
 
 export const userApi = {
 	registerUser(vals: IRegisterFormData){
-		return apiClient.post<{message: string}>('/register', vals);
+		return apiClient.post<ISuccess>('/register', vals);
 	},
 
 	verifyUser(id: string){
-		return apiClient.get<{ success: string }>(`/verify/${id}`);
+		return apiClient.get<ISuccess>(`/verify/${id}`);
+	},
+
+	resendEmail(vals: IResendFormData){
+		return apiClient.post<ISuccess>('/resend', vals);
 	},
 
 	loginUser(vals: ILoginFormData){
@@ -124,7 +132,7 @@ export const userApi = {
 	},
 
 	logoutUser(){
-		return apiClient.post<{ success: string }>('/logout', {}, {
+		return apiClient.post<ISuccess>('/logout', {}, {
 			headers: {
 				'Authorization': `Bearer ${localStorage.getItem('token')}`
 			}
@@ -132,7 +140,13 @@ export const userApi = {
 	},
 
 	resetUser(vals: IResetFormData){
-		return apiClient.post<{ success: string }>('/reset', vals);
+		return apiClient.post<ISuccess>('/reset', vals);
+	},
+
+	validReset(id: string){
+		return apiClient.get<ISuccess>('/reset/valid', {
+			params: id
+		});
 	},
 
 	changePassword(id: string, vals: IChangeFormData){
@@ -150,25 +164,7 @@ export const userApi = {
 	}
 };
 
-// class API {
-// 	static async createOrder(data: IBillingFormData & {
-// 	cartItems: any[] }):
-// 		Promise<{ success: string } | AxiosError> {
-// 		let response: AxiosResponse;
-//
-// 		try {
-// 			response = await this.clientAPI.post<{ success:
-// 			string }>('/orders', data, {
-// 				headers: {
-// 					Authorization: `Bearer ${localStorage.getIte
-// 					m('token')}`
-// 				}
-// 			});
-// 		} catch (err) {
-// 			console.log(err.response.data);
-// 			return err as AxiosError;
-// 		}
-//
-// 		return response.data;
-// 	}
-// }
+export const isError = (resp: any): resp is IError => (
+	'message' in resp
+);
+

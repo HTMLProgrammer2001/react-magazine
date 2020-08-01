@@ -59,13 +59,9 @@ class SliderElement extends React.Component<IElementProps, ISliderState>{
 	}
 
 	componentDidMount(): void {
-		// 50..100 60 => (60 - 50)/(100 - 50)
-
-		const {min, max, input: {value}} = this.props;
-
 		//Calculate positions
-		this.leftPosition = (value.from - min)/(max - min) * 100;
-		this.rightPosition = 100 - (value.to - min)/(max - min) * 100;
+		this.leftPosition = 0;
+		this.rightPosition = 0;
 
 		this.positeSlider();
 
@@ -78,8 +74,8 @@ class SliderElement extends React.Component<IElementProps, ISliderState>{
 		const {min, max, input: {value}} = this.props;
 
 		//Calculate positions
-		this.leftPosition = (value.from - min)/(max - min) * 100;
-		this.rightPosition = 100 - (value.to - min)/(max - min) * 100;
+		this.leftPosition = value.from/max * 100;
+		this.rightPosition = 100 - (value.to)/max * 100;
 
 		this.positeSlider();
 	}
@@ -135,16 +131,16 @@ class SliderElement extends React.Component<IElementProps, ISliderState>{
 			newPos = newPos < 0 ? 0 : newPos;
 
 			this.props.changeValue(this.props.input.name || 'priceRange', {
-				from: newPos/100 * (max - min),
+				from: newPos/100 * max,
 				to: value.to
 			});
 		}
 		else if(this.state.which == 'right' && newPos > this.leftPosition + 5){
-			newPos = newPos > 100 ? 100 : newPos;
+			newPos = newPos >= 100 ? 100 : newPos;
 
 			this.props.changeValue(this.props.name || 'priceRange', {
 				from: value.from,
-				to: newPos/100 * (max - min)
+				to: newPos/100 * max
 			});
 		}
 	}
@@ -166,4 +162,3 @@ class SliderElement extends React.Component<IElementProps, ISliderState>{
 }
 
 export default connected(SliderElement);
-

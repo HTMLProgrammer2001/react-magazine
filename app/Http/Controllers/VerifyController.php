@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ResendRequest;
 use App\User;
 use Illuminate\Foundation\Auth\VerifiesEmails;
 use Illuminate\Http\Request;
@@ -19,8 +20,12 @@ class VerifyController extends Controller
     public function verify(Request $request)
     {
         //find user
-        $userID = $request['id'];
-        $user = User::findOrFail($userID);
+        $token = $request['id'];
+        $user = User::query()->where('token', $token)->first();
+
+        //Validation
+        if(!$user or $user->hasVerifiedEmail())
+            return abort(404);
 
         //set verified
         $date = date('Y-m-d g:i:s');
@@ -31,15 +36,20 @@ class VerifyController extends Controller
         return response()->json(['success' => 'Email verified']);
     }
 
-    public function resend(Request $request)
+    public function resend(ResendRequest $request)
     {
-        if($request->user()->hasVerifiedEmail()){
+        $user = User::query()->where('email', $request->input('email'))->first();
+
+        if($user->hasVerifiedEmail()){
             //user was verified
             return response()->json(['message' => 'User already verified'], 422);
         }
 
         //send new email
-        $request->user()->sendEmailVerificationNotification();
+        $user->generateToken();
+        $user->save();
+
+        $user->sendApiEmailVerification();
 
         //return response
         return response()->json(['success' => 'Verification email has been resubmitted']);

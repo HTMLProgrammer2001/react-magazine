@@ -1,9 +1,8 @@
 import {
 	SEARCH_START,
 	SEARCH_ERROR,
-	SEARCH_SUCCESS
+	SEARCH_SUCCESS, SEARCH_RESET
 } from './types';
-import {IProduct} from '../../Interfaces/IProduct';
 import {ISearchResponse} from '../../Interfaces/Responses/ISearchResponse';
 
 
@@ -20,4 +19,8 @@ export const searchError = (error: string) => (<const>{
 export const searchSuccess = (response: ISearchResponse) => (<const>{
 	type: SEARCH_SUCCESS,
 	payload: response
+});
+
+export const searchReset = () => (<const>{
+	type: SEARCH_RESET
 });

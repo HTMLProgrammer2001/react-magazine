@@ -2,6 +2,9 @@ import * as React from 'react';
 import {reduxForm, Field, InjectedFormProps} from 'redux-form';
 
 import InputElement from '../FormElements/InputElement';
+import required from '../../Helpers/Validators/required';
+import email from '../../Helpers/Validators/email';
+import sizeBetween from '../../Helpers/Validators/sizeBetween';
 
 
 export type IRegisterFormData = {
@@ -11,15 +14,9 @@ export type IRegisterFormData = {
 	password_confirmation: string
 }
 
-type IOwnProps = {
-	registration: {
-		isLoading: boolean,
-		error: string | null,
-		message: string
-	}
-}
+type IRegisterProps = InjectedFormProps<IRegisterFormData>;
 
-type IRegisterProps = InjectedFormProps<IRegisterFormData, IOwnProps> & IOwnProps;
+const between = sizeBetween(6, 20);
 
 const RegisterForm: React.FC<IRegisterProps> = (props) => (
 	<div className="container">
@@ -27,23 +24,23 @@ const RegisterForm: React.FC<IRegisterProps> = (props) => (
 			<div className="login__head">Sign in</div>
 
 			{
-				props.registration.error &&
-					<div className="red">{props.registration.error}</div>
+				props.error &&
+					<div className="red">{props.error}</div>
 			}
 
 			<Field component={InputElement} type="text" name="fullName"
 				   placeholder="Full name" required/>
 			<Field component={InputElement} type="text" name="email"
-				   placeholder="Email" required/>
+				   placeholder="Email" required validate={[required, email]}/>
 			<Field component={InputElement} type="password" name="password"
-				   placeholder="Password" required/>
+				   placeholder="Password" required validate={[required, between]}/>
 			<Field component={InputElement} type="password" name="password_confirmation"
 				   placeholder="Confirm password" required/>
 
 			<div className="row space-between my-pad w-100">
 				<div/>
 				<button type="submit" className="check__but">
-					{props.registration.isLoading ? 'Loading...' : 'Sign in'}
+					{props.submitting ? 'Loading...' : 'Sign in'}
 				</button>
 			</div>
 		</form>
@@ -57,14 +54,6 @@ const validate = (values: IRegisterFormData) => {
 		errors.fullName = 'Enter name and surname';
 	}
 
-	if(!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)){
-		errors.email = 'Incorrect email';
-	}
-
-	if(values.password?.length < 8){
-		errors.password = 'Password must be at least 8 chars';
-	}
-
 	if(values.password_confirmation != values.password){
 		errors.password_confirmation = 'Passwords are not equals';
 	}
@@ -72,7 +61,7 @@ const validate = (values: IRegisterFormData) => {
 	return errors;
 };
 
-export default reduxForm<IRegisterFormData, IOwnProps>({
-	form: 'thunkRegister.ts',
+export default reduxForm<IRegisterFormData>({
+	form: 'register',
 	validate
 })(RegisterForm);

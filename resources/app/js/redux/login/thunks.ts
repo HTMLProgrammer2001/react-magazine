@@ -1,21 +1,21 @@
 import {ThunkAction, ThunkDispatch} from 'redux-thunk';
-import {updateSyncErrors, reset} from 'redux-form';
+import {FormAction, reset, startSubmit, stopSubmit} from 'redux-form';
 
 import {ILoginFormData} from '../../components/LoginPage/LoginForm';
 import {RootState} from '../';
-import {LoginActions} from './reducer';
-import {loginSuccess, loginStart, loginError} from './actions';
 import {userApi} from '../../Helpers/API';
 import {loadUserSuccessfull} from '../AppState/user/actions';
+import {toast} from 'react-toastify';
+import {loginClear, loginResend, loginReset} from './actions';
 
 
-export type LoginThunkAction = ThunkAction<void, RootState, unknown, LoginActions>;
+type loadType = ReturnType<typeof loadUserSuccessfull>;
+export type LoginThunkAction = ThunkAction<void, RootState, unknown, loadType | FormAction>;
 
 const thunkLogin = (vals: ILoginFormData, formName: string): LoginThunkAction =>
-	async (dispatch: ThunkDispatch<{}, {}, LoginActions |
-		ReturnType<typeof loadUserSuccessfull>>) => {
+	async (dispatch: ThunkDispatch<{}, {}, loadType | FormAction>) => {
 		//Login start
-		dispatch(loginStart());
+		dispatch(startSubmit(formName));
 
 		try {
 			//Request
@@ -24,19 +24,27 @@ const thunkLogin = (vals: ILoginFormData, formName: string): LoginThunkAction =>
 			//Update data
 			dispatch(reset(formName));
 			dispatch(loadUserSuccessfull(loginResponse.data));
-			dispatch(loginSuccess());
+
+			toast.success('You are successfully logged in');
 		}
 		catch (e) {
-			//Error
-			if(e.data.response!.data.errors){
-				dispatch(updateSyncErrors(
-					formName,
-					e.data.response!.data.errors,
-					e.data.response!.data.message
-				));
+			if(e.response?.data.resend) {
+				dispatch(loginResend());
+			}
+			else if(e.response?.data.reset) {
+				dispatch(loginReset());
+			}
+			else {
+				dispatch(loginClear());
 			}
 
-			dispatch(loginError(e.data.message));
+			//Error
+			dispatch(stopSubmit(formName, {
+				_error: e.response?.data.message || e.message,
+				...e.response?.data.errors
+			}));
+
+			toast.error('Error in login');
 		}
 	};
 

@@ -32,4 +32,4 @@ const Content: React.FC<{}> = () => (
 	</React.Fragment>
 );
 
-export default IsAuthenticated<{}>(Content);
+export default IsAuthenticated(true)<{}>(Content);

@@ -83,7 +83,7 @@ class User extends Authenticatable
     }
 
     public function sendApiEmailVerification(){
-        $this->notify(new VerifyApiEmail());
+        $this->notify(new VerifyApiEmail($this->token));
     }
 
     public function sendApiResetEmail($token){

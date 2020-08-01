@@ -13,12 +13,13 @@ class VerifyApiEmail extends VerifyEmail
 {
     use Queueable;
 
+    public function __construct($token)
+    {
+        $this->token = $token;
+    }
+
     public function verificationUrl($notifiable)
     {
-        return URL::temporarySignedRoute(
-            'verificationapi.verify',
-            Carbon::now()->addMinutes(60),
-            ['id' => $notifiable->getKey()]
-        );
+        return URL::to('/verify/' . $this->token);
     }
 }

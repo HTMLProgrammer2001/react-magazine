@@ -23,7 +23,7 @@ const thunkCategory = (): CategoryThunkAction =>
 		}
 		catch (e) {
 			//Error
-			dispatch(categoryLoadFailure(e.data.message));
+			dispatch(categoryLoadFailure(e.message));
 		}
 	};
 

@@ -31,7 +31,7 @@ const thunkAddComment = (productID: number, vals: IReviewFormData, formName: str
 				));
 			}
 
-			dispatch(commentAddError(e.data.response!.data.message));
+			dispatch(commentAddError(e.message));
 		}
 	};
 

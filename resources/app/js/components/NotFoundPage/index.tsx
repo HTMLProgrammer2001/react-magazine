@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import Breadcrumbs from '../Breadcrumbs';
+import NotFoundImg from './NotFoundImg';
 
 
 const NotFoundPage: React.FC<{}> = () => {
@@ -12,9 +13,7 @@ const NotFoundPage: React.FC<{}> = () => {
 		<React.Fragment>
 			<Breadcrumbs paths={[{name: 'Home', path: '/'}, {name: 'Not found', path: '/404'}]}/>
 
-			<div className="error">
-				<img className="error__img" src="/image/not-found.png" alt="Not found"/>
-			</div>
+			<NotFoundImg/>
 		</React.Fragment>
 	);
 };

@@ -5,26 +5,30 @@ import {Redirect} from 'react-router';
 import {RootState} from '../redux';
 
 
-const IsAuthenticated = <T extends object>(Elem: React.ComponentType<T>) => {
-	const mapStateToProps = (state: RootState) => ({
-		initialized: state.app.initialized,
-		userData: state.user
-	});
+const IsAuthenticated = (isAuth: boolean = true) =>
+	<T extends object>(Elem: React.ComponentType<T>) => {
+		const mapStateToProps = (state: RootState) => ({
+			initialized: state.app.initialized,
+			userData: state.user
+		});
 
-	const connected = connect(mapStateToProps, null);
+		const connected = connect(mapStateToProps, null);
 
-	const AuthenticatedElement: React.FC<T & ConnectedProps<typeof connected>> = (props: any) => {
-		if(!props.initialized)
-			return <div>Loading...</div>;
+		type AuthProps = T & ConnectedProps<typeof connected>;
+		const AuthenticatedElement: React.FC<AuthProps> = (props: any) => {
+			if (!props.initialized)
+				return <div>Loading...</div>;
 
-		if(!props.userData.user)
-			return <Redirect to='/login'/>;
+			if (!props.userData.user && isAuth)
+				return <Redirect to='/login'/>;
+			else if(props.userData.user && !isAuth)
+				return <Redirect to='/profile'/>;
 
-		return <Elem {...(props as T)}/>;
+			return <Elem {...(props as T)}/>;
+		};
+
+		return connected<any>(AuthenticatedElement);
 	};
-
-	return connected<any>(AuthenticatedElement);
-};
 
 export default IsAuthenticated;
 

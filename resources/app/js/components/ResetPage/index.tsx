@@ -3,14 +3,9 @@ import {connect, ConnectedProps} from 'react-redux';
 
 import Breadcrumbs from '../Breadcrumbs';
 import {default as ResetForm, IResetFormData} from './ResetForm';
-import {RootState} from '../../redux';
-import thunkReset from '../../redux/reset/thunks';
-import {selectResetState} from '../../redux/reset/selectors';
+import thunkReset from '../../redux/reset/thunks/resetRequest';
+import IsAuthenticated from '../../HOC/IsAuthenticated';
 
-
-const mapStateToProps = (state: RootState) => ({
-	resetState: selectResetState(state)
-});
 
 const mapDispatchToProps = (dispatch: any) => ({
 	reset: (vals: IResetFormData) => {
@@ -18,10 +13,12 @@ const mapDispatchToProps = (dispatch: any) => ({
 	}
 });
 
-const connected = connect(mapStateToProps, mapDispatchToProps);
+const connected = connect(null, mapDispatchToProps);
 
 
-const ResetPage: React.FC<ConnectedProps<typeof connected>> = (props) => {
+type IResetProps = ConnectedProps<typeof connected>;
+
+const ResetPage: React.FC<IResetProps> = (props) => {
 	React.useEffect(() => {
 		document.title = 'Reset password';
 	}, []);
@@ -37,13 +34,9 @@ const ResetPage: React.FC<ConnectedProps<typeof connected>> = (props) => {
 				{name: 'Reset password', path: '/reset'}
 			]}/>
 
-			<ResetForm
-				onSubmit={onSubmit}
-				resetState={props.resetState}
-			/>
+			<ResetForm onSubmit={onSubmit}/>
 		</React.Fragment>
 	);
 };
 
-export default connected(ResetPage);
-
+export default IsAuthenticated(false)<IResetProps>(connected(ResetPage));

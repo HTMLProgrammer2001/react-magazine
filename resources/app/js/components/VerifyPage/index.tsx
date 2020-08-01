@@ -5,6 +5,8 @@ import {connect, ConnectedProps} from 'react-redux';
 import Breadcrumbs from '../Breadcrumbs';
 import {RootState} from '../../redux';
 import thunkVerify from '../../redux/verify/thunks';
+import IsAuthenticated from '../../HOC/IsAuthenticated';
+import NotFoundImg from '../NotFoundPage/NotFoundImg';
 
 
 const mapStateToProps = (state: RootState) => ({
@@ -39,8 +41,9 @@ const VerifyPage: React.FC<IVerifyPageProps> = (props) => {
 			]}/>
 
 			{props.verifyState.isLoading && <div>Loading...</div>}
+			{props.verifyState.notFound && <NotFoundImg/>}
 
-			<div>
+			<div className="verify__text">
 				{
 					props.verifyState.message ?
 						props.verifyState.message :
@@ -51,4 +54,4 @@ const VerifyPage: React.FC<IVerifyPageProps> = (props) => {
 	);
 };
 
-export default connected(VerifyPage);
+export default IsAuthenticated(false)<IVerifyPageProps>(connected(VerifyPage));

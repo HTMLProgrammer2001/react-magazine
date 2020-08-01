@@ -23,6 +23,7 @@ class UserActions extends Controller
 
         //generate hash for password
         $user->setPassword($request->get('password'));
+        $user->generateToken();
         $user->save();
 
         //send verify message
@@ -30,7 +31,7 @@ class UserActions extends Controller
 
         //return answer
         return response()->json([
-            'message' => "User successfully created. Check {$request->input('email')} to activate"
+            'success' => "User successfully created. Check {$request->input('email')} to activate"
         ]);
     }
 
@@ -43,13 +44,15 @@ class UserActions extends Controller
 
             return response()->json([
                 'errors' => [],
-                'message' => 'Wrong password or email'
-            ]);
+                'message' => 'Wrong password or email.',
+                'reset' => true
+            ], 422);
         }
 
         if(!Auth::user()->hasVerifiedEmail())
             return response()->json([
-               'message' => 'Your account not verified'
+               'message' => 'Your account not verified',
+               'resend' => true
             ], 403);
 
         //generate token
@@ -84,6 +87,11 @@ class UserActions extends Controller
         $user = User::all()->where('email', $request->input('email'))->first();
 
         //generate token
+        if(!$user->email_verified_at)
+            return response()->json([
+                'message' => 'Verify your account at first'
+            ], 403);
+
         $token = $user->generateToken();
         $user->save();
 

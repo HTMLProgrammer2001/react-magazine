@@ -46,7 +46,7 @@ const thunkCheckout = (vals: IBillingFormData, formName: string): LoginThunkActi
 				));
 			}
 
-			dispatch(checkoutError(e.data.message));
+			dispatch(checkoutError(e.message));
 		}
 	};
 

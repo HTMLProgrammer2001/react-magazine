@@ -16,7 +16,6 @@ const Search: React.FC<IMenuProps & RouteComponentProps<{}>> = (props) => {
 	});
 
 	const onSubmit = (values: ISearchFormData) => {
-		console.log(values);
 		props.history.push(`/search?search=${values.search}`);
 	};
 

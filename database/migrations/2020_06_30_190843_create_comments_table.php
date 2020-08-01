@@ -23,7 +23,8 @@ class CreateCommentsTable extends Migration
             $table->date('date');
             $table->integer('mark');
 
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')
+                ->onDelete('SET NULL');
             $table->foreign('product_id')->references('id')
                 ->on('products')->onDelete('cascade');
         });

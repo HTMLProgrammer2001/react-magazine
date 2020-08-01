@@ -35,7 +35,7 @@ const productListReducer = (state: ProductListState = initialState, action: Prod
 		return {...initialState};
 
 	case PRODUCT_LIST_START:
-		return {...state, error: null, isLoading: false};
+		return {...state, error: null, isLoading: true};
 
 	case PRODUCT_LIST_ERROR:
 		return {...state, isLoading: false, error: action.error};

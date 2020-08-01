@@ -2,21 +2,27 @@ import * as React from 'react';
 import {reduxForm, Field, InjectedFormProps} from 'redux-form';
 
 import InputElement from '../FormElements/InputElement';
+import required from '../../Helpers/Validators/required';
+import email from '../../Helpers/Validators/email';
+import sizeBetween from '../../Helpers/Validators/sizeBetween';
+import {Link} from 'react-router-dom';
 
+
+type IOwnProps = {
+	loginState: {
+		needReset: boolean,
+		needResend: boolean
+	}
+};
 
 export type ILoginFormData = {
 	email: string,
 	password: string
 }
 
-type IOwnProps = {
-	loginData: {
-		error: string | null,
-		isLoading: boolean
-	}
-}
-
 type ILoginProps = InjectedFormProps<ILoginFormData, IOwnProps> & IOwnProps;
+
+const between = sizeBetween(6, 20);
 
 const LoginForm: React.FC<ILoginProps> = (props) => (
 	<div className="container">
@@ -24,19 +30,39 @@ const LoginForm: React.FC<ILoginProps> = (props) => (
 			<div className="login__head">Login</div>
 
 			{
-				props.loginData.error &&
-					<div className="red">{props.loginData.error}</div>
+				props.error &&
+					<div className="red">
+						{props.error}
+					</div>
+			}
+
+			{
+				props.loginState.needReset &&
+					<div className="red">
+						<Link to="/reset">
+							Reset
+						</Link>
+					</div>
+			}
+
+			{
+				props.loginState.needResend &&
+				<div className="red">
+					<Link to="/resend">
+						Resend
+					</Link>
+				</div>
 			}
 
 			<Field component={InputElement} type="text" name="email"
-				   placeholder="Email" required/>
+				   placeholder="Email" required validate={[required, email]}/>
 			<Field component={InputElement} type="password" name="password"
-				   placeholder="Password" required/>
+				   placeholder="Password" required validate={[required, between]}/>
 
 			<div className="row space-between my-pad w-100">
 				<div/>
 				<button type="submit" className="check__but">
-					{props.loginData.isLoading ? 'Loading...' : 'Login'}
+					{props.submitting ? 'Loading...' : 'Login'}
 				</button>
 			</div>
 		</form>

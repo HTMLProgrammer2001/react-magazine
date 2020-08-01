@@ -23,7 +23,7 @@ const thunkFilter = (): FilterThunkAction =>
 		}
 		catch (e) {
 			//Error
-			dispatch(filterError(e.data.message));
+			dispatch(filterError(e.message));
 		}
 	};
 

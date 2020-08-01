@@ -1,35 +1,41 @@
 import {ThunkAction, ThunkDispatch} from 'redux-thunk';
-import {updateSyncErrors, reset} from 'redux-form';
+import {reset, FormAction, startSubmit, stopSubmit} from 'redux-form';
 
 import {IRegisterFormData} from '../../components/RegisterPage/RegisterForm';
 import {RootState} from '../';
-import {RegisterActions} from './reducer';
-import {registerError, registerStart, registerSuccess} from './actions';
-import {userApi} from '../../Helpers/API';
+import {isError, userApi} from '../../Helpers/API';
+import {toast} from 'react-toastify';
 
 
-export type RegisterThunkAction = ThunkAction<void, RootState, unknown, RegisterActions>;
+type IRegisterActions = FormAction;
+export type RegisterThunkAction = ThunkAction<void, RootState, unknown, IRegisterActions>;
 
 const thunkRegister = (vals: IRegisterFormData, formName: string): RegisterThunkAction =>
-	async (dispatch: ThunkDispatch<{}, {}, RegisterActions>) => {
-		dispatch(registerStart());
+	async (dispatch: ThunkDispatch<{}, {}, IRegisterActions>) => {
+		dispatch(startSubmit(formName));
 
 		try{
 			const regResponse = await userApi.registerUser(vals);
 
-			dispatch(reset(formName));
-			dispatch(registerSuccess(regResponse.data.message));
+			if(isError(regResponse.data)){
+				dispatch(stopSubmit(formName, {_error: regResponse.data.message}));
+				toast.error('Error in registration');
+			}
+			else{
+				dispatch(reset(formName));
+				toast.success('You are registered!!! Check your email to verify account');
+			}
 		}
 		catch (e) {
-			if(e.data.response!.data.errors){
-				dispatch(updateSyncErrors(
-					formName,
-					e.data.response!.data.errors,
-					e.data.response!.data.message
-				));
-			}
+			console.dir(e);
 
-			dispatch(registerError(e.data.message));
+			//Error
+			dispatch(stopSubmit(formName, {
+				_error: e.response?.data.message || e.message,
+				...e.response?.data.errors
+			}));
+
+			toast.error('Error in register');
 		}
 	};
 

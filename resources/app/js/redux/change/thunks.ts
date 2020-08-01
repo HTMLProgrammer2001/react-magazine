@@ -34,7 +34,7 @@ const thunkChange = (id: string, vals: IChangeFormData, formName: string): Chang
 				));
 			}
 
-			dispatch(changeError(e.data.message));
+			dispatch(changeError(e.message));
 		}
 	};
 
