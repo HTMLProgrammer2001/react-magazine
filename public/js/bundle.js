@@ -34841,6 +34841,11 @@ exports.userApi = {
     resetUser: function resetUser(vals) {
         return apiClient.post('/reset', vals);
     },
+    validReset: function validReset(id) {
+        return apiClient.get('/reset/valid', {
+            params: id
+        });
+    },
     changePassword: function changePassword(id, vals) {
         return apiClient.post('/changePassword', vals, {
             params: { id: id }
@@ -35068,28 +35073,23 @@ var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react
 var CartItem_1 = __webpack_require__(/*! ./CartItem */ "./resources/app/es5/components/CartPage/Content/CartItem.js");
 var selectors_1 = __webpack_require__(/*! ../../../redux/AppState/cart/selectors */ "./resources/app/es5/redux/AppState/cart/selectors.js");
 var actions_1 = __webpack_require__(/*! ../../../redux/AppState/cart/actions */ "./resources/app/es5/redux/AppState/cart/actions.js");
+var thunks_1 = __webpack_require__(/*! ../../../redux/AppState/cart/thunks */ "./resources/app/es5/redux/AppState/cart/thunks.js");
 var mapStateToProps = function mapStateToProps(state) {
     return {
         cartItems: selectors_1.selectCartItems(state)
     };
 };
-var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-    return {
-        removeItem: function removeItem(index) {
-            dispatch(actions_1.cartRemove(index));
-        },
-        clearCart: function clearCart() {
-            dispatch(actions_1.cartReset());
-        }
-    };
-};
-var connected = react_redux_1.connect(mapStateToProps, mapDispatchToProps);
+var connected = react_redux_1.connect(mapStateToProps, {
+    removeItem: actions_1.cartRemove,
+    clearCart: actions_1.cartReset,
+    updateCart: thunks_1.default
+});
 var CartTable = function CartTable(props) {
     return React.createElement("div", { className: "container" }, React.createElement("div", { className: "table__wrap my-pad" }, React.createElement("div", { className: "table" }, React.createElement("div", { className: "table__head" }, React.createElement("div", { className: "table__head-item table__head-item_lg" }, "Product"), React.createElement("div", { className: "table__head-item" }, "Price"), React.createElement("div", { className: "table__head-item" }, "Quantity"), React.createElement("div", { className: "table__head-item" }, "Total"), React.createElement("div", { className: "table__head-item" })), React.createElement("div", { className: "table__content" }, props.cartItems.map(function (item, index) {
         return React.createElement(CartItem_1.default, __assign({ key: index, removeItem: function removeItem() {
                 return props.removeItem(index);
             } }, item));
-    })))), React.createElement("div", { className: "orders__actions" }, React.createElement("div", { className: "orders__clear", onClick: props.clearCart }, "Clear cart"), React.createElement("div", { className: "orders__update" }, "Update cart")));
+    })))), React.createElement("div", { className: "orders__actions" }, React.createElement("div", { className: "orders__clear", onClick: props.clearCart }, "Clear cart"), React.createElement("div", { className: "orders__update", onClick: props.updateCart }, "Update cart")));
 };
 exports.default = connected(CartTable);
 
@@ -35112,7 +35112,7 @@ var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_mod
 var selectors_1 = __webpack_require__(/*! ../../../redux/AppState/cart/selectors */ "./resources/app/es5/redux/AppState/cart/selectors.js");
 var mapStateToProps = function mapStateToProps(state) {
     return {
-        cartPrice: selectors_1.selectCartPrice(state)
+        cartPrice: selectors_1.selectCartPrice(state).toFixed(2)
     };
 };
 var connected = react_redux_1.connect(mapStateToProps);
@@ -35157,10 +35157,15 @@ exports.default = Content;
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-var EmptyCart = function EmptyCart() {
-    return React.createElement("div", { className: "empty my-pad" }, React.createElement("div", { className: "container" }, React.createElement("div", { className: "empty__text" }, "Your cart is current empty"), React.createElement(react_router_dom_1.Link, { to: "/" }, React.createElement("button", { type: "button", className: "empty__back" }, "Return to shop"))));
+var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+var thunks_1 = __webpack_require__(/*! ../../redux/AppState/cart/thunks */ "./resources/app/es5/redux/AppState/cart/thunks.js");
+var connected = react_redux_1.connect(null, {
+    updateCart: thunks_1.default
+});
+var EmptyCart = function EmptyCart(props) {
+    return React.createElement("div", { className: "empty my-pad" }, React.createElement("div", { className: "container" }, React.createElement("div", { className: "empty__text" }, "Your cart is current empty"), React.createElement(react_router_dom_1.Link, { to: "/" }, React.createElement("button", { type: "button", className: "empty__back" }, "Return to shop")), React.createElement("div", { className: "empty__back", onClick: props.updateCart }, "Update cart")));
 };
-exports.default = EmptyCart;
+exports.default = connected(EmptyCart);
 
 /***/ }),
 
@@ -37100,12 +37105,12 @@ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 var Breadcrumbs_1 = __webpack_require__(/*! ../Breadcrumbs */ "./resources/app/es5/components/Breadcrumbs.js");
 var ResetForm_1 = __webpack_require__(/*! ./ResetForm */ "./resources/app/es5/components/ResetPage/ResetForm.js");
-var thunks_1 = __webpack_require__(/*! ../../redux/reset/thunks */ "./resources/app/es5/redux/reset/thunks.js");
+var resetRequest_1 = __webpack_require__(/*! ../../redux/reset/thunks/resetRequest */ "./resources/app/es5/redux/reset/thunks/resetRequest.js");
 var IsAuthenticated_1 = __webpack_require__(/*! ../../HOC/IsAuthenticated */ "./resources/app/es5/HOC/IsAuthenticated.js");
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     return {
         reset: function reset(vals) {
-            dispatch(thunks_1.default(vals, 'reset'));
+            dispatch(resetRequest_1.default(vals, 'reset'));
         }
     };
 };
@@ -38103,6 +38108,7 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 Object.defineProperty(exports, "__esModule", { value: true });
 var actions_1 = __webpack_require__(/*! ./actions */ "./resources/app/es5/redux/AppState/cart/actions.js");
 var API_1 = __webpack_require__(/*! ../../../Helpers/API */ "./resources/app/es5/Helpers/API.js");
+var react_toastify_1 = __webpack_require__(/*! react-toastify */ "./node_modules/react-toastify/dist/react-toastify.esm.js");
 var thunkCart = function thunkCart() {
     return function (dispatch) {
         return __awaiter(void 0, void 0, void 0, function () {
@@ -38114,6 +38120,7 @@ var thunkCart = function thunkCart() {
                         try {
                             cartItems = JSON.parse(localStorage.getItem('cartItems'));
                             if (!cartItems || !cartItems.length) {
+                                dispatch(actions_1.cartReset());
                                 return [2];
                             }
                         } catch (e) {
@@ -38134,11 +38141,13 @@ var thunkCart = function thunkCart() {
                                     return i.id == item.product;
                                 }) });
                         });
+                        dispatch(actions_1.cartReset());
                         dispatch(actions_1.cartLoadSuccess(parsedCartItems));
                         return [3, 4];
                     case 3:
                         e_1 = _a.sent();
                         dispatch(actions_1.cartLoadError(e_1.message));
+                        react_toastify_1.toast.error("Error while requesting cart items:  " + e_1.message);
                         return [3, 4];
                     case 4:
                         return [2];
@@ -41458,10 +41467,10 @@ exports.default = thunkResend;
 
 /***/ }),
 
-/***/ "./resources/app/es5/redux/reset/thunks.js":
-/*!*************************************************!*\
-  !*** ./resources/app/es5/redux/reset/thunks.js ***!
-  \*************************************************/
+/***/ "./resources/app/es5/redux/reset/thunks/resetRequest.js":
+/*!**************************************************************!*\
+  !*** ./resources/app/es5/redux/reset/thunks/resetRequest.js ***!
+  \**************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -41565,7 +41574,7 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
-var API_1 = __webpack_require__(/*! ../../Helpers/API */ "./resources/app/es5/Helpers/API.js");
+var API_1 = __webpack_require__(/*! ../../../Helpers/API */ "./resources/app/es5/Helpers/API.js");
 var react_toastify_1 = __webpack_require__(/*! react-toastify */ "./node_modules/react-toastify/dist/react-toastify.esm.js");
 var thunkReset = function thunkReset(vals, formName) {
     return function (dispatch) {

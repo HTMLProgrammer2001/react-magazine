@@ -3,7 +3,8 @@ import {ThunkAction, ThunkDispatch} from 'redux-thunk';
 import {
 	cartLoadSuccess,
 	cartLoadError,
-	cartLoadStart
+	cartLoadStart,
+	cartReset
 } from './actions';
 import {dataApi} from '../../../Helpers/API';
 
@@ -11,6 +12,7 @@ import {RootState} from '../../index';
 import {CartActions} from './reducer';
 import {ICartItemStorage} from '../../../Interfaces/ICartItemStorage';
 import {ICartItem} from '../../../Interfaces/ICartItem';
+import {toast} from 'react-toastify';
 
 
 export type CartThunkAction = ThunkAction<void, RootState, unknown, CartActions>;
@@ -24,6 +26,7 @@ const thunkCart = (): CartThunkAction =>
 			cartItems = JSON.parse(<string>localStorage.getItem('cartItems'));
 
 			if(!cartItems || !cartItems.length) {
+				dispatch(cartReset());
 				return;
 			}
 		}
@@ -51,11 +54,13 @@ const thunkCart = (): CartThunkAction =>
 			}));
 
 			//Load success
+			dispatch(cartReset());
 			dispatch(cartLoadSuccess(<ICartItem[]>parsedCartItems));
 		}
 		catch (e) {
 			//Error
 			dispatch(cartLoadError(e.message));
+			toast.error(`Error while requesting cart items:  ${e.message}`);
 		}
 	};
 

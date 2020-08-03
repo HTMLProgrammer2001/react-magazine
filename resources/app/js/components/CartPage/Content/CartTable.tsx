@@ -3,26 +3,21 @@ import {connect, ConnectedProps} from 'react-redux';
 
 import {ICartItem} from '../../../Interfaces/ICartItem';
 import CartItem from './CartItem';
-import {Action, Dispatch} from 'redux';
 import {RootState} from '../../../redux';
 import {selectCartItems} from '../../../redux/AppState/cart/selectors';
 import {cartRemove, cartReset} from '../../../redux/AppState/cart/actions';
+import thunkCart from '../../../redux/AppState/cart/thunks';
 
 
 const mapStateToProps = (state: RootState) => ({
 	cartItems: selectCartItems(state)
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<Action<any>>) => ({
-	removeItem: (index: number) => {
-		dispatch(cartRemove(index));
-	},
-	clearCart: () => {
-		dispatch(cartReset());
-	}
+const connected = connect(mapStateToProps, {
+	removeItem: cartRemove,
+	clearCart: cartReset,
+	updateCart: thunkCart
 });
-
-const connected = connect(mapStateToProps, mapDispatchToProps);
 
 const CartTable: React.FC<ConnectedProps<typeof connected>> = (props) => (
 	<div className="container">
@@ -56,9 +51,13 @@ const CartTable: React.FC<ConnectedProps<typeof connected>> = (props) => (
 				onClick={props.clearCart}
 			>Clear cart</div>
 
-			<div className="orders__update">Update cart</div>
+			<div
+				className="orders__update"
+				onClick={props.updateCart}
+			>Update cart</div>
 		</div>
 	</div>
 );
 
 export default connected(CartTable);
+

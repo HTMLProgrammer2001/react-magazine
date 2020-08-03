@@ -7,7 +7,7 @@ import {selectCartPrice} from '../../../redux/AppState/cart/selectors';
 
 
 const mapStateToProps = (state: RootState) => ({
-	cartPrice: selectCartPrice(state)
+	cartPrice: selectCartPrice(state).toFixed(2)
 });
 
 const connected = connect(mapStateToProps);
