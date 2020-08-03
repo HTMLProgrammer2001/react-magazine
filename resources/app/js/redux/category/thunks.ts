@@ -5,6 +5,7 @@ import {dataApi} from '../../Helpers/API';
 
 import {RootState} from '../';
 import {CategoryActions} from './reducer';
+import {toast} from 'react-toastify';
 
 
 export type CategoryThunkAction = ThunkAction<void, RootState, unknown, CategoryActions>;
@@ -24,6 +25,7 @@ const thunkCategory = (): CategoryThunkAction =>
 		catch (e) {
 			//Error
 			dispatch(categoryLoadFailure(e.message));
+			toast.error('Error in loading categories');
 		}
 	};
 

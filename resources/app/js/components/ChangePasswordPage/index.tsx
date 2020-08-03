@@ -5,8 +5,10 @@ import {withRouter, RouteComponentProps} from 'react-router';
 import Breadcrumbs from '../Breadcrumbs';
 import {default as ChangeForm, IChangeFormData} from './ChangeForm';
 import {RootState} from '../../redux';
-import thunkChange from '../../redux/change/thunks';
+import thunkChange from '../../redux/change/thunks/change';
 import {selectChangeState} from '../../redux/change/selectors';
+import thunkValid from '../../redux/change/thunks/valid';
+import IsAuthenticated from '../../HOC/IsAuthenticated';
 
 
 const mapStateToProps = (state: RootState) => ({
@@ -14,7 +16,8 @@ const mapStateToProps = (state: RootState) => ({
 });
 
 const connected = connect(mapStateToProps, {
-	changePassword: thunkChange
+	changePassword: thunkChange,
+	valid: thunkValid
 });
 
 type IRouteParams = {
@@ -32,6 +35,7 @@ const ChangePage: React.FC<IChangePasswordProps> = (props) => {
 
 	React.useEffect(() => {
 		document.title = 'Change password';
+		props.valid(props.match.params.id);
 	}, []);
 
 	return (
@@ -40,13 +44,22 @@ const ChangePage: React.FC<IChangePasswordProps> = (props) => {
 				[{name: 'Home', path: '/'}, {name: 'Change password', path: '/change'}]
 			}/>
 
-			<ChangeForm
-				onSubmit={submit}
-				changeData={props.changeFormState}
-			/>
+			{
+				props.changeFormState.error &&
+					<div className="red">{props.changeFormState.error}</div>
+			}
+
+			{
+				props.changeFormState.isLoading &&
+					<div>Loading...</div>
+			}
+
+			{
+				!props.changeFormState.isLoading && !props.changeFormState.error &&
+					<ChangeForm onSubmit={submit}/>
+			}
 		</React.Fragment>
 	);
 };
 
-export default connected(withRouter(ChangePage));
-
+export default withRouter(IsAuthenticated(false)<IChangePasswordProps>(connected(ChangePage)));

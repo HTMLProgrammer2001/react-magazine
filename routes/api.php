@@ -48,7 +48,8 @@ Route::post('/subscribe', 'SubscribeController@createSubscribe');
 Route::put('/subscribe', 'SubscribeController@verifySubscribe');
 Route::delete('/subscribe', 'SubscribeController@unSubscribe');
 
-Route::post('/changePassword', 'UserActions@changePassword');
+Route::get('/change', 'UserActions@validChange');
+Route::post('/change', 'UserActions@changePassword');
 
 Route::get('/search', 'SearchController');
 Route::get('/me', 'UserActions@me')->middleware('auth:api');

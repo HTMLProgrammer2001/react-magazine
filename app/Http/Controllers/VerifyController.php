@@ -30,6 +30,7 @@ class VerifyController extends Controller
         //set verified
         $date = date('Y-m-d g:i:s');
         $user->email_verified_at = $date;
+        $user->generateToken();
         $user->save();
 
         //return response

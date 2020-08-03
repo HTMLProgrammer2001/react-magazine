@@ -39,9 +39,12 @@ const CategoriesPage: React.FC<ConnectedProps<typeof connected>> = (props) => {
 					<div className="red">{props.categoriesState.error}</div>
 			}
 
-			<CategoriesList
-				categories={props.categoriesState.categories}
-			/>
+			{
+				!props.categoriesState.isLoading && !props.categoriesState.error &&
+					<CategoriesList
+						categories={props.categoriesState.categories}
+					/>
+			}
 		</React.Fragment>
 	);
 };

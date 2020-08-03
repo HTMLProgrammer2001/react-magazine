@@ -34841,13 +34841,13 @@ exports.userApi = {
     resetUser: function resetUser(vals) {
         return apiClient.post('/reset', vals);
     },
-    validReset: function validReset(id) {
-        return apiClient.get('/reset/valid', {
-            params: id
+    validChange: function validChange(id) {
+        return apiClient.get('/change', {
+            params: { id: id }
         });
     },
     changePassword: function changePassword(id, vals) {
-        return apiClient.post('/changePassword', vals, {
+        return apiClient.post('/change', vals, {
             params: { id: id }
         });
     },
@@ -35274,7 +35274,7 @@ var CategoriesPage = function CategoriesPage(props) {
         document.title = 'Categories';
         if (!props.categoriesState.loaded) props.loadCategories();
     }, []);
-    return React.createElement(React.Fragment, null, React.createElement(Breadcrumbs_1.default, { paths: [{ name: 'Home', path: '/' }, { name: 'Categories', path: '/categories' }] }), props.categoriesState.isLoading && React.createElement("div", null, "Loading..."), props.categoriesState.error && React.createElement("div", { className: "red" }, props.categoriesState.error), React.createElement(CategoriesList_1.default, { categories: props.categoriesState.categories }));
+    return React.createElement(React.Fragment, null, React.createElement(Breadcrumbs_1.default, { paths: [{ name: 'Home', path: '/' }, { name: 'Categories', path: '/categories' }] }), props.categoriesState.isLoading && React.createElement("div", null, "Loading..."), props.categoriesState.error && React.createElement("div", { className: "red" }, props.categoriesState.error), !props.categoriesState.isLoading && !props.categoriesState.error && React.createElement(CategoriesList_1.default, { categories: props.categoriesState.categories }));
 };
 exports.default = connected(CategoriesPage);
 
@@ -35294,11 +35294,22 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
 var InputElement_1 = __webpack_require__(/*! ../FormElements/InputElement */ "./resources/app/es5/components/FormElements/InputElement.js");
+var sizeBetween_1 = __webpack_require__(/*! ../../Helpers/Validators/sizeBetween */ "./resources/app/es5/Helpers/Validators/sizeBetween.js");
+var required_1 = __webpack_require__(/*! ../../Helpers/Validators/required */ "./resources/app/es5/Helpers/Validators/required.js");
+var size = sizeBetween_1.default(8, 20);
 var ChangeForm = function ChangeForm(props) {
-    return React.createElement("div", { className: "container" }, React.createElement("form", { onSubmit: props.handleSubmit, className: "login my-pad" }, React.createElement("div", { className: "login__head" }, "Change password"), props.changeData.error && React.createElement("div", { className: "red" }, props.changeData.error), React.createElement(redux_form_1.Field, { component: InputElement_1.default, type: "password", name: "password", placeholder: "Password", required: true }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, type: "password", name: "password_confirmation", placeholder: "Password confirmation", required: true }), React.createElement("div", { className: "row space-between my-pad w-100" }, React.createElement("div", null), React.createElement("button", { type: "submit", className: "check__but" }, props.changeData.isLoading ? 'Loading...' : 'Change'))));
+    return React.createElement("div", { className: "container" }, React.createElement("form", { onSubmit: props.handleSubmit, className: "login my-pad" }, React.createElement("div", { className: "login__head" }, "Change password"), props.error && React.createElement("div", { className: "red" }, props.error), React.createElement(redux_form_1.Field, { component: InputElement_1.default, type: "password", name: "password", placeholder: "Password", required: true, validate: [required_1.default, size] }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, type: "password", name: "password_confirmation", placeholder: "Password confirmation", required: true, validate: [required_1.default] }), React.createElement("div", { className: "row space-between my-pad w-100" }, React.createElement("div", null), React.createElement("button", { type: "submit", className: "check__but" }, props.submitting ? 'Loading...' : 'Change'))));
+};
+var validate = function validate(values) {
+    var errors = {};
+    if (values.password_confirmation != values.password) {
+        errors.password_confirmation = 'Passwords are not equals';
+    }
+    return errors;
 };
 exports.default = redux_form_1.reduxForm({
-    form: 'change'
+    form: 'change',
+    validate: validate
 })(ChangeForm);
 
 /***/ }),
@@ -35319,15 +35330,18 @@ var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react
 var react_router_1 = __webpack_require__(/*! react-router */ "./node_modules/react-router/esm/react-router.js");
 var Breadcrumbs_1 = __webpack_require__(/*! ../Breadcrumbs */ "./resources/app/es5/components/Breadcrumbs.js");
 var ChangeForm_1 = __webpack_require__(/*! ./ChangeForm */ "./resources/app/es5/components/ChangePasswordPage/ChangeForm.js");
-var thunks_1 = __webpack_require__(/*! ../../redux/change/thunks */ "./resources/app/es5/redux/change/thunks.js");
+var change_1 = __webpack_require__(/*! ../../redux/change/thunks/change */ "./resources/app/es5/redux/change/thunks/change.js");
 var selectors_1 = __webpack_require__(/*! ../../redux/change/selectors */ "./resources/app/es5/redux/change/selectors.js");
+var valid_1 = __webpack_require__(/*! ../../redux/change/thunks/valid */ "./resources/app/es5/redux/change/thunks/valid.js");
+var IsAuthenticated_1 = __webpack_require__(/*! ../../HOC/IsAuthenticated */ "./resources/app/es5/HOC/IsAuthenticated.js");
 var mapStateToProps = function mapStateToProps(state) {
     return {
         changeFormState: selectors_1.selectChangeState(state)
     };
 };
 var connected = react_redux_1.connect(mapStateToProps, {
-    changePassword: thunks_1.default
+    changePassword: change_1.default,
+    valid: valid_1.default
 });
 var ChangePage = function ChangePage(props) {
     var submit = function submit(values) {
@@ -35336,10 +35350,11 @@ var ChangePage = function ChangePage(props) {
     };
     React.useEffect(function () {
         document.title = 'Change password';
+        props.valid(props.match.params.id);
     }, []);
-    return React.createElement(React.Fragment, null, React.createElement(Breadcrumbs_1.default, { paths: [{ name: 'Home', path: '/' }, { name: 'Change password', path: '/change' }] }), React.createElement(ChangeForm_1.default, { onSubmit: submit, changeData: props.changeFormState }));
+    return React.createElement(React.Fragment, null, React.createElement(Breadcrumbs_1.default, { paths: [{ name: 'Home', path: '/' }, { name: 'Change password', path: '/change' }] }), props.changeFormState.error && React.createElement("div", { className: "red" }, props.changeFormState.error), props.changeFormState.isLoading && React.createElement("div", null, "Loading..."), !props.changeFormState.isLoading && !props.changeFormState.error && React.createElement(ChangeForm_1.default, { onSubmit: submit }));
 };
-exports.default = connected(react_router_1.withRouter(ChangePage));
+exports.default = react_router_1.withRouter(IsAuthenticated_1.default(false)(connected(ChangePage)));
 
 /***/ }),
 
@@ -39881,6 +39896,7 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 Object.defineProperty(exports, "__esModule", { value: true });
 var actions_1 = __webpack_require__(/*! ./actions */ "./resources/app/es5/redux/category/actions.js");
 var API_1 = __webpack_require__(/*! ../../Helpers/API */ "./resources/app/es5/Helpers/API.js");
+var react_toastify_1 = __webpack_require__(/*! react-toastify */ "./node_modules/react-toastify/dist/react-toastify.esm.js");
 var thunkCategory = function thunkCategory() {
     return function (dispatch) {
         return __awaiter(void 0, void 0, void 0, function () {
@@ -39900,6 +39916,7 @@ var thunkCategory = function thunkCategory() {
                     case 3:
                         e_1 = _a.sent();
                         dispatch(actions_1.categoryLoadFailure(e_1.message));
+                        react_toastify_1.toast.error('Error in loading categories');
                         return [3, 4];
                     case 4:
                         return [2];
@@ -39976,7 +39993,7 @@ var initialState = {
     error: null,
     isLoading: false
 };
-var loginReducer = function loginReducer(state, action) {
+var changeReducer = function changeReducer(state, action) {
     if (state === void 0) {
         state = initialState;
     }
@@ -39990,7 +40007,7 @@ var loginReducer = function loginReducer(state, action) {
     }
     return state;
 };
-exports.default = loginReducer;
+exports.default = changeReducer;
 
 /***/ }),
 
@@ -40011,10 +40028,154 @@ exports.selectChangeState = function (state) {
 
 /***/ }),
 
-/***/ "./resources/app/es5/redux/change/thunks.js":
-/*!**************************************************!*\
-  !*** ./resources/app/es5/redux/change/thunks.js ***!
-  \**************************************************/
+/***/ "./resources/app/es5/redux/change/thunks/change.js":
+/*!*********************************************************!*\
+  !*** ./resources/app/es5/redux/change/thunks/change.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __assign = undefined && undefined.__assign || function () {
+    __assign = Object.assign || function (t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) {
+                if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+            }
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
+    function adopt(value) {
+        return value instanceof P ? value : new P(function (resolve) {
+            resolve(value);
+        });
+    }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) {
+            try {
+                step(generator.next(value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function rejected(value) {
+            try {
+                step(generator["throw"](value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function step(result) {
+            result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+        }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = undefined && undefined.__generator || function (thisArg, body) {
+    var _ = { label: 0, sent: function sent() {
+            if (t[0] & 1) throw t[1];return t[1];
+        }, trys: [], ops: [] },
+        f,
+        y,
+        t,
+        g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
+        return this;
+    }), g;
+    function verb(n) {
+        return function (v) {
+            return step([n, v]);
+        };
+    }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) {
+            try {
+                if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+                if (y = 0, t) op = [op[0] & 2, t.value];
+                switch (op[0]) {
+                    case 0:case 1:
+                        t = op;break;
+                    case 4:
+                        _.label++;return { value: op[1], done: false };
+                    case 5:
+                        _.label++;y = op[1];op = [0];continue;
+                    case 7:
+                        op = _.ops.pop();_.trys.pop();continue;
+                    default:
+                        if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+                            _ = 0;continue;
+                        }
+                        if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+                            _.label = op[1];break;
+                        }
+                        if (op[0] === 6 && _.label < t[1]) {
+                            _.label = t[1];t = op;break;
+                        }
+                        if (t && _.label < t[2]) {
+                            _.label = t[2];_.ops.push(op);break;
+                        }
+                        if (t[2]) _.ops.pop();
+                        _.trys.pop();continue;
+                }
+                op = body.call(thisArg, _);
+            } catch (e) {
+                op = [6, e];y = 0;
+            } finally {
+                f = t = 0;
+            }
+        }if (op[0] & 5) throw op[1];return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
+var API_1 = __webpack_require__(/*! ../../../Helpers/API */ "./resources/app/es5/Helpers/API.js");
+var react_toastify_1 = __webpack_require__(/*! react-toastify */ "./node_modules/react-toastify/dist/react-toastify.esm.js");
+var thunkChange = function thunkChange(id, vals, formName) {
+    return function (dispatch) {
+        return __awaiter(void 0, void 0, void 0, function () {
+            var e_1;
+            var _a, _b;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
+                    case 0:
+                        dispatch(redux_form_1.startSubmit(formName));
+                        _c.label = 1;
+                    case 1:
+                        _c.trys.push([1, 3,, 4]);
+                        return [4, API_1.userApi.changePassword(id, vals)];
+                    case 2:
+                        _c.sent();
+                        dispatch(redux_form_1.reset(formName));
+                        dispatch(redux_form_1.stopSubmit(formName));
+                        react_toastify_1.toast.success('Password was changed successfully');
+                        return [3, 4];
+                    case 3:
+                        e_1 = _c.sent();
+                        dispatch(redux_form_1.stopSubmit(formName, __assign({ _error: ((_a = e_1.response) === null || _a === void 0 ? void 0 : _a.data.message) || e_1.message }, (_b = e_1.response) === null || _b === void 0 ? void 0 : _b.data.errors)));
+                        react_toastify_1.toast.error('Error in password change');
+                        return [3, 4];
+                    case 4:
+                        return [2];
+                }
+            });
+        });
+    };
+};
+exports.default = thunkChange;
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/change/thunks/valid.js":
+/*!********************************************************!*\
+  !*** ./resources/app/es5/redux/change/thunks/valid.js ***!
+  \********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -40105,10 +40266,10 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
-var actions_1 = __webpack_require__(/*! ./actions */ "./resources/app/es5/redux/change/actions.js");
-var API_1 = __webpack_require__(/*! ../../Helpers/API */ "./resources/app/es5/Helpers/API.js");
-var thunkChange = function thunkChange(id, vals, formName) {
+var actions_1 = __webpack_require__(/*! ../actions */ "./resources/app/es5/redux/change/actions.js");
+var API_1 = __webpack_require__(/*! ../../../Helpers/API */ "./resources/app/es5/Helpers/API.js");
+var react_toastify_1 = __webpack_require__(/*! react-toastify */ "./node_modules/react-toastify/dist/react-toastify.esm.js");
+var thunkValid = function thunkValid(id) {
     return function (dispatch) {
         return __awaiter(void 0, void 0, void 0, function () {
             var e_1;
@@ -40119,18 +40280,15 @@ var thunkChange = function thunkChange(id, vals, formName) {
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3,, 4]);
-                        return [4, API_1.userApi.changePassword(id, vals)];
+                        return [4, API_1.userApi.validChange(id)];
                     case 2:
                         _a.sent();
-                        dispatch(redux_form_1.reset(formName));
                         dispatch(actions_1.changeSuccess());
                         return [3, 4];
                     case 3:
                         e_1 = _a.sent();
-                        if (e_1.data.response.data.errors) {
-                            dispatch(redux_form_1.updateSyncErrors(formName, e_1.data.response.data.errors, e_1.data.response.data.message));
-                        }
-                        dispatch(actions_1.changeError(e_1.message));
+                        dispatch(actions_1.changeError(e_1.response.data.message || e_1.message));
+                        react_toastify_1.toast.error(e_1.response.data.message || e_1.message);
                         return [3, 4];
                     case 4:
                         return [2];
@@ -40139,7 +40297,7 @@ var thunkChange = function thunkChange(id, vals, formName) {
         });
     };
 };
-exports.default = thunkChange;
+exports.default = thunkValid;
 
 /***/ }),
 

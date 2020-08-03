@@ -104,7 +104,31 @@ class UserActions extends Controller
     }
 
     public function changePassword(ChangeRequest $request){
+        if(!$request->query('id'))
+            return abort(422);
 
+        //Find user and chage password
+        $user = User::query()->where('token', $request->query('id'))->firstOrFail();
+        $user->setPassword($request->input('password'));
+
+        //Change user token
+        $user->generateToken();
+        $user->save();
+
+        return response()->json([
+           'success' => 'Password successfully changed'
+        ]);
+    }
+
+    public function validChange(Request $request){
+        if(!$request->query('id'))
+            return abort(422);
+
+        User::query()->where('token', $request->query('id'))->firstOrFail();
+
+        return response()->json([
+           'success' => 'ID is valid'
+        ]);
     }
 
     public function me(Request $request){

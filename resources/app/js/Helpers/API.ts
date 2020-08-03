@@ -21,7 +21,6 @@ import {IResendFormData} from '../components/ResendPage/ResendForm';
 
 type ISuccess = {success: string};
 type IError = {message: string, errors?: string[]};
-type ILoginError = IError & {reset?: boolean, resend?: boolean}
 
 
 const apiClient = axios.create({
@@ -143,14 +142,14 @@ export const userApi = {
 		return apiClient.post<ISuccess>('/reset', vals);
 	},
 
-	validReset(id: string){
-		return apiClient.get<ISuccess>('/reset/valid', {
-			params: id
+	validChange(id: string){
+		return apiClient.get<ISuccess>('/change', {
+			params: {id}
 		});
 	},
 
 	changePassword(id: string, vals: IChangeFormData){
-		return apiClient.post<IChangeFormData>('/changePassword', vals, {
+		return apiClient.post<IChangeFormData>('/change', vals, {
 			params: {id}
 		});
 	},

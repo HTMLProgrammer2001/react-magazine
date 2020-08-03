@@ -17,7 +17,7 @@ const initialState: ChangeState = {
 	isLoading: false
 };
 
-const loginReducer = (state: ChangeState = initialState, action: ChangeActions): ChangeState => {
+const changeReducer = (state: ChangeState = initialState, action: ChangeActions): ChangeState => {
 	switch (action.type) {
 	case CHANGE_START:
 		return {error: null, isLoading: true};
@@ -32,4 +32,4 @@ const loginReducer = (state: ChangeState = initialState, action: ChangeActions):
 	return state;
 };
 
-export default loginReducer;
+export default changeReducer;
