@@ -34,8 +34,6 @@ class OrdersController extends Controller
 
         if($userID)
             $order->setUser($userID);
-        else
-            return abort(403);
 
         $order->setPayment($request->input('payment'));
         $order->save();

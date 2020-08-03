@@ -34929,6 +34929,44 @@ exports.default = function (value) {
 
 /***/ }),
 
+/***/ "./resources/app/es5/Helpers/Validators/fullName.js":
+/*!**********************************************************!*\
+  !*** ./resources/app/es5/Helpers/Validators/fullName.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = function (value) {
+    if (value == undefined) return undefined;
+    return value.split(/\s+/).filter(function (w) {
+        return w;
+    }).length == 2 ? undefined : 'Enter valid full name';
+};
+
+/***/ }),
+
+/***/ "./resources/app/es5/Helpers/Validators/phone.js":
+/*!*******************************************************!*\
+  !*** ./resources/app/es5/Helpers/Validators/phone.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = function (value) {
+    if (value == undefined) return undefined;
+    return new RegExp('^\\+?\\d{5,}$', 'i').test(value) ? undefined : 'Enter valid phone number';
+};
+
+/***/ }),
+
 /***/ "./resources/app/es5/Helpers/Validators/required.js":
 /*!**********************************************************!*\
   !*** ./resources/app/es5/Helpers/Validators/required.js ***!
@@ -35376,6 +35414,10 @@ var InputElement_1 = __webpack_require__(/*! ../../FormElements/InputElement */ 
 var CreateAccountForm_1 = __webpack_require__(/*! ./CreateAccountForm */ "./resources/app/es5/components/CheckoutPage/Form/CreateAccountForm.js");
 var Payment_1 = __webpack_require__(/*! ./Payment/ */ "./resources/app/es5/components/CheckoutPage/Form/Payment/index.js");
 var selectors_1 = __webpack_require__(/*! ../../../redux/AppState/user/selectors */ "./resources/app/es5/redux/AppState/user/selectors.js");
+var required_1 = __webpack_require__(/*! ../../../Helpers/Validators/required */ "./resources/app/es5/Helpers/Validators/required.js");
+var fullName_1 = __webpack_require__(/*! ../../../Helpers/Validators/fullName */ "./resources/app/es5/Helpers/Validators/fullName.js");
+var phone_1 = __webpack_require__(/*! ../../../Helpers/Validators/phone */ "./resources/app/es5/Helpers/Validators/phone.js");
+var email_1 = __webpack_require__(/*! ../../../Helpers/Validators/email */ "./resources/app/es5/Helpers/Validators/email.js");
 var mapStateToProps = function mapStateToProps(state) {
     return {
         user: selectors_1.selectUser(state)
@@ -35383,11 +35425,22 @@ var mapStateToProps = function mapStateToProps(state) {
 };
 var connected = react_redux_1.connect(mapStateToProps, null);
 var BillingForm = function BillingForm(props) {
-    return React.createElement("div", { className: "container" }, React.createElement("div", { className: "billing my-pad" }, React.createElement("div", { className: "billing__head" }, "Billing Details"), React.createElement("form", { className: "billing__form", onSubmit: props.handleSubmit, noValidate: true }, !props.user && React.createElement(redux_form_1.Field, { component: InputElement_1.default, placeholder: "Full name", name: "fullName", type: "text", required: true }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, placeholder: "Country", name: "country", type: "text", required: true }), React.createElement("div", { className: "row" }, React.createElement(redux_form_1.Field, { component: InputElement_1.default, placeholder: "Town / City", name: "city", type: "text", className: "mr-1", required: true }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, placeholder: "Postcode / Zip", name: "postcode", type: "text", className: "ml-1", required: true })), React.createElement(redux_form_1.Field, { component: InputElement_1.default, placeholder: "Street Address", name: "address", type: "text", required: true }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, placeholder: "Phone", name: "phone", type: "text", required: true }), !props.user && React.createElement(redux_form_1.Field, { component: InputElement_1.default, placeholder: "Email address", name: "email", type: "email", required: true }), !props.user && React.createElement(CreateAccountForm_1.default, null), React.createElement("div", null, "Order Notes"), React.createElement("div", { className: "text-muted" }, "Notes about your order like delivery species e.g."), React.createElement("div", { className: "input" }, React.createElement(redux_form_1.Field, { component: "textarea", className: "input__elem", rows: 1, name: "notes" }), React.createElement("div", { className: "input__line", style: { bottom: '4px' } })), React.createElement(Payment_1.default, null))));
+    return React.createElement("div", { className: "container" }, React.createElement("div", { className: "billing my-pad" }, React.createElement("div", { className: "billing__head" }, "Billing Details"), React.createElement("form", { className: "billing__form", onSubmit: props.handleSubmit }, props.error && React.createElement("div", { className: "red" }, props.error), !props.user && React.createElement(redux_form_1.Field, { component: InputElement_1.default, placeholder: "Full name", name: "fullName", type: "text", required: true, validate: [required_1.default, fullName_1.default] }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, placeholder: "Country", name: "country", type: "text", required: true, validate: [required_1.default] }), React.createElement("div", { className: "row" }, React.createElement(redux_form_1.Field, { component: InputElement_1.default, placeholder: "Town / City", name: "city", type: "text", className: "mr-1", required: true, validate: [required_1.default] }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, placeholder: "Postcode / Zip", name: "postcode", type: "text", className: "ml-1", required: true, validate: [required_1.default] })), React.createElement(redux_form_1.Field, { component: InputElement_1.default, placeholder: "Street Address", name: "address", type: "text", required: true, validate: [required_1.default] }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, placeholder: "Phone", name: "phone", type: "text", required: true, validate: [required_1.default, phone_1.default] }), !props.user && React.createElement(redux_form_1.Field, { component: InputElement_1.default, placeholder: "Email address", name: "email", type: "text", required: true, validate: [required_1.default, email_1.default] }), !props.user && React.createElement(CreateAccountForm_1.default, null), React.createElement("div", null, "Order Notes"), React.createElement("div", { className: "text-muted" }, "Notes about your order like delivery species e.g."), React.createElement("div", { className: "input" }, React.createElement(redux_form_1.Field, { component: "textarea", className: "input__elem", rows: 1, name: "notes" }), React.createElement("div", { className: "input__line", style: { bottom: '4px' } })), React.createElement(Payment_1.default, null))));
+};
+var validate = function validate(values) {
+    var errors = {};
+    if (values.create && values.password_confirmation != values.password) {
+        errors.password_confirmation = 'Passwords are not equals';
+    }
+    return errors;
 };
 var BillingFormRedux = connected(BillingForm);
 exports.default = redux_form_1.reduxForm({
-    form: 'billing'
+    form: 'billing',
+    validate: validate,
+    initialValues: {
+        payment: 'paypal'
+    }
 })(BillingFormRedux);
 
 /***/ }),
@@ -35408,14 +35461,17 @@ var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-f
 var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 var CheckboxElement_1 = __webpack_require__(/*! ../../FormElements/CheckboxElement */ "./resources/app/es5/components/FormElements/CheckboxElement.js");
 var InputElement_1 = __webpack_require__(/*! ../../FormElements/InputElement */ "./resources/app/es5/components/FormElements/InputElement.js");
+var sizeBetween_1 = __webpack_require__(/*! ../../../Helpers/Validators/sizeBetween */ "./resources/app/es5/Helpers/Validators/sizeBetween.js");
+var required_1 = __webpack_require__(/*! ../../../Helpers/Validators/required */ "./resources/app/es5/Helpers/Validators/required.js");
 var selector = redux_form_1.formValueSelector('billing');
 var connected = react_redux_1.connect(function (state) {
     return {
         isCreate: selector(state, 'create')
     };
 });
+var between = sizeBetween_1.default(8, 20);
 var AccountForm = function AccountForm(props) {
-    return React.createElement(React.Fragment, null, React.createElement(redux_form_1.Field, { component: CheckboxElement_1.default, name: "create", placeholder: "Create account?" }), props.isCreate && React.createElement("div", { className: "row my-pad" }, React.createElement(redux_form_1.Field, { component: InputElement_1.default, name: "password", placeholder: "Password", className: "mr-1", required: true }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, name: "passwordConfirm", placeholder: "Password confirmation", className: "ml-1", required: true })));
+    return React.createElement(React.Fragment, null, React.createElement(redux_form_1.Field, { component: CheckboxElement_1.default, name: "create", placeholder: "Create account?" }), props.isCreate && React.createElement("div", { className: "row my-pad" }, React.createElement(redux_form_1.Field, { component: InputElement_1.default, name: "password", type: "password", placeholder: "Password", className: "mr-1", required: true, validate: [required_1.default, between] }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, name: "password_confirmation", type: "password", placeholder: "Password confirmation", className: "ml-1", required: true })));
 };
 exports.default = connected(AccountForm);
 
@@ -35438,13 +35494,13 @@ var selectors_1 = __webpack_require__(/*! ../../../../redux/AppState/cart/select
 var connected = react_redux_1.connect(function (state) {
     return {
         cartItems: selectors_1.selectCartItems(state),
-        totalPrice: selectors_1.selectCartPrice(state)
+        totalPrice: selectors_1.selectCartPrice(state).toFixed(2)
     };
 });
 var PaymentList = function PaymentList(props) {
     return React.createElement("div", { className: "payment__order" }, React.createElement("div", { className: "payment__head" }, "My Order"), React.createElement("div", { className: "payment__order-list" }, React.createElement("div", { className: "payment__order-item" }, React.createElement("b", null, "Product"), React.createElement("b", null, "Total")), props.cartItems.map(function (item, index) {
         return React.createElement("div", { key: index, className: "payment__order-item" }, React.createElement("span", null, item.product.name, " x ", item.count), React.createElement("span", null, "$", (item.product.price * item.count).toFixed(2)));
-    }), React.createElement("div", { className: "payment__order-item" }, React.createElement("span", null, "Shipping"), React.createElement("span", null, "FREE SHIPPING")), React.createElement("div", { className: "payment__order-item" }, React.createElement("b", null, "Total"), React.createElement("b", null, "$", props.totalPrice.toFixed(2)))));
+    }), React.createElement("div", { className: "payment__order-item" }, React.createElement("span", null, "Shipping"), React.createElement("span", null, "FREE SHIPPING")), React.createElement("div", { className: "payment__order-item" }, React.createElement("b", null, "Total"), React.createElement("b", null, "$", props.totalPrice))));
 };
 exports.default = connected(PaymentList);
 
@@ -35534,8 +35590,15 @@ var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react
 var Breadcrumbs_1 = __webpack_require__(/*! ../Breadcrumbs */ "./resources/app/es5/components/Breadcrumbs.js");
 var Questions_1 = __webpack_require__(/*! ./Questions */ "./resources/app/es5/components/CheckoutPage/Questions.js");
 var BillingForm_1 = __webpack_require__(/*! ./Form/BillingForm */ "./resources/app/es5/components/CheckoutPage/Form/BillingForm.js");
+var Empty_1 = __webpack_require__(/*! ../CartPage/Empty */ "./resources/app/es5/components/CartPage/Empty.js");
 var thunks_1 = __webpack_require__(/*! ../../redux/checkout/thunks */ "./resources/app/es5/redux/checkout/thunks.js");
-var connected = react_redux_1.connect(null, {
+var selectors_1 = __webpack_require__(/*! ../../redux/AppState/cart/selectors */ "./resources/app/es5/redux/AppState/cart/selectors.js");
+var mapStateToProps = function mapStateToProps(state) {
+    return {
+        isEmpty: !selectors_1.selectCartCount(state)
+    };
+};
+var connected = react_redux_1.connect(mapStateToProps, {
     checkout: thunks_1.default
 });
 var CheckoutPage = function CheckoutPage(props) {
@@ -35544,7 +35607,11 @@ var CheckoutPage = function CheckoutPage(props) {
     }, []);
     var onSubmit = function onSubmit(vals) {
         console.log(vals);
-        props.checkout(vals, 'billing');
+        props.checkout(vals, 'billing').then(function (result) {
+            if (result) {
+                props.history.push('/thank');
+            }
+        });
     };
     return React.createElement(React.Fragment, null, React.createElement(Breadcrumbs_1.default, { paths: [{
             name: 'Home',
@@ -35552,7 +35619,7 @@ var CheckoutPage = function CheckoutPage(props) {
         }, {
             name: 'Checkout',
             path: '/checkout'
-        }] }), React.createElement(Questions_1.default, null), React.createElement(BillingForm_1.default, { onSubmit: onSubmit }));
+        }] }), props.isEmpty ? React.createElement(Empty_1.default, null) : React.createElement(React.Fragment, null, React.createElement(Questions_1.default, null), React.createElement(BillingForm_1.default, { onSubmit: onSubmit })));
 };
 exports.default = connected(CheckoutPage);
 
@@ -35586,8 +35653,9 @@ var VerifyPage_1 = __webpack_require__(/*! ./VerifyPage */ "./resources/app/es5/
 var ChangePasswordPage_1 = __webpack_require__(/*! ./ChangePasswordPage */ "./resources/app/es5/components/ChangePasswordPage/index.js");
 var SearchPage_1 = __webpack_require__(/*! ./SearchPage */ "./resources/app/es5/components/SearchPage/index.js");
 var ResendPage_1 = __webpack_require__(/*! ./ResendPage */ "./resources/app/es5/components/ResendPage/index.js");
+var ThankPage_1 = __webpack_require__(/*! ./ThankPage */ "./resources/app/es5/components/ThankPage/index.js");
 var Content = function Content() {
-    return React.createElement(React.Fragment, null, React.createElement(Header_1.default, null), React.createElement(react_router_dom_1.Switch, null, React.createElement(react_router_dom_1.Route, { path: '/', exact: true, component: HomePage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/login', exact: true, component: LoginPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/register', exact: true, component: RegisterPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/verify/:id', exact: true, component: VerifyPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/reset', exact: true, component: ResetPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/reset/:id', exact: true, component: ChangePasswordPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/resend', exact: true, component: ResendPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/cart', exact: true, component: CartPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/categories', exact: true, component: CategoriesPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/checkout', exact: true, component: CheckoutPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/products/:slug', exact: true, component: SinglePage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/search', exact: true, component: SearchPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/', component: NotFoundPage_1.default })), React.createElement(Footer_1.default, null));
+    return React.createElement(React.Fragment, null, React.createElement(Header_1.default, null), React.createElement(react_router_dom_1.Switch, null, React.createElement(react_router_dom_1.Route, { path: '/', exact: true, component: HomePage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/login', exact: true, component: LoginPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/register', exact: true, component: RegisterPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/verify/:id', exact: true, component: VerifyPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/reset', exact: true, component: ResetPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/reset/:id', exact: true, component: ChangePasswordPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/resend', exact: true, component: ResendPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/cart', exact: true, component: CartPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/categories', exact: true, component: CategoriesPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/checkout', exact: true, component: CheckoutPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/thank', exact: true, component: ThankPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/products/:slug', exact: true, component: SinglePage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/search', exact: true, component: SearchPage_1.default }), React.createElement(react_router_dom_1.Route, { path: '/', component: NotFoundPage_1.default })), React.createElement(Footer_1.default, null));
 };
 exports.default = Content;
 
@@ -36957,16 +37025,13 @@ var InputElement_1 = __webpack_require__(/*! ../FormElements/InputElement */ "./
 var required_1 = __webpack_require__(/*! ../../Helpers/Validators/required */ "./resources/app/es5/Helpers/Validators/required.js");
 var email_1 = __webpack_require__(/*! ../../Helpers/Validators/email */ "./resources/app/es5/Helpers/Validators/email.js");
 var sizeBetween_1 = __webpack_require__(/*! ../../Helpers/Validators/sizeBetween */ "./resources/app/es5/Helpers/Validators/sizeBetween.js");
+var fullName_1 = __webpack_require__(/*! ../../Helpers/Validators/fullName */ "./resources/app/es5/Helpers/Validators/fullName.js");
 var between = sizeBetween_1.default(6, 20);
 var RegisterForm = function RegisterForm(props) {
-    return React.createElement("div", { className: "container" }, React.createElement("form", { onSubmit: props.handleSubmit, className: "login my-pad", noValidate: true }, React.createElement("div", { className: "login__head" }, "Sign in"), props.error && React.createElement("div", { className: "red" }, props.error), React.createElement(redux_form_1.Field, { component: InputElement_1.default, type: "text", name: "fullName", placeholder: "Full name", required: true }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, type: "text", name: "email", placeholder: "Email", required: true, validate: [required_1.default, email_1.default] }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, type: "password", name: "password", placeholder: "Password", required: true, validate: [required_1.default, between] }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, type: "password", name: "password_confirmation", placeholder: "Confirm password", required: true }), React.createElement("div", { className: "row space-between my-pad w-100" }, React.createElement("div", null), React.createElement("button", { type: "submit", className: "check__but" }, props.submitting ? 'Loading...' : 'Sign in'))));
+    return React.createElement("div", { className: "container" }, React.createElement("form", { onSubmit: props.handleSubmit, className: "login my-pad", noValidate: true }, React.createElement("div", { className: "login__head" }, "Sign in"), props.error && React.createElement("div", { className: "red" }, props.error), React.createElement(redux_form_1.Field, { component: InputElement_1.default, type: "text", name: "fullName", placeholder: "Full name", required: true, validate: [required_1.default, fullName_1.default] }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, type: "text", name: "email", placeholder: "Email", required: true, validate: [required_1.default, email_1.default] }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, type: "password", name: "password", placeholder: "Password", required: true, validate: [required_1.default, between] }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, type: "password", name: "password_confirmation", placeholder: "Confirm password", required: true }), React.createElement("div", { className: "row space-between my-pad w-100" }, React.createElement("div", null), React.createElement("button", { type: "submit", className: "check__but" }, props.submitting ? 'Loading...' : 'Sign in'))));
 };
 var validate = function validate(values) {
-    var _a;
     var errors = {};
-    if (((_a = values.fullName) === null || _a === void 0 ? void 0 : _a.trim().split(' ').length) != 2) {
-        errors.fullName = 'Enter name and surname';
-    }
     if (values.password_confirmation != values.password) {
         errors.password_confirmation = 'Passwords are not equals';
     }
@@ -37602,6 +37667,25 @@ var SinglePage = function SinglePage(props) {
     return React.createElement(React.Fragment, null, React.createElement(Breadcrumbs_1.default, { paths: [{ name: 'Home', path: '/' }, { name: 'Product', path: '/' }] }), props.isLoading && React.createElement("div", null, "Loading info..."), !props.isLoading && props.data && React.createElement(React.Fragment, null, React.createElement(ProductInfo_1.default, { product: props.data }), React.createElement(Reviews_1.default, null)));
 };
 exports.default = connected(SinglePage);
+
+/***/ }),
+
+/***/ "./resources/app/es5/components/ThankPage/index.js":
+/*!*********************************************************!*\
+  !*** ./resources/app/es5/components/ThankPage/index.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var ThankPage = function ThankPage() {
+  return React.createElement("div", null, "Thank you");
+};
+exports.default = ThankPage;
 
 /***/ }),
 
@@ -40318,85 +40402,6 @@ exports.CHANGE_ERROR = 'change/ERROR';
 
 /***/ }),
 
-/***/ "./resources/app/es5/redux/checkout/actions.js":
-/*!*****************************************************!*\
-  !*** ./resources/app/es5/redux/checkout/actions.js ***!
-  \*****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var types_1 = __webpack_require__(/*! ./types */ "./resources/app/es5/redux/checkout/types.js");
-exports.checkoutStart = function () {
-    return {
-        type: types_1.CHECKOUT_START
-    };
-};
-exports.checkoutSuccess = function (message) {
-    return {
-        type: types_1.CHECKOUT_SUCCESS,
-        payload: message
-    };
-};
-exports.checkoutError = function (error) {
-    return {
-        type: types_1.CHECKOUT_ERROR,
-        error: error
-    };
-};
-
-/***/ }),
-
-/***/ "./resources/app/es5/redux/checkout/reducer.js":
-/*!*****************************************************!*\
-  !*** ./resources/app/es5/redux/checkout/reducer.js ***!
-  \*****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var __assign = undefined && undefined.__assign || function () {
-    __assign = Object.assign || function (t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) {
-                if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-            }
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var types_1 = __webpack_require__(/*! ./types */ "./resources/app/es5/redux/checkout/types.js");
-var initialState = {
-    isLoading: false,
-    error: null,
-    message: ''
-};
-var checkoutReducer = function checkoutReducer(state, action) {
-    if (state === void 0) {
-        state = initialState;
-    }
-    switch (action.type) {
-        case types_1.CHECKOUT_START:
-            return __assign(__assign({}, state), { isLoading: true, error: null });
-        case types_1.CHECKOUT_ERROR:
-            return __assign(__assign({}, state), { isLoading: false, error: action.error });
-        case types_1.CHECKOUT_SUCCESS:
-            return { message: action.payload, isLoading: false, error: null };
-    }
-    return state;
-};
-exports.default = checkoutReducer;
-
-/***/ }),
-
 /***/ "./resources/app/es5/redux/checkout/thunks.js":
 /*!****************************************************!*\
   !*** ./resources/app/es5/redux/checkout/thunks.js ***!
@@ -40504,38 +40509,37 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
-var actions_1 = __webpack_require__(/*! ./actions */ "./resources/app/es5/redux/checkout/actions.js");
+var react_toastify_1 = __webpack_require__(/*! react-toastify */ "./node_modules/react-toastify/dist/react-toastify.esm.js");
 var API_1 = __webpack_require__(/*! ../../Helpers/API */ "./resources/app/es5/Helpers/API.js");
-var actions_2 = __webpack_require__(/*! ../AppState/cart/actions */ "./resources/app/es5/redux/AppState/cart/actions.js");
+var actions_1 = __webpack_require__(/*! ../AppState/cart/actions */ "./resources/app/es5/redux/AppState/cart/actions.js");
 var thunkCheckout = function thunkCheckout(vals, formName) {
     return function (dispatch, getState) {
         return __awaiter(void 0, void 0, void 0, function () {
             var cartItems, mappedCartItems, checkoutResponse, e_1;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
+            var _a, _b;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
                     case 0:
-                        dispatch(actions_1.checkoutStart());
+                        dispatch(redux_form_1.startSubmit(formName));
                         cartItems = getState().cart.cartItems;
                         mappedCartItems = cartItems.map(function (item) {
                             return __assign(__assign({}, item), { product: item.product.id });
                         });
-                        _a.label = 1;
+                        _c.label = 1;
                     case 1:
-                        _a.trys.push([1, 3,, 4]);
+                        _c.trys.push([1, 3,, 4]);
                         return [4, API_1.dataApi.createOrder(__assign(__assign({}, vals), { cartItems: mappedCartItems }))];
                     case 2:
-                        checkoutResponse = _a.sent();
+                        checkoutResponse = _c.sent();
                         dispatch(redux_form_1.reset(formName));
-                        dispatch(actions_1.checkoutSuccess(checkoutResponse.data.success));
-                        dispatch(actions_2.cartReset());
-                        return [3, 4];
+                        dispatch(actions_1.cartReset());
+                        react_toastify_1.toast.success(checkoutResponse.data.success);
+                        return [2, true];
                     case 3:
-                        e_1 = _a.sent();
-                        if (e_1.data.response.data.errors) {
-                            dispatch(redux_form_1.updateSyncErrors(formName, e_1.data.response.data.errors, e_1.data.response.data.message));
-                        }
-                        dispatch(actions_1.checkoutError(e_1.message));
-                        return [3, 4];
+                        e_1 = _c.sent();
+                        dispatch(redux_form_1.stopSubmit(formName, __assign({ _error: ((_a = e_1.response) === null || _a === void 0 ? void 0 : _a.data.message) || e_1.message }, (_b = e_1.response) === null || _b === void 0 ? void 0 : _b.data.errors)));
+                        react_toastify_1.toast.error('Error in checkout');
+                        return [2, false];
                     case 4:
                         return [2];
                 }
@@ -40544,23 +40548,6 @@ var thunkCheckout = function thunkCheckout(vals, formName) {
     };
 };
 exports.default = thunkCheckout;
-
-/***/ }),
-
-/***/ "./resources/app/es5/redux/checkout/types.js":
-/*!***************************************************!*\
-  !*** ./resources/app/es5/redux/checkout/types.js ***!
-  \***************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.CHECKOUT_START = 'checkout/START';
-exports.CHECKOUT_SUCCESS = 'checkout/SUCCESS';
-exports.CHECKOUT_ERROR = 'checkout/ERROR';
 
 /***/ }),
 
@@ -40583,13 +40570,12 @@ var reducer_3 = __webpack_require__(/*! ./AppState/filter/reducer */ "./resource
 var SingleState_1 = __webpack_require__(/*! ./SingleState/ */ "./resources/app/es5/redux/SingleState/index.js");
 var reducer_4 = __webpack_require__(/*! ./category/reducer */ "./resources/app/es5/redux/category/reducer.js");
 var reducer_5 = __webpack_require__(/*! ./change/reducer */ "./resources/app/es5/redux/change/reducer.js");
-var reducer_6 = __webpack_require__(/*! ./checkout/reducer */ "./resources/app/es5/redux/checkout/reducer.js");
-var reducer_7 = __webpack_require__(/*! ./logout/reducer */ "./resources/app/es5/redux/logout/reducer.js");
-var reducer_8 = __webpack_require__(/*! ./AppState/user/reducer */ "./resources/app/es5/redux/AppState/user/reducer.js");
-var reducer_9 = __webpack_require__(/*! ./productList/reducer */ "./resources/app/es5/redux/productList/reducer.js");
-var reducer_10 = __webpack_require__(/*! ./search/reducer */ "./resources/app/es5/redux/search/reducer.js");
-var reducer_11 = __webpack_require__(/*! ./verify/reducer */ "./resources/app/es5/redux/verify/reducer.js");
-var reducer_12 = __webpack_require__(/*! ./login/reducer */ "./resources/app/es5/redux/login/reducer.js");
+var reducer_6 = __webpack_require__(/*! ./logout/reducer */ "./resources/app/es5/redux/logout/reducer.js");
+var reducer_7 = __webpack_require__(/*! ./AppState/user/reducer */ "./resources/app/es5/redux/AppState/user/reducer.js");
+var reducer_8 = __webpack_require__(/*! ./productList/reducer */ "./resources/app/es5/redux/productList/reducer.js");
+var reducer_9 = __webpack_require__(/*! ./search/reducer */ "./resources/app/es5/redux/search/reducer.js");
+var reducer_10 = __webpack_require__(/*! ./verify/reducer */ "./resources/app/es5/redux/verify/reducer.js");
+var reducer_11 = __webpack_require__(/*! ./login/reducer */ "./resources/app/es5/redux/login/reducer.js");
 var storeReducer = redux_1.combineReducers({
     app: reducer_1.default,
     cart: reducer_2.default,
@@ -40597,13 +40583,12 @@ var storeReducer = redux_1.combineReducers({
     single: SingleState_1.default,
     categories: reducer_4.default,
     change: reducer_5.default,
-    checkout: reducer_6.default,
-    login: reducer_12.default,
-    logout: reducer_7.default,
-    user: reducer_8.default,
-    productList: reducer_9.default,
-    search: reducer_10.default,
-    verify: reducer_11.default,
+    login: reducer_11.default,
+    logout: reducer_6.default,
+    user: reducer_7.default,
+    productList: reducer_8.default,
+    search: reducer_9.default,
+    verify: reducer_10.default,
     form: redux_form_1.reducer
 });
 exports.default = storeReducer;

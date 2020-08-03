@@ -7,7 +7,7 @@ import {selectCartItems, selectCartPrice} from '../../../../redux/AppState/cart/
 
 const connected = connect((state: RootState) => ({
 	cartItems: selectCartItems(state),
-	totalPrice: selectCartPrice(state)
+	totalPrice: selectCartPrice(state).toFixed(2)
 }));
 
 const PaymentList: React.FC<ConnectedProps<typeof connected>> = (props) => (
@@ -35,7 +35,7 @@ const PaymentList: React.FC<ConnectedProps<typeof connected>> = (props) => (
 			<div className="payment__order-item">
 				<b>Total</b>
 				<b>
-					${props.totalPrice.toFixed(2)}
+					${props.totalPrice}
 				</b>
 			</div>
 		</div>

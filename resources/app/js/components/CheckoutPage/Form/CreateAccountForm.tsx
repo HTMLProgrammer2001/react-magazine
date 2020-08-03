@@ -5,12 +5,14 @@ import {connect, ConnectedProps} from 'react-redux';
 import CheckboxElement from '../../FormElements/CheckboxElement';
 import InputElement from '../../FormElements/InputElement';
 import {RootState} from '../../../redux';
+import sizeBetween from '../../../Helpers/Validators/sizeBetween';
+import required from '../../../Helpers/Validators/required';
 
 
 export type IAccountFormData = {
 	create?: boolean,
 	password?: string,
-	passwordConfirm?: string
+	password_confirmation?: string
 }
 
 const selector = formValueSelector('billing');
@@ -18,6 +20,8 @@ const selector = formValueSelector('billing');
 const connected = connect((state: RootState) => ({
 	isCreate: selector(state, 'create')
 }));
+
+const between = sizeBetween(8, 20);
 
 const AccountForm: React.FC<ConnectedProps<typeof connected>> = (props) => (
 	<React.Fragment>
@@ -31,14 +35,17 @@ const AccountForm: React.FC<ConnectedProps<typeof connected>> = (props) => (
 			<Field
 				component={InputElement}
 				name="password"
+				type="password"
 				placeholder="Password"
 				className="mr-1"
 				required
+				validate={[required, between]}
 			/>
 
 			<Field
 				component={InputElement}
-				name="passwordConfirm"
+				name="password_confirmation"
+				type="password"
 				placeholder="Password confirmation"
 				className="ml-1"
 				required

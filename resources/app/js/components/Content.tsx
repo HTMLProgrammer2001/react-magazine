@@ -18,6 +18,7 @@ import VerifyPage from './VerifyPage';
 import ChangePage from './ChangePasswordPage';
 import SearchPage from './SearchPage';
 import ResendPage from './ResendPage';
+import ThankPage from './ThankPage';
 
 
 const Content: React.FC<{}> = () => (
@@ -36,6 +37,7 @@ const Content: React.FC<{}> = () => (
 			<Route path='/cart' exact component={CartPage}/>
 			<Route path='/categories' exact component={CategoriesPage}/>
 			<Route path='/checkout' exact component={CheckoutPage}/>
+			<Route path='/thank' exact component={ThankPage}/>
 			<Route path='/products/:slug' exact component={SinglePage}/>
 			<Route path='/search' exact component={SearchPage}/>
 

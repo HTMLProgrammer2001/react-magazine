@@ -5,6 +5,7 @@ import InputElement from '../FormElements/InputElement';
 import required from '../../Helpers/Validators/required';
 import email from '../../Helpers/Validators/email';
 import sizeBetween from '../../Helpers/Validators/sizeBetween';
+import fullName from '../../Helpers/Validators/fullName';
 
 
 export type IRegisterFormData = {
@@ -29,7 +30,7 @@ const RegisterForm: React.FC<IRegisterProps> = (props) => (
 			}
 
 			<Field component={InputElement} type="text" name="fullName"
-				   placeholder="Full name" required/>
+				   placeholder="Full name" required validate={[required, fullName]}/>
 			<Field component={InputElement} type="text" name="email"
 				   placeholder="Email" required validate={[required, email]}/>
 			<Field component={InputElement} type="password" name="password"
@@ -49,10 +50,6 @@ const RegisterForm: React.FC<IRegisterProps> = (props) => (
 
 const validate = (values: IRegisterFormData) => {
 	const errors: Partial<IRegisterFormData> = {};
-
-	if(values.fullName?.trim().split(' ').length != 2){
-		errors.fullName = 'Enter name and surname';
-	}
 
 	if(values.password_confirmation != values.password){
 		errors.password_confirmation = 'Passwords are not equals';

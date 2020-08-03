@@ -8,7 +8,6 @@ import filtersReducer from './AppState/filter/reducer';
 import singleReducer from './SingleState/';
 import categoryReducer from './category/reducer';
 import changeReducer from './change/reducer';
-import checkoutReducer from './checkout/reducer';
 import logoutReducer from './logout/reducer';
 import userReducer from './AppState/user/reducer';
 import productListReducer from './productList/reducer';
@@ -24,7 +23,6 @@ const storeReducer = combineReducers({
 	single: singleReducer,
 	categories: categoryReducer,
 	change: changeReducer,
-	checkout: checkoutReducer,
 	login: loginReducer,
 	logout: logoutReducer,
 	user: userReducer,

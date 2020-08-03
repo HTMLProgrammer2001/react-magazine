@@ -62,4 +62,8 @@ const ChangePage: React.FC<IChangePasswordProps> = (props) => {
 	);
 };
 
-export default withRouter(IsAuthenticated(false)<IChangePasswordProps>(connected(ChangePage)));
+export default withRouter(
+	IsAuthenticated(false)<IChangePasswordProps>(
+		connected(ChangePage)
+	)
+);
