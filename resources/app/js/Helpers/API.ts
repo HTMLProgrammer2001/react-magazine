@@ -77,7 +77,7 @@ export const dataApi = {
 	},
 
 	addComment(productID: number, vals: IReviewFormData){
-		return apiClient.post(`/products/${productID}/addComment`, vals, {
+		return apiClient.post<ISuccess>(`/products/${productID}/addComment`, vals, {
 			headers: {
 				Authorization: `Bearer ${localStorage.getItem('token')}`
 			}

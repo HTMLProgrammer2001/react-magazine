@@ -1,9 +1,22 @@
 import * as React from 'react';
 import c from 'classnames';
 import {Link} from 'react-router-dom';
+import {connect, ConnectedProps} from 'react-redux';
+
+import {RootState} from '../../../redux';
+import {selectUser} from '../../../redux/AppState/user/selectors';
+import thunkLogout from '../../../redux/logout/thunks';
 
 
-const UserDropdown: React.FC<{}> = () => {
+const mapStateToProps = (state: RootState) => ({
+	user: selectUser(state)
+});
+
+const connected = connect(mapStateToProps, {
+	logout: thunkLogout
+});
+
+const UserDropdown: React.FC<ConnectedProps<typeof connected>> = (props) => {
 	const [isOpen, changeOpen] = React.useState(false);
 
 	return (
@@ -15,10 +28,10 @@ const UserDropdown: React.FC<{}> = () => {
 				onClick={() => changeOpen(!isOpen)}
 			>
 				<div className="admHeader__name">
-					<span>Yuri Prisyazhny</span>
+					<span>{props.user!.fullName}</span>
 				</div>
 
-				<img className="admHeader__photo" src="/image/noAva.jpg"/>
+				<img className="admHeader__photo" src={`/image/${props.user!.avatar}`}/>
 				<i className="fas fa-sort-down ml-1"/>
 			</div>
 
@@ -41,7 +54,10 @@ const UserDropdown: React.FC<{}> = () => {
 							<Link to='/profile/favorite'>Favorite</Link>
 						</li>
 
-						<li className="menu__item">Log out</li>
+						<li
+							className="menu__item"
+							onClick={props.logout}
+						>Log out</li>
 					</ul>
 				</div>
 			</div>
@@ -49,4 +65,4 @@ const UserDropdown: React.FC<{}> = () => {
 	);
 };
 
-export default UserDropdown;
+export default connected(UserDropdown);

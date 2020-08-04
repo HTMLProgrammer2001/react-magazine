@@ -8,6 +8,8 @@ import ProductInfo from './ProductInfo/';
 import {RootState} from '../../redux';
 import thunkProduct from '../../redux/SingleState/product/thunks/thunkProduct';
 import {selectSingleProduct} from '../../redux/SingleState/selectors';
+import Loader from '../Loader';
+import NotFoundImg from '../NotFoundPage/NotFoundImg';
 
 
 const mapStateToProps = (state: RootState) => ({
@@ -41,7 +43,8 @@ const SinglePage: React.FC<ISingleProductProps> = (props) => {
 				{name: 'Product', path: '/'}
 			]}/>
 
-			{props.isLoading && <div>Loading info...</div>}
+			{props.notFound && <NotFoundImg/>}
+			{props.isLoading && <Loader/>}
 
 			{
 				!props.isLoading && props.data &&

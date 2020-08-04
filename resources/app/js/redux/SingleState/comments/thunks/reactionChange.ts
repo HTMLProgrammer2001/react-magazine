@@ -3,6 +3,7 @@ import {ThunkAction, ThunkDispatch} from 'redux-thunk';
 import {RootState} from '../../../index';
 import {commentReactionChange} from '../actions';
 import {dataApi} from '../../../../Helpers/API';
+import {toast} from 'react-toastify';
 
 
 type ReactionAction = ReturnType<typeof commentReactionChange>;
@@ -15,10 +16,12 @@ const thunkReactionChange = (commentID: number, reaction: string): ToggleLikeThu
 			
 			if(reactionResponse.data.success){
 				dispatch(commentReactionChange(commentID, reaction));
+				toast.success('Comment reaction changed');
 			}
 		}
 		catch (e) {
-			console.log(e);	
+			console.log(e);
+			toast.error(e.response?.data.message || e.message);
 		}
 	};
 

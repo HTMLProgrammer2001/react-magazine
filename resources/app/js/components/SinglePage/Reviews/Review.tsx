@@ -52,8 +52,11 @@ const Review: React.FC<IReviewProps> = ({comment, changeReaction}) => (
 									changeReaction(comment.id, 'up');
 							}}
 						>
-							<i className="fas fa-angle-up"/>
-							<span className={c({active: comment.curReaction == 'up'})}>
+							<i
+								className={c('fas fa-angle-up', {
+									active: comment.curReaction == 'up'})}
+							/>
+							<span>
 								&nbsp;{comment.likes}
 							</span>
 						</span>
@@ -64,8 +67,11 @@ const Review: React.FC<IReviewProps> = ({comment, changeReaction}) => (
 									changeReaction(comment.id, 'down');
 							}}
 						>
-							<i className="fas fa-angle-down"/>
-							<span className={c({active: comment.curReaction == 'down'})}>
+							<i
+								className={c('fas fa-angle-down', {
+									active: comment.curReaction == 'down'})}
+							/>
+							<span>
 								&nbsp;{comment.dislikes}
 							</span>
 						</span>
@@ -79,4 +85,3 @@ const Review: React.FC<IReviewProps> = ({comment, changeReaction}) => (
 );
 
 export default connected(Review);
-

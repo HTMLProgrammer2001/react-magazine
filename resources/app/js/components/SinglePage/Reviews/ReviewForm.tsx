@@ -5,6 +5,9 @@ import {connect, ConnectedProps} from 'react-redux';
 import MarkElement from '../../FormElements/MarkElement';
 import UserData from './UserData';
 import {RootState} from '../../../redux';
+import required from '../../../Helpers/Validators/required';
+import inRange from '../../../Helpers/Validators/inRange';
+import {selectUser} from '../../../redux/AppState/user/selectors';
 
 
 export type IReviewFormData = {
@@ -15,8 +18,7 @@ export type IReviewFormData = {
 };
 
 const mapStateToProps = (state: RootState) => ({
-	commentData: state.single.addComment,
-	user: state.user.user
+	user: selectUser(state)
 });
 
 const connected = connect(mapStateToProps);
@@ -24,11 +26,13 @@ const connected = connect(mapStateToProps);
 type IOwnProps = ConnectedProps<typeof connected>;
 type IReviewFormProps = InjectedFormProps<IReviewFormData, IOwnProps> & IOwnProps;
 
+const markValidator = inRange(1, 5);
+
 const ReviewForm: React.FC<IReviewFormProps> = (props) => (
-	<form className="reviews__form" onSubmit={props.handleSubmit} noValidate>
+	<form className="reviews__form" onSubmit={props.handleSubmit}>
 		{
-			props.commentData.error &&
-				<div className="red">{props.commentData.error}</div>
+			props.error &&
+				<div className="red">{props.error}</div>
 		}
 
 		<div className="row">
@@ -43,6 +47,7 @@ const ReviewForm: React.FC<IReviewFormProps> = (props) => (
 					component={MarkElement}
 					name="mark"
 					formName={props.form}
+					validate={[markValidator]}
 				/>
 
 				<div className="reviews__comment">
@@ -58,6 +63,7 @@ const ReviewForm: React.FC<IReviewFormProps> = (props) => (
 							   className="input__elem"
 							   rows={1}
 							   required
+							   validate={[required]}
 							   name="message"
 						/>
 
@@ -65,7 +71,9 @@ const ReviewForm: React.FC<IReviewFormProps> = (props) => (
 						<div className="input__line" style={{bottom: '4px'}}/>
 					</div>
 
-					<button type="submit" className="reviews__but">Send</button>
+					<button type="submit" className="reviews__but">
+						{props.submitting ? 'Loading...' : 'Send'}
+					</button>
 				</div>
 			</div>
 		</div>

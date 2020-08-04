@@ -4,7 +4,8 @@ import {dataApi} from '../../../../Helpers/API';
 import {RootState} from '../../../index';
 import {ProductActions} from '../reducer';
 import {commentReset} from '../../comments/actions';
-import {productError, productStart, productSuccess} from '../actions';
+import {productError, productNotFound, productStart, productSuccess} from '../actions';
+import {toast} from 'react-toastify';
 
 
 export type ProductThunkAction = ThunkAction<void, RootState, unknown, ProductActions>;
@@ -20,7 +21,13 @@ const thunkProduct = (slug: string): ProductThunkAction =>
 			dispatch(productSuccess(productResponse.data));
 		}
 		catch (e) {
-			dispatch(productError(e.message));
+			if(e.response.status == 404){
+				dispatch(productNotFound());
+			}
+
+			dispatch(productError(e.response?.data.message || e.message));
+
+			toast.error(e.response?.data.message || e.message);
 		}
 	};
 

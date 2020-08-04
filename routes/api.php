@@ -32,7 +32,7 @@ Route::post('/products/{productID}/addComment', 'CommentController@create');
 Route::get('/categories', 'CategoriesController@getAll');
 
 Route::post('/register', 'UserActions@register');
-Route::post('/login', 'UserActions@login');
+Route::post('/login', 'UserActions@login')->name('login');
 Route::post('/logout', 'UserActions@logout')
     ->middleware('auth:api, verified');
 
@@ -56,3 +56,7 @@ Route::get('/me', 'UserActions@me')->middleware('auth:api');
 Route::get('/getProductsByIds', 'ProductInfoController@getProductsByIds');
 
 Route::post('/orders', 'OrdersController@create');
+
+Route::group(['namespace' => 'Profile', 'prefix' => 'profile'], function(){
+    Route::any('/favorite', 'FavoriteController');
+});

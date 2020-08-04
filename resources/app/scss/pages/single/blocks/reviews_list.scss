@@ -30,6 +30,10 @@
 
         &-mark{
             cursor: pointer;
+
+            & .fas.active{
+                color: $red;
+            }
         }
 
         &-mark>*{

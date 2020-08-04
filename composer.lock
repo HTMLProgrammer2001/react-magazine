@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0ab5200b36da536ff8b8db831294b93e",
+    "content-hash": "58fcebed64c866c7e9c611200814dfb3",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2991,6 +2991,68 @@
                 "uuid"
             ],
             "time": "2020-03-29T20:13:32+00:00"
+        },
+        {
+            "name": "sarfraznawaz2005/laravel-sse",
+            "version": "1.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sarfraznawaz2005/laravel-sse.git",
+                "reference": "cec6476593eb5c5d10a713f48777612c040650ca"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sarfraznawaz2005/laravel-sse/zipball/cec6476593eb5c5d10a713f48777612c040650ca",
+                "reference": "cec6476593eb5c5d10a713f48777612c040650ca",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "~5|~6|~7",
+                "php": "^7.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Sarfraznawaz2005\\SSE\\ServiceProvider"
+                    ],
+                    "aliases": {
+                        "SSE": "Sarfraznawaz2005\\SSE\\Facades\\SSEFacade"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Sarfraznawaz2005\\SSE\\": "src/"
+                },
+                "files": [
+                    "src/Helpers/helper.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sarfraz Ahmed",
+                    "email": "sarfraznawaz2005@gmail.com",
+                    "homepage": "http://codeinphp.github.io"
+                }
+            ],
+            "description": "Laravel package to provide Server Sent Events functionality for your app.",
+            "homepage": "https://github.com/sarfraznawaz2005/laravel-sse",
+            "keywords": [
+                "Sever Sent Events",
+                "event",
+                "laravel",
+                "notifications",
+                "polling",
+                "realtime",
+                "server",
+                "sse"
+            ],
+            "time": "2020-04-28T10:53:58+00:00"
         },
         {
             "name": "spatie/valuestore",

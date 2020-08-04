@@ -83,7 +83,7 @@ class ProductInfoController extends Controller
         $result = $product->changeLikeFor($request->user()->id);
 
         return response()->json([
-            'message' => $result
+            'success' => $result
         ]);
     }
 

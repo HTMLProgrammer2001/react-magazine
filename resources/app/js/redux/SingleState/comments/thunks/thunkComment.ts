@@ -6,6 +6,7 @@ import {CommentActions} from '../reducer';
 import {commentSuccess, commentError, commentStart} from '../actions';
 import {dataApi} from '../../../../Helpers/API';
 import {RootState} from '../../../index';
+import {toast} from 'react-toastify';
 
 
 export type CommentThunkAction = ThunkAction<void, RootState, unknown, CommentActions>;
@@ -23,7 +24,8 @@ const thunkComment = (productID: number, offset: number = 1): CommentThunkAction
 			dispatch(commentSuccess(commentResponse.data));
 		}
 		catch (e) {
-			dispatch(commentError(e.data.response!.data.message));
+			dispatch(commentError(e.response?.data.message || e.message));
+			toast.error(e.response?.data.message || e.message);
 		}
 	};
 

@@ -42,7 +42,7 @@ const CartList: React.FC<ICartListProps> = (props) => (
 		}
 
 		{
-			props.cartItems.length &&
+			!!props.cartItems.length &&
 			<li className="header__product-item">
 				<b>Total</b>
 				<span/>

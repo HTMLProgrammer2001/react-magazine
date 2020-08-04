@@ -1,3 +1,3 @@
 export type IChangeLikeResponse = {
-	message: boolean
+	success: boolean
 };

@@ -3,6 +3,8 @@ import {connect, ConnectedProps} from 'react-redux';
 
 import Breadcrumbs from '../Breadcrumbs';
 import CategoriesList from './CategoriesList';
+import Loader from '../Loader';
+
 import {RootState} from '../../redux';
 import thunkCategory from '../../redux/category/thunks';
 import {selectCategoriesState} from '../../redux/category/selectors';
@@ -32,7 +34,7 @@ const CategoriesPage: React.FC<ConnectedProps<typeof connected>> = (props) => {
 				{name: 'Categories', path: '/categories'}
 			]}/>
 
-			{props.categoriesState.isLoading && <div>Loading...</div>}
+			{props.categoriesState.isLoading && <Loader/>}
 
 			{
 				props.categoriesState.error &&

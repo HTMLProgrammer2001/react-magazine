@@ -25,11 +25,15 @@ const MarkElement: React.FC<IElementProps> = (props) => {
 	const {input: {value, name}} = props;
 
 	return (
-		<Mark
-			rating={value}
-			fixed={false}
-			onChange={(newValue: number) => props.changeValue(name, newValue)}
-		/>
+		<React.Fragment>
+			<Mark
+				rating={value}
+				fixed={false}
+				onChange={(newValue: number) => props.changeValue(name, newValue)}
+			/>
+
+			<div className="red">{props.meta.error}</div>
+		</React.Fragment>
 	);
 };
 

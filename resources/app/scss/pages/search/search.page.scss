@@ -1,0 +1,30 @@
+.search{
+    &__list{
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+
+        &>a{
+            width: 50%;
+        }
+    }
+
+    &__item{
+        display: flex;
+        align-items: center;
+
+        margin: 20px 0;
+    }
+
+    &__photo{
+        width: 50%;
+        min-width: 200px;
+        padding: 0 20px;
+    }
+
+    &__info>*{
+        display: flex;
+        margin: 10px 0;
+    }
+}

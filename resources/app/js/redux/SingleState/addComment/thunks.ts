@@ -1,37 +1,39 @@
 import {ThunkAction, ThunkDispatch} from 'redux-thunk';
-import {updateSyncErrors, reset} from 'redux-form';
+import {reset, startSubmit, stopSubmit, FormAction} from 'redux-form';
 
 import {IReviewFormData} from '../../../components/SinglePage/Reviews/ReviewForm';
 import {RootState} from '../../';
-import {AddCommentActions} from './reducer';
 
-import {commentAddSuccess, commentAddStart, commentAddError} from './actions';
 import {dataApi} from '../../../Helpers/API';
+import {toast} from 'react-toastify';
+import {commentReset} from '../comments/actions';
+import thunkComment from '../comments/thunks/thunkComment';
 
 
+type AddCommentActions = any;
 export type AddCommentThunkAction = ThunkAction<void, RootState, unknown, AddCommentActions>;
 
 const thunkAddComment = (productID: number, vals: IReviewFormData, formName: string):
 	AddCommentThunkAction =>
 	async (dispatch: ThunkDispatch<{}, {}, AddCommentActions>) => {
-		dispatch(commentAddStart());
+		dispatch(startSubmit(formName));
 
 		try{
-			await dataApi.addComment(productID, vals);
+			const addCommResponse = await dataApi.addComment(productID, vals);
 
 			dispatch(reset(formName));
-			dispatch(commentAddSuccess());
+			dispatch(commentReset());
+			dispatch(thunkComment(productID));
+
+			toast.success(addCommResponse.data.success);
 		}
 		catch (e) {
-			if(e.data.response!.data.errors){
-				dispatch(updateSyncErrors(
-					formName,
-					e.data.response!.data.errors,
-					e.data.response!.data.message
-				));
-			}
+			dispatch(stopSubmit(formName, {
+				_error: e.response?.data.message || e.message,
+				...e.response?.data.errors
+			}));
 
-			dispatch(commentAddError(e.message));
+			toast.error(e.response?.data.message || e.message);
 		}
 	};
 

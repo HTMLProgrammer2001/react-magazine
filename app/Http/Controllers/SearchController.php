@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use App\Http\Resources\ProductResource;
+use App\Http\Resources\ProductsResource;
 use App\Product;
 use Illuminate\Http\Request;
 
@@ -19,6 +20,8 @@ class SearchController extends Controller
         $search = $request->query('search');
         $products = Product::where('name', 'like', "%$search%")->paginate(1);
 
-        return response()->json($products);
+        $data = array_merge($products->toArray(), (new ProductsResource($products))->toArray($request));
+
+        return response()->json($data);
     }
 }

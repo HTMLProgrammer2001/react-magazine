@@ -46,17 +46,19 @@ const ReviewsList: React.FC<ConnectedProps<typeof connected>> = (props) => (
 
 		<div className="load">
 			{
-				props.totalCount == props.comments.length ?
+				props.totalCount == props.comments.length && props.totalCount ?
 					false :
-					<button
-						type="button"
-						className="load__more"
-						onClick={
-							() => props.loadComments(props.curProductID, props.currentPage + 1)
-						}
-					>
-						{props.isLoading ? 'Loading...' : 'Load More'}
-					</button>
+					!props.totalCount ?
+						<div>No comments yet</div> :
+						<button
+							type="button"
+							className="load__more"
+							onClick={
+								() => props.loadComments(props.curProductID, props.currentPage + 1)
+							}
+						>
+							{props.isLoading ? 'Loading...' : 'Load More'}
+						</button>
 			}
 		</div>
 	</React.Fragment>

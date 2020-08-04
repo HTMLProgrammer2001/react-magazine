@@ -1,4 +1,10 @@
-import {PRODUCT_LIKE_CHANGE, PRODUCT_ERROR, PRODUCT_SUCCESS, PRODUCT_START} from './types';
+import {
+	PRODUCT_LIKE_CHANGE,
+	PRODUCT_ERROR,
+	PRODUCT_SUCCESS,
+	PRODUCT_START,
+	PRODUCT_NOT_FOUND
+} from './types';
 
 import {IFullProduct} from '../../../Interfaces/IFullProduct';
 
@@ -20,4 +26,8 @@ export const productSuccess = (product: IFullProduct) => (<const>{
 export const productLikeChange = (liked: boolean) => (<const>{
 	type: PRODUCT_LIKE_CHANGE,
 	payload: liked
+});
+
+export const productNotFound = () => (<const>{
+	type: PRODUCT_NOT_FOUND
 });

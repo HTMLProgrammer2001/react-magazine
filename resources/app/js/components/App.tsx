@@ -4,6 +4,8 @@ import {connect, ConnectedProps} from 'react-redux';
 
 import Content from './Content';
 import ProfileSwitcher from './Profile';
+import Loader from './Loader';
+
 import {RootState} from '../redux';
 import thunkInitialize from '../redux/AppState/app/thunks';
 import {selectInitialized} from '../redux/AppState/app/selectors';
@@ -24,7 +26,7 @@ const App: React.FC<ConnectedProps<typeof connected>> = (props) => {
 	}, []);
 
 	if(!props.initialized)
-		return <div>Loading...</div>;
+		return <Loader/>;
 
 	return (
 		<Router>

@@ -28,7 +28,6 @@ const Reviews: React.FC<ConnectedProps<typeof connected>> = (props) => {
 				<div className="reviews__head">Reviews</div>
 
 				<ReviewForm onSubmit={onSubmit}/>
-
 				<ReviewsList/>
 			</div>
 		</div>

@@ -7,6 +7,7 @@ import {RootState} from '../../redux';
 import thunkSearch from '../../redux/search/thunks';
 import {selectSearchLength, selectSearchState} from '../../redux/search/selectors';
 import {searchReset} from '../../redux/search/actions';
+import List from './List';
 
 
 const mapStateToProps = (state: RootState) => ({
@@ -29,49 +30,53 @@ const SearchPage: React.FC<ISearchProps> = (props) => {
 	}, [props.location.search.split('=')[1]]);
 
 	return (
-		<React.Fragment>
+		<div>
 			<Breadcrumbs paths={[
 				{name: 'Home', path: '/'},
 				{name: 'Search', path: '/search'}
 			]}/>
 
-			<div>
-				<div>Loaded {props.productCount} of {props.searchState.totalCount}</div>
+			<div className="container py-pad">
+				<div>
+					<div>
+						Loaded {props.productCount} of {props.searchState.totalCount}
+					</div>
+
+					{
+						<List
+							products={props.searchState.products}
+							search={props.searchState.search}
+							count={props.productCount}
+						/>
+					}
+				</div>
 
 				{
-					props.productCount ?
-						props.searchState.products.map((item) => (
-							<div key={item.id}>{item.name}</div>
-						))
-						:
-						<div>No products was found for {props.searchState.search}</div>
+					props.searchState.error &&
+						<div className="center">{props.searchState.error}</div>
 				}
-			</div>
 
-			{props.searchState.error && <div>{props.searchState.error}</div>}
-
-			{
-				props.productCount == props.searchState.totalCount &&
-				!props.searchState.isLoading ?
-					false :
-					<div className="goods__list-load">
-						<button
-							type="button"
-							className="goods__list-more"
-							onClick={
-								() => {
+				{
+					props.productCount == props.searchState.totalCount &&
+					!props.searchState.isLoading ?
+						false :
+						<div className="goods__list-load">
+							<button
+								type="button"
+								className="goods__list-more"
+								onClick={() => {
 									props.loadSearch(
 										props.searchState.search,
 										props.searchState.currentPage + 1
 									);
-								}
-							}
-						>
-							{props.searchState.isLoading ? 'Loading...' : 'Load More'}
-						</button>
-					</div>
-			}
-		</React.Fragment>
+								}}
+							>
+								{props.searchState.isLoading ? 'Loading...' : 'Load More'}
+							</button>
+						</div>
+				}
+			</div>
+		</div>
 	);
 };
 
