@@ -34723,10 +34723,61 @@ exports.default = IsAuthenticated;
 
 /***/ }),
 
-/***/ "./resources/app/es5/Helpers/API.js":
-/*!******************************************!*\
-  !*** ./resources/app/es5/Helpers/API.js ***!
-  \******************************************/
+/***/ "./resources/app/es5/Helpers/API/ProfileAPI.js":
+/*!*****************************************************!*\
+  !*** ./resources/app/es5/Helpers/API/ProfileAPI.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var axios_1 = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+var apiClient = axios_1.default.create({
+    baseURL: 'http://localhost:8000/api/profile',
+    headers: {
+        'Content-Type': 'application/json'
+    }
+});
+exports.profileAPI = {
+    getProducts: function getProducts() {
+        return apiClient.get('/recommendationProducts');
+    },
+    getFavorite: function getFavorite(page, size, find) {
+        if (page === void 0) {
+            page = 1;
+        }
+        if (size === void 0) {
+            size = 5;
+        }
+        if (find === void 0) {
+            find = '';
+        }
+        return apiClient.get('/favorite', {
+            params: { page: page, find: find, size: size },
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem('token')
+            }
+        });
+    },
+    deleteFavorite: function deleteFavorite(id) {
+        return apiClient.delete('/favorite', {
+            params: { id: id },
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem('token')
+            }
+        });
+    }
+};
+
+/***/ }),
+
+/***/ "./resources/app/es5/Helpers/API/frontAPI.js":
+/*!***************************************************!*\
+  !*** ./resources/app/es5/Helpers/API/frontAPI.js ***!
+  \***************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -36934,6 +36985,59 @@ exports.default = AdminHeader;
 
 /***/ }),
 
+/***/ "./resources/app/es5/components/Profile/FavoritePage/FavoriteForm.js":
+/*!***************************************************************************!*\
+  !*** ./resources/app/es5/components/Profile/FavoritePage/FavoriteForm.js ***!
+  \***************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
+var InputElement_1 = __webpack_require__(/*! ../../FormElements/InputElement */ "./resources/app/es5/components/FormElements/InputElement.js");
+var FavoriteForm = function FavoriteForm(props) {
+    return React.createElement("form", { onSubmit: props.handleSubmit, className: "myOrders__header my-pad" }, React.createElement("span", { className: "myOrders__find" }, React.createElement(redux_form_1.Field, { component: InputElement_1.default, name: "find", required: true, placeholder: "Enter product name" })));
+};
+exports.default = redux_form_1.reduxForm({
+    form: 'favoriteFind',
+    onChange: function onChange(values, dispatch) {
+        dispatch(redux_form_1.submit('favoriteFind'));
+    }
+})(FavoriteForm);
+
+/***/ }),
+
+/***/ "./resources/app/es5/components/Profile/FavoritePage/FavoriteItem.js":
+/*!***************************************************************************!*\
+  !*** ./resources/app/es5/components/Profile/FavoritePage/FavoriteItem.js ***!
+  \***************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+var thunkDeleteFav_1 = __webpack_require__(/*! ../../../redux/Profile/favoriteProducts/thunks/thunkDeleteFav */ "./resources/app/es5/redux/Profile/favoriteProducts/thunks/thunkDeleteFav.js");
+var connected = react_redux_1.connect(null, {
+    del: thunkDeleteFav_1.default
+});
+var FavoriteItem = function FavoriteItem(props) {
+    return React.createElement("div", { className: "table__row" }, React.createElement("div", { className: "table__col" }, "#", props.favorite.id), React.createElement("div", { className: "table__col" }, React.createElement("img", { className: "mb-10", src: "/image/" + props.favorite.product.photo }), React.createElement("div", null, props.favorite.product.name)), React.createElement("div", { className: "table__col" }, React.createElement(react_router_dom_1.Link, { to: "/products/" + props.favorite.product.slug }, React.createElement("i", { className: "fas fa-eye ml-10 cur" })), React.createElement("i", { className: "fas fa-times cur", onClick: function onClick() {
+            return props.del(props.favorite.id);
+        } })));
+};
+exports.default = connected(FavoriteItem);
+
+/***/ }),
+
 /***/ "./resources/app/es5/components/Profile/FavoritePage/index.js":
 /*!********************************************************************!*\
   !*** ./resources/app/es5/components/Profile/FavoritePage/index.js ***!
@@ -36944,12 +37048,54 @@ exports.default = AdminHeader;
 "use strict";
 
 
+var __assign = undefined && undefined.__assign || function () {
+    __assign = Object.assign || function (t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) {
+                if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+            }
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-var FavoritePage = function FavoritePage() {
-    return React.createElement("div", { className: "admContent" }, React.createElement("div", { className: "container" }, React.createElement("div", { className: "myOrders py-pad" }, React.createElement("div", { className: "pull-right" }, React.createElement("span", { className: "but but_outline" }, "Continue shopping")), React.createElement("h3", null, "My favorite"), React.createElement("div", { className: "myOrders__header my-pad" }, React.createElement("span", { className: "myOrders__find" }, React.createElement("div", { className: "input" }, React.createElement("input", { className: "input__elem", type: "text", required: true }), React.createElement("label", { className: "input__label" }, "Find favorite product"), React.createElement("div", { className: "input__line" }))), React.createElement("div", null)), React.createElement("div", { className: "table__wrap" }, React.createElement("div", { className: "table" }, React.createElement("div", { className: "table__head" }, React.createElement("div", { className: "table__head-item" }, "ID"), React.createElement("div", { className: "table__head-item" }, "Product"), React.createElement("div", { className: "table__head-item" }, "Actions")), React.createElement("div", { className: "table__content" }, React.createElement("div", { className: "table__row" }, React.createElement("div", { className: "table__col" }, "#43534455"), React.createElement("div", { className: "table__col" }, React.createElement("img", { className: "mb-10", src: "/image/product.png" }), React.createElement("div", null, "TShirt")), React.createElement("div", { className: "table__col" }, React.createElement("i", { className: "fas fa-times cur" }), React.createElement("i", { className: "fas fa-eye ml-10 cur" }))), React.createElement("div", { className: "table__row" }, React.createElement("div", { className: "table__col" }, "#43534455"), React.createElement("div", { className: "table__col" }, React.createElement("img", { className: "mb-10", src: "/image/product.png" }), React.createElement("div", null, "TShirt")), React.createElement("div", { className: "table__col" }, React.createElement("i", { className: "fas fa-times cur" }), React.createElement("i", { className: "fas fa-eye ml-10 cur" }))), React.createElement("div", { className: "table__row" }, React.createElement("div", { className: "table__col" }, "#43534455"), React.createElement("div", { className: "table__col" }, React.createElement("img", { className: "mb-10", src: "/image/product.png" }), React.createElement("div", null, "TShirt")), React.createElement("div", { className: "table__col" }, React.createElement("i", { className: "fas fa-times cur" }), React.createElement("i", { className: "fas fa-eye ml-10 cur" }))))))), React.createElement("div", { className: "pagination mb-pad" }, React.createElement("div", { className: "pagination__item pagination__item_disabled" }, "Prev"), React.createElement("div", { className: "pagination__item pagination__item_active" }, "1"), React.createElement("div", { className: "pagination__item" }, "2"), React.createElement("div", { className: "pagination__item" }, "3"), React.createElement("div", { className: "pagination__item" }, "Next"))));
+var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+var Paginator_1 = __webpack_require__(/*! ../Paginator */ "./resources/app/es5/components/Profile/Paginator.js");
+var FavoriteForm_1 = __webpack_require__(/*! ./FavoriteForm */ "./resources/app/es5/components/Profile/FavoritePage/FavoriteForm.js");
+var selectors_1 = __webpack_require__(/*! ../../../redux/Profile/favoriteProducts/selectors */ "./resources/app/es5/redux/Profile/favoriteProducts/selectors.js");
+var thunkFavorite_1 = __webpack_require__(/*! ../../../redux/Profile/favoriteProducts/thunks/thunkFavorite */ "./resources/app/es5/redux/Profile/favoriteProducts/thunks/thunkFavorite.js");
+var actions_1 = __webpack_require__(/*! ../../../redux/Profile/favoriteProducts/actions */ "./resources/app/es5/redux/Profile/favoriteProducts/actions.js");
+var Loader_1 = __webpack_require__(/*! ../../Loader */ "./resources/app/es5/components/Loader.js");
+var FavoriteItem_1 = __webpack_require__(/*! ./FavoriteItem */ "./resources/app/es5/components/Profile/FavoritePage/FavoriteItem.js");
+var mapStateToProps = function mapStateToProps(state) {
+    return __assign({}, selectors_1.selectFavoriteState(state));
 };
-exports.default = FavoritePage;
+var connected = react_redux_1.connect(mapStateToProps, function (dispatch) {
+    return {
+        getFavorite: function getFavorite(page) {
+            if (page === void 0) {
+                page = 1;
+            }
+            dispatch(thunkFavorite_1.default(page));
+        },
+        changeFilter: function changeFilter() {
+            dispatch(actions_1.favoriteReset());
+            dispatch(thunkFavorite_1.default());
+        }
+    };
+});
+var FavoritePage = function FavoritePage(props) {
+    React.useEffect(function () {
+        if (!props.favorites.length) props.getFavorite();
+    }, []);
+    return React.createElement("div", { className: "admContent" }, React.createElement("div", { className: "container" }, React.createElement("div", { className: "myOrders py-pad" }, React.createElement("div", { className: "pull-right" }, React.createElement("span", { className: "but but_outline" }, "Continue shopping")), React.createElement("h3", null, "My favorite"), React.createElement(FavoriteForm_1.default, { onSubmit: props.changeFilter }), React.createElement("div", { className: "table__wrap" }, React.createElement("div", { className: "table" }, React.createElement("div", { className: "table__head" }, React.createElement("div", { className: "table__head-item" }, "ID"), React.createElement("div", { className: "table__head-item" }, "Product"), React.createElement("div", { className: "table__head-item" }, "Actions")), React.createElement("div", { className: "table__content" }, props.isLoading && React.createElement(Loader_1.default, null), props.error && React.createElement("div", { className: "red" }, props.error), !props.isLoading && !props.error && props.favorites.map(function (f) {
+        return React.createElement(FavoriteItem_1.default, { favorite: f, key: f.id });
+    }))))), React.createElement(Paginator_1.default, { totalPage: Math.ceil(props.totalCount / props.size), curPage: props.currentPage, handler: props.getFavorite })));
+};
+exports.default = connected(FavoritePage);
 
 /***/ }),
 
@@ -36972,6 +37118,48 @@ exports.default = OrdersPage;
 
 /***/ }),
 
+/***/ "./resources/app/es5/components/Profile/Paginator.js":
+/*!***********************************************************!*\
+  !*** ./resources/app/es5/components/Profile/Paginator.js ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var classnames_1 = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+var Paginator = function Paginator(_a) {
+    var totalPage = _a.totalPage,
+        _b = _a.curPage,
+        curPage = _b === void 0 ? 1 : _b,
+        _c = _a.size,
+        size = _c === void 0 ? 5 : _c,
+        handler = _a.handler;
+    var left = Math.floor((curPage - 1) / size);
+    var right = Math.ceil(totalPage / size) - left - 1;
+    console.log('Left: ', left);
+    console.log('Right: ', right);
+    var prev = function prev() {
+        if (left > 0) handler(curPage - size);
+    };
+    var next = function next() {
+        if (right > 0) handler(curPage + size);
+    };
+    return React.createElement("div", { className: "pagination mb-pad" }, React.createElement("div", { className: classnames_1.default('pagination__item', { 'pagination__item_disabled': left <= 0 }), onClick: prev }, "Prev"), new Array(size).fill('').map(function (i, index) {
+        var p = left * size + index + 1,
+            classes = classnames_1.default('pagination__item', { 'pagination__item_active': curPage == p });
+        return p <= totalPage ? React.createElement("div", { className: classes, onClick: function onClick() {
+                return handler(p);
+            } }, p) : false;
+    }), React.createElement("div", { className: classnames_1.default('pagination__item', { 'pagination__item_disabled': right <= 0 }), onClick: next }, "Next"));
+};
+exports.default = Paginator;
+
+/***/ }),
+
 /***/ "./resources/app/es5/components/Profile/ProfilePage/FavoriteProductItem.js":
 /*!*********************************************************************************!*\
   !*** ./resources/app/es5/components/Profile/ProfilePage/FavoriteProductItem.js ***!
@@ -36986,7 +37174,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 var FavoriteProductItem = function FavoriteProductItem(props) {
-    return React.createElement(react_router_dom_1.Link, { to: "/product/" + props.slug }, React.createElement("div", { className: "goods__list-product" }, React.createElement("a", { href: "#", style: { width: '100%' } }, React.createElement("img", { className: "goods__list-photo", src: "/image/" + props.photo, alt: "Product photo" })), React.createElement("div", { className: "goods__list-info" }, React.createElement("div", { className: "goods__list-name" }, props.name), React.createElement("div", { className: "goods__list-price" }, props.price))));
+    return React.createElement(react_router_dom_1.Link, { to: "/product/" + props.slug, className: "w-100" }, React.createElement("div", { className: "goods__list-product" }, React.createElement("a", { href: "#", style: { width: '100%' } }, React.createElement("img", { className: "goods__list-photo", src: "/image/" + props.photo, alt: "Product photo" })), React.createElement("div", { className: "goods__list-info" }, React.createElement("div", { className: "goods__list-name" }, props.name), React.createElement("div", { className: "goods__list-price" }, props.price))));
 };
 exports.default = FavoriteProductItem;
 
@@ -37016,17 +37204,26 @@ var __assign = undefined && undefined.__assign || function () {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 var FavoriteProductItem_1 = __webpack_require__(/*! ./FavoriteProductItem */ "./resources/app/es5/components/Profile/ProfilePage/FavoriteProductItem.js");
-var FavoriteProducts = function FavoriteProducts() {
-    var _a = React.useState([]),
-        products = _a[0],
-        setProducts = _a[1];
-    var getProducts = function getProducts() {};
-    return React.createElement("div", { className: "container" }, React.createElement("div", { className: "sales my-pad" }, React.createElement("h3", null, "Top sales"), React.createElement("div", { className: "sales__list goods__list" }, products.map(function (p) {
+var thunks_1 = __webpack_require__(/*! ../../../redux/Profile/recommendProducts/thunks */ "./resources/app/es5/redux/Profile/recommendProducts/thunks.js");
+var selectors_1 = __webpack_require__(/*! ../../../redux/Profile/recommendProducts/selectors */ "./resources/app/es5/redux/Profile/recommendProducts/selectors.js");
+var Loader_1 = __webpack_require__(/*! ../../Loader */ "./resources/app/es5/components/Loader.js");
+var mapStateToProps = function mapStateToProps(state) {
+    return __assign({}, selectors_1.selectRecommendState(state));
+};
+var connected = react_redux_1.connect(mapStateToProps, {
+    getRecommend: thunks_1.default
+});
+var FavoriteProducts = function FavoriteProducts(props) {
+    React.useEffect(function () {
+        props.getRecommend();
+    }, []);
+    return React.createElement("div", { className: "container" }, React.createElement("div", { className: "sales my-pad" }, React.createElement("h3", null, "Top sales"), props.isLoading && React.createElement(Loader_1.default, null), props.error && React.createElement("div", { className: "red" }, props.error), !props.isLoading && !props.error && React.createElement("div", { className: "sales__list goods__list" }, props.products.map(function (p) {
         return React.createElement(FavoriteProductItem_1.default, __assign({ key: p.id }, p));
     }))));
 };
-exports.default = FavoriteProducts;
+exports.default = connected(FavoriteProducts);
 
 /***/ }),
 
@@ -38413,7 +38610,7 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var actions_1 = __webpack_require__(/*! ./actions */ "./resources/app/es5/redux/AppState/cart/actions.js");
-var API_1 = __webpack_require__(/*! ../../../Helpers/API */ "./resources/app/es5/Helpers/API.js");
+var frontAPI_1 = __webpack_require__(/*! ../../../Helpers/API/frontAPI */ "./resources/app/es5/Helpers/API/frontAPI.js");
 var react_toastify_1 = __webpack_require__(/*! react-toastify */ "./node_modules/react-toastify/dist/react-toastify.esm.js");
 var thunkCart = function thunkCart() {
     return function (dispatch) {
@@ -38439,7 +38636,7 @@ var thunkCart = function thunkCart() {
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3,, 4]);
-                        return [4, API_1.dataApi.getProductsByIds(productIDs)];
+                        return [4, frontAPI_1.dataApi.getProductsByIds(productIDs)];
                     case 2:
                         cartResponse_1 = _a.sent();
                         parsedCartItems = cartItems.map(function (item) {
@@ -38669,7 +38866,7 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var actions_1 = __webpack_require__(/*! ./actions */ "./resources/app/es5/redux/AppState/filter/actions.js");
-var API_1 = __webpack_require__(/*! ../../../Helpers/API */ "./resources/app/es5/Helpers/API.js");
+var frontAPI_1 = __webpack_require__(/*! ../../../Helpers/API/frontAPI */ "./resources/app/es5/Helpers/API/frontAPI.js");
 var thunkFilter = function thunkFilter() {
     return function (dispatch) {
         return __awaiter(void 0, void 0, void 0, function () {
@@ -38681,7 +38878,7 @@ var thunkFilter = function thunkFilter() {
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3,, 4]);
-                        return [4, API_1.dataApi.getFilters()];
+                        return [4, frontAPI_1.dataApi.getFilters()];
                     case 2:
                         filterResponse = _a.sent();
                         dispatch(actions_1.filterSuccess(filterResponse.data));
@@ -38924,7 +39121,7 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var actions_1 = __webpack_require__(/*! ./actions */ "./resources/app/es5/redux/AppState/user/actions.js");
-var API_1 = __webpack_require__(/*! ../../../Helpers/API */ "./resources/app/es5/Helpers/API.js");
+var frontAPI_1 = __webpack_require__(/*! ../../../Helpers/API/frontAPI */ "./resources/app/es5/Helpers/API/frontAPI.js");
 var thunkUser = function thunkUser() {
     return function (dispatch) {
         return __awaiter(void 0, void 0, void 0, function () {
@@ -38940,7 +39137,7 @@ var thunkUser = function thunkUser() {
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3,, 4]);
-                        return [4, API_1.userApi.getUser()];
+                        return [4, frontAPI_1.userApi.getUser()];
                     case 2:
                         userResponse = _a.sent();
                         dispatch(actions_1.loadUserSuccessfull({
@@ -38978,6 +39175,676 @@ exports.USER_LOAD_START = 'userLoad/START';
 exports.USER_LOAD_ERROR = 'userLoad/ERROR';
 exports.USER_LOAD_SUCCESSFULL = 'userLoad/SUCCESSFULL';
 exports.USER_RESET = 'user/RESET';
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/Profile/favoriteProducts/actions.js":
+/*!*********************************************************************!*\
+  !*** ./resources/app/es5/redux/Profile/favoriteProducts/actions.js ***!
+  \*********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var types_1 = __webpack_require__(/*! ./types */ "./resources/app/es5/redux/Profile/favoriteProducts/types.js");
+exports.favoriteStart = function () {
+    return {
+        type: types_1.FAVORITE_START
+    };
+};
+exports.favoriteSuccess = function (resp) {
+    return {
+        type: types_1.FAVORITE_SUCCESS,
+        payload: resp
+    };
+};
+exports.favoriteError = function (error) {
+    return {
+        type: types_1.FAVORITE_ERROR,
+        error: error
+    };
+};
+exports.favoriteReset = function () {
+    return {
+        type: types_1.FAVORITE_RESET
+    };
+};
+exports.favoriteDelete = function (id) {
+    return {
+        type: types_1.FAVORITE_DELETE,
+        payload: id
+    };
+};
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/Profile/favoriteProducts/reducer.js":
+/*!*********************************************************************!*\
+  !*** ./resources/app/es5/redux/Profile/favoriteProducts/reducer.js ***!
+  \*********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __assign = undefined && undefined.__assign || function () {
+    __assign = Object.assign || function (t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) {
+                if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+            }
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var types_1 = __webpack_require__(/*! ./types */ "./resources/app/es5/redux/Profile/favoriteProducts/types.js");
+var initialState = {
+    totalCount: 0,
+    currentPage: 1,
+    isLoading: false,
+    error: null,
+    size: 1,
+    favorites: []
+};
+var favoriteReducer = function favoriteReducer(state, action) {
+    if (state === void 0) {
+        state = initialState;
+    }
+    switch (action.type) {
+        case types_1.FAVORITE_RESET:
+            return __assign({}, initialState);
+        case types_1.FAVORITE_START:
+            return __assign(__assign({}, state), { isLoading: true, error: null });
+        case types_1.FAVORITE_ERROR:
+            return __assign(__assign({}, state), { isLoading: false, error: action.error });
+        case types_1.FAVORITE_SUCCESS:
+            return __assign(__assign({}, state), { totalCount: action.payload.meta.total, currentPage: action.payload.meta.current_page, isLoading: false, error: null, favorites: action.payload.data });
+        case types_1.FAVORITE_DELETE:
+            return __assign(__assign({}, state), { favorites: state.favorites.filter(function (f) {
+                    return f.id != action.payload;
+                }) });
+    }
+    return state;
+};
+exports.default = favoriteReducer;
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/Profile/favoriteProducts/selectors.js":
+/*!***********************************************************************!*\
+  !*** ./resources/app/es5/redux/Profile/favoriteProducts/selectors.js ***!
+  \***********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.selectFavoriteState = function (state) {
+  return state.profile.favorite;
+};
+exports.selectFavoriteSize = function (state) {
+  return state.profile.favorite.size;
+};
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/Profile/favoriteProducts/thunks/thunkDeleteFav.js":
+/*!***********************************************************************************!*\
+  !*** ./resources/app/es5/redux/Profile/favoriteProducts/thunks/thunkDeleteFav.js ***!
+  \***********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
+    function adopt(value) {
+        return value instanceof P ? value : new P(function (resolve) {
+            resolve(value);
+        });
+    }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) {
+            try {
+                step(generator.next(value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function rejected(value) {
+            try {
+                step(generator["throw"](value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function step(result) {
+            result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+        }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = undefined && undefined.__generator || function (thisArg, body) {
+    var _ = { label: 0, sent: function sent() {
+            if (t[0] & 1) throw t[1];return t[1];
+        }, trys: [], ops: [] },
+        f,
+        y,
+        t,
+        g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
+        return this;
+    }), g;
+    function verb(n) {
+        return function (v) {
+            return step([n, v]);
+        };
+    }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) {
+            try {
+                if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+                if (y = 0, t) op = [op[0] & 2, t.value];
+                switch (op[0]) {
+                    case 0:case 1:
+                        t = op;break;
+                    case 4:
+                        _.label++;return { value: op[1], done: false };
+                    case 5:
+                        _.label++;y = op[1];op = [0];continue;
+                    case 7:
+                        op = _.ops.pop();_.trys.pop();continue;
+                    default:
+                        if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+                            _ = 0;continue;
+                        }
+                        if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+                            _.label = op[1];break;
+                        }
+                        if (op[0] === 6 && _.label < t[1]) {
+                            _.label = t[1];t = op;break;
+                        }
+                        if (t && _.label < t[2]) {
+                            _.label = t[2];_.ops.push(op);break;
+                        }
+                        if (t[2]) _.ops.pop();
+                        _.trys.pop();continue;
+                }
+                op = body.call(thisArg, _);
+            } catch (e) {
+                op = [6, e];y = 0;
+            } finally {
+                f = t = 0;
+            }
+        }if (op[0] & 5) throw op[1];return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var ProfileAPI_1 = __webpack_require__(/*! ../../../../Helpers/API/ProfileAPI */ "./resources/app/es5/Helpers/API/ProfileAPI.js");
+var react_toastify_1 = __webpack_require__(/*! react-toastify */ "./node_modules/react-toastify/dist/react-toastify.esm.js");
+var actions_1 = __webpack_require__(/*! ../actions */ "./resources/app/es5/redux/Profile/favoriteProducts/actions.js");
+var thunkDeleteFav = function thunkDeleteFav(id) {
+    return function (dispatch, getState) {
+        return __awaiter(void 0, void 0, void 0, function () {
+            var favoriteResponse, e_1;
+            var _a;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        _b.trys.push([0, 2,, 3]);
+                        return [4, ProfileAPI_1.profileAPI.deleteFavorite(id)];
+                    case 1:
+                        favoriteResponse = _b.sent();
+                        dispatch(actions_1.favoriteDelete(id));
+                        react_toastify_1.toast.success(favoriteResponse.data.success);
+                        return [3, 3];
+                    case 2:
+                        e_1 = _b.sent();
+                        react_toastify_1.toast.error(((_a = e_1.response) === null || _a === void 0 ? void 0 : _a.data.message) || e_1.message);
+                        return [3, 3];
+                    case 3:
+                        return [2];
+                }
+            });
+        });
+    };
+};
+exports.default = thunkDeleteFav;
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/Profile/favoriteProducts/thunks/thunkFavorite.js":
+/*!**********************************************************************************!*\
+  !*** ./resources/app/es5/redux/Profile/favoriteProducts/thunks/thunkFavorite.js ***!
+  \**********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
+    function adopt(value) {
+        return value instanceof P ? value : new P(function (resolve) {
+            resolve(value);
+        });
+    }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) {
+            try {
+                step(generator.next(value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function rejected(value) {
+            try {
+                step(generator["throw"](value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function step(result) {
+            result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+        }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = undefined && undefined.__generator || function (thisArg, body) {
+    var _ = { label: 0, sent: function sent() {
+            if (t[0] & 1) throw t[1];return t[1];
+        }, trys: [], ops: [] },
+        f,
+        y,
+        t,
+        g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
+        return this;
+    }), g;
+    function verb(n) {
+        return function (v) {
+            return step([n, v]);
+        };
+    }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) {
+            try {
+                if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+                if (y = 0, t) op = [op[0] & 2, t.value];
+                switch (op[0]) {
+                    case 0:case 1:
+                        t = op;break;
+                    case 4:
+                        _.label++;return { value: op[1], done: false };
+                    case 5:
+                        _.label++;y = op[1];op = [0];continue;
+                    case 7:
+                        op = _.ops.pop();_.trys.pop();continue;
+                    default:
+                        if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+                            _ = 0;continue;
+                        }
+                        if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+                            _.label = op[1];break;
+                        }
+                        if (op[0] === 6 && _.label < t[1]) {
+                            _.label = t[1];t = op;break;
+                        }
+                        if (t && _.label < t[2]) {
+                            _.label = t[2];_.ops.push(op);break;
+                        }
+                        if (t[2]) _.ops.pop();
+                        _.trys.pop();continue;
+                }
+                op = body.call(thisArg, _);
+            } catch (e) {
+                op = [6, e];y = 0;
+            } finally {
+                f = t = 0;
+            }
+        }if (op[0] & 5) throw op[1];return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
+var actions_1 = __webpack_require__(/*! ../actions */ "./resources/app/es5/redux/Profile/favoriteProducts/actions.js");
+var ProfileAPI_1 = __webpack_require__(/*! ../../../../Helpers/API/ProfileAPI */ "./resources/app/es5/Helpers/API/ProfileAPI.js");
+var react_toastify_1 = __webpack_require__(/*! react-toastify */ "./node_modules/react-toastify/dist/react-toastify.esm.js");
+var selectors_1 = __webpack_require__(/*! ../selectors */ "./resources/app/es5/redux/Profile/favoriteProducts/selectors.js");
+var thunkFavorite = function thunkFavorite(offset) {
+    if (offset === void 0) {
+        offset = 1;
+    }
+    return function (dispatch, getState) {
+        return __awaiter(void 0, void 0, void 0, function () {
+            var selector, find, size, favoriteResponse, e_1;
+            var _a, _b;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
+                    case 0:
+                        dispatch(actions_1.favoriteStart());
+                        selector = redux_form_1.formValueSelector('favoriteFind');
+                        find = selector(getState(), 'find');
+                        size = selectors_1.selectFavoriteSize(getState());
+                        _c.label = 1;
+                    case 1:
+                        _c.trys.push([1, 3,, 4]);
+                        return [4, ProfileAPI_1.profileAPI.getFavorite(offset, size, find)];
+                    case 2:
+                        favoriteResponse = _c.sent();
+                        dispatch(actions_1.favoriteSuccess(favoriteResponse.data));
+                        return [3, 4];
+                    case 3:
+                        e_1 = _c.sent();
+                        dispatch(actions_1.favoriteError(((_a = e_1.response) === null || _a === void 0 ? void 0 : _a.data.message) || e_1.message));
+                        react_toastify_1.toast.error(((_b = e_1.response) === null || _b === void 0 ? void 0 : _b.data.message) || e_1.message);
+                        return [3, 4];
+                    case 4:
+                        return [2];
+                }
+            });
+        });
+    };
+};
+exports.default = thunkFavorite;
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/Profile/favoriteProducts/types.js":
+/*!*******************************************************************!*\
+  !*** ./resources/app/es5/redux/Profile/favoriteProducts/types.js ***!
+  \*******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.FAVORITE_START = 'favorite/START';
+exports.FAVORITE_ERROR = 'favorite/error';
+exports.FAVORITE_SUCCESS = 'favorite/success';
+exports.FAVORITE_RESET = 'favorite/reset';
+exports.FAVORITE_DELETE = 'favorite/delete';
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/Profile/index.js":
+/*!**************************************************!*\
+  !*** ./resources/app/es5/redux/Profile/index.js ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var redux_1 = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
+var reducer_1 = __webpack_require__(/*! ./recommendProducts/reducer */ "./resources/app/es5/redux/Profile/recommendProducts/reducer.js");
+var reducer_2 = __webpack_require__(/*! ./favoriteProducts/reducer */ "./resources/app/es5/redux/Profile/favoriteProducts/reducer.js");
+exports.default = redux_1.combineReducers({
+    recommend: reducer_1.default,
+    favorite: reducer_2.default
+});
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/Profile/recommendProducts/actions.js":
+/*!**********************************************************************!*\
+  !*** ./resources/app/es5/redux/Profile/recommendProducts/actions.js ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var types_1 = __webpack_require__(/*! ./types */ "./resources/app/es5/redux/Profile/recommendProducts/types.js");
+exports.recommendStart = function () {
+    return {
+        type: types_1.RECOMMEND_LOAD_START
+    };
+};
+exports.recommendError = function (error) {
+    return {
+        type: types_1.RECOMMEND_LOAD_ERROR,
+        error: error
+    };
+};
+exports.recommendSuccess = function (products) {
+    return {
+        type: types_1.RECOMMEND_LOAD_SUCCESS,
+        payload: products
+    };
+};
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/Profile/recommendProducts/reducer.js":
+/*!**********************************************************************!*\
+  !*** ./resources/app/es5/redux/Profile/recommendProducts/reducer.js ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __assign = undefined && undefined.__assign || function () {
+    __assign = Object.assign || function (t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) {
+                if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+            }
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var types_1 = __webpack_require__(/*! ./types */ "./resources/app/es5/redux/Profile/recommendProducts/types.js");
+var initialState = {
+    error: null,
+    isLoading: false,
+    products: []
+};
+var recommendReducer = function recommendReducer(state, action) {
+    if (state === void 0) {
+        state = initialState;
+    }
+    switch (action.type) {
+        case types_1.RECOMMEND_LOAD_START:
+            return __assign(__assign({}, state), { error: null, isLoading: true });
+        case types_1.RECOMMEND_LOAD_ERROR:
+            return __assign(__assign({}, state), { error: action.error, isLoading: false });
+        case types_1.RECOMMEND_LOAD_SUCCESS:
+            return { error: null, isLoading: false, products: action.payload };
+    }
+    return state;
+};
+exports.default = recommendReducer;
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/Profile/recommendProducts/selectors.js":
+/*!************************************************************************!*\
+  !*** ./resources/app/es5/redux/Profile/recommendProducts/selectors.js ***!
+  \************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.selectRecommendState = function (state) {
+  return state.profile.recommend;
+};
+exports.selectRecommendProducts = function (state) {
+  return state.profile.recommend.products;
+};
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/Profile/recommendProducts/thunks.js":
+/*!*********************************************************************!*\
+  !*** ./resources/app/es5/redux/Profile/recommendProducts/thunks.js ***!
+  \*********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
+    function adopt(value) {
+        return value instanceof P ? value : new P(function (resolve) {
+            resolve(value);
+        });
+    }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) {
+            try {
+                step(generator.next(value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function rejected(value) {
+            try {
+                step(generator["throw"](value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function step(result) {
+            result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+        }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = undefined && undefined.__generator || function (thisArg, body) {
+    var _ = { label: 0, sent: function sent() {
+            if (t[0] & 1) throw t[1];return t[1];
+        }, trys: [], ops: [] },
+        f,
+        y,
+        t,
+        g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
+        return this;
+    }), g;
+    function verb(n) {
+        return function (v) {
+            return step([n, v]);
+        };
+    }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) {
+            try {
+                if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+                if (y = 0, t) op = [op[0] & 2, t.value];
+                switch (op[0]) {
+                    case 0:case 1:
+                        t = op;break;
+                    case 4:
+                        _.label++;return { value: op[1], done: false };
+                    case 5:
+                        _.label++;y = op[1];op = [0];continue;
+                    case 7:
+                        op = _.ops.pop();_.trys.pop();continue;
+                    default:
+                        if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+                            _ = 0;continue;
+                        }
+                        if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+                            _.label = op[1];break;
+                        }
+                        if (op[0] === 6 && _.label < t[1]) {
+                            _.label = t[1];t = op;break;
+                        }
+                        if (t && _.label < t[2]) {
+                            _.label = t[2];_.ops.push(op);break;
+                        }
+                        if (t[2]) _.ops.pop();
+                        _.trys.pop();continue;
+                }
+                op = body.call(thisArg, _);
+            } catch (e) {
+                op = [6, e];y = 0;
+            } finally {
+                f = t = 0;
+            }
+        }if (op[0] & 5) throw op[1];return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var actions_1 = __webpack_require__(/*! ./actions */ "./resources/app/es5/redux/Profile/recommendProducts/actions.js");
+var ProfileAPI_1 = __webpack_require__(/*! ../../../Helpers/API/ProfileAPI */ "./resources/app/es5/Helpers/API/ProfileAPI.js");
+var react_toastify_1 = __webpack_require__(/*! react-toastify */ "./node_modules/react-toastify/dist/react-toastify.esm.js");
+var thunkRecommend = function thunkRecommend() {
+    return function (dispatch) {
+        return __awaiter(void 0, void 0, void 0, function () {
+            var recommendResponse, e_1;
+            var _a, _b;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
+                    case 0:
+                        dispatch(actions_1.recommendStart());
+                        _c.label = 1;
+                    case 1:
+                        _c.trys.push([1, 3,, 4]);
+                        return [4, ProfileAPI_1.profileAPI.getProducts()];
+                    case 2:
+                        recommendResponse = _c.sent();
+                        dispatch(actions_1.recommendSuccess(recommendResponse.data));
+                        return [3, 4];
+                    case 3:
+                        e_1 = _c.sent();
+                        dispatch(actions_1.recommendError(((_a = e_1.response) === null || _a === void 0 ? void 0 : _a.data.message) || e_1.message));
+                        react_toastify_1.toast.error(((_b = e_1.response) === null || _b === void 0 ? void 0 : _b.data.message) || e_1.message);
+                        return [3, 4];
+                    case 4:
+                        return [2];
+                }
+            });
+        });
+    };
+};
+exports.default = thunkRecommend;
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/Profile/recommendProducts/types.js":
+/*!********************************************************************!*\
+  !*** ./resources/app/es5/redux/Profile/recommendProducts/types.js ***!
+  \********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.RECOMMEND_LOAD_START = 'recommend/START';
+exports.RECOMMEND_LOAD_ERROR = 'recommend/ERROR';
+exports.RECOMMEND_LOAD_SUCCESS = 'recommend/SUCCESS';
 
 /***/ }),
 
@@ -39088,7 +39955,7 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
-var API_1 = __webpack_require__(/*! ../../../Helpers/API */ "./resources/app/es5/Helpers/API.js");
+var frontAPI_1 = __webpack_require__(/*! ../../../Helpers/API/frontAPI */ "./resources/app/es5/Helpers/API/frontAPI.js");
 var react_toastify_1 = __webpack_require__(/*! react-toastify */ "./node_modules/react-toastify/dist/react-toastify.esm.js");
 var actions_1 = __webpack_require__(/*! ../comments/actions */ "./resources/app/es5/redux/SingleState/comments/actions.js");
 var thunkComment_1 = __webpack_require__(/*! ../comments/thunks/thunkComment */ "./resources/app/es5/redux/SingleState/comments/thunks/thunkComment.js");
@@ -39104,7 +39971,7 @@ var thunkAddComment = function thunkAddComment(productID, vals, formName) {
                         _d.label = 1;
                     case 1:
                         _d.trys.push([1, 3,, 4]);
-                        return [4, API_1.dataApi.addComment(productID, vals)];
+                        return [4, frontAPI_1.dataApi.addComment(productID, vals)];
                     case 2:
                         addCommResponse = _d.sent();
                         dispatch(redux_form_1.reset(formName));
@@ -39334,7 +40201,7 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var actions_1 = __webpack_require__(/*! ../actions */ "./resources/app/es5/redux/SingleState/comments/actions.js");
-var API_1 = __webpack_require__(/*! ../../../../Helpers/API */ "./resources/app/es5/Helpers/API.js");
+var frontAPI_1 = __webpack_require__(/*! ../../../../Helpers/API/frontAPI */ "./resources/app/es5/Helpers/API/frontAPI.js");
 var react_toastify_1 = __webpack_require__(/*! react-toastify */ "./node_modules/react-toastify/dist/react-toastify.esm.js");
 var thunkReactionChange = function thunkReactionChange(commentID, reaction) {
     return function (dispatch) {
@@ -39345,7 +40212,7 @@ var thunkReactionChange = function thunkReactionChange(commentID, reaction) {
                 switch (_b.label) {
                     case 0:
                         _b.trys.push([0, 2,, 3]);
-                        return [4, API_1.dataApi.changeReaction(commentID, reaction)];
+                        return [4, frontAPI_1.dataApi.changeReaction(commentID, reaction)];
                     case 1:
                         reactionResponse = _b.sent();
                         if (reactionResponse.data.success) {
@@ -39465,7 +40332,7 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 Object.defineProperty(exports, "__esModule", { value: true });
 var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
 var actions_1 = __webpack_require__(/*! ../actions */ "./resources/app/es5/redux/SingleState/comments/actions.js");
-var API_1 = __webpack_require__(/*! ../../../../Helpers/API */ "./resources/app/es5/Helpers/API.js");
+var frontAPI_1 = __webpack_require__(/*! ../../../../Helpers/API/frontAPI */ "./resources/app/es5/Helpers/API/frontAPI.js");
 var react_toastify_1 = __webpack_require__(/*! react-toastify */ "./node_modules/react-toastify/dist/react-toastify.esm.js");
 var thunkComment = function thunkComment(productID, offset) {
     if (offset === void 0) {
@@ -39484,7 +40351,7 @@ var thunkComment = function thunkComment(productID, offset) {
                         _c.label = 1;
                     case 1:
                         _c.trys.push([1, 3,, 4]);
-                        return [4, API_1.dataApi.getComments(productID, offset, sortType)];
+                        return [4, frontAPI_1.dataApi.getComments(productID, offset, sortType)];
                     case 2:
                         commentResponse = _c.sent();
                         dispatch(actions_1.commentSuccess(commentResponse.data));
@@ -39734,7 +40601,7 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var API_1 = __webpack_require__(/*! ../../../../Helpers/API */ "./resources/app/es5/Helpers/API.js");
+var frontAPI_1 = __webpack_require__(/*! ../../../../Helpers/API/frontAPI */ "./resources/app/es5/Helpers/API/frontAPI.js");
 var actions_1 = __webpack_require__(/*! ../../comments/actions */ "./resources/app/es5/redux/SingleState/comments/actions.js");
 var actions_2 = __webpack_require__(/*! ../actions */ "./resources/app/es5/redux/SingleState/product/actions.js");
 var react_toastify_1 = __webpack_require__(/*! react-toastify */ "./node_modules/react-toastify/dist/react-toastify.esm.js");
@@ -39751,7 +40618,7 @@ var thunkProduct = function thunkProduct(slug) {
                         _c.label = 1;
                     case 1:
                         _c.trys.push([1, 3,, 4]);
-                        return [4, API_1.dataApi.getProductInfo(slug)];
+                        return [4, frontAPI_1.dataApi.getProductInfo(slug)];
                     case 2:
                         productResponse = _c.sent();
                         dispatch(actions_2.productSuccess(productResponse.data));
@@ -39870,7 +40737,7 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var actions_1 = __webpack_require__(/*! ../actions */ "./resources/app/es5/redux/SingleState/product/actions.js");
-var API_1 = __webpack_require__(/*! ../../../../Helpers/API */ "./resources/app/es5/Helpers/API.js");
+var frontAPI_1 = __webpack_require__(/*! ../../../../Helpers/API/frontAPI */ "./resources/app/es5/Helpers/API/frontAPI.js");
 var react_toastify_1 = __webpack_require__(/*! react-toastify */ "./node_modules/react-toastify/dist/react-toastify.esm.js");
 var thunkToggleLike = function thunkToggleLike(productID) {
     return function (dispatch) {
@@ -39881,7 +40748,7 @@ var thunkToggleLike = function thunkToggleLike(productID) {
                 switch (_b.label) {
                     case 0:
                         _b.trys.push([0, 2,, 3]);
-                        return [4, API_1.dataApi.changeLike(productID)];
+                        return [4, frontAPI_1.dataApi.changeLike(productID)];
                     case 1:
                         toggleResponse = _b.sent();
                         dispatch(actions_1.productLikeChange(toggleResponse.data.success));
@@ -40146,7 +41013,7 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var actions_1 = __webpack_require__(/*! ./actions */ "./resources/app/es5/redux/category/actions.js");
-var API_1 = __webpack_require__(/*! ../../Helpers/API */ "./resources/app/es5/Helpers/API.js");
+var frontAPI_1 = __webpack_require__(/*! ../../Helpers/API/frontAPI */ "./resources/app/es5/Helpers/API/frontAPI.js");
 var react_toastify_1 = __webpack_require__(/*! react-toastify */ "./node_modules/react-toastify/dist/react-toastify.esm.js");
 var thunkCategory = function thunkCategory() {
     return function (dispatch) {
@@ -40159,7 +41026,7 @@ var thunkCategory = function thunkCategory() {
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3,, 4]);
-                        return [4, API_1.dataApi.getCategories()];
+                        return [4, frontAPI_1.dataApi.getCategories()];
                     case 2:
                         categoryResponse = _a.sent();
                         dispatch(actions_1.categoryLoadSuccess(categoryResponse.data));
@@ -40386,7 +41253,7 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
-var API_1 = __webpack_require__(/*! ../../../Helpers/API */ "./resources/app/es5/Helpers/API.js");
+var frontAPI_1 = __webpack_require__(/*! ../../../Helpers/API/frontAPI */ "./resources/app/es5/Helpers/API/frontAPI.js");
 var react_toastify_1 = __webpack_require__(/*! react-toastify */ "./node_modules/react-toastify/dist/react-toastify.esm.js");
 var thunkChange = function thunkChange(id, vals, formName) {
     return function (dispatch) {
@@ -40400,7 +41267,7 @@ var thunkChange = function thunkChange(id, vals, formName) {
                         _c.label = 1;
                     case 1:
                         _c.trys.push([1, 3,, 4]);
-                        return [4, API_1.userApi.changePassword(id, vals)];
+                        return [4, frontAPI_1.userApi.changePassword(id, vals)];
                     case 2:
                         _c.sent();
                         dispatch(redux_form_1.reset(formName));
@@ -40518,7 +41385,7 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var actions_1 = __webpack_require__(/*! ../actions */ "./resources/app/es5/redux/change/actions.js");
-var API_1 = __webpack_require__(/*! ../../../Helpers/API */ "./resources/app/es5/Helpers/API.js");
+var frontAPI_1 = __webpack_require__(/*! ../../../Helpers/API/frontAPI */ "./resources/app/es5/Helpers/API/frontAPI.js");
 var react_toastify_1 = __webpack_require__(/*! react-toastify */ "./node_modules/react-toastify/dist/react-toastify.esm.js");
 var thunkValid = function thunkValid(id) {
     return function (dispatch) {
@@ -40531,7 +41398,7 @@ var thunkValid = function thunkValid(id) {
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3,, 4]);
-                        return [4, API_1.userApi.validChange(id)];
+                        return [4, frontAPI_1.userApi.validChange(id)];
                     case 2:
                         _a.sent();
                         dispatch(actions_1.changeSuccess());
@@ -40677,7 +41544,7 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 Object.defineProperty(exports, "__esModule", { value: true });
 var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
 var react_toastify_1 = __webpack_require__(/*! react-toastify */ "./node_modules/react-toastify/dist/react-toastify.esm.js");
-var API_1 = __webpack_require__(/*! ../../Helpers/API */ "./resources/app/es5/Helpers/API.js");
+var frontAPI_1 = __webpack_require__(/*! ../../Helpers/API/frontAPI */ "./resources/app/es5/Helpers/API/frontAPI.js");
 var actions_1 = __webpack_require__(/*! ../AppState/cart/actions */ "./resources/app/es5/redux/AppState/cart/actions.js");
 var thunkCheckout = function thunkCheckout(vals, formName) {
     return function (dispatch, getState) {
@@ -40695,7 +41562,7 @@ var thunkCheckout = function thunkCheckout(vals, formName) {
                         _c.label = 1;
                     case 1:
                         _c.trys.push([1, 3,, 4]);
-                        return [4, API_1.dataApi.createOrder(__assign(__assign({}, vals), { cartItems: mappedCartItems }))];
+                        return [4, frontAPI_1.dataApi.createOrder(__assign(__assign({}, vals), { cartItems: mappedCartItems }))];
                     case 2:
                         checkoutResponse = _c.sent();
                         dispatch(redux_form_1.reset(formName));
@@ -40743,6 +41610,7 @@ var reducer_8 = __webpack_require__(/*! ./productList/reducer */ "./resources/ap
 var reducer_9 = __webpack_require__(/*! ./search/reducer */ "./resources/app/es5/redux/search/reducer.js");
 var reducer_10 = __webpack_require__(/*! ./verify/reducer */ "./resources/app/es5/redux/verify/reducer.js");
 var reducer_11 = __webpack_require__(/*! ./login/reducer */ "./resources/app/es5/redux/login/reducer.js");
+var Profile_1 = __webpack_require__(/*! ./Profile/ */ "./resources/app/es5/redux/Profile/index.js");
 var storeReducer = redux_1.combineReducers({
     app: reducer_1.default,
     cart: reducer_2.default,
@@ -40756,6 +41624,7 @@ var storeReducer = redux_1.combineReducers({
     productList: reducer_8.default,
     search: reducer_9.default,
     verify: reducer_10.default,
+    profile: Profile_1.default,
     form: redux_form_1.reducer
 });
 exports.default = storeReducer;
@@ -40945,7 +41814,7 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
-var API_1 = __webpack_require__(/*! ../../Helpers/API */ "./resources/app/es5/Helpers/API.js");
+var frontAPI_1 = __webpack_require__(/*! ../../Helpers/API/frontAPI */ "./resources/app/es5/Helpers/API/frontAPI.js");
 var actions_1 = __webpack_require__(/*! ../AppState/user/actions */ "./resources/app/es5/redux/AppState/user/actions.js");
 var react_toastify_1 = __webpack_require__(/*! react-toastify */ "./node_modules/react-toastify/dist/react-toastify.esm.js");
 var actions_2 = __webpack_require__(/*! ./actions */ "./resources/app/es5/redux/login/actions.js");
@@ -40961,7 +41830,7 @@ var thunkLogin = function thunkLogin(vals, formName) {
                         _e.label = 1;
                     case 1:
                         _e.trys.push([1, 3,, 4]);
-                        return [4, API_1.userApi.loginUser(vals)];
+                        return [4, frontAPI_1.userApi.loginUser(vals)];
                     case 2:
                         loginResponse = _e.sent();
                         dispatch(redux_form_1.reset(formName));
@@ -41180,7 +42049,7 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var actions_1 = __webpack_require__(/*! ./actions */ "./resources/app/es5/redux/logout/actions.js");
-var API_1 = __webpack_require__(/*! ../../Helpers/API */ "./resources/app/es5/Helpers/API.js");
+var frontAPI_1 = __webpack_require__(/*! ../../Helpers/API/frontAPI */ "./resources/app/es5/Helpers/API/frontAPI.js");
 var actions_2 = __webpack_require__(/*! ../AppState/user/actions */ "./resources/app/es5/redux/AppState/user/actions.js");
 var thunkLogout = function thunkLogout() {
     return function (dispatch) {
@@ -41193,7 +42062,7 @@ var thunkLogout = function thunkLogout() {
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3,, 4]);
-                        return [4, API_1.userApi.logoutUser()];
+                        return [4, frontAPI_1.userApi.logoutUser()];
                     case 2:
                         _a.sent();
                         dispatch(actions_2.resetUser());
@@ -41424,7 +42293,7 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 Object.defineProperty(exports, "__esModule", { value: true });
 var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
 var actions_1 = __webpack_require__(/*! ./actions */ "./resources/app/es5/redux/productList/actions.js");
-var API_1 = __webpack_require__(/*! ../../Helpers/API */ "./resources/app/es5/Helpers/API.js");
+var frontAPI_1 = __webpack_require__(/*! ../../Helpers/API/frontAPI */ "./resources/app/es5/Helpers/API/frontAPI.js");
 var thunkProductList = function thunkProductList(offset) {
     if (offset === void 0) {
         offset = 1;
@@ -41441,7 +42310,7 @@ var thunkProductList = function thunkProductList(offset) {
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3,, 4]);
-                        return [4, API_1.dataApi.getProducts(filters, offset)];
+                        return [4, frontAPI_1.dataApi.getProducts(filters, offset)];
                     case 2:
                         productListResponse = _a.sent();
                         dispatch(actions_1.productListSuccess(productListResponse.data));
@@ -41586,7 +42455,7 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
-var API_1 = __webpack_require__(/*! ../../Helpers/API */ "./resources/app/es5/Helpers/API.js");
+var frontAPI_1 = __webpack_require__(/*! ../../Helpers/API/frontAPI */ "./resources/app/es5/Helpers/API/frontAPI.js");
 var react_toastify_1 = __webpack_require__(/*! react-toastify */ "./node_modules/react-toastify/dist/react-toastify.esm.js");
 var thunkRegister = function thunkRegister(vals, formName) {
     return function (dispatch) {
@@ -41600,10 +42469,10 @@ var thunkRegister = function thunkRegister(vals, formName) {
                         _c.label = 1;
                     case 1:
                         _c.trys.push([1, 3,, 4]);
-                        return [4, API_1.userApi.registerUser(vals)];
+                        return [4, frontAPI_1.userApi.registerUser(vals)];
                     case 2:
                         regResponse = _c.sent();
-                        if (API_1.isError(regResponse.data)) {
+                        if (frontAPI_1.isError(regResponse.data)) {
                             dispatch(redux_form_1.stopSubmit(formName, { _error: regResponse.data.message }));
                             react_toastify_1.toast.error('Error in registration');
                         } else {
@@ -41735,7 +42604,7 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
-var API_1 = __webpack_require__(/*! ../../Helpers/API */ "./resources/app/es5/Helpers/API.js");
+var frontAPI_1 = __webpack_require__(/*! ../../Helpers/API/frontAPI */ "./resources/app/es5/Helpers/API/frontAPI.js");
 var react_toastify_1 = __webpack_require__(/*! react-toastify */ "./node_modules/react-toastify/dist/react-toastify.esm.js");
 var thunkResend = function thunkResend(vals, formName) {
     return function (dispatch) {
@@ -41749,10 +42618,10 @@ var thunkResend = function thunkResend(vals, formName) {
                         _c.label = 1;
                     case 1:
                         _c.trys.push([1, 3,, 4]);
-                        return [4, API_1.userApi.resendEmail(vals)];
+                        return [4, frontAPI_1.userApi.resendEmail(vals)];
                     case 2:
                         resendResponse = _c.sent();
-                        if (API_1.isError(resendResponse.data)) {
+                        if (frontAPI_1.isError(resendResponse.data)) {
                             dispatch(redux_form_1.stopSubmit(formName, { _error: resendResponse.data.message }));
                             react_toastify_1.toast.error('Error in resend');
                         } else {
@@ -41884,7 +42753,7 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
-var API_1 = __webpack_require__(/*! ../../../Helpers/API */ "./resources/app/es5/Helpers/API.js");
+var frontAPI_1 = __webpack_require__(/*! ../../../Helpers/API/frontAPI */ "./resources/app/es5/Helpers/API/frontAPI.js");
 var react_toastify_1 = __webpack_require__(/*! react-toastify */ "./node_modules/react-toastify/dist/react-toastify.esm.js");
 var thunkReset = function thunkReset(vals, formName) {
     return function (dispatch) {
@@ -41898,7 +42767,7 @@ var thunkReset = function thunkReset(vals, formName) {
                         _c.label = 1;
                     case 1:
                         _c.trys.push([1, 3,, 4]);
-                        return [4, API_1.userApi.resetUser(vals)];
+                        return [4, frontAPI_1.userApi.resetUser(vals)];
                     case 2:
                         resetResponse = _c.sent();
                         dispatch(redux_form_1.reset(formName));
@@ -42008,7 +42877,7 @@ var searchReducer = function searchReducer(state, action) {
         case types_1.SEARCH_START:
             return __assign(__assign({}, state), { search: action.payload, isLoading: true, error: null });
         case types_1.SEARCH_SUCCESS:
-            return __assign(__assign({}, state), { isLoading: false, products: __spreadArrays(state.products, action.payload.data), totalCount: action.payload.total, currentPage: action.payload.current_page, error: null });
+            return __assign(__assign({}, state), { isLoading: false, products: __spreadArrays(state.products, action.payload.data), totalCount: action.payload.meta.total, currentPage: action.payload.meta.current_page, error: null });
         case types_1.SEARCH_ERROR:
             return __assign(__assign({}, state), { isLoading: false, error: action.error });
         case types_1.SEARCH_RESET:
@@ -42138,7 +43007,7 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var actions_1 = __webpack_require__(/*! ./actions */ "./resources/app/es5/redux/search/actions.js");
-var API_1 = __webpack_require__(/*! ../../Helpers/API */ "./resources/app/es5/Helpers/API.js");
+var frontAPI_1 = __webpack_require__(/*! ../../Helpers/API/frontAPI */ "./resources/app/es5/Helpers/API/frontAPI.js");
 var thunkSearch = function thunkSearch(text, page) {
     if (page === void 0) {
         page = 1;
@@ -42153,7 +43022,7 @@ var thunkSearch = function thunkSearch(text, page) {
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3,, 4]);
-                        return [4, API_1.dataApi.search(text, page)];
+                        return [4, frontAPI_1.dataApi.search(text, page)];
                     case 2:
                         searchResponse = _a.sent();
                         dispatch(actions_1.searchSuccess(searchResponse.data));
@@ -42373,7 +43242,7 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var actions_1 = __webpack_require__(/*! ./actions */ "./resources/app/es5/redux/verify/actions.js");
-var API_1 = __webpack_require__(/*! ../../Helpers/API */ "./resources/app/es5/Helpers/API.js");
+var frontAPI_1 = __webpack_require__(/*! ../../Helpers/API/frontAPI */ "./resources/app/es5/Helpers/API/frontAPI.js");
 var react_toastify_1 = __webpack_require__(/*! react-toastify */ "./node_modules/react-toastify/dist/react-toastify.esm.js");
 var thunkVerify = function thunkVerify(id) {
     return function (dispatch) {
@@ -42386,7 +43255,7 @@ var thunkVerify = function thunkVerify(id) {
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3,, 4]);
-                        return [4, API_1.userApi.verifyUser(id)];
+                        return [4, frontAPI_1.userApi.verifyUser(id)];
                     case 2:
                         verifyResponse = _a.sent();
                         dispatch(actions_1.verifySuccess(verifyResponse.data.success));

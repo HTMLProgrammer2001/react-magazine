@@ -7,7 +7,7 @@ import {
 	productListStart,
 	productListSuccess
 } from './actions';
-import {dataApi} from '../../Helpers/API';
+import {dataApi} from '../../Helpers/API/frontAPI';
 import {IGoodsFormData} from '../../components/HomePage/Goods/GoodsForm';
 import {RootState} from '../index';
 

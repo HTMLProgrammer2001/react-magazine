@@ -4,7 +4,7 @@ import {formValueSelector} from 'redux-form';
 import {CommentActions} from '../reducer';
 
 import {commentSuccess, commentError, commentStart} from '../actions';
-import {dataApi} from '../../../../Helpers/API';
+import {dataApi} from '../../../../Helpers/API/frontAPI';
 import {RootState} from '../../../index';
 import {toast} from 'react-toastify';
 

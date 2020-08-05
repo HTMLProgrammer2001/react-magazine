@@ -3,7 +3,7 @@ import {reset, FormAction, startSubmit, stopSubmit} from 'redux-form';
 
 import {IResetFormData} from '../../../components/ResetPage/ResetForm';
 import {RootState} from '../../index';
-import {userApi} from '../../../Helpers/API';
+import {userApi} from '../../../Helpers/API/frontAPI';
 import {toast} from 'react-toastify';
 
 

@@ -1,7 +1,7 @@
 import {ThunkAction, ThunkDispatch} from 'redux-thunk';
 
 import {categoryLoadStart, categoryLoadFailure, categoryLoadSuccess} from './actions';
-import {dataApi} from '../../Helpers/API';
+import {dataApi} from '../../Helpers/API/frontAPI';
 
 import {RootState} from '../';
 import {CategoryActions} from './reducer';

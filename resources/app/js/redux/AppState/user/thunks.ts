@@ -7,7 +7,7 @@ import {
 	loadUserSuccessfull,
 	loadUserError
 } from './actions';
-import {userApi} from '../../../Helpers/API';
+import {userApi} from '../../../Helpers/API/frontAPI';
 
 
 export type FilterThunkAction = ThunkAction<void, RootState, unknown, UserActions>;

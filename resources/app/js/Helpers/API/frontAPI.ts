@@ -1,26 +1,26 @@
 import axios from 'axios';
 
-import {IProductsResponse} from '../Interfaces/Responses/IProductsResponse';
-import {IFullProduct} from '../Interfaces/IFullProduct';
-import {ICommentsResponse} from '../Interfaces/Responses/ICommentsResponse';
-import {IChangeLikeResponse} from '../Interfaces/Responses/IChangeLikeResponse';
-import {IRegisterFormData} from '../components/RegisterPage/RegisterForm';
-import {ILoginFormData} from '../components/LoginPage/LoginForm';
-import {ILoadUserResponse} from '../Interfaces/Responses/ILoadUserResponse';
-import {IResetFormData} from '../components/ResetPage/ResetForm';
-import {IReviewFormData} from '../components/SinglePage/Reviews/ReviewForm';
-import {ICategory} from '../Interfaces/ICategory';
-import {IGoodsFormData} from '../components/HomePage/Goods/GoodsForm';
-import {IFilter} from '../Interfaces/IFilter';
-import {IChangeFormData} from '../components/ChangePasswordPage/ChangeForm';
-import {ISearchResponse} from '../Interfaces/Responses/ISearchResponse';
-import {IUser} from '../Interfaces/IUser';
-import {IProduct} from '../Interfaces/IProduct';
-import {IBillingFormData} from '../components/CheckoutPage/Form/BillingForm';
-import {IResendFormData} from '../components/ResendPage/ResendForm';
+import {IProductsResponse} from '../../Interfaces/Responses/IProductsResponse';
+import {IFullProduct} from '../../Interfaces/IFullProduct';
+import {ICommentsResponse} from '../../Interfaces/Responses/ICommentsResponse';
+import {IChangeLikeResponse} from '../../Interfaces/Responses/IChangeLikeResponse';
+import {IRegisterFormData} from '../../components/RegisterPage/RegisterForm';
+import {ILoginFormData} from '../../components/LoginPage/LoginForm';
+import {ILoadUserResponse} from '../../Interfaces/Responses/ILoadUserResponse';
+import {IResetFormData} from '../../components/ResetPage/ResetForm';
+import {IReviewFormData} from '../../components/SinglePage/Reviews/ReviewForm';
+import {ICategory} from '../../Interfaces/ICategory';
+import {IGoodsFormData} from '../../components/HomePage/Goods/GoodsForm';
+import {IFilter} from '../../Interfaces/IFilter';
+import {IChangeFormData} from '../../components/ChangePasswordPage/ChangeForm';
+import {ISearchResponse} from '../../Interfaces/Responses/ISearchResponse';
+import {IUser} from '../../Interfaces/IUser';
+import {IProduct} from '../../Interfaces/IProduct';
+import {IBillingFormData} from '../../components/CheckoutPage/Form/BillingForm';
+import {IResendFormData} from '../../components/ResendPage/ResendForm';
 
-type ISuccess = {success: string};
-type IError = {message: string, errors?: string[]};
+export type ISuccess = {success: string};
+export type IError = {message: string, errors?: string[]};
 
 
 const apiClient = axios.create({

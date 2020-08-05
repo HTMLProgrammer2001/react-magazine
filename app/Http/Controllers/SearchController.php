@@ -13,15 +13,13 @@ class SearchController extends Controller
      * Handle the incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return
      */
     public function __invoke(Request $request)
     {
         $search = $request->query('search');
         $products = Product::where('name', 'like', "%$search%")->paginate(1);
 
-        $data = array_merge($products->toArray(), (new ProductsResource($products))->toArray($request));
-
-        return response()->json($data);
+        return new ProductsResource($products);
     }
 }

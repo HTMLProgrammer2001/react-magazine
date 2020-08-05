@@ -46,6 +46,10 @@ class User extends Authenticatable
         return $this->hasMany(Reaction::class);
     }
 
+    public function likes(){
+        return $this->hasMany(Like::class);
+    }
+
     //helpers
     public function changeEmail($newEmail){
         $this->email = $newEmail;

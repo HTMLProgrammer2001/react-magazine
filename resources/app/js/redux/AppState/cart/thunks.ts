@@ -6,7 +6,7 @@ import {
 	cartLoadStart,
 	cartReset
 } from './actions';
-import {dataApi} from '../../../Helpers/API';
+import {dataApi} from '../../../Helpers/API/frontAPI';
 
 import {RootState} from '../../index';
 import {CartActions} from './reducer';

@@ -1,89 +1,84 @@
 import * as React from 'react';
+import {connect, ConnectedProps} from 'react-redux';
+
+import Paginator from '../Paginator';
+import FavoriteForm from './FavoriteForm';
+import {RootState} from '../../../redux';
+import {selectFavoriteState} from '../../../redux/Profile/favoriteProducts/selectors';
+import thunkFavorite from '../../../redux/Profile/favoriteProducts/thunks/thunkFavorite';
+import {favoriteReset} from '../../../redux/Profile/favoriteProducts/actions';
+import Loader from '../../Loader';
+import FavoriteItem from './FavoriteItem';
 
 
-const FavoritePage: React.FC<{}> = () => (
-	<div className="admContent">
-		<div className="container">
-			<div className="myOrders py-pad">
-				<div className="pull-right">
-					<span className="but but_outline">Continue shopping</span>
-				</div>
+const mapStateToProps = (state: RootState) => ({
+	...selectFavoriteState(state)
+});
 
-				<h3>My favorite</h3>
+const connected = connect(mapStateToProps, (dispatch: any) => ({
+	getFavorite: (page: number = 1) => {
+		dispatch(thunkFavorite(page));
+	},
+	changeFilter: () => {
+		dispatch(favoriteReset());
+		dispatch(thunkFavorite());
+	}
+}));
 
-				<div className="myOrders__header my-pad">
-					<span className="myOrders__find">
-              			<div className="input">
-                			<input className="input__elem" type="text" required/>
-                			<label className="input__label">Find favorite product</label>
-                			<div className="input__line"/>
-              			</div>
-					</span>
+type IFavoritePageProps = ConnectedProps<typeof connected>;
 
-					<div/>
-				</div>
+const FavoritePage: React.FC<IFavoritePageProps> = (props) => {
+	React.useEffect(() => {
+		if(!props.favorites.length)
+			props.getFavorite();
+	}, []);
 
-				<div className="table__wrap">
-					<div className="table">
-						<div className="table__head">
-							<div className="table__head-item">ID</div>
-							<div className="table__head-item">Product</div>
-							<div className="table__head-item">Actions</div>
-						</div>
+	return (
+		<div className="admContent">
+			<div className="container">
+				<div className="myOrders py-pad">
+					<div className="pull-right">
+						<span className="but but_outline">Continue shopping</span>
+					</div>
 
-						<div className="table__content">
-							<div className="table__row">
-								<div className="table__col">#43534455</div>
-								<div className="table__col">
-									<img className="mb-10" src="/image/product.png"/>
-									<div>TShirt</div>
-								</div>
+					<h3>My favorite</h3>
 
-								<div className="table__col">
-									<i className="fas fa-times cur"/>
-									<i className="fas fa-eye ml-10 cur"/>
-								</div>
+					<FavoriteForm onSubmit={props.changeFilter}/>
+
+					<div className="table__wrap">
+						<div className="table">
+							<div className="table__head">
+								<div className="table__head-item">ID</div>
+								<div className="table__head-item">Product</div>
+								<div className="table__head-item">Actions</div>
 							</div>
 
-							<div className="table__row">
-								<div className="table__col">#43534455</div>
-								<div className="table__col">
-									<img className="mb-10" src="/image/product.png"/>
-									<div>TShirt</div>
-								</div>
+							<div className="table__content">
+								{props.isLoading && <Loader/>}
+								{props.error && <div className="red">{props.error}</div>}
 
-								<div className="table__col">
-									<i className="fas fa-times cur"/>
-									<i className="fas fa-eye ml-10 cur"/>
-								</div>
-							</div>
-
-							<div className="table__row">
-								<div className="table__col">#43534455</div>
-								<div className="table__col">
-									<img className="mb-10" src="/image/product.png"/>
-									<div>TShirt</div>
-								</div>
-
-								<div className="table__col">
-									<i className="fas fa-times cur"/>
-									<i className="fas fa-eye ml-10 cur"/>
-								</div>
+								{
+									!props.isLoading && !props.error &&
+									props.favorites.map((f) => (
+										<FavoriteItem
+											favorite={f}
+											key={f.id}
+										/>
+									))
+								}
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
 
-			<div className="pagination mb-pad">
-				<div className="pagination__item pagination__item_disabled">Prev</div>
-				<div className="pagination__item pagination__item_active">1</div>
-				<div className="pagination__item">2</div>
-				<div className="pagination__item">3</div>
-				<div className="pagination__item">Next</div>
+				<Paginator
+					totalPage={Math.ceil(props.totalCount/props.size)}
+					curPage={props.currentPage}
+					handler={props.getFavorite}
+				/>
 			</div>
 		</div>
-	</div>
-);
+	);
+};
 
-export default FavoritePage;
+export default connected(FavoritePage);

@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 
 
 const FavoriteProductItem: React.FC<IProduct> = (props) => (
-	<Link to={`/product/${props.slug}`}>
+	<Link to={`/product/${props.slug}`} className="w-100">
 		<div className="goods__list-product">
 			<a href="#" style={{width: '100%'}}>
 				<img

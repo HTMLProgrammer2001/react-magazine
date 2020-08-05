@@ -1,7 +1,7 @@
 import {RootState} from '../';
 import {LogoutActions} from './reducer';
 import {logoutError, logoutStart, logoutSuccess} from './actions';
-import {userApi} from '../../Helpers/API';
+import {userApi} from '../../Helpers/API/frontAPI';
 import {resetUser} from '../AppState/user/actions';
 import {ThunkAction, ThunkDispatch} from 'redux-thunk';
 

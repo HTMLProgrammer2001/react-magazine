@@ -3,7 +3,7 @@ import {ThunkAction, ThunkDispatch} from 'redux-thunk';
 import {RootState} from '../';
 import {VerifyActions} from './reducer';
 import {verifyStart, verifyError, verifySuccess, verifyNotFound} from './actions';
-import {userApi} from '../../Helpers/API';
+import {userApi} from '../../Helpers/API/frontAPI';
 import {toast} from 'react-toastify';
 
 

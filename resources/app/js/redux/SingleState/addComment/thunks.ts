@@ -4,7 +4,7 @@ import {reset, startSubmit, stopSubmit, FormAction} from 'redux-form';
 import {IReviewFormData} from '../../../components/SinglePage/Reviews/ReviewForm';
 import {RootState} from '../../';
 
-import {dataApi} from '../../../Helpers/API';
+import {dataApi} from '../../../Helpers/API/frontAPI';
 import {toast} from 'react-toastify';
 import {commentReset} from '../comments/actions';
 import thunkComment from '../comments/thunks/thunkComment';

@@ -1,6 +1,6 @@
 import {ThunkAction, ThunkDispatch} from 'redux-thunk';
 
-import {dataApi} from '../../../../Helpers/API';
+import {dataApi} from '../../../../Helpers/API/frontAPI';
 import {RootState} from '../../../index';
 import {ProductActions} from '../reducer';
 import {commentReset} from '../../comments/actions';

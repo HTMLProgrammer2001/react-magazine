@@ -3,7 +3,7 @@ import {FormAction, reset, startSubmit, stopSubmit} from 'redux-form';
 
 import {ILoginFormData} from '../../components/LoginPage/LoginForm';
 import {RootState} from '../';
-import {userApi} from '../../Helpers/API';
+import {userApi} from '../../Helpers/API/frontAPI';
 import {loadUserSuccessfull} from '../AppState/user/actions';
 import {toast} from 'react-toastify';
 import {loginClear, loginResend, loginReset} from './actions';

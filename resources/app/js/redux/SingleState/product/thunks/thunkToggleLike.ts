@@ -2,7 +2,7 @@ import {ThunkAction, ThunkDispatch} from 'redux-thunk';
 
 import {RootState} from '../../../';
 import {productLikeChange} from '../actions';
-import {dataApi} from '../../../../Helpers/API';
+import {dataApi} from '../../../../Helpers/API/frontAPI';
 import {toast} from 'react-toastify';
 
 

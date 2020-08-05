@@ -4,7 +4,7 @@ import {toast} from 'react-toastify';
 
 import {IBillingFormData} from '../../components/CheckoutPage/Form/BillingForm';
 import {RootState} from '../';
-import {dataApi} from '../../Helpers/API';
+import {dataApi} from '../../Helpers/API/frontAPI';
 import {cartReset} from '../AppState/cart/actions';
 
 

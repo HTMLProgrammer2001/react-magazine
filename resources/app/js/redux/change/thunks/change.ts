@@ -5,7 +5,7 @@ import {IChangeFormData} from '../../../components/ChangePasswordPage/ChangeForm
 import {RootState} from '../../index';
 import {ChangeActions} from '../reducer';
 
-import {userApi} from '../../../Helpers/API';
+import {userApi} from '../../../Helpers/API/frontAPI';
 import {toast} from 'react-toastify';
 
 

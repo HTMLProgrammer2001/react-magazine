@@ -4,7 +4,7 @@ import {RootState} from '../../index';
 import {ChangeActions} from '../reducer';
 
 import {changeError, changeSuccess, changeStart} from '../actions';
-import {userApi} from '../../../Helpers/API';
+import {userApi} from '../../../Helpers/API/frontAPI';
 import {toast} from 'react-toastify';
 
 

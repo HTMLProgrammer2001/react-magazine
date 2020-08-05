@@ -58,5 +58,8 @@ Route::get('/getProductsByIds', 'ProductInfoController@getProductsByIds');
 Route::post('/orders', 'OrdersController@create');
 
 Route::group(['namespace' => 'Profile', 'prefix' => 'profile'], function(){
-    Route::any('/favorite', 'FavoriteController');
+    Route::get('/recommendationProducts', 'RecommendationController');
+
+    Route::get('/favorite', 'FavoriteController@get');
+    Route::delete('/favorite', 'FavoriteController@delete');
 });

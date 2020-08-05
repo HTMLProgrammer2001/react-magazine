@@ -14,6 +14,7 @@ import productListReducer from './productList/reducer';
 import searchReducer from './search/reducer';
 import verifyReducer from './verify/reducer';
 import loginReducer from './login/reducer';
+import profileReducer from './Profile/';
 
 
 const storeReducer = combineReducers({
@@ -29,6 +30,7 @@ const storeReducer = combineReducers({
 	productList: productListReducer,
 	search: searchReducer,
 	verify: verifyReducer,
+	profile: profileReducer,
 	form: formReducer
 });
 

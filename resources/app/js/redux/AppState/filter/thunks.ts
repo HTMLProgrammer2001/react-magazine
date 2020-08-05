@@ -4,7 +4,7 @@ import {RootState} from '../../index';
 import {FilterActions} from './reducer';
 import {filterStart, filterError, filterSuccess} from './actions';
 
-import {dataApi} from '../../../Helpers/API';
+import {dataApi} from '../../../Helpers/API/frontAPI';
 
 
 export type FilterThunkAction = ThunkAction<void, RootState, unknown, FilterActions>;

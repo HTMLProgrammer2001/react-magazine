@@ -7,7 +7,7 @@ import {
 	searchStart,
 	searchSuccess
 } from './actions';
-import {dataApi} from '../../Helpers/API';
+import {dataApi} from '../../Helpers/API/frontAPI';
 
 
 export type SearchThunkAction = ThunkAction<void, RootState, unknown, SearchActions>;

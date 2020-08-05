@@ -36,8 +36,8 @@ const searchReducer = (state: SearchState = initialState, action: SearchActions)
 			...state,
 			isLoading: false,
 			products: [...state.products, ...action.payload.data],
-			totalCount: action.payload.total,
-			currentPage: action.payload.current_page,
+			totalCount: action.payload.meta.total,
+			currentPage: action.payload.meta.current_page,
 			error: null
 		};
 
