@@ -2,9 +2,9 @@ import * as React from 'react';
 import {reduxForm, InjectedFormProps, Field} from 'redux-form';
 
 import {Size} from '../../../Interfaces/IProduct';
-import ColorGroup from '../../FormElements/ColorGroup';
-import SizeGroup from '../../FormElements/SizeGroup';
-import NumericElement from '../../FormElements/Numeric';
+import ColorGroup from '../../FormElements/Custom/ColorGroup';
+import SizeGroup from '../../FormElements/Custom/SizeGroup';
+import NumericElement from '../../FormElements/Custom/Numeric';
 import Like from './Like';
 
 

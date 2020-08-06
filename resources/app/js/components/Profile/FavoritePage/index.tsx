@@ -9,6 +9,7 @@ import thunkFavorite from '../../../redux/Profile/favoriteProducts/thunks/thunkF
 import {favoriteReset} from '../../../redux/Profile/favoriteProducts/actions';
 import Loader from '../../Loader';
 import FavoriteItem from './FavoriteItem';
+import {Link} from 'react-router-dom';
 
 
 const mapStateToProps = (state: RootState) => ({
@@ -38,7 +39,9 @@ const FavoritePage: React.FC<IFavoritePageProps> = (props) => {
 			<div className="container">
 				<div className="myOrders py-pad">
 					<div className="pull-right">
-						<span className="but but_outline">Continue shopping</span>
+						<Link to="/profile/">
+							<span className="but but_outline">Continue shopping</span>
+						</Link>
 					</div>
 
 					<h3>My favorite</h3>

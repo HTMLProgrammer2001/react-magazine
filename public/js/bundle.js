@@ -34733,6 +34733,18 @@ exports.default = IsAuthenticated;
 "use strict";
 
 
+var __assign = undefined && undefined.__assign || function () {
+    __assign = Object.assign || function (t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) {
+                if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+            }
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var axios_1 = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 var apiClient = axios_1.default.create({
@@ -34765,6 +34777,34 @@ exports.profileAPI = {
     deleteFavorite: function deleteFavorite(id) {
         return apiClient.delete('/favorite', {
             params: { id: id },
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem('token')
+            }
+        });
+    },
+    getOrders: function getOrders(page, size, form) {
+        if (page === void 0) {
+            page = 1;
+        }
+        if (size === void 0) {
+            size = 5;
+        }
+        return apiClient.get('/orders', {
+            params: __assign({ page: page, size: size }, form),
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem('token')
+            }
+        });
+    },
+    getReviews: function getReviews(page, size, form) {
+        if (page === void 0) {
+            page = 1;
+        }
+        if (size === void 0) {
+            size = 5;
+        }
+        return apiClient.get('/reviews', {
+            params: __assign({ page: page, size: size }, form),
             headers: {
                 Authorization: "Bearer " + localStorage.getItem('token')
             }
@@ -35808,10 +35848,10 @@ exports.default = CheckboxGroup;
 
 /***/ }),
 
-/***/ "./resources/app/es5/components/FormElements/ColorElement.js":
-/*!*******************************************************************!*\
-  !*** ./resources/app/es5/components/FormElements/ColorElement.js ***!
-  \*******************************************************************/
+/***/ "./resources/app/es5/components/FormElements/Custom/ColorElement.js":
+/*!**************************************************************************!*\
+  !*** ./resources/app/es5/components/FormElements/Custom/ColorElement.js ***!
+  \**************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -35848,10 +35888,10 @@ exports.default = connected(ColorElement);
 
 /***/ }),
 
-/***/ "./resources/app/es5/components/FormElements/ColorGroup.js":
-/*!*****************************************************************!*\
-  !*** ./resources/app/es5/components/FormElements/ColorGroup.js ***!
-  \*****************************************************************/
+/***/ "./resources/app/es5/components/FormElements/Custom/ColorGroup.js":
+/*!************************************************************************!*\
+  !*** ./resources/app/es5/components/FormElements/Custom/ColorGroup.js ***!
+  \************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -35861,7 +35901,7 @@ exports.default = connected(ColorElement);
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
-var ColorElement_1 = __webpack_require__(/*! ./ColorElement */ "./resources/app/es5/components/FormElements/ColorElement.js");
+var ColorElement_1 = __webpack_require__(/*! ./ColorElement */ "./resources/app/es5/components/FormElements/Custom/ColorElement.js");
 var ColorGroup = function ColorGroup(props) {
     var colors = props.colors,
         formName = props.formName,
@@ -35876,40 +35916,10 @@ exports.default = ColorGroup;
 
 /***/ }),
 
-/***/ "./resources/app/es5/components/FormElements/InputElement.js":
-/*!*******************************************************************!*\
-  !*** ./resources/app/es5/components/FormElements/InputElement.js ***!
-  \*******************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-var InputElement = function InputElement(props) {
-    var required = props.required,
-        type = props.type,
-        placeholder = props.placeholder,
-        className = props.className,
-        _a = props.input,
-        value = _a.value,
-        name = _a.name,
-        onChange = _a.onChange,
-        _b = props.meta,
-        touched = _b.touched,
-        error = _b.error;
-    return React.createElement(React.Fragment, null, React.createElement("div", { className: "input  " + className }, React.createElement("input", { className: "input__elem", required: required, type: type, value: value, name: name, onChange: onChange }), React.createElement("label", { className: "input__label" }, React.createElement("span", null, placeholder), required && React.createElement("span", { className: "red" }, "*")), React.createElement("div", { className: "input__line" })), touched && error && React.createElement("small", { className: "red", style: { margin: '5px' } }, error));
-};
-exports.default = InputElement;
-
-/***/ }),
-
-/***/ "./resources/app/es5/components/FormElements/MarkElement.js":
-/*!******************************************************************!*\
-  !*** ./resources/app/es5/components/FormElements/MarkElement.js ***!
-  \******************************************************************/
+/***/ "./resources/app/es5/components/FormElements/Custom/MarkElement.js":
+/*!*************************************************************************!*\
+  !*** ./resources/app/es5/components/FormElements/Custom/MarkElement.js ***!
+  \*************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -35920,7 +35930,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
 var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-var Mark_1 = __webpack_require__(/*! ../Mark */ "./resources/app/es5/components/Mark.js");
+var Mark_1 = __webpack_require__(/*! ../../Mark */ "./resources/app/es5/components/Mark.js");
 var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
     return {
         changeValue: function changeValue(name, newValue) {
@@ -35941,10 +35951,10 @@ exports.default = connected(MarkElement);
 
 /***/ }),
 
-/***/ "./resources/app/es5/components/FormElements/Numeric.js":
-/*!**************************************************************!*\
-  !*** ./resources/app/es5/components/FormElements/Numeric.js ***!
-  \**************************************************************/
+/***/ "./resources/app/es5/components/FormElements/Custom/Numeric.js":
+/*!*********************************************************************!*\
+  !*** ./resources/app/es5/components/FormElements/Custom/Numeric.js ***!
+  \*********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -35981,37 +35991,10 @@ exports.default = connected(NumericElement);
 
 /***/ }),
 
-/***/ "./resources/app/es5/components/FormElements/SelectElement.js":
-/*!********************************************************************!*\
-  !*** ./resources/app/es5/components/FormElements/SelectElement.js ***!
-  \********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-var SelectElement = function SelectElement(props) {
-    var className = props.className,
-        options = props.options,
-        _a = props.input,
-        value = _a.value,
-        name = _a.name,
-        onChange = _a.onChange;
-    return React.createElement("div", { className: "select cur" }, React.createElement("select", { className: "select__input cur " + className, name: name, value: value, onChange: onChange }, options.map(function (option, index) {
-        return React.createElement("option", { key: index, value: option }, option);
-    })), React.createElement("i", { className: "fas fa-chevron-down select__icon" }), React.createElement("div", { className: "select__line" }));
-};
-exports.default = SelectElement;
-
-/***/ }),
-
-/***/ "./resources/app/es5/components/FormElements/SizeElement.js":
-/*!******************************************************************!*\
-  !*** ./resources/app/es5/components/FormElements/SizeElement.js ***!
-  \******************************************************************/
+/***/ "./resources/app/es5/components/FormElements/Custom/SizeElement.js":
+/*!*************************************************************************!*\
+  !*** ./resources/app/es5/components/FormElements/Custom/SizeElement.js ***!
+  \*************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -36049,10 +36032,10 @@ exports.default = connected(SizeElement);
 
 /***/ }),
 
-/***/ "./resources/app/es5/components/FormElements/SizeGroup.js":
-/*!****************************************************************!*\
-  !*** ./resources/app/es5/components/FormElements/SizeGroup.js ***!
-  \****************************************************************/
+/***/ "./resources/app/es5/components/FormElements/Custom/SizeGroup.js":
+/*!***********************************************************************!*\
+  !*** ./resources/app/es5/components/FormElements/Custom/SizeGroup.js ***!
+  \***********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -36062,7 +36045,7 @@ exports.default = connected(SizeElement);
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
-var SizeElement_1 = __webpack_require__(/*! ./SizeElement */ "./resources/app/es5/components/FormElements/SizeElement.js");
+var SizeElement_1 = __webpack_require__(/*! ./SizeElement */ "./resources/app/es5/components/FormElements/Custom/SizeElement.js");
 var SizeGroup = function SizeGroup(props) {
     var sizes = props.sizes,
         formName = props.formName,
@@ -36079,10 +36062,10 @@ exports.default = SizeGroup;
 
 /***/ }),
 
-/***/ "./resources/app/es5/components/FormElements/Slider.js":
-/*!*************************************************************!*\
-  !*** ./resources/app/es5/components/FormElements/Slider.js ***!
-  \*************************************************************/
+/***/ "./resources/app/es5/components/FormElements/Custom/Slider.js":
+/*!********************************************************************!*\
+  !*** ./resources/app/es5/components/FormElements/Custom/Slider.js ***!
+  \********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -36207,6 +36190,120 @@ var SliderElement = function (_super) {
     return SliderElement;
 }(React.Component);
 exports.default = connected(SliderElement);
+
+/***/ }),
+
+/***/ "./resources/app/es5/components/FormElements/InputElement.js":
+/*!*******************************************************************!*\
+  !*** ./resources/app/es5/components/FormElements/InputElement.js ***!
+  \*******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var InputElement = function InputElement(props) {
+    var required = props.required,
+        type = props.type,
+        placeholder = props.placeholder,
+        className = props.className,
+        _a = props.input,
+        value = _a.value,
+        name = _a.name,
+        onChange = _a.onChange,
+        _b = props.meta,
+        touched = _b.touched,
+        error = _b.error;
+    return React.createElement(React.Fragment, null, React.createElement("div", { className: "input  " + className }, React.createElement("input", { className: "input__elem", required: required, type: type, value: value, name: name, onChange: onChange }), React.createElement("label", { className: "input__label" }, React.createElement("span", null, placeholder), required && React.createElement("span", { className: "red" }, "*")), React.createElement("div", { className: "input__line" })), touched && error && React.createElement("small", { className: "red", style: { margin: '5px' } }, error));
+};
+exports.default = InputElement;
+
+/***/ }),
+
+/***/ "./resources/app/es5/components/FormElements/RadioElement.js":
+/*!*******************************************************************!*\
+  !*** ./resources/app/es5/components/FormElements/RadioElement.js ***!
+  \*******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var classnames_1 = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+var RadioElement = function RadioElement(props) {
+    var placeholder = props.placeholder,
+        className = props.className,
+        style = props.style,
+        radioValue = props.value,
+        _a = props.input,
+        value = _a.value,
+        name = _a.name,
+        checked = _a.checked,
+        onChange = _a.onChange;
+    return React.createElement("div", { className: "radio", style: style }, React.createElement("label", { className: "row" }, React.createElement("input", { className: classnames_1.default('radio__elem', className), type: "radio", value: radioValue, name: name, onChange: onChange, checked: value == radioValue }), React.createElement("span", { className: "radio__label" }, placeholder)));
+};
+exports.default = RadioElement;
+
+/***/ }),
+
+/***/ "./resources/app/es5/components/FormElements/RadioGroup.js":
+/*!*****************************************************************!*\
+  !*** ./resources/app/es5/components/FormElements/RadioGroup.js ***!
+  \*****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
+var RadioElement_1 = __webpack_require__(/*! ./RadioElement */ "./resources/app/es5/components/FormElements/RadioElement.js");
+var RadioGroup = function RadioGroup(props) {
+    var options = props.options,
+        formName = props.formName,
+        _a = props.input,
+        value = _a.value,
+        name = _a.name;
+    return React.createElement(React.Fragment, null, options.map(function (option, index) {
+        return React.createElement(redux_form_1.Field, { component: RadioElement_1.default, placeholder: option.text, key: index, formName: formName, name: name, value: option.value });
+    }));
+};
+exports.default = RadioGroup;
+
+/***/ }),
+
+/***/ "./resources/app/es5/components/FormElements/SelectElement.js":
+/*!********************************************************************!*\
+  !*** ./resources/app/es5/components/FormElements/SelectElement.js ***!
+  \********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var SelectElement = function SelectElement(props) {
+    var className = props.className,
+        options = props.options,
+        _a = props.input,
+        value = _a.value,
+        name = _a.name,
+        onChange = _a.onChange;
+    return React.createElement("div", { className: "select cur" }, React.createElement("select", { className: "select__input cur " + className, name: name, value: value, onChange: onChange }, options.map(function (option, index) {
+        return React.createElement("option", { key: index, value: option }, option);
+    })), React.createElement("i", { className: "fas fa-chevron-down select__icon" }), React.createElement("div", { className: "select__line" }));
+};
+exports.default = SelectElement;
 
 /***/ }),
 
@@ -36495,9 +36592,9 @@ var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-f
 var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 var react_router_1 = __webpack_require__(/*! react-router */ "./node_modules/react-router/esm/react-router.js");
 var CheckboxGroup_1 = __webpack_require__(/*! ../../../FormElements/CheckboxGroup */ "./resources/app/es5/components/FormElements/CheckboxGroup.js");
-var ColorGroup_1 = __webpack_require__(/*! ../../../FormElements/ColorGroup */ "./resources/app/es5/components/FormElements/ColorGroup.js");
-var SizeGroup_1 = __webpack_require__(/*! ../../../FormElements/SizeGroup */ "./resources/app/es5/components/FormElements/SizeGroup.js");
-var Slider_1 = __webpack_require__(/*! ../../../FormElements/Slider */ "./resources/app/es5/components/FormElements/Slider.js");
+var ColorGroup_1 = __webpack_require__(/*! ../../../FormElements/Custom/ColorGroup */ "./resources/app/es5/components/FormElements/Custom/ColorGroup.js");
+var SizeGroup_1 = __webpack_require__(/*! ../../../FormElements/Custom/SizeGroup */ "./resources/app/es5/components/FormElements/Custom/SizeGroup.js");
+var Slider_1 = __webpack_require__(/*! ../../../FormElements/Custom/Slider */ "./resources/app/es5/components/FormElements/Custom/Slider.js");
 var selector = redux_form_1.formValueSelector('productFilter');
 var connected = react_redux_1.connect(function (state) {
     return {
@@ -37070,6 +37167,7 @@ var thunkFavorite_1 = __webpack_require__(/*! ../../../redux/Profile/favoritePro
 var actions_1 = __webpack_require__(/*! ../../../redux/Profile/favoriteProducts/actions */ "./resources/app/es5/redux/Profile/favoriteProducts/actions.js");
 var Loader_1 = __webpack_require__(/*! ../../Loader */ "./resources/app/es5/components/Loader.js");
 var FavoriteItem_1 = __webpack_require__(/*! ./FavoriteItem */ "./resources/app/es5/components/Profile/FavoritePage/FavoriteItem.js");
+var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 var mapStateToProps = function mapStateToProps(state) {
     return __assign({}, selectors_1.selectFavoriteState(state));
 };
@@ -37091,11 +37189,64 @@ var FavoritePage = function FavoritePage(props) {
     React.useEffect(function () {
         if (!props.favorites.length) props.getFavorite();
     }, []);
-    return React.createElement("div", { className: "admContent" }, React.createElement("div", { className: "container" }, React.createElement("div", { className: "myOrders py-pad" }, React.createElement("div", { className: "pull-right" }, React.createElement("span", { className: "but but_outline" }, "Continue shopping")), React.createElement("h3", null, "My favorite"), React.createElement(FavoriteForm_1.default, { onSubmit: props.changeFilter }), React.createElement("div", { className: "table__wrap" }, React.createElement("div", { className: "table" }, React.createElement("div", { className: "table__head" }, React.createElement("div", { className: "table__head-item" }, "ID"), React.createElement("div", { className: "table__head-item" }, "Product"), React.createElement("div", { className: "table__head-item" }, "Actions")), React.createElement("div", { className: "table__content" }, props.isLoading && React.createElement(Loader_1.default, null), props.error && React.createElement("div", { className: "red" }, props.error), !props.isLoading && !props.error && props.favorites.map(function (f) {
+    return React.createElement("div", { className: "admContent" }, React.createElement("div", { className: "container" }, React.createElement("div", { className: "myOrders py-pad" }, React.createElement("div", { className: "pull-right" }, React.createElement(react_router_dom_1.Link, { to: "/profile/" }, React.createElement("span", { className: "but but_outline" }, "Continue shopping"))), React.createElement("h3", null, "My favorite"), React.createElement(FavoriteForm_1.default, { onSubmit: props.changeFilter }), React.createElement("div", { className: "table__wrap" }, React.createElement("div", { className: "table" }, React.createElement("div", { className: "table__head" }, React.createElement("div", { className: "table__head-item" }, "ID"), React.createElement("div", { className: "table__head-item" }, "Product"), React.createElement("div", { className: "table__head-item" }, "Actions")), React.createElement("div", { className: "table__content" }, props.isLoading && React.createElement(Loader_1.default, null), props.error && React.createElement("div", { className: "red" }, props.error), !props.isLoading && !props.error && props.favorites.map(function (f) {
         return React.createElement(FavoriteItem_1.default, { favorite: f, key: f.id });
     }))))), React.createElement(Paginator_1.default, { totalPage: Math.ceil(props.totalCount / props.size), curPage: props.currentPage, handler: props.getFavorite })));
 };
 exports.default = connected(FavoritePage);
+
+/***/ }),
+
+/***/ "./resources/app/es5/components/Profile/OrdersPage/OrderItem.js":
+/*!**********************************************************************!*\
+  !*** ./resources/app/es5/components/Profile/OrdersPage/OrderItem.js ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+exports.OrderItem = function (_a) {
+    var order = _a.order;
+    return React.createElement("div", { className: "table__row" }, React.createElement("div", { className: "table__col" }, "#", order.id), React.createElement("div", { className: "table__col" }, order.date), React.createElement("div", { className: "table__col" }, "$", order.price.toFixed(2)), React.createElement("div", { className: "table__col" }, order.products), React.createElement("div", { className: "table__col" }, order.status));
+};
+exports.default = exports.OrderItem;
+
+/***/ }),
+
+/***/ "./resources/app/es5/components/Profile/OrdersPage/OrdersForm.js":
+/*!***********************************************************************!*\
+  !*** ./resources/app/es5/components/Profile/OrdersPage/OrdersForm.js ***!
+  \***********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
+var InputElement_1 = __webpack_require__(/*! ../../FormElements/InputElement */ "./resources/app/es5/components/FormElements/InputElement.js");
+var SelectElement_1 = __webpack_require__(/*! ../../FormElements/SelectElement */ "./resources/app/es5/components/FormElements/SelectElement.js");
+var RadioGroup_1 = __webpack_require__(/*! ../../FormElements/RadioGroup */ "./resources/app/es5/components/FormElements/RadioGroup.js");
+var OrdersForm = function OrdersForm(props) {
+    return React.createElement("form", { onSubmit: props.handleSubmit }, React.createElement("div", { className: "myOrders__header my-pad" }, React.createElement("span", { className: "myOrders__find" }, React.createElement(redux_form_1.Field, { component: InputElement_1.default, type: "text", name: "find", placeholder: "Enter order items name", required: true }))), React.createElement(redux_form_1.Field, { component: SelectElement_1.default, name: "sort", options: ['Latest', 'Newest'] }), React.createElement("div", { className: "myOrders__types my-pad" }, React.createElement(redux_form_1.Field, { component: RadioGroup_1.default, formName: props.form, name: "types", options: [{ text: 'All', value: 'all' }, { text: 'Finished', value: 'finished' }, { text: 'In move', value: 'move' }, { text: 'Payment', value: 'payment' }] })));
+};
+exports.default = redux_form_1.reduxForm({
+    form: 'ordersFind',
+    initialValues: {
+        find: '',
+        sort: 'Latest',
+        types: 'all'
+    },
+    onChange: function onChange(values, dispatch) {
+        dispatch(redux_form_1.submit('ordersFind'));
+    }
+})(OrdersForm);
 
 /***/ }),
 
@@ -37109,12 +37260,55 @@ exports.default = connected(FavoritePage);
 "use strict";
 
 
+var __assign = undefined && undefined.__assign || function () {
+    __assign = Object.assign || function (t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) {
+                if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+            }
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-var OrdersPage = function OrdersPage() {
-    return React.createElement("div", { className: "admContent" }, React.createElement("div", { className: "container" }, React.createElement("div", { className: "myOrders py-pad" }, React.createElement("div", { className: "pull-right" }, React.createElement("span", { className: "but but_outline" }, "Continue shopping")), React.createElement("h3", null, "My orders"), React.createElement("div", { className: "myOrders__header my-pad" }, React.createElement("span", { className: "myOrders__find" }, React.createElement("div", { className: "input" }, React.createElement("input", { className: "input__elem", type: "text", required: true }), React.createElement("label", { className: "input__label" }, "Find order"), React.createElement("div", { className: "input__line" }))), React.createElement("div", { className: "select cur" }, React.createElement("select", { className: "select__input cur" }, React.createElement("option", { selected: true }, "Latest"), React.createElement("option", null, "Newest")), React.createElement("i", { className: "fas fa-chevron-down select__icon" }), React.createElement("div", { className: "select__line" }))), React.createElement("div", { className: "myOrders__types my-pad" }, React.createElement("div", { className: "radio" }, React.createElement("label", { className: "row" }, React.createElement("input", { className: "radio__elem", type: "radio", name: "filter" }), React.createElement("span", { className: "radio__label" }, "All"))), React.createElement("div", { className: "radio" }, React.createElement("label", { className: "row" }, React.createElement("input", { className: "radio__elem", type: "radio", name: "filter" }), React.createElement("span", { className: "radio__label" }, "Finished"))), React.createElement("div", { className: "radio" }, React.createElement("label", { className: "row" }, React.createElement("input", { className: "radio__elem", type: "radio", name: "filter" }), React.createElement("span", { className: "radio__label" }, "In move"))), React.createElement("div", { className: "radio" }, React.createElement("label", { className: "row" }, React.createElement("input", { className: "radio__elem", type: "radio", name: "filter" }), React.createElement("span", { className: "radio__label" }, "Payment")))), React.createElement("div", { className: "table__wrap" }, React.createElement("div", { className: "table" }, React.createElement("div", { className: "table__head" }, React.createElement("div", { className: "table__head-item" }, "ID"), React.createElement("div", { className: "table__head-item" }, "Date"), React.createElement("div", { className: "table__head-item" }, "Price"), React.createElement("div", { className: "table__head-item" }, "Status")), React.createElement("div", { className: "table__content" }, React.createElement("div", { className: "table__row" }, React.createElement("div", { className: "table__col" }, "#43534455"), React.createElement("div", { className: "table__col" }, "20.03.2020"), React.createElement("div", { className: "table__col" }, "$90.00"), React.createElement("div", { className: "table__col" }, "TShirt")), React.createElement("div", { className: "table__row" }, React.createElement("div", { className: "table__col" }, "#43534455"), React.createElement("div", { className: "table__col" }, "20.03.2020"), React.createElement("div", { className: "table__col" }, "$90.00"), React.createElement("div", { className: "table__col" }, "TShirt")), React.createElement("div", { className: "table__row" }, React.createElement("div", { className: "table__col" }, "#43534455"), React.createElement("div", { className: "table__col" }, "20.03.2020"), React.createElement("div", { className: "table__col" }, "$90.00"), React.createElement("div", { className: "table__col" }, "TShirt")))))), React.createElement("div", { className: "pagination mb-pad" }, React.createElement("div", { className: "pagination__item pagination__item_disabled" }, "Prev"), React.createElement("div", { className: "pagination__item pagination__item_active" }, "1"), React.createElement("div", { className: "pagination__item" }, "2"), React.createElement("div", { className: "pagination__item" }, "3"), React.createElement("div", { className: "pagination__item" }, "Next"))));
+var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+var OrdersForm_1 = __webpack_require__(/*! ./OrdersForm */ "./resources/app/es5/components/Profile/OrdersPage/OrdersForm.js");
+var Paginator_1 = __webpack_require__(/*! ../Paginator */ "./resources/app/es5/components/Profile/Paginator.js");
+var selectors_1 = __webpack_require__(/*! ../../../redux/Profile/orders/selectors */ "./resources/app/es5/redux/Profile/orders/selectors.js");
+var thunkOrders_1 = __webpack_require__(/*! ../../../redux/Profile/orders/thunks/thunkOrders */ "./resources/app/es5/redux/Profile/orders/thunks/thunkOrders.js");
+var actions_1 = __webpack_require__(/*! ../../../redux/Profile/orders/actions */ "./resources/app/es5/redux/Profile/orders/actions.js");
+var Loader_1 = __webpack_require__(/*! ../../Loader */ "./resources/app/es5/components/Loader.js");
+var OrderItem_1 = __webpack_require__(/*! ./OrderItem */ "./resources/app/es5/components/Profile/OrdersPage/OrderItem.js");
+var mapStateToProps = function mapStateToProps(state) {
+    return __assign({}, selectors_1.selectOrdersState(state));
 };
-exports.default = OrdersPage;
+var connected = react_redux_1.connect(mapStateToProps, function (dispatch) {
+    return {
+        getOrders: function getOrders(page) {
+            if (page === void 0) {
+                page = 1;
+            }
+            dispatch(thunkOrders_1.default(page));
+        },
+        changeFilter: function changeFilter() {
+            dispatch(actions_1.ordersReset());
+            dispatch(thunkOrders_1.default());
+        }
+    };
+});
+var OrdersPage = function OrdersPage(props) {
+    React.useEffect(function () {
+        props.getOrders();
+    }, []);
+    return React.createElement("div", { className: "admContent" }, React.createElement("div", { className: "container" }, React.createElement("div", { className: "myOrders py-pad" }, React.createElement("div", { className: "pull-right" }, React.createElement(react_router_dom_1.Link, { to: "/" }, React.createElement("span", { className: "but but_outline" }, "Continue shopping"))), React.createElement("h3", null, "My orders"), React.createElement(OrdersForm_1.default, { onSubmit: props.changeFilter }), React.createElement("div", { className: "table__wrap" }, React.createElement("div", { className: "table" }, React.createElement("div", { className: "table__head" }, React.createElement("div", { className: "table__head-item" }, "ID"), React.createElement("div", { className: "table__head-item" }, "Date"), React.createElement("div", { className: "table__head-item" }, "Price"), React.createElement("div", { className: "table__head-item" }, "Products"), React.createElement("div", { className: "table__head-item" }, "Status")), React.createElement("div", { className: "table__content" }, props.isLoading && React.createElement(Loader_1.default, null), props.error && React.createElement("div", { className: "red" }, props.error), !props.isLoading && !props.error && props.orders.map(function (order) {
+        return React.createElement(OrderItem_1.default, { key: order.id, order: order });
+    }))))), React.createElement(Paginator_1.default, { totalPage: Math.ceil(props.totalCount / props.size), curPage: props.currentPage, handler: props.getOrders })));
+};
+exports.default = connected(OrdersPage);
 
 /***/ }),
 
@@ -37276,6 +37470,58 @@ exports.default = ProfilePage;
 
 /***/ }),
 
+/***/ "./resources/app/es5/components/Profile/ReviewsPage/ReviewsForm.js":
+/*!*************************************************************************!*\
+  !*** ./resources/app/es5/components/Profile/ReviewsPage/ReviewsForm.js ***!
+  \*************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
+var InputElement_1 = __webpack_require__(/*! ../../FormElements/InputElement */ "./resources/app/es5/components/FormElements/InputElement.js");
+var SelectElement_1 = __webpack_require__(/*! ../../FormElements/SelectElement */ "./resources/app/es5/components/FormElements/SelectElement.js");
+var ReviewsForm = function ReviewsForm(props) {
+    return React.createElement("form", { className: "myOrders__header my-pad", onSubmit: props.handleSubmit }, React.createElement("span", { className: "myOrders__find" }, React.createElement(redux_form_1.Field, { component: InputElement_1.default, name: "find", placeholder: "Find review", required: true })), React.createElement(redux_form_1.Field, { component: SelectElement_1.default, name: "sort", options: ['Latest', 'Newest', 'Positive first', 'Negative first'] }));
+};
+exports.default = redux_form_1.reduxForm({
+    form: 'reviewsFind',
+    initialValues: {
+        find: '',
+        sort: 'Latest'
+    },
+    onChange: function onChange(values, dispatch) {
+        dispatch(redux_form_1.submit('reviewsFind'));
+    }
+})(ReviewsForm);
+
+/***/ }),
+
+/***/ "./resources/app/es5/components/Profile/ReviewsPage/ReviewsItem.js":
+/*!*************************************************************************!*\
+  !*** ./resources/app/es5/components/Profile/ReviewsPage/ReviewsItem.js ***!
+  \*************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var Mark_1 = __webpack_require__(/*! ../../Mark */ "./resources/app/es5/components/Mark.js");
+var ReviewsItem = function ReviewsItem(_a) {
+    var review = _a.review;
+    return React.createElement("div", { className: "table__row" }, React.createElement("div", { className: "table__col" }, "#", review.id), React.createElement("div", { className: "table__col" }, review.date), React.createElement("div", { className: "table__col" }, React.createElement("img", { className: "mb-10", src: "/image/" + review.product.photo }), React.createElement("div", null, review.product.name)), React.createElement("div", { className: "table__col" }, React.createElement(Mark_1.default, { rating: review.mark, fixed: true })));
+};
+exports.default = ReviewsItem;
+
+/***/ }),
+
 /***/ "./resources/app/es5/components/Profile/ReviewsPage/index.js":
 /*!*******************************************************************!*\
   !*** ./resources/app/es5/components/Profile/ReviewsPage/index.js ***!
@@ -37286,13 +37532,54 @@ exports.default = ProfilePage;
 "use strict";
 
 
+var __assign = undefined && undefined.__assign || function () {
+    __assign = Object.assign || function (t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) {
+                if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+            }
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-var Mark_1 = __webpack_require__(/*! ../../Mark */ "./resources/app/es5/components/Mark.js");
-var ReviewsPage = function ReviewsPage() {
-    return React.createElement("div", { className: "admContent" }, React.createElement("div", { className: "container" }, React.createElement("div", { className: "myOrders py-pad" }, React.createElement("div", { className: "pull-right" }, React.createElement("span", { className: "but but_outline" }, "Continue shopping")), React.createElement("h3", null, "My reviews"), React.createElement("div", { className: "myOrders__header my-pad" }, React.createElement("span", { className: "myOrders__find" }, React.createElement("div", { className: "input" }, React.createElement("input", { className: "input__elem", type: "text", required: true }), React.createElement("label", { className: "input__label" }, "Find reviews"), React.createElement("div", { className: "input__line" }))), React.createElement("div", { className: "select cur" }, React.createElement("select", { className: "select__input cur" }, React.createElement("option", { selected: true }, "Latest"), React.createElement("option", null, "Newest"), React.createElement("option", null, "Positive first"), React.createElement("option", null, "Negative first")), React.createElement("i", { className: "fas fa-chevron-down select__icon" }), React.createElement("div", { className: "select__line" }))), React.createElement("div", { className: "table__wrap" }, React.createElement("div", { className: "table" }, React.createElement("div", { className: "table__head" }, React.createElement("div", { className: "table__head-item" }, "ID"), React.createElement("div", { className: "table__head-item" }, "Date"), React.createElement("div", { className: "table__head-item" }, "Product"), React.createElement("div", { className: "table__head-item" }, "Mark")), React.createElement("div", { className: "table__content" }, React.createElement("div", { className: "table__row" }, React.createElement("div", { className: "table__col" }, "#43534455"), React.createElement("div", { className: "table__col" }, "20.03.2020"), React.createElement("div", { className: "table__col" }, React.createElement("img", { className: "mb-10", src: "/image/product.png" }), React.createElement("div", null, "TShirt")), React.createElement("div", { className: "table__col" }, React.createElement(Mark_1.default, { rating: 5, fixed: true }))), React.createElement("div", { className: "table__row" }, React.createElement("div", { className: "table__col" }, "#43534455"), React.createElement("div", { className: "table__col" }, "20.03.2020"), React.createElement("div", { className: "table__col" }, React.createElement("img", { className: "mb-10", src: "/image/product.png" }), React.createElement("div", null, "TShirt")), React.createElement("div", { className: "table__col" }, React.createElement(Mark_1.default, { rating: 5, fixed: true }))), React.createElement("div", { className: "table__row" }, React.createElement("div", { className: "table__col" }, "#43534455"), React.createElement("div", { className: "table__col" }, "20.03.2020"), React.createElement("div", { className: "table__col" }, React.createElement("img", { className: "mb-10", src: "/image/product.png" }), React.createElement("div", null, "TShirt")), React.createElement("div", { className: "table__col" }, React.createElement(Mark_1.default, { rating: 5, fixed: true }))))))), React.createElement("div", { className: "pagination mb-pad" }, React.createElement("div", { className: "pagination__item pagination__item_disabled" }, "Prev"), React.createElement("div", { className: "pagination__item pagination__item_active" }, "1"), React.createElement("div", { className: "pagination__item" }, "2"), React.createElement("div", { className: "pagination__item" }, "3"), React.createElement("div", { className: "pagination__item" }, "Next"))));
+var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+var selectors_1 = __webpack_require__(/*! ../../../redux/Profile/reviews/selectors */ "./resources/app/es5/redux/Profile/reviews/selectors.js");
+var actions_1 = __webpack_require__(/*! ../../../redux/Profile/reviews/actions */ "./resources/app/es5/redux/Profile/reviews/actions.js");
+var Paginator_1 = __webpack_require__(/*! ../Paginator */ "./resources/app/es5/components/Profile/Paginator.js");
+var ReviewsForm_1 = __webpack_require__(/*! ./ReviewsForm */ "./resources/app/es5/components/Profile/ReviewsPage/ReviewsForm.js");
+var Loader_1 = __webpack_require__(/*! ../../Loader */ "./resources/app/es5/components/Loader.js");
+var ReviewsItem_1 = __webpack_require__(/*! ./ReviewsItem */ "./resources/app/es5/components/Profile/ReviewsPage/ReviewsItem.js");
+var thunkReviews_1 = __webpack_require__(/*! ../../../redux/Profile/reviews/thunks/thunkReviews */ "./resources/app/es5/redux/Profile/reviews/thunks/thunkReviews.js");
+var mapStateToProps = function mapStateToProps(state) {
+    return __assign({}, selectors_1.selectReviewsState(state));
 };
-exports.default = ReviewsPage;
+var connected = react_redux_1.connect(mapStateToProps, function (dispatch) {
+    return {
+        getReviews: function getReviews(page) {
+            if (page === void 0) {
+                page = 1;
+            }
+            dispatch(thunkReviews_1.default(page));
+        },
+        changeFilter: function changeFilter() {
+            dispatch(actions_1.reviewsReset());
+            dispatch(thunkReviews_1.default());
+        }
+    };
+});
+var ReviewsPage = function ReviewsPage(props) {
+    React.useEffect(function () {
+        props.getReviews(1);
+    }, []);
+    return React.createElement("div", { className: "admContent" }, React.createElement("div", { className: "container" }, React.createElement("div", { className: "myOrders py-pad" }, React.createElement("div", { className: "pull-right" }, React.createElement("span", { className: "but but_outline" }, "Continue shopping")), React.createElement("h3", null, "My reviews"), React.createElement(ReviewsForm_1.default, { onSubmit: props.changeFilter }), React.createElement("div", { className: "table__wrap" }, React.createElement("div", { className: "table" }, React.createElement("div", { className: "table__head" }, React.createElement("div", { className: "table__head-item" }, "ID"), React.createElement("div", { className: "table__head-item" }, "Date"), React.createElement("div", { className: "table__head-item" }, "Product"), React.createElement("div", { className: "table__head-item" }, "Mark")), React.createElement("div", { className: "table__content" }, props.isLoading && React.createElement(Loader_1.default, null), props.error && React.createElement("div", { className: "red" }, props.error), !props.isLoading && !props.error && props.reviews.map(function (review) {
+        return React.createElement(ReviewsItem_1.default, { key: review.id, review: review });
+    }))))), React.createElement(Paginator_1.default, { totalPage: Math.ceil(props.totalCount / props.size), handler: props.getReviews, curPage: props.currentPage })));
+};
+exports.default = connected(ReviewsPage);
 
 /***/ }),
 
@@ -37654,9 +37941,9 @@ exports.default = connected(SearchPage);
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
-var ColorGroup_1 = __webpack_require__(/*! ../../FormElements/ColorGroup */ "./resources/app/es5/components/FormElements/ColorGroup.js");
-var SizeGroup_1 = __webpack_require__(/*! ../../FormElements/SizeGroup */ "./resources/app/es5/components/FormElements/SizeGroup.js");
-var Numeric_1 = __webpack_require__(/*! ../../FormElements/Numeric */ "./resources/app/es5/components/FormElements/Numeric.js");
+var ColorGroup_1 = __webpack_require__(/*! ../../FormElements/Custom/ColorGroup */ "./resources/app/es5/components/FormElements/Custom/ColorGroup.js");
+var SizeGroup_1 = __webpack_require__(/*! ../../FormElements/Custom/SizeGroup */ "./resources/app/es5/components/FormElements/Custom/SizeGroup.js");
+var Numeric_1 = __webpack_require__(/*! ../../FormElements/Custom/Numeric */ "./resources/app/es5/components/FormElements/Custom/Numeric.js");
 var Like_1 = __webpack_require__(/*! ./Like */ "./resources/app/es5/components/SinglePage/ProductInfo/Like.js");
 var AddCartForm = function AddCartForm(props) {
     return React.createElement("form", { onSubmit: props.handleSubmit }, React.createElement("div", { className: "row space-between product__facilities" }, React.createElement("div", { className: "product__size row" }, React.createElement("p", null, "Size:"), React.createElement(redux_form_1.Field, { component: SizeGroup_1.default, name: "size", viewType: "product", formName: props.form, sizes: props.sizes })), React.createElement("div", { className: "product__color row" }, React.createElement("p", null, "Color:"), React.createElement(redux_form_1.Field, { component: ColorGroup_1.default, name: "color", formName: props.form, colors: props.colors }))), React.createElement("div", { className: "my-pad" }, React.createElement("div", { className: "order" }, React.createElement("div", { className: "order__quantity" }, React.createElement("b", { className: "order__quantity-head" }, "Quantity:"), React.createElement(redux_form_1.Field, { component: Numeric_1.default, name: "count", formName: props.form })), React.createElement("div", { className: "order__actions row mt-2" }, React.createElement(Like_1.default, null), React.createElement("button", { type: "submit", className: "order__add" }, "Add to cart")))));
@@ -37845,7 +38132,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
 var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-var MarkElement_1 = __webpack_require__(/*! ../../FormElements/MarkElement */ "./resources/app/es5/components/FormElements/MarkElement.js");
+var MarkElement_1 = __webpack_require__(/*! ../../FormElements/Custom/MarkElement */ "./resources/app/es5/components/FormElements/Custom/MarkElement.js");
 var UserData_1 = __webpack_require__(/*! ./UserData */ "./resources/app/es5/components/SinglePage/Reviews/UserData.js");
 var required_1 = __webpack_require__(/*! ../../../Helpers/Validators/required */ "./resources/app/es5/Helpers/Validators/required.js");
 var inRange_1 = __webpack_require__(/*! ../../../Helpers/Validators/inRange */ "./resources/app/es5/Helpers/Validators/inRange.js");
@@ -39250,7 +39537,7 @@ var initialState = {
     currentPage: 1,
     isLoading: false,
     error: null,
-    size: 1,
+    size: 5,
     favorites: []
 };
 var favoriteReducer = function favoriteReducer(state, action) {
@@ -39595,10 +39882,279 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var redux_1 = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
 var reducer_1 = __webpack_require__(/*! ./recommendProducts/reducer */ "./resources/app/es5/redux/Profile/recommendProducts/reducer.js");
 var reducer_2 = __webpack_require__(/*! ./favoriteProducts/reducer */ "./resources/app/es5/redux/Profile/favoriteProducts/reducer.js");
+var reducer_3 = __webpack_require__(/*! ./orders/reducer */ "./resources/app/es5/redux/Profile/orders/reducer.js");
+var reducer_4 = __webpack_require__(/*! ./reviews/reducer */ "./resources/app/es5/redux/Profile/reviews/reducer.js");
 exports.default = redux_1.combineReducers({
     recommend: reducer_1.default,
-    favorite: reducer_2.default
+    favorite: reducer_2.default,
+    orders: reducer_3.default,
+    reviews: reducer_4.default
 });
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/Profile/orders/actions.js":
+/*!***********************************************************!*\
+  !*** ./resources/app/es5/redux/Profile/orders/actions.js ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var types_1 = __webpack_require__(/*! ./types */ "./resources/app/es5/redux/Profile/orders/types.js");
+exports.ordersStart = function () {
+    return {
+        type: types_1.ORDERS_START
+    };
+};
+exports.ordersError = function (error) {
+    return {
+        type: types_1.ORDERS_ERROR,
+        error: error
+    };
+};
+exports.ordersSuccess = function (resp) {
+    return {
+        type: types_1.ORDERS_SUCCESS,
+        payload: resp
+    };
+};
+exports.ordersReset = function () {
+    return {
+        type: types_1.ORDERS_RESET
+    };
+};
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/Profile/orders/reducer.js":
+/*!***********************************************************!*\
+  !*** ./resources/app/es5/redux/Profile/orders/reducer.js ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __assign = undefined && undefined.__assign || function () {
+    __assign = Object.assign || function (t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) {
+                if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+            }
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var types_1 = __webpack_require__(/*! ./types */ "./resources/app/es5/redux/Profile/orders/types.js");
+var initialState = {
+    totalCount: 0,
+    currentPage: 1,
+    isLoading: false,
+    error: null,
+    size: 5,
+    orders: []
+};
+var ordersReducer = function ordersReducer(state, action) {
+    if (state === void 0) {
+        state = initialState;
+    }
+    switch (action.type) {
+        case types_1.ORDERS_RESET:
+            return __assign({}, initialState);
+        case types_1.ORDERS_START:
+            return __assign(__assign({}, state), { isLoading: true, error: null });
+        case types_1.ORDERS_ERROR:
+            return __assign(__assign({}, state), { isLoading: false, error: action.error });
+        case types_1.ORDERS_SUCCESS:
+            return __assign(__assign({}, state), { totalCount: action.payload.meta.total, currentPage: action.payload.meta.current_page, isLoading: false, error: null, orders: action.payload.data });
+    }
+    return state;
+};
+exports.default = ordersReducer;
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/Profile/orders/selectors.js":
+/*!*************************************************************!*\
+  !*** ./resources/app/es5/redux/Profile/orders/selectors.js ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.selectOrdersState = function (state) {
+  return state.profile.orders;
+};
+exports.selectOrdersSize = function (state) {
+  return state.profile.orders.size;
+};
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/Profile/orders/thunks/thunkOrders.js":
+/*!**********************************************************************!*\
+  !*** ./resources/app/es5/redux/Profile/orders/thunks/thunkOrders.js ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
+    function adopt(value) {
+        return value instanceof P ? value : new P(function (resolve) {
+            resolve(value);
+        });
+    }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) {
+            try {
+                step(generator.next(value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function rejected(value) {
+            try {
+                step(generator["throw"](value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function step(result) {
+            result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+        }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = undefined && undefined.__generator || function (thisArg, body) {
+    var _ = { label: 0, sent: function sent() {
+            if (t[0] & 1) throw t[1];return t[1];
+        }, trys: [], ops: [] },
+        f,
+        y,
+        t,
+        g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
+        return this;
+    }), g;
+    function verb(n) {
+        return function (v) {
+            return step([n, v]);
+        };
+    }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) {
+            try {
+                if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+                if (y = 0, t) op = [op[0] & 2, t.value];
+                switch (op[0]) {
+                    case 0:case 1:
+                        t = op;break;
+                    case 4:
+                        _.label++;return { value: op[1], done: false };
+                    case 5:
+                        _.label++;y = op[1];op = [0];continue;
+                    case 7:
+                        op = _.ops.pop();_.trys.pop();continue;
+                    default:
+                        if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+                            _ = 0;continue;
+                        }
+                        if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+                            _.label = op[1];break;
+                        }
+                        if (op[0] === 6 && _.label < t[1]) {
+                            _.label = t[1];t = op;break;
+                        }
+                        if (t && _.label < t[2]) {
+                            _.label = t[2];_.ops.push(op);break;
+                        }
+                        if (t[2]) _.ops.pop();
+                        _.trys.pop();continue;
+                }
+                op = body.call(thisArg, _);
+            } catch (e) {
+                op = [6, e];y = 0;
+            } finally {
+                f = t = 0;
+            }
+        }if (op[0] & 5) throw op[1];return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
+var actions_1 = __webpack_require__(/*! ../actions */ "./resources/app/es5/redux/Profile/orders/actions.js");
+var ProfileAPI_1 = __webpack_require__(/*! ../../../../Helpers/API/ProfileAPI */ "./resources/app/es5/Helpers/API/ProfileAPI.js");
+var react_toastify_1 = __webpack_require__(/*! react-toastify */ "./node_modules/react-toastify/dist/react-toastify.esm.js");
+var selectors_1 = __webpack_require__(/*! ../selectors */ "./resources/app/es5/redux/Profile/orders/selectors.js");
+var thunkOrders = function thunkOrders(offset) {
+    if (offset === void 0) {
+        offset = 1;
+    }
+    return function (dispatch, getState) {
+        return __awaiter(void 0, void 0, void 0, function () {
+            var orderForm, size, ordersResponse, e_1;
+            var _a, _b;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
+                    case 0:
+                        dispatch(actions_1.ordersStart());
+                        orderForm = redux_form_1.getFormValues('ordersFind')(getState());
+                        console.log(orderForm);
+                        size = selectors_1.selectOrdersSize(getState());
+                        _c.label = 1;
+                    case 1:
+                        _c.trys.push([1, 3,, 4]);
+                        return [4, ProfileAPI_1.profileAPI.getOrders(offset, size, orderForm)];
+                    case 2:
+                        ordersResponse = _c.sent();
+                        dispatch(actions_1.ordersSuccess(ordersResponse.data));
+                        return [3, 4];
+                    case 3:
+                        e_1 = _c.sent();
+                        dispatch(actions_1.ordersError(((_a = e_1.response) === null || _a === void 0 ? void 0 : _a.data.message) || e_1.message));
+                        react_toastify_1.toast.error(((_b = e_1.response) === null || _b === void 0 ? void 0 : _b.data.message) || e_1.message);
+                        return [3, 4];
+                    case 4:
+                        return [2];
+                }
+            });
+        });
+    };
+};
+exports.default = thunkOrders;
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/Profile/orders/types.js":
+/*!*********************************************************!*\
+  !*** ./resources/app/es5/redux/Profile/orders/types.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ORDERS_START = 'profile/orders/START';
+exports.ORDERS_ERROR = 'profile/orders/ERROR';
+exports.ORDERS_SUCCESS = 'profile/orders/SUCCESS';
+exports.ORDERS_RESET = 'profile/orders/RESET';
 
 /***/ }),
 
@@ -39845,6 +40401,271 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.RECOMMEND_LOAD_START = 'recommend/START';
 exports.RECOMMEND_LOAD_ERROR = 'recommend/ERROR';
 exports.RECOMMEND_LOAD_SUCCESS = 'recommend/SUCCESS';
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/Profile/reviews/actions.js":
+/*!************************************************************!*\
+  !*** ./resources/app/es5/redux/Profile/reviews/actions.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var types_1 = __webpack_require__(/*! ./types */ "./resources/app/es5/redux/Profile/reviews/types.js");
+exports.reviewsStart = function () {
+    return {
+        type: types_1.REVIEWS_START
+    };
+};
+exports.reviewsError = function (error) {
+    return {
+        type: types_1.REVIEWS_ERROR,
+        error: error
+    };
+};
+exports.reviewsSuccess = function (resp) {
+    return {
+        type: types_1.REVIEWS_SUCCESS,
+        payload: resp
+    };
+};
+exports.reviewsReset = function () {
+    return {
+        type: types_1.REVIEWS_RESET
+    };
+};
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/Profile/reviews/reducer.js":
+/*!************************************************************!*\
+  !*** ./resources/app/es5/redux/Profile/reviews/reducer.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __assign = undefined && undefined.__assign || function () {
+    __assign = Object.assign || function (t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) {
+                if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+            }
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var types_1 = __webpack_require__(/*! ./types */ "./resources/app/es5/redux/Profile/reviews/types.js");
+var initialState = {
+    totalCount: 0,
+    currentPage: 1,
+    isLoading: false,
+    error: null,
+    size: 5,
+    reviews: []
+};
+var reviewsReducer = function reviewsReducer(state, action) {
+    if (state === void 0) {
+        state = initialState;
+    }
+    switch (action.type) {
+        case types_1.REVIEWS_RESET:
+            return __assign({}, initialState);
+        case types_1.REVIEWS_START:
+            return __assign(__assign({}, state), { isLoading: true, error: null });
+        case types_1.REVIEWS_ERROR:
+            return __assign(__assign({}, state), { isLoading: false, error: action.error });
+        case types_1.REVIEWS_SUCCESS:
+            return __assign(__assign({}, state), { totalCount: action.payload.meta.total, currentPage: action.payload.meta.current_page, isLoading: false, error: null, reviews: action.payload.data });
+    }
+    return state;
+};
+exports.default = reviewsReducer;
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/Profile/reviews/selectors.js":
+/*!**************************************************************!*\
+  !*** ./resources/app/es5/redux/Profile/reviews/selectors.js ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.selectReviewsState = function (state) {
+  return state.profile.reviews;
+};
+exports.selectReviewsSize = function (state) {
+  return state.profile.reviews.size;
+};
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/Profile/reviews/thunks/thunkReviews.js":
+/*!************************************************************************!*\
+  !*** ./resources/app/es5/redux/Profile/reviews/thunks/thunkReviews.js ***!
+  \************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
+    function adopt(value) {
+        return value instanceof P ? value : new P(function (resolve) {
+            resolve(value);
+        });
+    }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) {
+            try {
+                step(generator.next(value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function rejected(value) {
+            try {
+                step(generator["throw"](value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function step(result) {
+            result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+        }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = undefined && undefined.__generator || function (thisArg, body) {
+    var _ = { label: 0, sent: function sent() {
+            if (t[0] & 1) throw t[1];return t[1];
+        }, trys: [], ops: [] },
+        f,
+        y,
+        t,
+        g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
+        return this;
+    }), g;
+    function verb(n) {
+        return function (v) {
+            return step([n, v]);
+        };
+    }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) {
+            try {
+                if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+                if (y = 0, t) op = [op[0] & 2, t.value];
+                switch (op[0]) {
+                    case 0:case 1:
+                        t = op;break;
+                    case 4:
+                        _.label++;return { value: op[1], done: false };
+                    case 5:
+                        _.label++;y = op[1];op = [0];continue;
+                    case 7:
+                        op = _.ops.pop();_.trys.pop();continue;
+                    default:
+                        if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+                            _ = 0;continue;
+                        }
+                        if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+                            _.label = op[1];break;
+                        }
+                        if (op[0] === 6 && _.label < t[1]) {
+                            _.label = t[1];t = op;break;
+                        }
+                        if (t && _.label < t[2]) {
+                            _.label = t[2];_.ops.push(op);break;
+                        }
+                        if (t[2]) _.ops.pop();
+                        _.trys.pop();continue;
+                }
+                op = body.call(thisArg, _);
+            } catch (e) {
+                op = [6, e];y = 0;
+            } finally {
+                f = t = 0;
+            }
+        }if (op[0] & 5) throw op[1];return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
+var actions_1 = __webpack_require__(/*! ../actions */ "./resources/app/es5/redux/Profile/reviews/actions.js");
+var ProfileAPI_1 = __webpack_require__(/*! ../../../../Helpers/API/ProfileAPI */ "./resources/app/es5/Helpers/API/ProfileAPI.js");
+var react_toastify_1 = __webpack_require__(/*! react-toastify */ "./node_modules/react-toastify/dist/react-toastify.esm.js");
+var selectors_1 = __webpack_require__(/*! ../selectors */ "./resources/app/es5/redux/Profile/reviews/selectors.js");
+var thunkReviews = function thunkReviews(offset) {
+    if (offset === void 0) {
+        offset = 1;
+    }
+    return function (dispatch, getState) {
+        return __awaiter(void 0, void 0, void 0, function () {
+            var orderForm, size, reviewsResponse, e_1;
+            var _a, _b;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
+                    case 0:
+                        dispatch(actions_1.reviewsStart());
+                        orderForm = redux_form_1.getFormValues('reviewsFind')(getState());
+                        console.log(orderForm);
+                        size = selectors_1.selectReviewsSize(getState());
+                        _c.label = 1;
+                    case 1:
+                        _c.trys.push([1, 3,, 4]);
+                        return [4, ProfileAPI_1.profileAPI.getReviews(offset, size, orderForm)];
+                    case 2:
+                        reviewsResponse = _c.sent();
+                        dispatch(actions_1.reviewsSuccess(reviewsResponse.data));
+                        return [3, 4];
+                    case 3:
+                        e_1 = _c.sent();
+                        dispatch(actions_1.reviewsError(((_a = e_1.response) === null || _a === void 0 ? void 0 : _a.data.message) || e_1.message));
+                        react_toastify_1.toast.error(((_b = e_1.response) === null || _b === void 0 ? void 0 : _b.data.message) || e_1.message);
+                        return [3, 4];
+                    case 4:
+                        return [2];
+                }
+            });
+        });
+    };
+};
+exports.default = thunkReviews;
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/Profile/reviews/types.js":
+/*!**********************************************************!*\
+  !*** ./resources/app/es5/redux/Profile/reviews/types.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.REVIEWS_START = 'profile/reviews/START';
+exports.REVIEWS_ERROR = 'profile/reviews/ERROR';
+exports.REVIEWS_SUCCESS = 'profile/reviews/SUCCESS';
+exports.REVIEWS_RESET = 'profile/reviews/RESET';
 
 /***/ }),
 

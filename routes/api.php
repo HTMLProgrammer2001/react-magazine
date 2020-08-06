@@ -60,6 +60,10 @@ Route::post('/orders', 'OrdersController@create');
 Route::group(['namespace' => 'Profile', 'prefix' => 'profile'], function(){
     Route::get('/recommendationProducts', 'RecommendationController');
 
-    Route::get('/favorite', 'FavoriteController@get');
+    Route::get('/favorite', 'FavoriteController@all');
     Route::delete('/favorite', 'FavoriteController@delete');
+
+    Route::get('/orders', 'OrdersController@all');
+
+    Route::get('/reviews', 'ReviewsController@all');
 });

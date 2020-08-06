@@ -26,7 +26,7 @@ const initialState: FavoriteState = {
 	currentPage: 1,
 	isLoading: false,
 	error: null,
-	size: 1,
+	size: 5,
 	favorites: []
 };
 

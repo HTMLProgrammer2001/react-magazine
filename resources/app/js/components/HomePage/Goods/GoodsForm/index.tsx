@@ -4,9 +4,9 @@ import {connect, ConnectedProps} from 'react-redux';
 import {withRouter, RouteComponentProps} from 'react-router';
 
 import CheckboxGroup from '../../../FormElements/CheckboxGroup';
-import ColorGroup from '../../../FormElements/ColorGroup';
-import SizeGroup from '../../../FormElements/SizeGroup';
-import Slider from '../../../FormElements/Slider';
+import ColorGroup from '../../../FormElements/Custom/ColorGroup';
+import SizeGroup from '../../../FormElements/Custom/SizeGroup';
+import Slider from '../../../FormElements/Custom/Slider';
 import {RootState} from '../../../../redux';
 
 

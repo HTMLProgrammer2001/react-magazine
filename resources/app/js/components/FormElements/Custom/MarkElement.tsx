@@ -3,7 +3,7 @@ import {WrappedFieldProps, change} from 'redux-form';
 import {connect, ConnectedProps} from 'react-redux';
 import {Dispatch} from 'redux';
 
-import Mark from '../Mark';
+import Mark from '../../Mark';
 
 
 const mapDispatchToProps = (dispatch: Dispatch, ownProps: IOwnProps) => ({

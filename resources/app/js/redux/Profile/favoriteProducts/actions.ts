@@ -1,4 +1,10 @@
-import {FAVORITE_DELETE, FAVORITE_ERROR, FAVORITE_RESET, FAVORITE_START, FAVORITE_SUCCESS} from './types';
+import {
+	FAVORITE_DELETE,
+	FAVORITE_ERROR,
+	FAVORITE_RESET,
+	FAVORITE_START,
+	FAVORITE_SUCCESS
+} from './types';
 
 import {IFavoriteResponse} from '../../../Interfaces/Responses/IFavoriteResponse';
 

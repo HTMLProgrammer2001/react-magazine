@@ -2,7 +2,7 @@ import * as React from 'react';
 import {reduxForm, InjectedFormProps, Field} from 'redux-form';
 import {connect, ConnectedProps} from 'react-redux';
 
-import MarkElement from '../../FormElements/MarkElement';
+import MarkElement from '../../FormElements/Custom/MarkElement';
 import UserData from './UserData';
 import {RootState} from '../../../redux';
 import required from '../../../Helpers/Validators/required';

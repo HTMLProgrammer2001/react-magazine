@@ -1,111 +1,88 @@
 import * as React from 'react';
+import {Link} from 'react-router-dom';
+import {connect, ConnectedProps} from 'react-redux';
+
+import OrdersForm from './OrdersForm';
+import Paginator from '../Paginator';
+import {RootState} from '../../../redux';
+import {selectOrdersState} from '../../../redux/Profile/orders/selectors';
+import thunkOrders from '../../../redux/Profile/orders/thunks/thunkOrders';
+import {ordersReset} from '../../../redux/Profile/orders/actions';
+import Loader from '../../Loader';
+import OrderItem from './OrderItem';
 
 
-const OrdersPage: React.FC<{}> = () => (
-	<div className="admContent">
-		<div className="container">
-			<div className="myOrders py-pad">
-				<div className="pull-right">
-					<span className="but but_outline">Continue shopping</span>
-				</div>
+const mapStateToProps = (state: RootState) => ({
+	...selectOrdersState(state)
+});
 
-				<h3>My orders</h3>
+const connected = connect(mapStateToProps, (dispatch: any) => ({
+	getOrders(page: number = 1){
+		dispatch(thunkOrders(page));
+	},
+	changeFilter(){
+		dispatch(ordersReset());
+		dispatch(thunkOrders());
+	}
+}));
 
-				<div className="myOrders__header my-pad">
-					<span className="myOrders__find">
-              			<div className="input">
-                			<input className="input__elem" type="text" required/>
-                			<label className="input__label">Find order</label>
-                			<div className="input__line"/>
-              			</div>
-					</span>
+type IOrdersPageProps = ConnectedProps<typeof connected>;
 
-					<div className="select cur">
-						<select className="select__input cur">
-							<option selected>Latest</option>
-							<option>Newest</option>
-						</select>
+const OrdersPage: React.FC<IOrdersPageProps> = (props) => {
+	React.useEffect(() => {
+		props.getOrders();
+	}, []);
 
-						<i className="fas fa-chevron-down select__icon"/>
-						<div className="select__line"/>
-					</div>
-				</div>
-
-				<div className="myOrders__types my-pad">
-					<div className="radio">
-						<label className="row">
-							<input className="radio__elem" type="radio" name="filter"/>
-							<span className="radio__label">All</span>
-						</label>
-					</div>
-
-					<div className="radio">
-						<label className="row">
-							<input className="radio__elem" type="radio" name="filter"/>
-							<span className="radio__label">Finished</span>
-						</label>
+	return (
+		<div className="admContent">
+			<div className="container">
+				<div className="myOrders py-pad">
+					<div className="pull-right">
+						<Link to="/">
+							<span className="but but_outline">Continue shopping</span>
+						</Link>
 					</div>
 
-					<div className="radio">
-						<label className="row">
-							<input className="radio__elem" type="radio" name="filter"/>
-							<span className="radio__label">In move</span>
-						</label>
-					</div>
+					<h3>My orders</h3>
 
-					<div className="radio">
-						<label className="row">
-							<input className="radio__elem" type="radio" name="filter"/>
-							<span className="radio__label">Payment</span>
-						</label>
-					</div>
-				</div>
+					<OrdersForm onSubmit={props.changeFilter}/>
 
-				<div className="table__wrap">
-					<div className="table">
-						<div className="table__head">
-							<div className="table__head-item">ID</div>
-							<div className="table__head-item">Date</div>
-							<div className="table__head-item">Price</div>
-							<div className="table__head-item">Status</div>
-						</div>
-
-						<div className="table__content">
-							<div className="table__row">
-								<div className="table__col">#43534455</div>
-								<div className="table__col">20.03.2020</div>
-								<div className="table__col">$90.00</div>
-								<div className="table__col">TShirt</div>
+					<div className="table__wrap">
+						<div className="table">
+							<div className="table__head">
+								<div className="table__head-item">ID</div>
+								<div className="table__head-item">Date</div>
+								<div className="table__head-item">Price</div>
+								<div className="table__head-item">Products</div>
+								<div className="table__head-item">Status</div>
 							</div>
 
-							<div className="table__row">
-								<div className="table__col">#43534455</div>
-								<div className="table__col">20.03.2020</div>
-								<div className="table__col">$90.00</div>
-								<div className="table__col">TShirt</div>
-							</div>
+							<div className="table__content">
+								{props.isLoading && <Loader/>}
+								{props.error && <div className="red">{props.error}</div>}
 
-							<div className="table__row">
-								<div className="table__col">#43534455</div>
-								<div className="table__col">20.03.2020</div>
-								<div className="table__col">$90.00</div>
-								<div className="table__col">TShirt</div>
+								{
+									!props.isLoading && !props.error &&
+									props.orders.map((order) => (
+										<OrderItem
+											key={order.id}
+											order={order}
+										/>
+									))
+								}
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
 
-			<div className="pagination mb-pad">
-				<div className="pagination__item pagination__item_disabled">Prev</div>
-				<div className="pagination__item pagination__item_active">1</div>
-				<div className="pagination__item">2</div>
-				<div className="pagination__item">3</div>
-				<div className="pagination__item">Next</div>
+				<Paginator
+					totalPage={Math.ceil(props.totalCount / props.size)}
+					curPage={props.currentPage}
+					handler={props.getOrders}
+				/>
 			</div>
-
 		</div>
-	</div>
-);
+	);
+}
 
-export default OrdersPage;
+export default connected(OrdersPage);

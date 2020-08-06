@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class FavoriteController extends Controller
 {
-    public function get(Request $request){
+    public function all(Request $request){
         $find = $request->query('find') ?? '';
         $paginationSize = $request->query('size') ?? 1;
 
