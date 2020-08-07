@@ -34809,7 +34809,22 @@ exports.profileAPI = {
                 Authorization: "Bearer " + localStorage.getItem('token')
             }
         });
-    }
+    },
+    changePassword: function changePassword(vals) {
+        return apiClient.post('/account/password', vals, {
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem('token')
+            }
+        });
+    },
+    deleteAccount: function deleteAccount() {
+        return apiClient.delete('/account', {
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem('token')
+            }
+        });
+    },
+    changePersonal: function changePersonal() {}
 };
 
 /***/ }),
@@ -37583,6 +37598,66 @@ exports.default = connected(ReviewsPage);
 
 /***/ }),
 
+/***/ "./resources/app/es5/components/Profile/SettingsPage/ChangePasswordForm.js":
+/*!*********************************************************************************!*\
+  !*** ./resources/app/es5/components/Profile/SettingsPage/ChangePasswordForm.js ***!
+  \*********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
+var InputElement_1 = __webpack_require__(/*! ../../FormElements/InputElement */ "./resources/app/es5/components/FormElements/InputElement.js");
+var required_1 = __webpack_require__(/*! ../../../Helpers/Validators/required */ "./resources/app/es5/Helpers/Validators/required.js");
+var sizeBetween_1 = __webpack_require__(/*! ../../../Helpers/Validators/sizeBetween */ "./resources/app/es5/Helpers/Validators/sizeBetween.js");
+var size = sizeBetween_1.default(8, 20);
+var ChangePasswordForm = function ChangePasswordForm(props) {
+    return React.createElement("form", { onSubmit: props.handleSubmit }, React.createElement("div", { className: "login__head" }, "Security"), React.createElement(redux_form_1.Field, { component: InputElement_1.default, type: "password", name: "oldPassword", placeholder: "Current password", required: true }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, type: "password", name: "password", placeholder: "New password", required: true, validate: [required_1.default, size] }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, type: "password", name: "password_confirmation", placeholder: "Confirm password", required: true, validate: [required_1.default, size] }), React.createElement("div", { className: "row space-between my-pad w-100" }, React.createElement("div", null), React.createElement("button", { type: "submit", className: "check__but" }, props.submitting ? 'Loading...' : 'Update')));
+};
+var validate = function validate(values) {
+    var errors = {};
+    if (values.password_confirmation != values.password) {
+        errors.password_confirmation = 'Passwords are not equals';
+    }
+    return errors;
+};
+exports.default = redux_form_1.reduxForm({
+    form: 'profileChangePassword',
+    validate: validate
+})(ChangePasswordForm);
+
+/***/ }),
+
+/***/ "./resources/app/es5/components/Profile/SettingsPage/PersonalInfoForm.js":
+/*!*******************************************************************************!*\
+  !*** ./resources/app/es5/components/Profile/SettingsPage/PersonalInfoForm.js ***!
+  \*******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
+var InputElement_1 = __webpack_require__(/*! ../../FormElements/InputElement */ "./resources/app/es5/components/FormElements/InputElement.js");
+var required_1 = __webpack_require__(/*! ../../../Helpers/Validators/required */ "./resources/app/es5/Helpers/Validators/required.js");
+var fullName_1 = __webpack_require__(/*! ../../../Helpers/Validators/fullName */ "./resources/app/es5/Helpers/Validators/fullName.js");
+var email_1 = __webpack_require__(/*! ../../../Helpers/Validators/email */ "./resources/app/es5/Helpers/Validators/email.js");
+var PersonalInfoForm = function PersonalInfoForm(props) {
+    return React.createElement("form", { className: "billing__form", onSubmit: props.handleSubmit }, React.createElement("div", { className: "file my-pad" }, React.createElement("img", { className: "file_image", src: "/image/product.png" }), React.createElement("label", null, React.createElement("input", { className: "file__elem", type: "file" }), React.createElement("div", { className: "file__but" }, "Select file"))), React.createElement(redux_form_1.Field, { component: InputElement_1.default, name: "fullName", placeholder: "Full name", required: true, validate: [required_1.default, fullName_1.default] }), React.createElement(redux_form_1.Field, { component: InputElement_1.default, name: "email", placeholder: "Email", required: true, validate: [required_1.default, email_1.default] }), React.createElement("div", { className: "row space-between my-pad w-100" }, React.createElement("div", null), React.createElement("button", { type: "submit", className: "check__but" }, "Update")));
+};
+exports.default = redux_form_1.reduxForm({
+    form: 'profilePersonalForm'
+})(PersonalInfoForm);
+
+/***/ }),
+
 /***/ "./resources/app/es5/components/Profile/SettingsPage/index.js":
 /*!********************************************************************!*\
   !*** ./resources/app/es5/components/Profile/SettingsPage/index.js ***!
@@ -37593,12 +37668,44 @@ exports.default = connected(ReviewsPage);
 "use strict";
 
 
+var __assign = undefined && undefined.__assign || function () {
+    __assign = Object.assign || function (t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) {
+                if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+            }
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-var SettingsPage = function SettingsPage() {
-    return React.createElement("div", { className: "admContent" }, React.createElement("div", { className: "billing py-pad" }, React.createElement("div", { className: "container" }, React.createElement("div", { className: "login__head" }, "Personal info"), React.createElement("div", { className: "billing__form" }, React.createElement("div", { className: "file my-pad" }, React.createElement("img", { className: "file_image", src: "/image/product.png" }), React.createElement("label", null, React.createElement("input", { className: "file__elem", type: "file" }), React.createElement("div", { className: "file__but" }, "Select file"))), React.createElement("div", { className: "input" }, React.createElement("input", { className: "input__elem", required: true }), React.createElement("label", { className: "input__label" }, React.createElement("span", null, "First Name"), React.createElement("span", { className: "red" }, "*")), React.createElement("div", { className: "input__line" })), React.createElement("div", { className: "input" }, React.createElement("input", { className: "input__elem", required: true }), React.createElement("label", { className: "input__label" }, React.createElement("span", null, "Last Name"), React.createElement("span", { className: "red" }, "*")), React.createElement("div", { className: "input__line" })), React.createElement("div", { className: "input" }, React.createElement("input", { className: "input__elem", required: true }), React.createElement("label", { className: "input__label" }, React.createElement("span", null, "Email Address"), React.createElement("span", { className: "red" }, "*")), React.createElement("div", { className: "input__line" })), React.createElement("div", { className: "row space-between my-pad w-100" }, React.createElement("div", null), React.createElement("button", { type: "button", className: "check__but" }, "Update")), React.createElement("div", { className: "login__head" }, "Security"), React.createElement("div", { className: "input" }, React.createElement("input", { className: "input__elem", required: true, type: "password" }), React.createElement("label", { className: "input__label" }, React.createElement("span", null, "Password"), React.createElement("span", { className: "red" }, "*")), React.createElement("div", { className: "input__line" })), React.createElement("div", { className: "input" }, React.createElement("input", { className: "input__elem", required: true, type: "password" }), React.createElement("label", { className: "input__label" }, React.createElement("span", null, "Password confirmation"), React.createElement("span", { className: "red" }, "*")), React.createElement("div", { className: "input__line" }))), React.createElement("div", { className: "row space-between my-pad w-100" }, React.createElement("div", null), React.createElement("button", { type: "button", className: "check__but" }, "Update")), React.createElement("div", { className: "login__head" }, "Delete account"), React.createElement("div", { className: "row space-between my-pad w-100" }, React.createElement("div", null), React.createElement("button", { type: "button", className: "check__but" }, "Delete")))));
+var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+var PersonalInfoForm_1 = __webpack_require__(/*! ./PersonalInfoForm */ "./resources/app/es5/components/Profile/SettingsPage/PersonalInfoForm.js");
+var ChangePasswordForm_1 = __webpack_require__(/*! ./ChangePasswordForm */ "./resources/app/es5/components/Profile/SettingsPage/ChangePasswordForm.js");
+var thunks_1 = __webpack_require__(/*! ../../../redux/Profile/changePassword/thunks */ "./resources/app/es5/redux/Profile/changePassword/thunks.js");
+var thunks_2 = __webpack_require__(/*! ../../../redux/Profile/deleteAccount/thunks */ "./resources/app/es5/redux/Profile/deleteAccount/thunks.js");
+var selectors_1 = __webpack_require__(/*! ../../../redux/Profile/deleteAccount/selectors */ "./resources/app/es5/redux/Profile/deleteAccount/selectors.js");
+var mapStateToProps = function mapStateToProps(state) {
+    return __assign({}, selectors_1.selectDeleteState(state));
 };
-exports.default = SettingsPage;
+var connected = react_redux_1.connect(mapStateToProps, {
+    changePassword: thunks_1.default,
+    deleteAcc: thunks_2.default
+});
+var SettingsPage = function SettingsPage(props) {
+    return React.createElement("div", { className: "admContent" }, React.createElement("div", { className: "billing py-pad" }, React.createElement("div", { className: "container" }, React.createElement("div", { className: "login__head" }, "Personal info"), React.createElement(PersonalInfoForm_1.default, { onSubmit: function onSubmit(vals) {
+            return console.log(vals);
+        } }), React.createElement(ChangePasswordForm_1.default, { onSubmit: function onSubmit(vals) {
+            console.log(vals);
+            props.changePassword(vals, 'profileChangePassword');
+        } }), React.createElement("div", { className: "login__head" }, "Delete account"), React.createElement("div", { className: "row space-between my-pad w-100" }, React.createElement("div", null), React.createElement("button", { type: "button", onClick: function onClick() {
+            if (confirm('Are you sure?')) props.deleteAcc();
+        }, className: "check__but" }, props.isLoading ? 'Loading...' : 'Delete')))));
+};
+exports.default = connected(SettingsPage);
 
 /***/ }),
 
@@ -39465,6 +39572,382 @@ exports.USER_RESET = 'user/RESET';
 
 /***/ }),
 
+/***/ "./resources/app/es5/redux/Profile/changePassword/thunks.js":
+/*!******************************************************************!*\
+  !*** ./resources/app/es5/redux/Profile/changePassword/thunks.js ***!
+  \******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __assign = undefined && undefined.__assign || function () {
+    __assign = Object.assign || function (t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) {
+                if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+            }
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
+    function adopt(value) {
+        return value instanceof P ? value : new P(function (resolve) {
+            resolve(value);
+        });
+    }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) {
+            try {
+                step(generator.next(value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function rejected(value) {
+            try {
+                step(generator["throw"](value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function step(result) {
+            result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+        }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = undefined && undefined.__generator || function (thisArg, body) {
+    var _ = { label: 0, sent: function sent() {
+            if (t[0] & 1) throw t[1];return t[1];
+        }, trys: [], ops: [] },
+        f,
+        y,
+        t,
+        g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
+        return this;
+    }), g;
+    function verb(n) {
+        return function (v) {
+            return step([n, v]);
+        };
+    }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) {
+            try {
+                if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+                if (y = 0, t) op = [op[0] & 2, t.value];
+                switch (op[0]) {
+                    case 0:case 1:
+                        t = op;break;
+                    case 4:
+                        _.label++;return { value: op[1], done: false };
+                    case 5:
+                        _.label++;y = op[1];op = [0];continue;
+                    case 7:
+                        op = _.ops.pop();_.trys.pop();continue;
+                    default:
+                        if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+                            _ = 0;continue;
+                        }
+                        if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+                            _.label = op[1];break;
+                        }
+                        if (op[0] === 6 && _.label < t[1]) {
+                            _.label = t[1];t = op;break;
+                        }
+                        if (t && _.label < t[2]) {
+                            _.label = t[2];_.ops.push(op);break;
+                        }
+                        if (t[2]) _.ops.pop();
+                        _.trys.pop();continue;
+                }
+                op = body.call(thisArg, _);
+            } catch (e) {
+                op = [6, e];y = 0;
+            } finally {
+                f = t = 0;
+            }
+        }if (op[0] & 5) throw op[1];return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var redux_form_1 = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
+var ProfileAPI_1 = __webpack_require__(/*! ../../../Helpers/API/ProfileAPI */ "./resources/app/es5/Helpers/API/ProfileAPI.js");
+var react_toastify_1 = __webpack_require__(/*! react-toastify */ "./node_modules/react-toastify/dist/react-toastify.esm.js");
+var thunkProfilePasswordChange = function thunkProfilePasswordChange(vals, formName) {
+    return function (dispatch) {
+        return __awaiter(void 0, void 0, void 0, function () {
+            var e_1;
+            var _a, _b;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
+                    case 0:
+                        dispatch(redux_form_1.startSubmit(formName));
+                        _c.label = 1;
+                    case 1:
+                        _c.trys.push([1, 3,, 4]);
+                        return [4, ProfileAPI_1.profileAPI.changePassword(vals)];
+                    case 2:
+                        _c.sent();
+                        dispatch(redux_form_1.reset(formName));
+                        dispatch(redux_form_1.stopSubmit(formName));
+                        react_toastify_1.toast.success('Password was changed successfully');
+                        return [3, 4];
+                    case 3:
+                        e_1 = _c.sent();
+                        dispatch(redux_form_1.stopSubmit(formName, __assign({ _error: ((_a = e_1.response) === null || _a === void 0 ? void 0 : _a.data.message) || e_1.message }, (_b = e_1.response) === null || _b === void 0 ? void 0 : _b.data.errors)));
+                        react_toastify_1.toast.error('Error in password change');
+                        return [3, 4];
+                    case 4:
+                        return [2];
+                }
+            });
+        });
+    };
+};
+exports.default = thunkProfilePasswordChange;
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/Profile/deleteAccount/actions.js":
+/*!******************************************************************!*\
+  !*** ./resources/app/es5/redux/Profile/deleteAccount/actions.js ***!
+  \******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var types_1 = __webpack_require__(/*! ./types */ "./resources/app/es5/redux/Profile/deleteAccount/types.js");
+exports.deleteStart = function () {
+    return {
+        type: types_1.DELETE_START
+    };
+};
+exports.deleteSuccess = function () {
+    return {
+        type: types_1.DELETE_SUCCESS
+    };
+};
+exports.deleteError = function (error) {
+    return {
+        type: types_1.DELETE_ERROR,
+        error: error
+    };
+};
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/Profile/deleteAccount/reducer.js":
+/*!******************************************************************!*\
+  !*** ./resources/app/es5/redux/Profile/deleteAccount/reducer.js ***!
+  \******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var types_1 = __webpack_require__(/*! ./types */ "./resources/app/es5/redux/Profile/deleteAccount/types.js");
+var initialState = {
+    isLoading: false,
+    error: ''
+};
+var deleteReducer = function deleteReducer(state, action) {
+    if (state === void 0) {
+        state = initialState;
+    }
+    switch (action.type) {
+        case types_1.DELETE_START:
+            return { isLoading: true, error: '' };
+        case types_1.DELETE_SUCCESS:
+            return { isLoading: false, error: '' };
+        case types_1.DELETE_ERROR:
+            return { isLoading: false, error: action.error };
+    }
+    return state;
+};
+exports.default = deleteReducer;
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/Profile/deleteAccount/selectors.js":
+/*!********************************************************************!*\
+  !*** ./resources/app/es5/redux/Profile/deleteAccount/selectors.js ***!
+  \********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.selectDeleteState = function (state) {
+  return state.profile.delete;
+};
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/Profile/deleteAccount/thunks.js":
+/*!*****************************************************************!*\
+  !*** ./resources/app/es5/redux/Profile/deleteAccount/thunks.js ***!
+  \*****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
+    function adopt(value) {
+        return value instanceof P ? value : new P(function (resolve) {
+            resolve(value);
+        });
+    }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) {
+            try {
+                step(generator.next(value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function rejected(value) {
+            try {
+                step(generator["throw"](value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function step(result) {
+            result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+        }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = undefined && undefined.__generator || function (thisArg, body) {
+    var _ = { label: 0, sent: function sent() {
+            if (t[0] & 1) throw t[1];return t[1];
+        }, trys: [], ops: [] },
+        f,
+        y,
+        t,
+        g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
+        return this;
+    }), g;
+    function verb(n) {
+        return function (v) {
+            return step([n, v]);
+        };
+    }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) {
+            try {
+                if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+                if (y = 0, t) op = [op[0] & 2, t.value];
+                switch (op[0]) {
+                    case 0:case 1:
+                        t = op;break;
+                    case 4:
+                        _.label++;return { value: op[1], done: false };
+                    case 5:
+                        _.label++;y = op[1];op = [0];continue;
+                    case 7:
+                        op = _.ops.pop();_.trys.pop();continue;
+                    default:
+                        if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+                            _ = 0;continue;
+                        }
+                        if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+                            _.label = op[1];break;
+                        }
+                        if (op[0] === 6 && _.label < t[1]) {
+                            _.label = t[1];t = op;break;
+                        }
+                        if (t && _.label < t[2]) {
+                            _.label = t[2];_.ops.push(op);break;
+                        }
+                        if (t[2]) _.ops.pop();
+                        _.trys.pop();continue;
+                }
+                op = body.call(thisArg, _);
+            } catch (e) {
+                op = [6, e];y = 0;
+            } finally {
+                f = t = 0;
+            }
+        }if (op[0] & 5) throw op[1];return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var react_toastify_1 = __webpack_require__(/*! react-toastify */ "./node_modules/react-toastify/dist/react-toastify.esm.js");
+var actions_1 = __webpack_require__(/*! ./actions */ "./resources/app/es5/redux/Profile/deleteAccount/actions.js");
+var ProfileAPI_1 = __webpack_require__(/*! ../../../Helpers/API/ProfileAPI */ "./resources/app/es5/Helpers/API/ProfileAPI.js");
+var actions_2 = __webpack_require__(/*! ../../AppState/user/actions */ "./resources/app/es5/redux/AppState/user/actions.js");
+var thunkDelete = function thunkDelete() {
+    return function (dispatch) {
+        return __awaiter(void 0, void 0, void 0, function () {
+            var deleteResponse, e_1;
+            var _a, _b;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
+                    case 0:
+                        dispatch(actions_1.deleteStart());
+                        _c.label = 1;
+                    case 1:
+                        _c.trys.push([1, 3,, 4]);
+                        return [4, ProfileAPI_1.profileAPI.deleteAccount()];
+                    case 2:
+                        deleteResponse = _c.sent();
+                        dispatch(actions_1.deleteSuccess());
+                        dispatch(actions_2.resetUser());
+                        react_toastify_1.toast.success(deleteResponse.data.success);
+                        return [3, 4];
+                    case 3:
+                        e_1 = _c.sent();
+                        dispatch(actions_1.deleteError(((_a = e_1.response) === null || _a === void 0 ? void 0 : _a.data.message) || e_1.message));
+                        react_toastify_1.toast.error(((_b = e_1.response) === null || _b === void 0 ? void 0 : _b.data.message) || e_1.message);
+                        return [3, 4];
+                    case 4:
+                        return [2];
+                }
+            });
+        });
+    };
+};
+exports.default = thunkDelete;
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/Profile/deleteAccount/types.js":
+/*!****************************************************************!*\
+  !*** ./resources/app/es5/redux/Profile/deleteAccount/types.js ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.DELETE_START = 'delete/START';
+exports.DELETE_SUCCESS = 'delete/SUCCESS';
+exports.DELETE_ERROR = 'delete/ERROR';
+
+/***/ }),
+
 /***/ "./resources/app/es5/redux/Profile/favoriteProducts/actions.js":
 /*!*********************************************************************!*\
   !*** ./resources/app/es5/redux/Profile/favoriteProducts/actions.js ***!
@@ -39884,11 +40367,13 @@ var reducer_1 = __webpack_require__(/*! ./recommendProducts/reducer */ "./resour
 var reducer_2 = __webpack_require__(/*! ./favoriteProducts/reducer */ "./resources/app/es5/redux/Profile/favoriteProducts/reducer.js");
 var reducer_3 = __webpack_require__(/*! ./orders/reducer */ "./resources/app/es5/redux/Profile/orders/reducer.js");
 var reducer_4 = __webpack_require__(/*! ./reviews/reducer */ "./resources/app/es5/redux/Profile/reviews/reducer.js");
+var reducer_5 = __webpack_require__(/*! ./deleteAccount/reducer */ "./resources/app/es5/redux/Profile/deleteAccount/reducer.js");
 exports.default = redux_1.combineReducers({
     recommend: reducer_1.default,
     favorite: reducer_2.default,
     orders: reducer_3.default,
-    reviews: reducer_4.default
+    reviews: reducer_4.default,
+    delete: reducer_5.default
 });
 
 /***/ }),

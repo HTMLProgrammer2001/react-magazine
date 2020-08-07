@@ -4,9 +4,9 @@ namespace App;
 
 use App\Notifications\ResetApiPassword;
 use App\Notifications\VerifyApiEmail;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Laravel\Passport\HasApiTokens;
 
@@ -65,6 +65,10 @@ class User extends Authenticatable
 
     public function setPassword($password){
         $this->password = bcrypt($password);
+    }
+
+    public function checkPassword($pass): bool{
+        return Hash::check($pass, $this->password);
     }
 
     public function setRole(int $role){

@@ -66,4 +66,9 @@ Route::group(['namespace' => 'Profile', 'prefix' => 'profile'], function(){
     Route::get('/orders', 'OrdersController@all');
 
     Route::get('/reviews', 'ReviewsController@all');
+
+    Route::group(['prefix' => 'account'], function (){
+       Route::delete('/', 'AccountController@delete');
+       Route::post('/password', 'AccountController@changePassword');
+    });
 });

@@ -7,6 +7,7 @@ import {IOrdersFormData} from '../../components/Profile/OrdersPage/OrdersForm';
 import {IOrdersResponse} from '../../Interfaces/Responses/IOrdersResponse';
 import {IReviewsResponse} from '../../Interfaces/Responses/IReviewsResponse';
 import {IReviewsFormData} from '../../components/Profile/ReviewsPage/ReviewsForm';
+import {IChangePasswordData} from '../../components/Profile/SettingsPage/ChangePasswordForm';
 
 
 const apiClient = axios.create({
@@ -55,6 +56,26 @@ export const profileAPI = {
 				Authorization: `Bearer ${localStorage.getItem('token')}`
 			}
 		});
+	},
+
+	changePassword(vals: IChangePasswordData){
+		return apiClient.post<ISuccess>('/account/password', vals, {
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem('token')}`
+			}
+		});
+	},
+
+	deleteAccount(){
+		return apiClient.delete<ISuccess>('/account', {
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem('token')}`
+			}
+		});
+	},
+
+	changePersonal(){
+
 	}
 };
 
