@@ -51,6 +51,7 @@ const ReviewsPage: React.FC<IReviewsPageProps> = (props) => {
 								<div className="table__head-item">Date</div>
 								<div className="table__head-item">Product</div>
 								<div className="table__head-item">Mark</div>
+								<div className="table__head-item">Actions</div>
 							</div>
 
 							<div className="table__content">

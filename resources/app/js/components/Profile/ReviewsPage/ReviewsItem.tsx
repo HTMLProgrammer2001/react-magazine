@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Mark from '../../Mark';
 import {IFullComment} from '../../../Interfaces/IFullComment';
+import {Link} from 'react-router-dom';
 
 
 type IReviewsItemProps = {
@@ -18,6 +19,12 @@ const ReviewsItem: React.FC<IReviewsItemProps> = ({review}) => (
 
 		<div className="table__col">
 			<Mark rating={review.mark} fixed/>
+		</div>
+
+		<div className="table__col">
+			<Link to={`/products/${review.product.slug}#${review.id}`}>
+				<i className="fas fa-eye ml-10 cur"/>
+			</Link>
 		</div>
 	</div>
 );

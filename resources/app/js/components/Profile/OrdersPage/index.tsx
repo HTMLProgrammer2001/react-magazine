@@ -55,6 +55,7 @@ const OrdersPage: React.FC<IOrdersPageProps> = (props) => {
 								<div className="table__head-item">Price</div>
 								<div className="table__head-item">Products</div>
 								<div className="table__head-item">Status</div>
+								<div className="table__head-item">Actions</div>
 							</div>
 
 							<div className="table__content">

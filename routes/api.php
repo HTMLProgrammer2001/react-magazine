@@ -64,6 +64,7 @@ Route::group(['namespace' => 'Profile', 'prefix' => 'profile'], function(){
     Route::delete('/favorite', 'FavoriteController@delete');
 
     Route::get('/orders', 'OrdersController@all');
+    Route::get('/orders/{id}', 'OrdersController@single');
 
     Route::get('/reviews', 'ReviewsController@all');
 

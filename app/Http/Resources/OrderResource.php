@@ -25,12 +25,24 @@ class OrderResource extends JsonResource
         $products = $this->products;
         $productsList = $products->pluck('name')->implode(', ');
 
+        $productsItems = [];
+
+        foreach ($this->products as $product)
+            $productsItems[] = [
+                'price' => $product->pivot->price,
+                'color' => $product->pivot->color,
+                'size' => $product->pivot->size,
+                'count' => $product->pivot->count,
+                'product' => new ProductResource($product)
+            ];
+
         return [
             'id' => $this->id,
             'date' => $date,
             'price' => $price,
             'status' => $this->type,
-            'products' => $productsList
+            'products' => $productsList,
+            'productsItems' => $productsItems
         ];
     }
 }

@@ -26,7 +26,6 @@ const thunkProduct = (slug: string): ProductThunkAction =>
 			}
 
 			dispatch(productError(e.response?.data.message || e.message));
-
 			toast.error(e.response?.data.message || e.message);
 		}
 	};

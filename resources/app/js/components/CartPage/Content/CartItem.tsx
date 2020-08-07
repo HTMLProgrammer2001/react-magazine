@@ -3,7 +3,7 @@ import {ICartItem} from '../../../Interfaces/ICartItem';
 
 
 type ICartItemProps = ICartItem & {
-	removeItem: () => void
+	removeItem?: () => void
 };
 
 const CartItem: React.FC<ICartItemProps> = (props) => (
@@ -39,12 +39,15 @@ const CartItem: React.FC<ICartItemProps> = (props) => (
 			{props.count * props.product.price}
 		</div>
 
-		<div className="table__col orders__remove">
-			<i
-				className="fas fa-times cur"
-				onClick={props.removeItem}
-			/>
-		</div>
+		{
+			props.removeItem &&
+			<div className="table__col orders__remove">
+				<i
+					className="fas fa-times cur"
+					onClick={props.removeItem}
+				/>
+			</div>
+		}
 	</div>
 );
 

@@ -12,6 +12,7 @@ import SettingsPage from './SettingsPage';
 import FavoritePage from './FavoritePage';
 import OrdersPage from './OrdersPage';
 import ReviewsPage from './ReviewsPage';
+import SingleOrderPage from './SingleOrderPage';
 
 
 const Content: React.FC<{}> = () => (
@@ -23,6 +24,7 @@ const Content: React.FC<{}> = () => (
 			<Route path='/profile/settings' exact component={SettingsPage}/>
 			<Route path='/profile/favorite' exact component={FavoritePage}/>
 			<Route path='/profile/orders' exact component={OrdersPage}/>
+			<Route path='/profile/orders/:orderID' exact component={SingleOrderPage}/>
 			<Route path='/profile/reviews' exact component={ReviewsPage}/>
 
 			<Route path='/' component={NotFoundPage}/>

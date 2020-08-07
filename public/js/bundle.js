@@ -34824,7 +34824,14 @@ exports.profileAPI = {
             }
         });
     },
-    changePersonal: function changePersonal() {}
+    changePersonal: function changePersonal() {},
+    getOrder: function getOrder(id) {
+        return apiClient.get("/orders/" + id, {
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem('token')
+            }
+        });
+    }
 };
 
 /***/ }),
@@ -35204,7 +35211,7 @@ exports.default = Breadcrumbs;
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var CartItem = function CartItem(props) {
-    return React.createElement("div", { className: "table__row" }, React.createElement("div", { className: "table__col orders__product" }, React.createElement("img", { className: "orders__img", src: "/image/" + props.product.photo, alt: "Product picture" }), React.createElement("div", null, React.createElement("div", { className: "orders__name" }, props.product.name), React.createElement("div", { className: "orders__color" }, React.createElement("div", { className: "goods__color-item", style: { background: props.color } }), React.createElement("div", { className: "orders__size" }, props.size)))), React.createElement("div", { className: "table__col orders__price" }, props.product.price), React.createElement("div", { className: "table__col orders__quantity" }, React.createElement("div", { className: "order__quantity" }, React.createElement("span", null, props.count))), React.createElement("div", { className: "table__col orders__total" }, props.count * props.product.price), React.createElement("div", { className: "table__col orders__remove" }, React.createElement("i", { className: "fas fa-times cur", onClick: props.removeItem })));
+    return React.createElement("div", { className: "table__row" }, React.createElement("div", { className: "table__col orders__product" }, React.createElement("img", { className: "orders__img", src: "/image/" + props.product.photo, alt: "Product picture" }), React.createElement("div", null, React.createElement("div", { className: "orders__name" }, props.product.name), React.createElement("div", { className: "orders__color" }, React.createElement("div", { className: "goods__color-item", style: { background: props.color } }), React.createElement("div", { className: "orders__size" }, props.size)))), React.createElement("div", { className: "table__col orders__price" }, props.product.price), React.createElement("div", { className: "table__col orders__quantity" }, React.createElement("div", { className: "order__quantity" }, React.createElement("span", null, props.count))), React.createElement("div", { className: "table__col orders__total" }, props.count * props.product.price), props.removeItem && React.createElement("div", { className: "table__col orders__remove" }, React.createElement("i", { className: "fas fa-times cur", onClick: props.removeItem })));
 };
 exports.default = CartItem;
 
@@ -37224,9 +37231,10 @@ exports.default = connected(FavoritePage);
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 exports.OrderItem = function (_a) {
     var order = _a.order;
-    return React.createElement("div", { className: "table__row" }, React.createElement("div", { className: "table__col" }, "#", order.id), React.createElement("div", { className: "table__col" }, order.date), React.createElement("div", { className: "table__col" }, "$", order.price.toFixed(2)), React.createElement("div", { className: "table__col" }, order.products), React.createElement("div", { className: "table__col" }, order.status));
+    return React.createElement("div", { className: "table__row" }, React.createElement("div", { className: "table__col" }, "#", order.id), React.createElement("div", { className: "table__col" }, order.date), React.createElement("div", { className: "table__col" }, "$", order.price.toFixed(2)), React.createElement("div", { className: "table__col" }, order.products), React.createElement("div", { className: "table__col" }, order.status), React.createElement("div", { className: "table__col" }, React.createElement(react_router_dom_1.Link, { to: "/profile/orders/" + order.id }, React.createElement("i", { className: "fas fa-eye ml-10 cur" }))));
 };
 exports.default = exports.OrderItem;
 
@@ -37319,7 +37327,7 @@ var OrdersPage = function OrdersPage(props) {
     React.useEffect(function () {
         props.getOrders();
     }, []);
-    return React.createElement("div", { className: "admContent" }, React.createElement("div", { className: "container" }, React.createElement("div", { className: "myOrders py-pad" }, React.createElement("div", { className: "pull-right" }, React.createElement(react_router_dom_1.Link, { to: "/" }, React.createElement("span", { className: "but but_outline" }, "Continue shopping"))), React.createElement("h3", null, "My orders"), React.createElement(OrdersForm_1.default, { onSubmit: props.changeFilter }), React.createElement("div", { className: "table__wrap" }, React.createElement("div", { className: "table" }, React.createElement("div", { className: "table__head" }, React.createElement("div", { className: "table__head-item" }, "ID"), React.createElement("div", { className: "table__head-item" }, "Date"), React.createElement("div", { className: "table__head-item" }, "Price"), React.createElement("div", { className: "table__head-item" }, "Products"), React.createElement("div", { className: "table__head-item" }, "Status")), React.createElement("div", { className: "table__content" }, props.isLoading && React.createElement(Loader_1.default, null), props.error && React.createElement("div", { className: "red" }, props.error), !props.isLoading && !props.error && props.orders.map(function (order) {
+    return React.createElement("div", { className: "admContent" }, React.createElement("div", { className: "container" }, React.createElement("div", { className: "myOrders py-pad" }, React.createElement("div", { className: "pull-right" }, React.createElement(react_router_dom_1.Link, { to: "/" }, React.createElement("span", { className: "but but_outline" }, "Continue shopping"))), React.createElement("h3", null, "My orders"), React.createElement(OrdersForm_1.default, { onSubmit: props.changeFilter }), React.createElement("div", { className: "table__wrap" }, React.createElement("div", { className: "table" }, React.createElement("div", { className: "table__head" }, React.createElement("div", { className: "table__head-item" }, "ID"), React.createElement("div", { className: "table__head-item" }, "Date"), React.createElement("div", { className: "table__head-item" }, "Price"), React.createElement("div", { className: "table__head-item" }, "Products"), React.createElement("div", { className: "table__head-item" }, "Status"), React.createElement("div", { className: "table__head-item" }, "Actions")), React.createElement("div", { className: "table__content" }, props.isLoading && React.createElement(Loader_1.default, null), props.error && React.createElement("div", { className: "red" }, props.error), !props.isLoading && !props.error && props.orders.map(function (order) {
         return React.createElement(OrderItem_1.default, { key: order.id, order: order });
     }))))), React.createElement(Paginator_1.default, { totalPage: Math.ceil(props.totalCount / props.size), curPage: props.currentPage, handler: props.getOrders })));
 };
@@ -37529,9 +37537,10 @@ exports.default = redux_form_1.reduxForm({
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var Mark_1 = __webpack_require__(/*! ../../Mark */ "./resources/app/es5/components/Mark.js");
+var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 var ReviewsItem = function ReviewsItem(_a) {
     var review = _a.review;
-    return React.createElement("div", { className: "table__row" }, React.createElement("div", { className: "table__col" }, "#", review.id), React.createElement("div", { className: "table__col" }, review.date), React.createElement("div", { className: "table__col" }, React.createElement("img", { className: "mb-10", src: "/image/" + review.product.photo }), React.createElement("div", null, review.product.name)), React.createElement("div", { className: "table__col" }, React.createElement(Mark_1.default, { rating: review.mark, fixed: true })));
+    return React.createElement("div", { className: "table__row" }, React.createElement("div", { className: "table__col" }, "#", review.id), React.createElement("div", { className: "table__col" }, review.date), React.createElement("div", { className: "table__col" }, React.createElement("img", { className: "mb-10", src: "/image/" + review.product.photo }), React.createElement("div", null, review.product.name)), React.createElement("div", { className: "table__col" }, React.createElement(Mark_1.default, { rating: review.mark, fixed: true })), React.createElement("div", { className: "table__col" }, React.createElement(react_router_dom_1.Link, { to: "/products/" + review.product.slug + "#" + review.id }, React.createElement("i", { className: "fas fa-eye ml-10 cur" }))));
 };
 exports.default = ReviewsItem;
 
@@ -37590,7 +37599,7 @@ var ReviewsPage = function ReviewsPage(props) {
     React.useEffect(function () {
         props.getReviews(1);
     }, []);
-    return React.createElement("div", { className: "admContent" }, React.createElement("div", { className: "container" }, React.createElement("div", { className: "myOrders py-pad" }, React.createElement("div", { className: "pull-right" }, React.createElement("span", { className: "but but_outline" }, "Continue shopping")), React.createElement("h3", null, "My reviews"), React.createElement(ReviewsForm_1.default, { onSubmit: props.changeFilter }), React.createElement("div", { className: "table__wrap" }, React.createElement("div", { className: "table" }, React.createElement("div", { className: "table__head" }, React.createElement("div", { className: "table__head-item" }, "ID"), React.createElement("div", { className: "table__head-item" }, "Date"), React.createElement("div", { className: "table__head-item" }, "Product"), React.createElement("div", { className: "table__head-item" }, "Mark")), React.createElement("div", { className: "table__content" }, props.isLoading && React.createElement(Loader_1.default, null), props.error && React.createElement("div", { className: "red" }, props.error), !props.isLoading && !props.error && props.reviews.map(function (review) {
+    return React.createElement("div", { className: "admContent" }, React.createElement("div", { className: "container" }, React.createElement("div", { className: "myOrders py-pad" }, React.createElement("div", { className: "pull-right" }, React.createElement("span", { className: "but but_outline" }, "Continue shopping")), React.createElement("h3", null, "My reviews"), React.createElement(ReviewsForm_1.default, { onSubmit: props.changeFilter }), React.createElement("div", { className: "table__wrap" }, React.createElement("div", { className: "table" }, React.createElement("div", { className: "table__head" }, React.createElement("div", { className: "table__head-item" }, "ID"), React.createElement("div", { className: "table__head-item" }, "Date"), React.createElement("div", { className: "table__head-item" }, "Product"), React.createElement("div", { className: "table__head-item" }, "Mark"), React.createElement("div", { className: "table__head-item" }, "Actions")), React.createElement("div", { className: "table__content" }, props.isLoading && React.createElement(Loader_1.default, null), props.error && React.createElement("div", { className: "red" }, props.error), !props.isLoading && !props.error && props.reviews.map(function (review) {
         return React.createElement(ReviewsItem_1.default, { key: review.id, review: review });
     }))))), React.createElement(Paginator_1.default, { totalPage: Math.ceil(props.totalCount / props.size), handler: props.getReviews, curPage: props.currentPage })));
 };
@@ -37709,6 +37718,124 @@ exports.default = connected(SettingsPage);
 
 /***/ }),
 
+/***/ "./resources/app/es5/components/Profile/SingleOrderPage/Content/OrderItemsTable.js":
+/*!*****************************************************************************************!*\
+  !*** ./resources/app/es5/components/Profile/SingleOrderPage/Content/OrderItemsTable.js ***!
+  \*****************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __assign = undefined && undefined.__assign || function () {
+    __assign = Object.assign || function (t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) {
+                if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+            }
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var CartItem_1 = __webpack_require__(/*! ../../../CartPage/Content/CartItem */ "./resources/app/es5/components/CartPage/Content/CartItem.js");
+var OrderItemsTable = function OrderItemsTable(props) {
+    return React.createElement("div", { className: "container" }, React.createElement("div", { className: "table__wrap my-pad" }, React.createElement("div", { className: "table" }, React.createElement("div", { className: "table__head" }, React.createElement("div", { className: "table__head-item table__head-item_lg" }, "Product"), React.createElement("div", { className: "table__head-item" }, "Price"), React.createElement("div", { className: "table__head-item" }, "Quantity"), React.createElement("div", { className: "table__head-item" }, "Total")), React.createElement("div", { className: "table__content" }, props.items.map(function (item, index) {
+        return React.createElement(CartItem_1.default, __assign({}, item, { key: index }));
+    })))));
+};
+exports.default = OrderItemsTable;
+
+/***/ }),
+
+/***/ "./resources/app/es5/components/Profile/SingleOrderPage/Content/index.js":
+/*!*******************************************************************************!*\
+  !*** ./resources/app/es5/components/Profile/SingleOrderPage/Content/index.js ***!
+  \*******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __assign = undefined && undefined.__assign || function () {
+    __assign = Object.assign || function (t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) {
+                if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+            }
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+var selectors_1 = __webpack_require__(/*! ../../../../redux/Profile/singleOrder/selectors */ "./resources/app/es5/redux/Profile/singleOrder/selectors.js");
+var OrderItemsTable_1 = __webpack_require__(/*! ./OrderItemsTable */ "./resources/app/es5/components/Profile/SingleOrderPage/Content/OrderItemsTable.js");
+var mapStateToProps = function mapStateToProps(state) {
+    return __assign({}, selectors_1.selectSingleOrder(state));
+};
+var connected = react_redux_1.connect(mapStateToProps, null);
+var Content = function Content(props) {
+    return React.createElement("div", { className: "single_order__content" }, React.createElement("div", null, React.createElement("b", null, "ID: "), React.createElement("span", null, props.id)), React.createElement("div", null, React.createElement("b", null, "Order date: "), React.createElement("span", null, props.date)), React.createElement("div", null, React.createElement("b", null, "Status: "), React.createElement("span", null, props.status)), React.createElement("div", null, React.createElement("b", null, "Order price: "), React.createElement("span", null, props.price)), React.createElement(OrderItemsTable_1.default, { items: props.productsItems }));
+};
+exports.default = connected(Content);
+
+/***/ }),
+
+/***/ "./resources/app/es5/components/Profile/SingleOrderPage/index.js":
+/*!***********************************************************************!*\
+  !*** ./resources/app/es5/components/Profile/SingleOrderPage/index.js ***!
+  \***********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __assign = undefined && undefined.__assign || function () {
+    __assign = Object.assign || function (t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) {
+                if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+            }
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var react_redux_1 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+var selectors_1 = __webpack_require__(/*! ../../../redux/Profile/singleOrder/selectors */ "./resources/app/es5/redux/Profile/singleOrder/selectors.js");
+var thunks_1 = __webpack_require__(/*! ../../../redux/Profile/singleOrder/thunks */ "./resources/app/es5/redux/Profile/singleOrder/thunks.js");
+var Loader_1 = __webpack_require__(/*! ../../Loader */ "./resources/app/es5/components/Loader.js");
+var NotFoundImg_1 = __webpack_require__(/*! ../../NotFoundPage/NotFoundImg */ "./resources/app/es5/components/NotFoundPage/NotFoundImg.js");
+var Content_1 = __webpack_require__(/*! ./Content */ "./resources/app/es5/components/Profile/SingleOrderPage/Content/index.js");
+var mapStateToProps = function mapStateToProps(state) {
+    return __assign({}, selectors_1.selectSingleOrderState(state));
+};
+var connected = react_redux_1.connect(mapStateToProps, {
+    getOrder: thunks_1.default
+});
+var SingleOrderPage = function SingleOrderPage(props) {
+    React.useEffect(function () {
+        props.getOrder(+props.match.params.orderID);
+    }, []);
+    return React.createElement("div", { className: "admContent" }, React.createElement("div", { className: "container" }, props.isLoading && React.createElement(Loader_1.default, null), props.error && React.createElement("div", { className: "red" }, props.error), props.notFound && React.createElement(NotFoundImg_1.default, null), props.order && React.createElement(Content_1.default, null)));
+};
+exports.default = connected(SingleOrderPage);
+
+/***/ }),
+
 /***/ "./resources/app/es5/components/Profile/index.js":
 /*!*******************************************************!*\
   !*** ./resources/app/es5/components/Profile/index.js ***!
@@ -37731,8 +37858,9 @@ var SettingsPage_1 = __webpack_require__(/*! ./SettingsPage */ "./resources/app/
 var FavoritePage_1 = __webpack_require__(/*! ./FavoritePage */ "./resources/app/es5/components/Profile/FavoritePage/index.js");
 var OrdersPage_1 = __webpack_require__(/*! ./OrdersPage */ "./resources/app/es5/components/Profile/OrdersPage/index.js");
 var ReviewsPage_1 = __webpack_require__(/*! ./ReviewsPage */ "./resources/app/es5/components/Profile/ReviewsPage/index.js");
+var SingleOrderPage_1 = __webpack_require__(/*! ./SingleOrderPage */ "./resources/app/es5/components/Profile/SingleOrderPage/index.js");
 var Content = function Content() {
-    return React.createElement(React.Fragment, null, React.createElement(AdminHeader_1.default, null), React.createElement(react_router_1.Switch, null, React.createElement(react_router_1.Route, { path: '/profile', exact: true, component: ProfilePage_1.default }), React.createElement(react_router_1.Route, { path: '/profile/settings', exact: true, component: SettingsPage_1.default }), React.createElement(react_router_1.Route, { path: '/profile/favorite', exact: true, component: FavoritePage_1.default }), React.createElement(react_router_1.Route, { path: '/profile/orders', exact: true, component: OrdersPage_1.default }), React.createElement(react_router_1.Route, { path: '/profile/reviews', exact: true, component: ReviewsPage_1.default }), React.createElement(react_router_1.Route, { path: '/', component: NotFoundPage_1.default })), React.createElement(AdminFooter_1.default, null));
+    return React.createElement(React.Fragment, null, React.createElement(AdminHeader_1.default, null), React.createElement(react_router_1.Switch, null, React.createElement(react_router_1.Route, { path: '/profile', exact: true, component: ProfilePage_1.default }), React.createElement(react_router_1.Route, { path: '/profile/settings', exact: true, component: SettingsPage_1.default }), React.createElement(react_router_1.Route, { path: '/profile/favorite', exact: true, component: FavoritePage_1.default }), React.createElement(react_router_1.Route, { path: '/profile/orders', exact: true, component: OrdersPage_1.default }), React.createElement(react_router_1.Route, { path: '/profile/orders/:orderID', exact: true, component: SingleOrderPage_1.default }), React.createElement(react_router_1.Route, { path: '/profile/reviews', exact: true, component: ReviewsPage_1.default }), React.createElement(react_router_1.Route, { path: '/', component: NotFoundPage_1.default })), React.createElement(AdminFooter_1.default, null));
 };
 exports.default = IsAuthenticated_1.default(true)(Content);
 
@@ -40368,12 +40496,14 @@ var reducer_2 = __webpack_require__(/*! ./favoriteProducts/reducer */ "./resourc
 var reducer_3 = __webpack_require__(/*! ./orders/reducer */ "./resources/app/es5/redux/Profile/orders/reducer.js");
 var reducer_4 = __webpack_require__(/*! ./reviews/reducer */ "./resources/app/es5/redux/Profile/reviews/reducer.js");
 var reducer_5 = __webpack_require__(/*! ./deleteAccount/reducer */ "./resources/app/es5/redux/Profile/deleteAccount/reducer.js");
+var reducer_6 = __webpack_require__(/*! ./singleOrder/reducer */ "./resources/app/es5/redux/Profile/singleOrder/reducer.js");
 exports.default = redux_1.combineReducers({
     recommend: reducer_1.default,
     favorite: reducer_2.default,
     orders: reducer_3.default,
     reviews: reducer_4.default,
-    delete: reducer_5.default
+    delete: reducer_5.default,
+    singleOrder: reducer_6.default
 });
 
 /***/ }),
@@ -41151,6 +41281,264 @@ exports.REVIEWS_START = 'profile/reviews/START';
 exports.REVIEWS_ERROR = 'profile/reviews/ERROR';
 exports.REVIEWS_SUCCESS = 'profile/reviews/SUCCESS';
 exports.REVIEWS_RESET = 'profile/reviews/RESET';
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/Profile/singleOrder/actions.js":
+/*!****************************************************************!*\
+  !*** ./resources/app/es5/redux/Profile/singleOrder/actions.js ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var types_1 = __webpack_require__(/*! ./types */ "./resources/app/es5/redux/Profile/singleOrder/types.js");
+exports.singleOrderStart = function () {
+    return {
+        type: types_1.SINGLE_ORDER_START
+    };
+};
+exports.singleOrderError = function (error) {
+    return {
+        type: types_1.SINGLE_ORDER_ERROR,
+        error: error
+    };
+};
+exports.singleOrderSuccess = function (order) {
+    return {
+        type: types_1.SINGLE_ORDER_SUCCESS,
+        payload: order
+    };
+};
+exports.singleOrderNotFound = function () {
+    return {
+        type: types_1.SINGLE_ORDER_NOT_FOUND
+    };
+};
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/Profile/singleOrder/reducer.js":
+/*!****************************************************************!*\
+  !*** ./resources/app/es5/redux/Profile/singleOrder/reducer.js ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __assign = undefined && undefined.__assign || function () {
+    __assign = Object.assign || function (t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) {
+                if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+            }
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var types_1 = __webpack_require__(/*! ./types */ "./resources/app/es5/redux/Profile/singleOrder/types.js");
+var initialState = {
+    isLoading: false,
+    notFound: false,
+    error: null,
+    order: null
+};
+var singleOrderReducer = function singleOrderReducer(state, action) {
+    if (state === void 0) {
+        state = initialState;
+    }
+    switch (action.type) {
+        case types_1.SINGLE_ORDER_START:
+            return __assign(__assign({}, initialState), { isLoading: true });
+        case types_1.SINGLE_ORDER_ERROR:
+            return __assign(__assign({}, initialState), { error: action.error });
+        case types_1.SINGLE_ORDER_SUCCESS:
+            return __assign(__assign({}, initialState), { order: action.payload });
+        case types_1.SINGLE_ORDER_NOT_FOUND:
+            return __assign(__assign({}, initialState), { notFound: true });
+    }
+    return state;
+};
+exports.default = singleOrderReducer;
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/Profile/singleOrder/selectors.js":
+/*!******************************************************************!*\
+  !*** ./resources/app/es5/redux/Profile/singleOrder/selectors.js ***!
+  \******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.selectSingleOrderState = function (state) {
+  return state.profile.singleOrder;
+};
+exports.selectSingleOrder = function (state) {
+  return state.profile.singleOrder.order;
+};
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/Profile/singleOrder/thunks.js":
+/*!***************************************************************!*\
+  !*** ./resources/app/es5/redux/Profile/singleOrder/thunks.js ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
+    function adopt(value) {
+        return value instanceof P ? value : new P(function (resolve) {
+            resolve(value);
+        });
+    }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) {
+            try {
+                step(generator.next(value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function rejected(value) {
+            try {
+                step(generator["throw"](value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function step(result) {
+            result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+        }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = undefined && undefined.__generator || function (thisArg, body) {
+    var _ = { label: 0, sent: function sent() {
+            if (t[0] & 1) throw t[1];return t[1];
+        }, trys: [], ops: [] },
+        f,
+        y,
+        t,
+        g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
+        return this;
+    }), g;
+    function verb(n) {
+        return function (v) {
+            return step([n, v]);
+        };
+    }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) {
+            try {
+                if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+                if (y = 0, t) op = [op[0] & 2, t.value];
+                switch (op[0]) {
+                    case 0:case 1:
+                        t = op;break;
+                    case 4:
+                        _.label++;return { value: op[1], done: false };
+                    case 5:
+                        _.label++;y = op[1];op = [0];continue;
+                    case 7:
+                        op = _.ops.pop();_.trys.pop();continue;
+                    default:
+                        if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+                            _ = 0;continue;
+                        }
+                        if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+                            _.label = op[1];break;
+                        }
+                        if (op[0] === 6 && _.label < t[1]) {
+                            _.label = t[1];t = op;break;
+                        }
+                        if (t && _.label < t[2]) {
+                            _.label = t[2];_.ops.push(op);break;
+                        }
+                        if (t[2]) _.ops.pop();
+                        _.trys.pop();continue;
+                }
+                op = body.call(thisArg, _);
+            } catch (e) {
+                op = [6, e];y = 0;
+            } finally {
+                f = t = 0;
+            }
+        }if (op[0] & 5) throw op[1];return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var react_toastify_1 = __webpack_require__(/*! react-toastify */ "./node_modules/react-toastify/dist/react-toastify.esm.js");
+var actions_1 = __webpack_require__(/*! ./actions */ "./resources/app/es5/redux/Profile/singleOrder/actions.js");
+var ProfileAPI_1 = __webpack_require__(/*! ../../../Helpers/API/ProfileAPI */ "./resources/app/es5/Helpers/API/ProfileAPI.js");
+var thunkSingleOrder = function thunkSingleOrder(id) {
+    return function (dispatch) {
+        return __awaiter(void 0, void 0, void 0, function () {
+            var singleOrderResponse, e_1;
+            var _a, _b, _c;
+            return __generator(this, function (_d) {
+                switch (_d.label) {
+                    case 0:
+                        dispatch(actions_1.singleOrderStart());
+                        _d.label = 1;
+                    case 1:
+                        _d.trys.push([1, 3,, 4]);
+                        return [4, ProfileAPI_1.profileAPI.getOrder(id)];
+                    case 2:
+                        singleOrderResponse = _d.sent();
+                        dispatch(actions_1.singleOrderSuccess(singleOrderResponse.data));
+                        return [3, 4];
+                    case 3:
+                        e_1 = _d.sent();
+                        if (((_a = e_1.response) === null || _a === void 0 ? void 0 : _a.status) == 404 || e_1.status == 404) {
+                            dispatch(actions_1.singleOrderNotFound());
+                        }
+                        dispatch(actions_1.singleOrderError(((_b = e_1.response) === null || _b === void 0 ? void 0 : _b.data.message) || e_1.message));
+                        react_toastify_1.toast.error(((_c = e_1.response) === null || _c === void 0 ? void 0 : _c.data.message) || e_1.message);
+                        return [3, 4];
+                    case 4:
+                        return [2];
+                }
+            });
+        });
+    };
+};
+exports.default = thunkSingleOrder;
+
+/***/ }),
+
+/***/ "./resources/app/es5/redux/Profile/singleOrder/types.js":
+/*!**************************************************************!*\
+  !*** ./resources/app/es5/redux/Profile/singleOrder/types.js ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.SINGLE_ORDER_START = 'singleOrder/START';
+exports.SINGLE_ORDER_ERROR = 'singleOrder/ERROR';
+exports.SINGLE_ORDER_SUCCESS = 'singleOrder/SUCCESS';
+exports.SINGLE_ORDER_NOT_FOUND = 'singleOrder/NOT_FOUND';
 
 /***/ }),
 

@@ -8,6 +8,7 @@ import {IOrdersResponse} from '../../Interfaces/Responses/IOrdersResponse';
 import {IReviewsResponse} from '../../Interfaces/Responses/IReviewsResponse';
 import {IReviewsFormData} from '../../components/Profile/ReviewsPage/ReviewsForm';
 import {IChangePasswordData} from '../../components/Profile/SettingsPage/ChangePasswordForm';
+import {IFullOrder} from '../../Interfaces/IFullOrder';
 
 
 const apiClient = axios.create({
@@ -76,6 +77,13 @@ export const profileAPI = {
 
 	changePersonal(){
 
+	},
+
+	getOrder(id: number){
+		return apiClient.get<IFullOrder>(`/orders/${id}`, {
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem('token')}`
+			}
+		});
 	}
 };
-
