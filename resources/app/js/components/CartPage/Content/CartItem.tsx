@@ -36,7 +36,7 @@ const CartItem: React.FC<ICartItemProps> = (props) => (
 		</div>
 
 		<div className="table__col orders__total">
-			{props.count * props.product.price}
+			{(props.count * props.product.price).toFixed(2)}
 		</div>
 
 		{

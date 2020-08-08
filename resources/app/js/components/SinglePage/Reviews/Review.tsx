@@ -22,7 +22,7 @@ const Review: React.FC<IReviewProps> = ({comment, changeReaction}) => (
 		<div className="reviews-list__item row">
 			<img
 				className="reviews__ava"
-				src={`/image/${comment.author.avatar}`}
+				src={comment.author.avatar}
 				alt="User ava"
 			/>
 

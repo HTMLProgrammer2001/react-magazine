@@ -7,6 +7,7 @@ use App\Http\Requests\ChangeRequest;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\ResetRequest;
+use App\Http\Resources\UserResource;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -61,7 +62,7 @@ class UserActions extends Controller
         //return token and user info
         return response()->json([
             'token' => $token->accessToken,
-            'user' => Auth::user()
+            'user' => new UserResource(Auth::user())
         ]);
     }
 
@@ -132,6 +133,6 @@ class UserActions extends Controller
     }
 
     public function me(Request $request){
-        return response()->json($request->user());
+        return response()->json(new UserResource($request->user()));
     }
 }

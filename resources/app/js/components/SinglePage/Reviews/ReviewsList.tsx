@@ -16,7 +16,7 @@ const mapStateToProps = (state: RootState) => ({
 
 const mapDispatchToProps = (dispatch: any) => ({
 	loadComments: (productID: number, offset: number) => {
-		dispatch(thunkComment(offset));
+		dispatch(thunkComment(productID, offset));
 	},
 	changedSort: (productID: number) => {
 		dispatch(commentReset());

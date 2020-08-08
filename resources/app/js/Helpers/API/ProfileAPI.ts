@@ -9,6 +9,8 @@ import {IReviewsResponse} from '../../Interfaces/Responses/IReviewsResponse';
 import {IReviewsFormData} from '../../components/Profile/ReviewsPage/ReviewsForm';
 import {IChangePasswordData} from '../../components/Profile/SettingsPage/ChangePasswordForm';
 import {IFullOrder} from '../../Interfaces/IFullOrder';
+import {PersonalInfoFormData} from '../../components/Profile/SettingsPage/PersonalInfoForm';
+import {IUser} from '../../Interfaces/IUser';
 
 
 const apiClient = axios.create({
@@ -75,8 +77,18 @@ export const profileAPI = {
 		});
 	},
 
-	changePersonal(){
+	changePersonal(vals: PersonalInfoFormData){
+		let formData = new FormData();
 
+		let key: keyof PersonalInfoFormData;
+		for(key of (Object.keys(vals) as Array<keyof PersonalInfoFormData>))
+			formData.set(key, vals[key]);
+
+		return apiClient.post<{user: IUser}>('/account/personal', formData, {
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem('token')}`
+			}
+		});
 	},
 
 	getOrder(id: number){

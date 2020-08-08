@@ -2,41 +2,22 @@ import * as React from 'react';
 import {WrappedFieldProps} from 'redux-form';
 
 
-type IFileElementProps = {
-	defaultPhoto?: string
-};
-
-type IElementProps = WrappedFieldProps & React.InputHTMLAttributes<HTMLInputElement> &
-	IFileElementProps;
+type IElementProps = WrappedFieldProps & React.InputHTMLAttributes<HTMLInputElement>;
 
 const FileElement: React.FC<IElementProps> = (props) => {
-	const {
-		required, defaultPhoto,
-		input: {value, name, onChange},
-		meta: {touched, error}
-	} = props;
+	const {input: {name, onChange}} = props;
+
+	const myChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		onChange(e.target.files![0]);
+	};
 
 	return (
-		<div className="file my-pad">
-			{
-				!value && defaultPhoto &&
-					<img className="file_image" src={defaultPhoto} alt="Photo"/>
-			}
-
-			<label>
-				<input
-					className="file__elem"
-					type="file"
-					name={name}
-					onChange={onChange}
-					required={required}
-				/>
-
-				<div className="file__but">Select file</div>
-			</label>
-
-			{touched && error && <div className="red">{error}</div>}
-		</div>
+		<input
+			className="file__elem"
+			type="file"
+			name={name}
+			onChange={myChange}
+		/>
 	);
 };
 

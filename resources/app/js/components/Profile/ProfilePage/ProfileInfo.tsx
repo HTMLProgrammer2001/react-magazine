@@ -32,7 +32,7 @@ const ProfileInfo: React.FC<ConnectedProps<typeof connected>> = (props) => (
 			</div>
 
 			<div className="info__image my-pad">
-				<img className="info__photo" src={`/image/${props.user!.avatar}`}/>
+				<img className="info__photo" src={props.user!.avatar}/>
 			</div>
 
 			<div className="info__fields">

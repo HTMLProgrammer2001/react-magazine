@@ -229,4 +229,6 @@ return [
 
     ],
 
+    'avatarDirectory' => 'public/avatars/',
+    'avatarPath' => '/storage/avatars/'
 ];

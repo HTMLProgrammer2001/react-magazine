@@ -20,7 +20,7 @@ class CommentResource extends JsonResource
         if(!$this->user)
             $userInfo = [
                 'fullName' => $this->name,
-                'avatar' => 'noAva.jpg',
+                'avatar' => config('app.avatarPath') . 'noAva.jpg',
                 'id' => null
             ];
 

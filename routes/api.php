@@ -71,5 +71,6 @@ Route::group(['namespace' => 'Profile', 'prefix' => 'profile'], function(){
     Route::group(['prefix' => 'account'], function (){
        Route::delete('/', 'AccountController@delete');
        Route::post('/password', 'AccountController@changePassword');
+       Route::post('/personal', 'AccountController@personal');
     });
 });

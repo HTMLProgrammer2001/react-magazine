@@ -31,7 +31,7 @@ const UserDropdown: React.FC<ConnectedProps<typeof connected>> = (props) => {
 					<span>{props.user!.fullName}</span>
 				</div>
 
-				<img className="admHeader__photo" src={`/image/${props.user!.avatar}`}/>
+				<img className="admHeader__photo" src={props.user!.avatar}/>
 				<i className="fas fa-sort-down ml-1"/>
 			</div>
 

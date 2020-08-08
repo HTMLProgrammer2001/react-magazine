@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Profile;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Profile\ChangePasswordRequest;
+use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class AccountController extends Controller
 {
@@ -43,6 +45,30 @@ class AccountController extends Controller
 
         return response()->json([
            'success' => 'Password successfully changed'
+        ]);
+    }
+
+    public function personal(Request $request){
+        $user = $request->user('api');
+
+        if($request->file('avatar')) {
+            $file = $request->file('avatar');
+
+            $name = Str::random(16);
+            $ext = $file->extension();
+
+            $file->storeAs(config('app.avatarDirectory'), $name . '.' . $ext);
+
+            $user->avatar = $name . '.' . $ext;
+        }
+
+        $user->fullName = $request->input('fullName');
+        $user->email = $request->input('email');
+        $user->save();
+
+        return response()->json([
+            'file' => $request->file(),
+            'user' => new UserResource(auth('api')->user())
         ]);
     }
 }

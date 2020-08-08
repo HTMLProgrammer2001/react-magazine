@@ -38,7 +38,7 @@ const ReviewForm: React.FC<IReviewFormProps> = (props) => (
 		<div className="row">
 			<img
 				className="reviews__ava"
-				src={`/image/${props.user ? props.user.avatar : 'noAva.jpg'}`}
+				src={props.user ? props.user.avatar : '/storage/avatars/noAva.jpg'}
 				alt="Ava"
 			/>
 

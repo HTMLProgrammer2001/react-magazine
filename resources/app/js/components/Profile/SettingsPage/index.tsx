@@ -7,6 +7,7 @@ import thunkProfilePasswordChange from '../../../redux/Profile/changePassword/th
 import thunkDelete from '../../../redux/Profile/deleteAccount/thunks';
 import {RootState} from '../../../redux';
 import {selectDeleteState} from '../../../redux/Profile/deleteAccount/selectors';
+import thunkProfilePersonal from '../../../redux/Profile/personal/thunks';
 
 
 const mapStateToProps = (state: RootState) => ({
@@ -15,7 +16,8 @@ const mapStateToProps = (state: RootState) => ({
 
 const connected = connect(mapStateToProps, {
 	changePassword: thunkProfilePasswordChange,
-	deleteAcc: thunkDelete
+	deleteAcc: thunkDelete,
+	personalChange: thunkProfilePersonal
 });
 
 type ISettingsPageProps = ConnectedProps<typeof connected>;
@@ -27,7 +29,10 @@ const SettingsPage: React.FC<ISettingsPageProps> = (props) => (
 				<div className="login__head">Personal info</div>
 
 				<PersonalInfoForm
-					onSubmit={(vals: PersonalInfoFormData) => console.log(vals)}
+					onSubmit={(vals: PersonalInfoFormData) => {
+						console.log(vals);
+						props.personalChange(vals, 'profilePersonalForm');
+					}}
 				/>
 
 				<ChangePasswordForm onSubmit={(vals: IChangePasswordData) => {

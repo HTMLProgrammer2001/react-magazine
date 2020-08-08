@@ -45,11 +45,17 @@ const Menu: React.FC<ConnectedProps<typeof connected>> = (props) => {
 
 				{
 					props.userData.user ?
-						<a
-							href="#"
-						   className="header__item"
-							onClick={props.logout}
-						>Log out</a> :
+						<React.Fragment>
+							<a
+								href="#"
+						   		className="header__item"
+								onClick={props.logout}
+							>Log out</a>
+
+							<Link to="/profile" className="header__item">
+								Profile
+							</Link>
+						</React.Fragment> :
 
 						<React.Fragment>
 							<Link to="/login" className="header__item">

@@ -89,12 +89,14 @@ function webpackTask(){
 		.src(`${SRC_PATH}/es5/main.js`)
 		.pipe(webpackStream({
 			...webpackConfig,
-			devtool: 'none'
+			devtool: 'none',
+			mode: 'production'
 		}, webpack))
 		.on('error', function (err) {
 			console.error('WEBPACK ERROR', err);
 			this.emit('end');
 		})
+		.pipe(uglify())
 		.pipe(gulp.dest(`${DIST_PATH}/js/`))
 		.pipe(browserSync.stream());
 }
