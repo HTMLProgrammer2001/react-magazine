@@ -52,6 +52,8 @@ Route::get('/change', 'UserActions@validChange');
 Route::post('/change', 'UserActions@changePassword');
 
 Route::get('/search', 'SearchController');
+Route::get('/find', 'SearchController@find');
+
 Route::get('/me', 'UserActions@me')->middleware('auth:api');
 Route::get('/getProductsByIds', 'ProductInfoController@getProductsByIds');
 

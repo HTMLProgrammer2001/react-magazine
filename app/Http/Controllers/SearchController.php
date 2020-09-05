@@ -22,4 +22,12 @@ class SearchController extends Controller
 
         return new ProductsResource($products);
     }
+
+    public function find(Request $request)
+    {
+	$find = $request->query('find');
+	$products = Product::where('name', 'like', "%$find%")->get();
+
+	return new ProductsResource($products);
+    }
 }

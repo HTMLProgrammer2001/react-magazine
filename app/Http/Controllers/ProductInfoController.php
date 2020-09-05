@@ -17,7 +17,9 @@ class ProductInfoController extends Controller
         $categories = $request->input('categories');
 
         $productQuery = Product::query();
-        $productQuery->whereBetween('price', [$range['from'], $range['to']]);
+
+	if($range)
+	    $productQuery->whereBetween('price', [$range['from'], $range['to']]);
 
         if($color)
             $productQuery->where( 'colors', 'like', "%{$color}%" );
@@ -25,7 +27,7 @@ class ProductInfoController extends Controller
         if($size)
             $productQuery->where('sizes', 'like', "%{$size}%");
 
-        if($categories){
+        if($categories && sizeof($categories)){
             $catIDs = array_keys($categories);
 
             $catIDs = array_filter($catIDs, function($catID) use($categories){
