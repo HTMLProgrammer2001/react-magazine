@@ -8,10 +8,10 @@
     "lint": "eslint ./src",
     "lint:fix": "eslint ./src --fix",
     "postinstall": "cross-env APP_URL=https://magazinel.herokuapp.com/ gulp",
-    "post-install-cmd": [ 
-        "php artisan clear-compiled",
-        "chmod -R 777 storage", 
-        "php artisan passport:keys"
+    "post-install-cmd": [
+      "php artisan clear-compiled",
+      "chmod -R 777 storage",
+      "php artisan passport:keys"
     ]
   },
   "author": "",
@@ -34,6 +34,7 @@
     "babel-preset-react": "^6.24.1",
     "browser-sync": "^2.26.7",
     "cache-loader": "^4.1.0",
+    "cross-env": "^7.0.2",
     "del": "^5.1.0",
     "eslint": "^5.16.0",
     "eslint-plugin-react": "^7.19.0",
