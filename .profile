@@ -11,4 +11,4 @@ export DB_DATABASE=de6p7kkhffb43h;
 export DB_PORT=5432;
 export DB_HOST=ec2-52-72-34-184.compute-1.amazonaws.com;
 
-echo "Variables was successfully setted";
+composer require fzaninotto/faker;
