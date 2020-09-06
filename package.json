@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint ./src",
     "lint:fix": "eslint ./src --fix",
-    "postinstall": "gulp",
+    "postinstall": "cross-env APP_URL=https://magazinel.herokuapp.com/ gulp",
     "post-install-cmd": [ 
         "php artisan clear-compiled",
         "chmod -R 777 storage", 
