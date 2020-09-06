@@ -14,7 +14,8 @@ import {IUser} from '../../Interfaces/IUser';
 
 
 const apiClient = axios.create({
-	baseURL: 'https://magazinel.herokuapp.com/api/profile',
+	baseURL: process.env.APP_URL ? 
+		`${process.env.APP_URL}/api/profile` : 'http://localhost:8000/api/profile',
 	headers: {
 		'Content-Type': 'application/json'
 	}

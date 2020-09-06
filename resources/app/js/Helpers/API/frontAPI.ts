@@ -24,7 +24,7 @@ export type IError = {message: string, errors?: string[]};
 
 
 const apiClient = axios.create({
-	baseURL: 'https://magazinel.herokuapp.com/api',
+	baseURL: process.env.APP_URL ? `${process.env.APP_URL}/api` : 'http://localhost:8000/api',
 	headers: {
 		'Content-Type': 'application/json'
 	}

@@ -6,7 +6,13 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint ./src",
-    "lint:fix": "eslint ./src --fix"
+    "lint:fix": "eslint ./src --fix",
+    "postinstall": "gulp",
+    "post-install-cmd": [ 
+        "php artisan clear-compiled",
+        "chmod -R 777 storage", 
+        "php artisan passport:keys"
+    ]
   },
   "author": "",
   "license": "ISC",
