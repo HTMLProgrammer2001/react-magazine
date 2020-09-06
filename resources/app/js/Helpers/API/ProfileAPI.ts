@@ -14,8 +14,7 @@ import {IUser} from '../../Interfaces/IUser';
 
 
 const apiClient = axios.create({
-	baseURL: process.env.APP_URL ? 
-		`${process.env.APP_URL}/api/profile` : 'http://localhost:8000/api/profile',
+	baseURL: '/api/profile',
 	headers: {
 		'Content-Type': 'application/json'
 	}
