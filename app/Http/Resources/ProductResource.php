@@ -26,7 +26,8 @@ class ProductResource extends JsonResource
             'images' => array_map(function($item) {
                 return '/image/' . $item;
             }, json_decode($this->images)),
-            'mark' => $this->comments()->avg('mark'),
+            'price' => +$this->price,
+            'mark' => +$this->comments()->avg('mark'),
             'liked' => !!$this->likes()->where('user_id', $userID )->first()
         ]);
     }
