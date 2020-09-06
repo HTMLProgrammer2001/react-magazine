@@ -10,3 +10,5 @@ export DB_PASSWORD=ede862f43302693011bf082cd4b89f44dcddecca12ba3a166be53f6b2b9cb
 export DB_DATABASE=de6p7kkhffb43h;
 export DB_PORT=5432;
 export DB_HOST=ec2-52-72-34-184.compute-1.amazonaws.com;
+
+echo "Variables was successfully setted";
