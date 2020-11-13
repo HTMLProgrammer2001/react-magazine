@@ -31,4 +31,3 @@ const IsAuthenticated = (isAuth: boolean = true) =>
 	};
 
 export default IsAuthenticated;
-
