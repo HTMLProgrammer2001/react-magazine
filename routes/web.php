@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/{any_route}', function () {
+Route::get('/{all}', function () {
     return view('index');
-})->where('any_route', '.*');
+})
+->where('all', '^(?!api).*$')
+->where('all', '^(?!storage).*$');
